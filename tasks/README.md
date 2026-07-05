@@ -31,6 +31,10 @@ tasks/<domain>/<name>/
 - [cwd/readme/create](cwd/readme/create/) - Create a `README.md`
 - [cwd/readme/update](cwd/readme/update/) - Update a `README.md`
 
+### design/
+
+- [design/review](design/review/) - Review a design document
+
 ### git/
 
 - [git/conflict/resolve](git/conflict/resolve/) - Resolve a git merge conflict

@@ -340,6 +340,12 @@ contexts: {
 		description: "Guide for implementing project documents received as the sole context for the work"
 		tags: ["project", "implementation", "implement", "implementing", "execution", "delivery", "documentation", "guide", "agents"]
 	}
+	"design/writing": {
+		module:      "github.com/start-cli/library/contexts/design/writing@v1"
+		version:     "v1.0.0"
+		description: "Guide for writing design documents for a new system or substantial feature before it becomes project documents"
+		tags: ["design", "writing", "feature", "architecture", "documentation", "guide", "agents"]
+	}
 	"start/library/naming": {
 		module:      "github.com/start-cli/library/contexts/start/library/naming@v1"
 		version:     "v1.1.0"
@@ -591,6 +597,12 @@ tasks: {
 		version:     "v1.4.0"
 		description: "Begin working on the current project with full context"
 		tags: ["cwd", "project", "begin", "implementation", "active", "current"]
+	}
+	"design/review": {
+		module:      "github.com/start-cli/library/tasks/design/review@v1"
+		version:     "v1.0.0"
+		description: "Review and harden a design document before it becomes project documents"
+		tags: ["design", "review", "feature", "analysis", "architecture", "critique"]
 	}
 	"confluence/doc/read": {
 		module:      "github.com/start-cli/library/tasks/confluence/doc/read@v1"
