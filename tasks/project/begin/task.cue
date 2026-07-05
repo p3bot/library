@@ -1,10 +1,11 @@
-package review
+package begin
 
 import "github.com/start-cli/library/schemas@v1"
 
 task: schemas.#Task & {
-	description: "Review and prepare the current project for implementation"
-	tags: ["cwd", "project", "review", "preparation", "analysis", "active", "current"]
+	description: "Begin working on the current project with full context"
+	tags: ["project", "begin", "implementation", "active", "current"]
+	uses: ["contexts:project/implementation"]
 	file: "@module/task.md"
 	prompt: """
 		Read {{.file}} to understand your task.

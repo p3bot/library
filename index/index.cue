@@ -280,12 +280,6 @@ contexts: {
 		description: "Repository-specific AI agent guidelines from AGENTS.md"
 		tags: ["agents", "repository", "guidelines", "cwd"]
 	}
-	"cwd/project": {
-		module:      "github.com/start-cli/library/contexts/cwd/project@v1"
-		version:     "v1.0.0"
-		description: "Project-specific documentation from project.md"
-		tags: ["project", "repository", "documentation", "cwd"]
-	}
 	"home/dotagents/environment": {
 		module:      "github.com/start-cli/library/contexts/home/dotagents/environment@v1"
 		version:     "v1.0.0"
@@ -330,7 +324,7 @@ contexts: {
 	}
 	"project/writing": {
 		module:      "github.com/start-cli/library/contexts/project/writing@v1"
-		version:     "v1.0.0"
+		version:     "v1.1.0"
 		description: "Guide for writing project documents that serve as the sole context for an implementer agent"
 		tags: ["project", "writing", "documentation", "guide", "agents"]
 	}
@@ -580,23 +574,23 @@ tasks: {
 		description: "Create a new system prompt (role) for AI agent use"
 		tags: ["dotagents", "cwd", "role", "system-prompt", "ai"]
 	}
-	"cwd/project/create": {
-		module:      "github.com/start-cli/library/tasks/cwd/project/create@v1"
-		version:     "v1.4.0"
+	"project/create": {
+		module:      "github.com/start-cli/library/tasks/project/create@v1"
+		version:     "v1.0.0"
 		description: "Create a new project document"
-		tags: ["cwd", "project", "create", "planning", "active", "current"]
+		tags: ["project", "create", "planning", "active", "current"]
 	}
-	"cwd/project/review": {
-		module:      "github.com/start-cli/library/tasks/cwd/project/review@v1"
-		version:     "v1.7.0"
+	"project/review": {
+		module:      "github.com/start-cli/library/tasks/project/review@v1"
+		version:     "v1.0.0"
 		description: "Review the current project, surface open issues, and optionally resolve them"
-		tags: ["cwd", "project", "review", "preparation", "analysis", "active", "current", "design", "issues"]
+		tags: ["project", "review", "preparation", "analysis", "active", "current", "design", "issues"]
 	}
-	"cwd/project/begin": {
-		module:      "github.com/start-cli/library/tasks/cwd/project/begin@v1"
-		version:     "v1.4.0"
+	"project/begin": {
+		module:      "github.com/start-cli/library/tasks/project/begin@v1"
+		version:     "v1.0.0"
 		description: "Begin working on the current project with full context"
-		tags: ["cwd", "project", "begin", "implementation", "active", "current"]
+		tags: ["project", "begin", "implementation", "active", "current"]
 	}
 	"design/review": {
 		module:      "github.com/start-cli/library/tasks/design/review@v1"

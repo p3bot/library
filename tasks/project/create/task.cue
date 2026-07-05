@@ -1,11 +1,11 @@
-package begin
+package create
 
 import "github.com/start-cli/library/schemas@v1"
 
 task: schemas.#Task & {
-	description: "Begin working on the current project with full context"
-	tags: ["cwd", "project", "begin", "implementation", "active", "current"]
-	uses: ["contexts:project/implementation"]
+	description: "Create a new project document"
+	tags: ["project", "create", "planning", "active", "current"]
+	uses: ["contexts:project/writing"]
 	file: "@module/task.md"
 	prompt: """
 		Read {{.file}} to understand your task.

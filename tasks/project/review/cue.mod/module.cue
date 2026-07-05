@@ -1,4 +1,4 @@
-module: "github.com/start-cli/library/contexts/cwd/project@v1"
+module: "github.com/start-cli/library/tasks/project/review@v1"
 language: {
 	version: "v0.16.0"
 }

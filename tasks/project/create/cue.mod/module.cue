@@ -1,4 +1,4 @@
-module: "github.com/start-cli/library/tasks/cwd/project/review@v1"
+module: "github.com/start-cli/library/tasks/project/create@v1"
 language: {
 	version: "v0.16.0"
 }
@@ -7,6 +7,6 @@ source: {
 }
 deps: {
 	"github.com/start-cli/library/schemas@v1": {
-		v: "v1.0.0"
+		v: "v1.1.0"
 	}
 }

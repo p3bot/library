@@ -67,7 +67,7 @@ Acceptance criteria verify completion, not quality. Quality is shaped by how the
 
 ## File Placement
 
-Save the project document as `project.md` at the repository root unless the user specifies otherwise.
+Place the project document at the repository root unless the user specifies a different location. Use the filename the user provides. If none is given, continue the repo's existing `NN-<slug>.md` numbering when that convention is already in use, otherwise use a short kebab-case name derived from the goal.
 
 ## Formatting
 

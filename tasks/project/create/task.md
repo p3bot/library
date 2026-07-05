@@ -6,16 +6,16 @@ Create a new project document following the project writing guide.
 
 ### Step 1: Check for an Existing Active Project
 
-Before creating a new project, check whether there is already a current or active project in progress.
+Before creating a new project, check whether there is already a current or active project in progress. If the user named a target document, treat that as the project to create.
 
 Look for clues in:
 
 - `AGENTS.md` — check for any reference to a current or active project
-- Common filenames at the repo root: `project.md`, `spec.md`, `ROADMAP.md`, other markdown or document files
+- Repository root — scan for existing project or specification documents among the markdown or document files present
 - Agent directories: `.agents/`, `.claude/`, `.cursor/`, `.gemini/`, or others
 - Documentation folders: `docs/`
 
-If an active project is found, inform the user and confirm they want to create a new one before continuing.
+Do not assume a fixed filename. If an active project is found, inform the user and confirm they want to create a new one before continuing.
 
 ### Step 2: Load the Writing Guide
 
@@ -54,9 +54,10 @@ Write the document following the structure, formatting, and principles defined b
 
 File placement:
 
+- If the user specified a filename or location, use it.
 - If project documents using `NN-<slug>.md` numbering already exist in the repo, continue the sequence — name the new file with the next number.
-- If no project documents exist, name it `project.md`.
-- Place it in the repository root unless an extra instruction specifies a different location.
+- Otherwise ask the user what to name the document, suggesting a short kebab-case name derived from the goal.
+- Place it in the repository root unless an instruction specifies a different location.
 
 ### Step 5: Update AGENTS.md
 

@@ -1,7 +1,7 @@
 # Item-by-item Template Versions
 
 History of the per-item finding template used by the interactive review tasks
-(`tasks/review/pre-commit`, `tasks/cwd/project/review`, and
+(`tasks/review/pre-commit`, `tasks/project/review`, and
 `tasks/review/multi-agent/orchestrator`). The tasks share this template; they
 differ only in the title line and the Category placeholder:
 

@@ -10,13 +10,13 @@ Finding no new issues is a valid outcome. If the project document is complete an
 
 ### Phase 1: Review
 
-1. Find the project document. Look for clues in:
+1. Identify the project document. If the user named one — in the task instructions or the conversation — use it. Otherwise look for clues in:
    - `AGENTS.md` — check for any reference to a current or active project
-   - Common filenames at the repo root: `project.md`, `spec.md`, `plan.md`, `*.md`
+   - Repository root — scan for a project or specification document among the markdown or document files present
    - Agent directories: `.agents/`, `.claude/`, `.cursor/`, `.gemini/`, or similar
    - Documentation folders: `docs/`
 
-   The project may be described as "active", "current", "in progress", "working on", or similar terms. If multiple candidates are found, ask the user to confirm. If none are found, ask the user where it is located.
+   The project may be described as "active", "current", "in progress", "working on", or similar terms. Do not assume a fixed filename. If exactly one clear candidate is found, use it. If multiple candidates are found, or none can be identified with confidence, ask the user which file to use.
 2. Read the project document thoroughly.
 3. Run the Size and Coherence Check (below). If it fires, skip to Phase 4 and declare Split the project.
 4. Analyse the repository:

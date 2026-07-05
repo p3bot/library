@@ -25,9 +25,6 @@ tasks/<domain>/<name>/
 - [cwd/agents-md/create](cwd/agents-md/create/) - Create `AGENTS.md`
 - [cwd/agents-md/update](cwd/agents-md/update/) - Update `AGENTS.md`
 - [cwd/dotagents/role/create](cwd/dotagents/role/create/) - Create a role file under `./.agents/`
-- [cwd/project/begin](cwd/project/begin/) - Resume an in-progress project document
-- [cwd/project/create](cwd/project/create/) - Create a project document
-- [cwd/project/review](cwd/project/review/) - Review a project document
 - [cwd/readme/create](cwd/readme/create/) - Create a `README.md`
 - [cwd/readme/update](cwd/readme/update/) - Update a `README.md`
 
@@ -62,6 +59,12 @@ tasks/<domain>/<name>/
 - [jira/item/read](jira/item/read/) - Read and summarise a Jira item
 - [jira/item/research](jira/item/research/) - Research a Jira item
 - [jira/item/review](jira/item/review/) - Review a single Jira item
+
+### project/
+
+- [project/begin](project/begin/) - Resume an in-progress project document
+- [project/create](project/create/) - Create a project document
+- [project/review](project/review/) - Review a project document
 
 ### review/
 
