@@ -127,35 +127,35 @@ agents: {
 	}
 	"agy/interactive": {
 		module:      "github.com/start-cli/library/agents/agy/interactive@v1"
-		version:     "v1.0.0"
+		version:     "v1.1.0"
 		description: "Antigravity CLI by Google - agentic coding assistant"
 		bin:         "agy"
 		tags: ["google", "agy", "antigravity", "coding", "agent"]
 	}
 	"agy/edit": {
 		module:      "github.com/start-cli/library/agents/agy/edit@v1"
-		version:     "v1.0.0"
+		version:     "v1.1.0"
 		description: "Antigravity CLI with auto-accepted file edits - for trusted editing sessions"
 		bin:         "agy"
 		tags: ["google", "agy", "antigravity", "coding", "agent", "trusted", "auto-edit"]
 	}
 	"agy/bypass-permissions": {
 		module:      "github.com/start-cli/library/agents/agy/bypass-permissions@v1"
-		version:     "v1.0.0"
+		version:     "v1.1.0"
 		description: "Antigravity CLI with all permissions bypassed - for background and automated tasks"
 		bin:         "agy"
 		tags: ["google", "agy", "antigravity", "coding", "agent", "automation", "background", "bypass-permissions"]
 	}
 	"agy/non-interactive": {
 		module:      "github.com/start-cli/library/agents/agy/non-interactive@v1"
-		version:     "v1.0.0"
+		version:     "v1.1.0"
 		description: "Antigravity CLI in non-interactive mode - completes task and exits"
 		bin:         "agy"
 		tags: ["google", "agy", "antigravity", "coding", "agent", "non-interactive", "scripted"]
 	}
 	"agy/unattended": {
 		module:      "github.com/start-cli/library/agents/agy/unattended@v1"
-		version:     "v1.0.0"
+		version:     "v1.1.0"
 		description: "Antigravity CLI in unattended mode - non-interactive with all permissions bypassed"
 		bin:         "agy"
 		tags: ["google", "agy", "antigravity", "coding", "agent", "unattended", "non-interactive", "bypass-permissions", "automation"]

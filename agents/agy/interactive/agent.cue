@@ -4,7 +4,7 @@ import "github.com/start-cli/library/schemas@v1"
 
 agent: schemas.#Agent & {
 	bin:           "agy"
-	command:       "{{.bin}} --model \"{{.model}}\" --prompt-interactive {{.prompt}}"
+	command:       "{{.bin}} --model {{.model}} --prompt-interactive {{.prompt}}"
 	description:   "Antigravity CLI by Google - agentic coding assistant"
 	default_model: "flash"
 	models: {

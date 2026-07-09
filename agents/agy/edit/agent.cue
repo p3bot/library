@@ -4,7 +4,7 @@ import "github.com/start-cli/library/schemas@v1"
 
 agent: schemas.#Agent & {
 	bin:           "agy"
-	command:       "{{.bin}} --model \"{{.model}}\" --mode accept-edits --prompt-interactive {{.prompt}}"
+	command:       "{{.bin}} --model {{.model}} --mode accept-edits --prompt-interactive {{.prompt}}"
 	description:   "Antigravity CLI with auto-accepted file edits - for trusted editing sessions"
 	default_model: "flash"
 	models: {

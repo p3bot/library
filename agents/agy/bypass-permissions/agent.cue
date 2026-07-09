@@ -4,7 +4,7 @@ import "github.com/start-cli/library/schemas@v1"
 
 agent: schemas.#Agent & {
 	bin:           "agy"
-	command:       "{{.bin}} --model \"{{.model}}\" --dangerously-skip-permissions --prompt-interactive {{.prompt}}"
+	command:       "{{.bin}} --model {{.model}} --dangerously-skip-permissions --prompt-interactive {{.prompt}}"
 	description:   "Antigravity CLI with all permissions bypassed - for background and automated tasks"
 	default_model: "flash"
 	models: {

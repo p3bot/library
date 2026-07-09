@@ -4,7 +4,7 @@ import "github.com/start-cli/library/schemas@v1"
 
 agent: schemas.#Agent & {
 	bin:           "agy"
-	command:       "{{.bin}} --model \"{{.model}}\" --print {{.prompt}}"
+	command:       "{{.bin}} --model {{.model}} --print {{.prompt}}"
 	description:   "Antigravity CLI in non-interactive mode - completes task and exits"
 	default_model: "flash"
 	models: {
