@@ -98,6 +98,11 @@ The fully-qualified user-facing address is `agents:<cli-tool>/<variant>` (e.g. `
 | `copilot/non-interactive` | Non-interactive | Default |
 | `copilot/unattended` | Non-interactive | Bypass all |
 | `grok/interactive` | Interactive | Default |
+| `agy/interactive` | Interactive | Default |
+| `agy/edit` | Interactive | Auto-edit |
+| `agy/bypass-permissions` | Interactive | Bypass all |
+| `agy/non-interactive` | Non-interactive | Default |
+| `agy/unattended` | Non-interactive | Bypass all |
 
 ## Choosing a Pattern
 
@@ -128,12 +133,12 @@ In TTY mode the user always picks a variant from a list, so this contract has no
 
 The patterns map to CLI flags:
 
-| Pattern | Claude Flags | Gemini Flags | Copilot Flags | Grok Flags |
-|---------|--------------|--------------|---------------|------------|
-| Base | `--permission-mode default` | `--approval-mode default --prompt-interactive` | `--interactive` | `--permission-mode default` |
-| Edit | `--permission-mode acceptEdits` | `--approval-mode auto_edit --prompt-interactive` | `--allow-tool=write --interactive` | — |
-| Bypass Permissions | `--permission-mode bypassPermissions` | `--approval-mode yolo --prompt-interactive` | `--allow-all --interactive` | — |
-| Non-interactive | `--permission-mode default --print` | `--approval-mode default --prompt` | `--allow-all-tools --prompt` | — |
-| Unattended | `--permission-mode bypassPermissions --print` | `--approval-mode yolo --prompt` | `--allow-all --prompt` | — |
+| Pattern | Claude Flags | Gemini Flags | Copilot Flags | Grok Flags | Agy Flags |
+|---------|--------------|--------------|---------------|------------|-----------|
+| Base | `--permission-mode default` | `--approval-mode default --prompt-interactive` | `--interactive` | `--permission-mode default` | `--prompt-interactive` |
+| Edit | `--permission-mode acceptEdits` | `--approval-mode auto_edit --prompt-interactive` | `--allow-tool=write --interactive` | — | `--mode accept-edits --prompt-interactive` |
+| Bypass Permissions | `--permission-mode bypassPermissions` | `--approval-mode yolo --prompt-interactive` | `--allow-all --interactive` | — | `--dangerously-skip-permissions --prompt-interactive` |
+| Non-interactive | `--permission-mode default --print` | `--approval-mode default --prompt` | `--allow-all-tools --prompt` | — | `--print` |
+| Unattended | `--permission-mode bypassPermissions --print` | `--approval-mode yolo --prompt` | `--allow-all --prompt` | — | `--dangerously-skip-permissions --print` |
 
-Note: Copilot's "Non-interactive" variant uses `--allow-all-tools` rather than a default-permission flag, so its effective permission posture differs from the Claude and Gemini Non-interactive variants. The pattern label captures the interactivity dimension; consult each agent's `command` field for the exact flags it runs. Only `grok/interactive` is published so far.
+Note: Copilot's "Non-interactive" variant uses `--allow-all-tools` rather than a default-permission flag, so its effective permission posture differs from the Claude and Gemini Non-interactive variants. The pattern label captures the interactivity dimension; consult each agent's `command` field for the exact flags it runs. Only `grok/interactive` is published for Grok so far. Agy has no system-prompt CLI flag; roles rely on workspace `AGENTS.md` / `GEMINI.md` discovery.

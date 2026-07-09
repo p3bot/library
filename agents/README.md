@@ -46,6 +46,14 @@ agents/<vendor>/<mode>/
 
 - [grok/interactive](grok/interactive/) - Interactive Grok Build session
 
+### agy/ (Google Antigravity CLI)
+
+- [agy/interactive](agy/interactive/) - Interactive Antigravity session
+- [agy/non-interactive](agy/non-interactive/) - Non-interactive mode
+- [agy/edit](agy/edit/) - Auto-accepted file edits via --mode accept-edits
+- [agy/bypass-permissions](agy/bypass-permissions/) - All permissions bypassed
+- [agy/unattended](agy/unattended/) - Non-interactive with all permissions bypassed
+
 ## Documentation
 
 See [docs/](../docs/) for CLI reference documentation.
