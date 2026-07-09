@@ -42,6 +42,10 @@ agents/<vendor>/<mode>/
 
 - [aichat/interactive](aichat/interactive/) - Interactive AIChat session
 
+### grok/ (xAI Grok Build TUI)
+
+- [grok/interactive](grok/interactive/) - Interactive Grok Build session
+
 ## Documentation
 
 See [docs/](../docs/) for CLI reference documentation.

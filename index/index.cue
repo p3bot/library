@@ -118,6 +118,13 @@ agents: {
 		bin:         "copilot"
 		tags: ["github", "copilot", "coding", "agent", "unattended", "non-interactive", "bypass-permissions", "automation"]
 	}
+	"grok/interactive": {
+		module:      "github.com/start-cli/library/agents/grok/interactive@v1"
+		version:     "v1.0.0"
+		description: "Grok Build TUI by xAI - agentic coding assistant"
+		bin:         "grok"
+		tags: ["xai", "grok", "coding", "agent"]
+	}
 }
 
 // Role index - maps friendly names to module paths
