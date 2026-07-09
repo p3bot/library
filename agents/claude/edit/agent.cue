@@ -4,7 +4,7 @@ import "github.com/start-cli/library/schemas@v1"
 
 agent: schemas.#Agent & {
 	bin:         "claude"
-	command:     "{{.bin}} --model {{.model}} --permission-mode acceptEdits --append-system-prompt-file {{.role_file}} {{.prompt}}"
+	command:     "{{.bin}} --model {{.model}} --permission-mode acceptEdits --system-prompt-file {{.role_file}} {{.prompt}}"
 	description: "Claude Code with auto-accepted file edits - for trusted editing sessions"
 	default_model: "sonnet"
 	models: {

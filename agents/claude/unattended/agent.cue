@@ -4,7 +4,7 @@ import "github.com/start-cli/library/schemas@v1"
 
 agent: schemas.#Agent & {
 	bin:         "claude"
-	command:     "{{.bin}} --model {{.model}} --permission-mode bypassPermissions --append-system-prompt-file {{.role_file}} --print {{.prompt}}"
+	command:     "{{.bin}} --model {{.model}} --permission-mode bypassPermissions --system-prompt-file {{.role_file}} --print {{.prompt}}"
 	description: "Claude Code in unattended mode - non-interactive with all permissions bypassed"
 	default_model: "sonnet"
 	models: {

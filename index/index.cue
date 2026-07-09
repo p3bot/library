@@ -8,35 +8,35 @@ agents: [string]: schemas.#IndexEntry
 agents: {
 	"claude/interactive": {
 		module:      "github.com/start-cli/library/agents/claude/interactive@v1"
-		version:     "v1.0.0"
+		version:     "v1.1.0"
 		description: "Claude Code by Anthropic - agentic coding assistant"
 		bin:         "claude"
 		tags: ["anthropic", "claude", "coding", "agent"]
 	}
 	"claude/bypass-permissions": {
 		module:      "github.com/start-cli/library/agents/claude/bypass-permissions@v1"
-		version:     "v1.0.0"
+		version:     "v1.1.0"
 		description: "Claude Code with all permissions bypassed - for background and automated tasks"
 		bin:         "claude"
 		tags: ["anthropic", "claude", "coding", "agent", "automation", "background", "bypass-permissions"]
 	}
 	"claude/edit": {
 		module:      "github.com/start-cli/library/agents/claude/edit@v1"
-		version:     "v1.0.0"
+		version:     "v1.1.0"
 		description: "Claude Code with auto-accepted file edits - for trusted editing sessions"
 		bin:         "claude"
 		tags: ["anthropic", "claude", "coding", "agent", "trusted", "auto-edit"]
 	}
 	"claude/non-interactive": {
 		module:      "github.com/start-cli/library/agents/claude/non-interactive@v1"
-		version:     "v1.0.0"
+		version:     "v1.1.0"
 		description: "Claude Code in non-interactive mode - completes task and exits"
 		bin:         "claude"
 		tags: ["anthropic", "claude", "coding", "agent", "non-interactive", "scripted"]
 	}
 	"claude/unattended": {
 		module:      "github.com/start-cli/library/agents/claude/unattended@v1"
-		version:     "v1.0.0"
+		version:     "v1.1.0"
 		description: "Claude Code in unattended mode - non-interactive with all permissions bypassed"
 		bin:         "claude"
 		tags: ["anthropic", "claude", "coding", "agent", "unattended", "non-interactive", "bypass-permissions", "automation"]

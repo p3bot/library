@@ -4,7 +4,7 @@ import "github.com/start-cli/library/schemas@v1"
 
 agent: schemas.#Agent & {
 	bin:           "claude"
-	command:       "{{.bin}} --model {{.model}} --permission-mode default --append-system-prompt-file {{.role_file}} {{.prompt}}"
+	command:       "{{.bin}} --model {{.model}} --permission-mode default --system-prompt-file {{.role_file}} {{.prompt}}"
 	description:   "Claude Code by Anthropic - agentic coding assistant"
 	default_model: "sonnet"
 	models: {
