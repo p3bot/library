@@ -636,7 +636,7 @@ tasks: {
 	}
 	"project/decompose": {
 		module:      "github.com/start-cli/library/tasks/project/decompose@v1"
-		version:     "v0.1.0"
+		version:     "v1.0.0"
 		description: "Decompose an accepted design into a right-sized set of project documents"
 		tags: ["project", "decompose", "design", "planning", "breakdown", "seams", "active", "current"]
 	}

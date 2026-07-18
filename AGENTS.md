@@ -152,7 +152,7 @@ It owns the full procedure — validation, version determination from the remote
 
 ## Versioning
 
-Versioning follows SemVer, with a minor bump as the default for additive or behavioural content changes. Reserve patch for trivial fixes with no behavioural effect and major for breaking a contract consumers rely on. The publishing workflow above is the canonical source for the detailed criteria and the rule that the index bump rides along with the module change.
+Every new module debuts at `v1.0.0`, never `v0.x`. From there, versioning follows SemVer, with a minor bump as the default for additive or behavioural content changes. Reserve patch for trivial fixes with no behavioural effect and major for breaking a contract consumers rely on. The publishing workflow above is the canonical source for the detailed criteria and the rule that the index bump rides along with the module change.
 
 ## Commit Convention
 
