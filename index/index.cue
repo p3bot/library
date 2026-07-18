@@ -634,6 +634,12 @@ tasks: {
 		description: "Begin working on the current project with full context"
 		tags: ["project", "begin", "implementation", "active", "current"]
 	}
+	"project/decompose": {
+		module:      "github.com/start-cli/library/tasks/project/decompose@v1"
+		version:     "v0.1.0"
+		description: "Decompose an accepted design into a right-sized set of project documents"
+		tags: ["project", "decompose", "design", "planning", "breakdown", "seams", "active", "current"]
+	}
 	"design/review": {
 		module:      "github.com/start-cli/library/tasks/design/review@v1"
 		version:     "v1.0.0"
