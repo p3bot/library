@@ -193,9 +193,23 @@ Outcome values:
 
 ## Per-item Template
 
-This template is a suggestion. Keep details succinct; expand only when the finding genuinely warrants it.
+Findings are read by someone who has not opened the code, cannot look anything up, and has to decide something after one read. This applies with extra force here — the finding arrives from a subagent that read the code, and the reader did not.
 
-Describe every finding from the perspective of someone who does not have the code in their head. Lead with what they would observe — run this, get that; send this, receive that; call this, it returns that — using the smallest concrete instance that fits the code under review. Show it; do not explain the problem through the code's internal structure. Then add only what is needed to decide: one line of cause, and one line of impact when it is not already obvious. Do not quote requirements, recap intent, or argue the finding is real — the evidence carries it. Keep the finding scannable.
+The bar: that reader can restate the problem in their own words after reading it once. A finding that fails this has failed, however accurate it is.
+
+Open with the smallest concrete instance that shows the problem, then explain it. Three moves, in order:
+
+1. Establish what correct looks like and show the break against it. Where the code runs, that is a command and its output, a call and its return, or a request and its response, with the expected value alongside — `ParseDuration("500ms") → 0s (want 500ms)`. Where the change is structural and produces no output, it is the scenario it would break, in plain language. Contrast two cases when the behaviour is conditional; the contrast is usually what makes the break obvious
+2. Say what causes it, in the same terms
+3. Say what it costs
+
+Writing rules:
+
+- Name things by what they are, not by what they are called in the code. "the retry counter", not `svc.rc`. Symbols and `file:line` follow the plain-language noun in parentheses as anchors; they never carry the explanation
+- Spell out internal shorthand on first use. Requirement ids, ticket numbers, and project acronyms mean nothing to the reader. A subagent's own abbreviations never survive into the presented finding
+- Never fabricate an observable. If the code path cannot be run as written, do not dress a structure diff up as command output — show the scenario instead
+- Length follows comprehension. Cut padding, never cut the setup that makes the rest land
+- Do not argue the finding is real or recap intent. The instance and the explanation carry it
 
 ```
 ### Issue n of T — <ID>: <short title>
@@ -203,17 +217,14 @@ Describe every finding from the perspective of someone who does not have the cod
 Review: <e.g. security, correctness>
 Location: <file:line>
 
-<evidence — the smallest concrete instance of the problem: command → output,
-request → response, call → return, a before/after, or the exact offending line.
-Show it; do not describe it.>
+<the smallest concrete instance: command → output, request → response, call →
+return, with the expected value alongside — or the scenario the change breaks
+where nothing runs. Show it; do not describe it.>
 
-**Cause**
+**Issue**
 
-<one sentence: why it happens, only when the reader needs it to decide>
-
-**Impact**
-
-<one line: the consequence, only when it is not obvious from the evidence>
+<continuous prose: what causes it and what it costs, in the same plain terms as
+the instance above. As long as it needs to be to land, and no longer.>
 
 **Decision**
 
@@ -227,6 +238,42 @@ B. <option>
 **Recommendation (B)**
 
 <option letter, then one clause on why, focused on the principled long-term solution>
+```
+
+Worked example:
+
+```
+### Issue 1 of 4 — H1: Session cookie is issued without the Secure flag
+
+Review: security
+Location: internal/http/session.go:88
+
+  $ curl -i https://app.local/login -d 'user=demo&pass=demo'
+  → Set-Cookie: sid=abc123; HttpOnly; Path=/
+                                     (want: ; Secure)
+
+**Issue**
+
+The cookie is built with HttpOnly but never sets Secure, so the browser will
+send it back over plain HTTP as well as HTTPS. Anyone able to induce a single
+http:// request to the domain — a stray link, a mixed-content asset, a captive
+portal — sees the session identifier in clear text and can replay it.
+
+**Decision**
+
+Set Secure unconditionally, or only outside local development?
+
+**Options**
+
+A. Always set Secure, and serve local development over HTTPS. One code path,
+   no environment-dependent security posture.
+B. Set Secure unless a development flag is set. Keeps plain-HTTP local setup
+   working, at the cost of a weaker configuration that can ship by accident.
+
+**Recommendation (A)**
+
+Option A: a flag that disables a security control is the kind that eventually
+reaches production, and local HTTPS is a one-time setup cost.
 ```
 
 Display the Per-item Prompt (see Commands) immediately after presenting the finding.

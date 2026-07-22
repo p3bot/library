@@ -114,9 +114,23 @@ After all findings have been processed, re-read the design document with fresh e
 
 ## Per-item Template
 
-This template is a suggestion. Keep details succinct; expand only when the finding genuinely warrants it.
+Findings are read by someone who has not opened the design document, cannot look anything up, and has to decide something after one read.
 
-Describe every finding from the perspective of someone who does not have the design in their head. Lead with the smallest concrete instance that makes the problem undeniable — the case the chosen approach handles worse than an alternative, the assumption stated as fact with nothing behind it, the cost the document never admits. Show it; do not argue it. Then add only what is needed to decide: one line of cause, and one line of impact when it is not already obvious. Do not recap intent or restate the design back to itself — the evidence carries the finding. Keep it scannable.
+The bar: that reader can restate the problem in their own words after reading it once. A finding that fails this has failed, however accurate it is.
+
+Open with the smallest concrete instance that shows the problem, then explain it. Three moves, in order:
+
+1. Establish what correct looks like and show the break against it. A design is not running code, so the instance is usually a scenario rather than an output — the case the chosen approach handles worse than an alternative, the condition under which a stated assumption stops holding, the cost the document never admits. Where the design makes a claim about existing code, a command and its output with the expected value alongside is stronger. Contrast two cases when the rule is conditional; the contrast is usually what makes the break obvious
+2. Say what causes it, in the same terms
+3. Say what it costs if the design ships as written
+
+Writing rules:
+
+- Name things by what they are, not by what they are called in the design. "the write path's ordering guarantee", not `R4`. Section names, symbols, and `file:line` follow the plain-language noun in parentheses as anchors; they never carry the explanation
+- Spell out internal shorthand on first use. Requirement ids, section codes, and project acronyms mean nothing to the reader
+- Never fabricate an observable. Do not dress a proposed type or structure up as command output — show the scenario instead
+- Length follows comprehension. Cut padding, never cut the setup that makes the rest land
+- Do not argue the finding is real or restate the design back to itself. The instance and the explanation carry it
 
 ```
 ### Finding n of T: <short title>
@@ -124,17 +138,16 @@ Describe every finding from the perspective of someone who does not have the des
 Category: <approach | alternative | tradeoff | assumption | risk | gap | decision | dependency>
 Location: <section heading, or file:line for a current-state claim>
 
-<evidence — the smallest concrete instance of the problem: a case the approach
-handles badly, an alternative that beats it on a stated goal, an assumption with
-nothing behind it, a cost left unstated. Show it; do not describe it.>
+<the smallest concrete instance: the scenario the design handles badly, the
+condition that breaks a stated assumption, the cost left unstated — or, for a
+claim about existing code, command → output with the expected value alongside.
+Show it; do not describe it.>
 
-**Cause**
+**Issue**
 
-<one sentence: why it happens, only when the reader needs it to decide>
-
-**Impact**
-
-<one line: the consequence if the design ships as written, only when not obvious>
+<continuous prose: what causes it and what it costs if the design ships as
+written, in the same plain terms as the instance above. As long as it needs to
+be to land, and no longer.>
 
 **Decision**
 
@@ -148,6 +161,46 @@ B. <option>
 **Recommendation (B)**
 
 <option letter, then one clause on why, focused on the principled long-term solution>
+```
+
+Worked example:
+
+```
+### Finding 1 of 3: Ordering guarantee assumes a single writer
+
+Category: assumption
+Location: Proposed Design — Write path
+
+  one region   → one writer per key, writes land in order
+  two regions  → two writers, same key, no rule stated for which wins
+
+**Issue**
+
+The design promises that updates to a record are applied in the order they were
+made, and gets that for free while there is exactly one writer. The rollout
+section then adds a second region that also accepts writes, without saying how
+the two are ordered against each other.
+
+Two users editing the same record from different regions can therefore end up
+with either edit winning, and neither the design nor the acceptance criteria say
+which is correct — so the implementation cannot be wrong, and cannot be verified
+either.
+
+**Decision**
+
+How are concurrent writes to the same record ordered across regions?
+
+**Options**
+
+A. Pin each record to a home region — writes elsewhere forward to it. Preserves
+   the single-writer guarantee unchanged; adds cross-region latency on write.
+B. Accept last-write-wins on a shared clock and state it as the guarantee.
+   Cheaper, but weakens a promise other sections already rely on.
+
+**Recommendation (A)**
+
+Option A: the ordering guarantee is load-bearing for the reconciliation design
+downstream, and B would quietly invalidate it.
 ```
 
 Display the Per-item Prompt (see Commands) immediately after presenting the finding.

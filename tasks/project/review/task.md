@@ -117,9 +117,23 @@ After all findings have been processed, re-read the project document with fresh 
 
 ## Per-item Template
 
-This template is a suggestion. Keep details succinct; expand only when the finding genuinely warrants it.
+Findings are read by someone who has not opened the project document, cannot look anything up, and has to decide something after one read.
 
-Describe every finding from the perspective of someone who does not have the code in their head. Lead with what they would observe — run this, get that; send this, receive that; call this, it returns that — using the smallest concrete instance that fits the code under review. Show it; do not explain the problem through the code's internal structure. Then add only what is needed to decide: one line of cause, and one line of impact when it is not already obvious. Do not quote requirements, recap intent, or argue the finding is real — the evidence carries it. Keep the finding scannable.
+The bar: that reader can restate the problem in their own words after reading it once. A finding that fails this has failed, however accurate it is.
+
+Open with the smallest concrete instance that shows the problem, then explain it. Three moves, in order:
+
+1. Establish what correct looks like and show the break against it. Where the target runs, that is a command and its output with the expected value alongside. Where it does not — a plan, a proposed design, a document — it is the scenario the change would break, in plain language. Contrast two cases when the rule is conditional; the contrast is usually what makes the break obvious
+2. Say what causes it, in the same terms
+3. Say what it costs
+
+Writing rules:
+
+- Name things by what they are, not by what they are called in the code. "the providers column", not `KnownAgent.Provider`. Symbols and `file:line` follow the plain-language noun in parentheses as anchors; they never carry the explanation
+- Spell out internal shorthand on first use. Requirement ids, section codes, and project acronyms mean nothing to the reader
+- Never fabricate an observable. If the thing under review does not run yet, do not dress a structure diff up as command output — show the scenario instead
+- Length follows comprehension. Cut padding, never cut the setup that makes the rest land
+- Do not argue the finding is real or recap the project's intent. The instance and the explanation carry it
 
 ```
 ### Finding n of T: <short title>
@@ -127,17 +141,14 @@ Describe every finding from the perspective of someone who does not have the cod
 Category: <decision | design | gap | risk | dependency>
 Location: <file:line, or section heading if relevant>
 
-<evidence — the smallest concrete instance of the problem: command → output,
-request → response, call → return, a before/after, or the exact offending line.
-Show it; do not describe it.>
+<the smallest concrete instance: command → output with the expected value
+alongside where the target runs; the scenario the change would break where it
+does not. Show it; do not describe it.>
 
-**Cause**
+**Issue**
 
-<one sentence: why it happens, only when the reader needs it to decide>
-
-**Impact**
-
-<one line: the consequence, only when it is not obvious from the evidence>
+<continuous prose: what causes it and what it costs, in the same plain terms as
+the instance above. As long as it needs to be to land, and no longer.>
 
 **Decision**
 
@@ -151,6 +162,53 @@ B. <option>
 **Recommendation (B)**
 
 <option letter, then one clause on why, focused on the principled long-term solution>
+```
+
+Worked example:
+
+```
+### Finding 2 of 4: Redesign drops the provider list the CLI prints
+
+Category: design
+Location: R3 Query, result, and detail types
+
+  agents get claude-code                     → providers: anthropic
+  agents get opencode --provider anthropic   → providers: anthropic   (today)
+                                             → providers: <empty>     (under R3)
+
+**Issue**
+
+The CLI prints a providers column for each agent. An agent like claude-code has
+a built-in provider, anthropic, so the column shows anthropic. An agent like
+opencode has no built-in provider — you tell it which one to use on the command
+line, and the column should then show what you passed.
+
+Today the library hands the CLI one ready-made field holding the providers
+actually used: the built-in ones, or the ones you passed. The CLI prints that
+field and nothing else. The redesign in R3 deletes that field and keeps only the
+built-in list, which for opencode is empty, so nothing in the returned data
+holds anthropic.
+
+The CLI's only recourse is to detect the no-built-in-provider case itself and
+substitute the value it passed in — which puts the provider-source decision back
+in the CLI, the exact thing R3 set out to remove.
+
+**Decision**
+
+How does the returned agent expose the provider list the CLI prints?
+
+**Options**
+
+A. Add a resolved-providers field alongside the built-in list — always
+   populated, holding the built-in providers or the ones passed in. Keeps both
+   the declared and the resolved sets visible.
+B. Replace the built-in list with the resolved one. Smaller surface, but the
+   declared-versus-resolved distinction is lost.
+
+**Recommendation (A)**
+
+Option A: it restores the field the CLI already reads with no special-casing,
+and keeps the built-in list as the capability fact it is.
 ```
 
 Display the Per-item Prompt (see Commands) immediately after presenting the finding.
