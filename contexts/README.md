@@ -22,7 +22,7 @@ contexts/<scope>/<name>/
 
 ### cwd/ (current working directory)
 
-- [cwd/agents-md](cwd/agents-md/) - Repository-specific agent guidelines from `AGENTS.md`
+- [cwd/agents-md](cwd/agents-md/) - Repository introduction from `AGENTS.md`
 - [cwd/dotagents/workspace](cwd/dotagents/workspace/) - Workspace settings from `./.agents/`
 - [cwd/dotagents/context/index](cwd/dotagents/context/index/) - Index of curated reference material in `./.agents/context/`
 

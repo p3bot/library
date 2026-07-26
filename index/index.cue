@@ -319,8 +319,8 @@ contexts: {
 	"cwd/agents-md": {
 		module:      "github.com/start-cli/library/contexts/cwd/agents-md@v1"
 		version:     "v1.0.0"
-		description: "Repository-specific AI agent guidelines from AGENTS.md"
-		tags: ["agents", "repository", "guidelines", "cwd"]
+		description: "Repository introduction from AGENTS.md"
+		tags: ["agents", "repository", "cwd"]
 	}
 	"home/dotagents/environment": {
 		module:      "github.com/start-cli/library/contexts/home/dotagents/environment@v1"
