@@ -259,6 +259,9 @@ Failure Isolation and Failure Containment were merged, as recorded above. The ma
 
 ## Flagged, Not Actioned
 
-- Deployment and Rollback Safety stayed in Architecture per the agreed mapping, but now sits one type away from Environment Reproducibility, Drift Detection, and Point-in-Time and Data Rollback, which are its natural neighbours. Candidate for a later move
-- Scope item purge. Deferred by agreement. Total item count rose from 140 to 162, and the initial read was that ten to fifteen items across the framework are low-yield or restate a sibling. Operability at 32 items is the densest target
 - Downstream module churn. `tasks/review/` holds 21 published modules, of which roughly a dozen are named for types that no longer exist: holistic, concurrency, duplication, readability, documentation, dependency, error-handling, observability, standards. These are published to the CUE Central Registry and consumers are pinned to them, so renaming or retiring them is a versioning decision, not a rename. It must be settled before the revised framework is relied upon
+
+## Resolved After Consolidation
+
+- Deployment and Rollback Safety moved from Architecture to Operability's Environment cluster (next to Environment Reproducibility and Drift Detection), matching the Failure Isolation precedent that operational concerns belong with Operability
+- Scope item purge applied after dual analysis and agreement. Net −9 (162 → 153). Merges: Exception Strategy + Error Propagation + Edge Case Coverage → Error Handling and Propagation; Functional Duplication + Pattern Redundancy + Boilerplate Reduction → Duplication and Redundancy; Conceptual Integrity + Pattern Consistency → Consistency and Conceptual Integrity; Thread Safety + Shared State Management → Thread Safety and Shared State; Data Minimisation + Purpose Limitation → Data Minimisation and Purpose Limitation. Drops: Structured Output (structure absorbed into Logging Quality and System Metrics); Product Analytics (out of Operability purpose). Wording: Supply Chain Risk trimmed to dependency-chain trust only (publishing pipeline integrity stays under Pipeline Security and Artefact Provenance). Explicitly retained after triple-check: Fail-Fast vs Fail-Safe, Cognitive Complexity, Code Flow, Component Boundaries, Dependency Flow, Performance Instrumentation

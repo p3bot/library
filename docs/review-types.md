@@ -70,8 +70,7 @@ Scope:
 - Absent Value Handling: Verifying that null, empty, zero, and undefined values are distinguished correctly and that absent data cannot cause unsafe dereferences or unchecked conversions.
 - Race Conditions: Identifying logic where the outcome depends on the non-deterministic timing of execution across multiple threads.
 - Deadlocks and Livelocks: Ensuring that synchronisation logic does not lead to states where the system is permanently stalled.
-- Thread Safety: Verifying that shared resources are accessed through safe mechanisms that prevent data corruption.
-- Shared State Management: Assessing the necessity of shared state and ensuring that mutable data is minimised.
+- Thread Safety and Shared State: Verifying that shared resources are accessed safely, that mutable shared state is minimised, and that remaining shared state is necessary.
 - Async Patterns: Evaluating the use of asynchronous primitives to ensure they are handled without blocking or unhandled failures.
 - Context and Cancellation: Verifying that operations respect cancellation signals and propagate execution context correctly.
 - Resource Pools: Assessing the sizing and management of thread and connection pools to prevent exhaustion and support expected throughput.
@@ -136,8 +135,7 @@ Scope:
 - Organisational Standards: Ensuring alignment with internal engineering playbooks and agreed-upon conventions.
 - Data Classification: Ensuring that data is categorised by sensitivity level, including explicit recognition of personal data, and that handling procedures match the classification.
 - Lawful Basis and Consent: Confirming that personal data processing has a documented lawful basis and that consent, where required, is captured, scoped, and revocable.
-- Data Minimisation: Verifying that only the data necessary for the stated purpose is collected and retained.
-- Purpose Limitation: Ensuring data collected for one purpose is not silently reused for another without re-establishing lawful basis.
+- Data Minimisation and Purpose Limitation: Verifying that only data necessary for the stated purpose is collected and retained, and that data collected for one purpose is not silently reused for another without re-establishing lawful basis.
 - Retention and Deletion: Verifying that personal data has defined retention periods and that deletion, including right-to-be-forgotten requests, is implemented end-to-end across stores and backups.
 - Data Subject Rights: Verifying that mechanisms exist to satisfy access, rectification, portability, restriction, and objection requests across all stores holding personal data, with response paths that are testable, auditable, and complete.
 - Anonymisation and Pseudonymisation: Assessing whether identity protection techniques applied to personal data match the asserted classification, distinguishing irreversible anonymisation from pseudonymisation that retains a re-identification path, and verifying that re-identification risk is bounded under realistic linkage.
@@ -173,11 +171,9 @@ Scope is grouped into four clusters. Failure handling covers the code path, tele
 
 Failure handling:
 
-- Exception Strategy: Ensuring that errors are caught at the appropriate level and not swallowed without logging.
-- Error Propagation: Verifying that error context is preserved as it moves through the system to aid root cause analysis.
+- Error Handling and Propagation: Ensuring errors are caught at the appropriate level and not swallowed without logging; that context is preserved as errors move through the system; and that unexpected inputs and unhandled failures cannot crash the process without a controlled path.
 - Sensitive Data in Errors: Ensuring error messages, stack traces, and failure responses do not expose secrets, internal structure, or PII to clients.
 - Graceful Degradation: Assessing how the system behaves when a dependency or non-critical component fails.
-- Edge Case Coverage: Identifying unhappy paths and unexpected inputs that could cause the system to crash.
 - Retry and Fallbacks: Evaluating call-site retry behaviour, including backoff strategy, jitter, retry budgets, and the safety of repeated invocation.
 - Timeout Strategy: Verifying that call sites define appropriate timeout values and that those values are propagated correctly across service boundaries.
 - Backpressure Handling: Assessing how call sites signal upstream producers to slow down when downstream capacity is exceeded.
@@ -187,11 +183,9 @@ Failure handling:
 
 Telemetry:
 
-- Logging Quality: Ensuring logs provide rich context, correct severity levels, structured format for parsing, and a strong signal-to-noise ratio to facilitate incident response.
-- System Metrics: Verifying that critical performance and health indicators are instrumented for monitoring.
-- Product Analytics: Confirming that user interaction events are captured accurately to inform business decisions.
+- Logging Quality: Ensuring logs provide rich context, correct severity levels, structured machine-parseable format, and a strong signal-to-noise ratio for incident response.
+- System Metrics: Verifying that critical performance and health indicators are instrumented in a structured, machine-parseable form for monitoring.
 - Distributed Tracing: Assessing the propagation of trace identifiers to allow for visualisation of requests across services.
-- Structured Output: Verifying that telemetry data is emitted in a format that is easily parsed by analysis tools.
 - Health Checks: Ensuring the system exposes accurate readiness and liveness signals for orchestration.
 - Alerting Strategy: Evaluating alert threshold configuration, noise-to-signal ratio, and escalation paths to ensure actionable notifications.
 - SLO and SLI Tracking: Verifying that reliability targets are defined, measured, and surfaced to support error budget decisions.
@@ -213,6 +207,7 @@ Environment:
 - Network Policy and Segmentation: Reviewing network rules to ensure services are isolated appropriately and follow least-privilege access.
 - Cost Attribution and Right-Sizing: Assessing whether provisioned resources are appropriately sized for their workload and tagged for cost tracking.
 - Environment Reproducibility: Verifying that environments can be reliably recreated from their definitions without manual intervention.
+- Deployment and Rollback Safety: Ensuring that deployment processes support safe rollback and that environment parity is maintained across stages.
 - Secret and Configuration Injection: Ensuring that runtime secrets and configuration are delivered through secure, auditable channels rather than embedded in IaC definitions, baked into images, or stored in plaintext environment files.
 
 ## Can We Live With It
@@ -236,7 +231,6 @@ Scope:
 - Event-Driven Architecture: Assessing message ordering guarantees, schema evolution strategies, and dead letter handling in asynchronous systems.
 - Data Partitioning: Reviewing sharding strategies and partition key selection to avoid hot spots and ensure balanced distribution.
 - Database Integrity: Verifying that schema changes maintain data consistency and handle migrations safely.
-- Deployment and Rollback Safety: Ensuring that deployment processes support safe rollback and that environment parity is maintained across stages.
 - Scalability and Extensibility: Assessing if the design accommodates growth in data volume or future requirements without requiring a rewrite.
 - Tech Stack Coherence: Identifying library sprawl or conflicting tool choices that complicate the strategic technical direction.
 
@@ -250,13 +244,10 @@ Scope:
 - Cognitive Complexity: Identifying logic that is too dense or requires excessive mental effort to parse.
 - Expressiveness: Assessing whether the code uses language features that clearly communicate the developer's intent.
 - Comment Utility: Ensuring comments are used to explain non-obvious decisions rather than restating the code.
-- Pattern Consistency: Verifying that the reviewed subject follows established idioms within the surrounding code to reduce the learning curve.
 - Code Flow: Assessing the narrative of the code to ensure the most important logic is prominent.
-- Conceptual Integrity: Verifying the subject feels written by one mind with consistent patterns rather than a patchwork of conflicting styles.
+- Consistency and Conceptual Integrity: Verifying the subject follows established local idioms and reads as one coherent design rather than a patchwork of conflicting styles.
 - Cognitive Profile: Assessing if the overall solution complexity is proportionate to the problem domain being solved.
-- Functional Duplication: Identifying similar logic performed in multiple places that should be centralised.
-- Pattern Redundancy: Recognising repeated structural patterns that suggest a missing abstraction.
-- Boilerplate Reduction: Identifying repetitive code that could be simplified through better design.
+- Duplication and Redundancy: Identifying repeated logic, structural patterns, and boilerplate that should be centralised or simplified — without forcing premature generalisation.
 - Codebase Atrophy: Detecting signs of large-scale rot, such as abandoned modules, ghost directories, or obsolete features.
 - Dead Code and Unused Surface: Identifying unreachable branches, unused exports, commented-out blocks, and stale feature flags that have outlived their purpose.
 - External Accuracy: Ensuring that the README, public API docs, and help guides reflect the actual state of the code.
@@ -274,7 +265,7 @@ Scope:
 - Maintenance and Health: Assessing the activity level, security history, and community support of external libraries.
 - Dependency Vulnerabilities: Identifying third-party packages with known CVEs or unpatched security issues present in the reviewed subject.
 - Licence Compatibility: Verifying that each dependency's licence is compatible with the subject's own licence and distribution model.
-- Supply Chain Risk: Assessing the trustworthiness of the dependency chain, including transitive dependencies, ownership changes, typosquatting indicators, and the integrity of the publishing pipeline.
+- Supply Chain Risk: Assessing the trustworthiness of the dependency chain, including transitive dependencies, ownership changes, and typosquatting indicators.
 - Asset Impact: Evaluating the effect of the dependency on bundle sizes, startup times, or deployment complexity.
 - First-Party Licensing and Attribution: Verifying that the subject declares its own licence correctly and that copied or vendored code carries the attribution its licence requires.
 - Project Hygiene: Checking for the presence and consistency of top-level configuration, build tooling, and environment setup.
