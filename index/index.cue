@@ -318,7 +318,7 @@ contexts: [string]: schemas.#IndexEntry
 contexts: {
 	"cwd/agents-md": {
 		module:      "github.com/start-cli/library/contexts/cwd/agents-md@v1"
-		version:     "v1.0.0"
+		version:     "v1.1.0"
 		description: "Repository introduction from AGENTS.md"
 		tags: ["agents", "repository", "cwd"]
 	}
