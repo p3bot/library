@@ -53,18 +53,10 @@ The two problems were solved together. Closing the gaps by appending types would
 
 ### Gaps identified and not closed
 
-These were raised, judged real, and left out of this change. They remain open.
-
-- AI and LLM integration review: prompt injection through untrusted content, tool-permission scope, validation of model output before acting on it, non-determinism in tests, token and context budget. Raised as particularly relevant given this repository ships an agent launcher whose modules are themselves prompts. Deferred as a scope decision about the framework's reach rather than an omission within it
-- Observability: metric cardinality and telemetry cost control, log retention
-- Error handling: actionability of the user-facing and operator-facing error message, as distinct from leakage of sensitive data
-- Infrastructure: capacity planning, quotas, and limits
-- Security: time-of-check to time-of-use, and secrets committed to version control history
+None remain from the consolidation gap list. Framework-level gaps below are separate.
 
 ### Framework-level gaps
 
-- No overlap or ownership policy. A comprehensive review runs many types and will emit the same finding more than once. Dependency Vulnerabilities appeared in both Security and Dependency; Privacy's Telemetry and Diagnostic Surfaces overlaps Observability; Error Handling's Sensitive Data in Errors overlaps Security's Data Protection. Only the first was resolved in this change, by relocation. No general policy was added
-- The Severity Rubric has no confidence axis. Five impact dimensions determine how bad a finding is if real, and nothing captures how sure the reviewer is, so a speculative Critical outranks a verified High. Not addressed
 - Holistic's summary line claimed coverage "across all dimensions" while its purpose and scope described repository-level structural health. Resolved by dissolving the type
 
 ## Decisions
@@ -265,3 +257,11 @@ Failure Isolation and Failure Containment were merged, as recorded above. The ma
 
 - Deployment and Rollback Safety moved from Architecture to Operability's Environment cluster (next to Environment Reproducibility and Drift Detection), matching the Failure Isolation precedent that operational concerns belong with Operability
 - Scope item purge applied after dual analysis and agreement. Net −9 (162 → 153). Merges: Exception Strategy + Error Propagation + Edge Case Coverage → Error Handling and Propagation; Functional Duplication + Pattern Redundancy + Boilerplate Reduction → Duplication and Redundancy; Conceptual Integrity + Pattern Consistency → Consistency and Conceptual Integrity; Thread Safety + Shared State Management → Thread Safety and Shared State; Data Minimisation + Purpose Limitation → Data Minimisation and Purpose Limitation. Drops: Structured Output (structure absorbed into Logging Quality and System Metrics); Product Analytics (out of Operability purpose). Wording: Supply Chain Risk trimmed to dependency-chain trust only (publishing pipeline integrity stays under Pipeline Security and Artefact Provenance). Explicitly retained after triple-check: Fail-Fast vs Fail-Safe, Cognitive Complexity, Code Flow, Component Boundaries, Dependency Flow, Performance Instrumentation
+- AI and LLM integration gap closed by distributing into existing types (no eleventh type): Security gained Prompt Injection and Untrusted Content, Tool and Agent Permission Scope, and Model Output Validation; Testing gained Non-Deterministic and Eval Behaviour; Performance gained Token and Context Budget. Third-party model data flows remain under Compliance Third-Party Data Sharing and Telemetry and Diagnostic Surfaces. Item count 153 → 158
+- Operability Telemetry gained Telemetry Volume and Retention (metric cardinality, log/trace volume, retention vs cost and compliance). Item count 158 → 159
+- Operability Failure handling gained Error Message Actionability (user- and operator-facing next steps, distinct from Sensitive Data in Errors). Item count 159 → 160
+- Operability Environment gained Capacity, Quotas, and Limits (enforced bounds and planned headroom, distinct from right-sizing and rate limiting). Item count 160 → 161
+- Security gained Time-of-Check to Time-of-Use and Secrets in Version Control History. Item count 161 → 163. Consolidation content gaps fully closed.
+- Overlap and Ownership section added after Severity Rubric: primary type by remediation question; no duplicate findings unless remediation differs; secondary types cross-reference
+- Severity Rubric gained an independent Confidence axis (Confirmed / Probable / Speculative); severity remains impact-only
+- Fresh-eyes pass polish: Severity/Confidence subsections; Review Depth (survey vs deep); secrets surface map on Secrets Management; Operability purpose and Families blurb include platform; Security five clusters; Supply Chain Dependencies / Build and release clusters; renames Telemetry Cardinality Volume and Cost, Infrastructure State Management, Excessive Data Exposure; wording fixes for races, resource pools, memory, error actionability

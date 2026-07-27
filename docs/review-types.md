@@ -16,6 +16,15 @@ A subject may be:
 
 Subject granularity affects which types yield signal, not which types apply. An Architecture review is richest over a repository or directory and degenerates over a single-line diff; a Correctness review is sharp at any granularity. Where a scope item must name the thing it examines, it refers to the reviewed subject, never to a fixed target.
 
+## Review Depth
+
+Subject binds what to look at. Types bind what to look for. Depth binds how far down each bound type's scope list to go.
+
+- Survey: One or many types at low depth. Sample for material issues; do not treat every scope item as mandatory.
+- Deep: Few types at full depth. Walk the full scope list for each bound type.
+
+The invoking task sets depth. Binding a type is not an order to empty every item on every run. Breadth across types is a depth choice, not a separate review type.
+
 ## Review Families
 
 Types are grouped into five families by the question they answer. The family is a navigation aid, not a scoping rule: a review binds types, never families.
@@ -27,7 +36,7 @@ Types are grouped into five families by the question they answer. The family is 
 | Is It Safe | Security | Identifying vulnerabilities and attack vectors |
 | | Compliance | Meeting legal, regulatory, and organisational obligations |
 | Will It Hold Up | Performance | Analysing efficiency and resource usage |
-| | Operability | Running, observing, surviving failure, and recovering in production |
+| | Operability | Running, observing, surviving failure, recovering, and platform fit in production |
 | Can We Live With It | Architecture | Evaluating system structure and design decisions |
 | | Maintainability | Assessing clarity, consistency, and cost of future change |
 | | Supply Chain | Reviewing what the subject consumes and what it publishes |
@@ -35,7 +44,11 @@ Types are grouped into five families by the question they answer. The family is 
 
 ## Severity Rubric
 
-Severity is a property of each finding, not of the review type. Score each finding against these impact dimensions:
+Every finding carries two independent properties: severity (how bad if true) and confidence (how sure it is true). Record both. Neither is a property of the review type.
+
+### Severity
+
+Score severity against these impact dimensions:
 
 - Blast Radius: How many systems, users, or records are affected.
 - Trigger Likelihood: How easily the issue can be triggered, intentionally or accidentally.
@@ -49,6 +62,31 @@ Severity levels:
 - High: Material impact on a defined scope, occurs under realistic conditions, or notable user disruption.
 - Medium: Limited blast radius or requires specific conditions to trigger. Should be addressed but not blocking.
 - Low: Cosmetic, contained, or trivially reversible. Best-effort fix.
+
+### Confidence
+
+- Confirmed: Reproduced, demonstrated with evidence, or proven by inspection of the controlling code path.
+- Probable: Strong indications from code or config; not fully reproduced.
+- Speculative: Hypothesis or pattern match without direct evidence on this subject.
+
+Do not raise severity to compensate for low confidence, or lower it to compensate for high confidence. A speculative Critical is still Critical in impact if true; it is not yet verified.
+
+## Overlap and Ownership
+
+A finding belongs to the type whose question it answers. When several types could claim it, pick the primary by remediation:
+
+- Stop an attacker or close a weakness: Security
+- Meet a legal or organisational obligation: Compliance
+- Fix production runtime, observability, or recovery: Operability
+- Fix efficiency of the implementation: Performance
+- Fix structure or dependency shape: Architecture
+- Fix clarity or cost of change: Maintainability
+- Fix the test suite or testability: Testing
+- Fix logic versus intended behaviour: Correctness
+- Fix what is consumed or published: Supply Chain
+- Fix the rendered user experience: Experience
+
+Do not file the same issue under two types unless the remediation differs. A secondary type may cross-reference the primary finding instead of duplicating it.
 
 ## Does It Work
 
@@ -68,12 +106,12 @@ Scope:
 - Numeric Precision and Overflow: Verifying that numeric types, rounding behaviour, and value ranges preserve accuracy and cannot silently overflow or lose precision.
 - Time and Clock Handling: Assessing the handling of time zones, daylight saving transitions, clock skew, and the distinction between wall-clock and monotonic time.
 - Absent Value Handling: Verifying that null, empty, zero, and undefined values are distinguished correctly and that absent data cannot cause unsafe dereferences or unchecked conversions.
-- Race Conditions: Identifying logic where the outcome depends on the non-deterministic timing of execution across multiple threads.
+- Race Conditions: Identifying logic where the outcome depends on the non-deterministic timing of concurrent execution (threads, async tasks, processes, or equivalent local actors).
 - Deadlocks and Livelocks: Ensuring that synchronisation logic does not lead to states where the system is permanently stalled.
 - Thread Safety and Shared State: Verifying that shared resources are accessed safely, that mutable shared state is minimised, and that remaining shared state is necessary.
 - Async Patterns: Evaluating the use of asynchronous primitives to ensure they are handled without blocking or unhandled failures.
 - Context and Cancellation: Verifying that operations respect cancellation signals and propagate execution context correctly.
-- Resource Pools: Assessing the sizing and management of thread and connection pools to prevent exhaustion and support expected throughput.
+- Resource Pools: Assessing the sizing, lifecycle, and management of thread and connection pools so concurrent use cannot exhaust the pool or leave resources unreleased.
 - Distributed Concurrency: Evaluating the correctness of distributed locks, leader election, and consensus mechanisms across networked nodes.
 - Event Ordering and Eventual Consistency: Assessing whether the system correctly handles out-of-order events and maintains correctness under eventual consistency models.
 
@@ -93,7 +131,8 @@ Scope:
 - Performance and Load Testing: Assessing whether critical paths are tested under realistic load to identify bottlenecks before production.
 - End-to-End Testing: Evaluating coverage of critical user journeys across service boundaries to ensure system-level correctness.
 - Chaos Testing: Assessing the use of controlled failure injection to validate system resilience under adverse conditions.
-- Security Testing: Coverage of authentication, authorisation, input validation boundaries, and known attack patterns relevant to the reviewed subject.
+- Security Testing: Assessing coverage of authentication, authorisation, input validation boundaries, and known attack patterns relevant to the reviewed subject.
+- Non-Deterministic and Eval Behaviour: Assessing how tests handle non-deterministic model or agent output, including seeds, fixtures, eval harnesses, and tolerance bands that keep signal without masking regressions.
 
 ## Is It Safe
 
@@ -101,27 +140,46 @@ Scope:
 
 Purpose: Identify vulnerabilities, security weaknesses, and potential attack vectors.
 
-Scope:
+Scope is grouped into five clusters. Identity and access covers who can act. Secrets and data covers credentials and protected information. Request and surface covers input and exposure paths. Agent and model covers LLM and tool-using systems. Integrity and audit covers check-then-act races and forensic record.
+
+Identity and access:
 
 - Authentication and Authorisation: Verifying the integrity of identity verification and the strict enforcement of access boundaries across all layers.
-- Input Validation and Sanitisation: Ensuring all untrusted data is validated and cleaned to prevent injection and manipulation attacks.
-- Secrets Management: Confirming that sensitive credentials are stored, accessed, rotated, and audited safely through externalised mechanisms.
+- Session Management: Reviewing the lifecycle and security properties of user sessions and tokens to prevent hijacking or unauthorised reuse.
+- Privilege Escalation: Analysing logic for flaws that could allow a user to perform actions beyond their intended permission level.
+- Insecure Direct Object References: Verifying that access to resources by identifier enforces authorisation checks rather than relying on obscurity.
+- Tenant Isolation: Verifying that data stores, caches, queues, background jobs, and search indices enforce tenant boundaries so no request can reach another tenant's records.
+
+Secrets and data:
+
+- Secrets Management: Confirming that sensitive credentials are stored, accessed, rotated, and audited safely through externalised mechanisms. Runtime handling lives here; full revision history is Secrets in Version Control History; delivery into the running process is Operability Secret and Configuration Injection.
+- Secrets in Version Control History: Verifying secrets are absent from the full revision history (not only the current tree), and that any past exposure has been rotated and purged or otherwise rendered unusable.
 - Data Protection and Encryption: Assessing the safety of sensitive information at rest and in transit, including the prevention of data leakage in logs.
 - Cryptography Usage: Evaluating the implementation of cryptographic primitives to ensure the use of proven, industry-standard protocols.
-- Session Management: Reviewing the lifecycle and security properties of user sessions and tokens to prevent hijacking or unauthorised reuse.
-- API Security: Identifying risks in endpoint design, including improper resource exposure or excessive data return.
+
+Request and surface:
+
+- Input Validation and Sanitisation: Ensuring all untrusted data is validated and cleaned to prevent injection and manipulation attacks.
+- Excessive Data Exposure: Verifying that API and service responses return only fields the caller needs, and that debug, internal, or sensitive attributes are not leaked through over-fetch or verbose error payloads.
 - CORS and CSRF Protection: Verifying that cross-origin policies and request forgery protections are correctly configured.
 - Rate Limiting: Assessing the system's resilience against automated abuse, brute-force attempts, and resource exhaustion.
 - Secure Headers: Confirming the presence of security-related HTTP headers that harden the client-side execution environment.
 - Path Traversal: Ensuring that file and resource pathing logic cannot be manipulated to access restricted areas.
 - Server-Side Request Forgery: Ensuring server-side requests cannot be manipulated to access internal resources or unintended external targets.
-- Insecure Direct Object References: Verifying that access to resources by identifier enforces authorisation checks rather than relying on obscurity.
-- Tenant Isolation: Verifying that data stores, caches, queues, background jobs, and search indices enforce tenant boundaries so no request can reach another tenant's records.
 - Mass Assignment: Verifying that object binding from external input does not allow modification of unintended fields or properties.
 - File Upload Security: Ensuring uploaded files are validated for content type, scanned for malicious content, and stored in isolated locations.
 - Deserialisation Safety: Verifying that the conversion of data formats into objects does not introduce execution risks.
 - Webhook and Callback Verification: Ensuring inbound callbacks from external systems are authenticated by signature and protected against replay.
-- Privilege Escalation: Analysing logic for flaws that could allow a user to perform actions beyond their intended permission level.
+
+Agent and model:
+
+- Prompt Injection and Untrusted Content: Verifying that untrusted content cannot override system instructions, exfiltrate secrets, or redirect tool use when incorporated into model prompts or agent context.
+- Tool and Agent Permission Scope: Verifying that tools, functions, and side-effecting actions available to a model or agent are least-privilege, explicitly granted, and cannot be expanded by untrusted input.
+- Model Output Validation: Ensuring model or agent output is validated, sandboxed, or human-gated before it drives side effects such as code execution, data mutation, or external requests.
+
+Integrity and audit:
+
+- Time-of-Check to Time-of-Use: Identifying races where a permission, existence, or integrity check is separated from use so an attacker can change the resource in the gap.
 - Audit Trail: Confirming that security-relevant events are captured completely and stored with tamper-resistance and retention sufficient for forensic analysis and compliance requirements.
 
 ### Compliance Review
@@ -153,19 +211,20 @@ Purpose: Analyse code efficiency and resource usage.
 Scope:
 
 - Algorithmic Complexity: Identifying logic with sub-optimal complexity that could degrade as input size grows.
-- Memory Management: Assessing allocation patterns to minimise unnecessary pressure on the garbage collector or memory limits.
+- Memory Management: Assessing allocation patterns to minimise unnecessary allocator, heap, or garbage-collector pressure and to stay within memory limits.
 - I/O Efficiency: Evaluating the frequency and size of network and disk operations to minimise latency.
 - Database Efficiency: Identifying N+1 query patterns or expensive join operations that impact system throughput.
 - Contention and Lock Pressure: Identifying synchronisation points that limit throughput under concurrent load.
 - Resource Lifecycles: Ensuring that connections, file handles, and other finite resources are closed promptly.
 - Caching Strategy: Identifying opportunities to reuse expensive computations while ensuring invalidation is sound.
 - Cold Start and Warm-up: Evaluating initialisation latency in serverless or JIT-compiled environments and strategies to mitigate it.
+- Token and Context Budget: Assessing prompt size, context window use, retrieval volume, and model-call batching so cost and latency stay within budget as input and history grow.
 - Infrastructure Impact: Assessing whether the code's runtime behaviour drives excessive compute, network, or storage consumption relative to the value delivered.
 - Performance Instrumentation: Ensuring critical paths emit metrics that allow performance regressions to be detected in production.
 
 ### Operability Review
 
-Purpose: Assess whether the subject can be run in production, observed while running, kept serving through failure, and recovered once state is lost.
+Purpose: Assess whether the subject can be run in production, observed while running, kept serving through failure, recovered once state is lost, and operated correctly on its platform.
 
 Scope is grouped into four clusters. Failure handling covers the code path, telemetry covers visibility, recovery covers durability of state, and environment covers the platform the subject runs on.
 
@@ -173,6 +232,7 @@ Failure handling:
 
 - Error Handling and Propagation: Ensuring errors are caught at the appropriate level and not swallowed without logging; that context is preserved as errors move through the system; and that unexpected inputs and unhandled failures cannot crash the process without a controlled path.
 - Sensitive Data in Errors: Ensuring error messages, stack traces, and failure responses do not expose secrets, internal structure, or PII to clients.
+- Error Message Actionability: Verifying that user-facing and operator-facing error messages state what failed and what to do next, without relying on internal knowledge and without exposing secrets, internal structure, or PII.
 - Graceful Degradation: Assessing how the system behaves when a dependency or non-critical component fails.
 - Retry and Fallbacks: Evaluating call-site retry behaviour, including backoff strategy, jitter, retry budgets, and the safety of repeated invocation.
 - Timeout Strategy: Verifying that call sites define appropriate timeout values and that those values are propagated correctly across service boundaries.
@@ -186,8 +246,9 @@ Telemetry:
 - Logging Quality: Ensuring logs provide rich context, correct severity levels, structured machine-parseable format, and a strong signal-to-noise ratio for incident response.
 - System Metrics: Verifying that critical performance and health indicators are instrumented in a structured, machine-parseable form for monitoring.
 - Distributed Tracing: Assessing the propagation of trace identifiers to allow for visualisation of requests across services.
+- Telemetry Cardinality, Volume, and Cost: Assessing metric cardinality, log and trace volume, and retention windows so observability cost and backend load stay controlled without discarding data needed for incident response and compliance.
 - Health Checks: Ensuring the system exposes accurate readiness and liveness signals for orchestration.
-- Alerting Strategy: Evaluating alert threshold configuration, noise-to-signal ratio, and escalation paths to ensure actionable notifications.
+- Alerting Strategy: Evaluating alert threshold configuration, signal-to-noise ratio, and escalation paths to ensure actionable notifications.
 - SLO and SLI Tracking: Verifying that reliability targets are defined, measured, and surfaced to support error budget decisions.
 
 Recovery:
@@ -202,10 +263,11 @@ Recovery:
 Environment:
 
 - Resource Provisioning: Verifying that infrastructure resources are defined declaratively and that provisioning logic is idempotent.
-- State Management: Assessing how infrastructure state is stored, shared, and protected from corruption or conflicts.
+- Infrastructure State Management: Assessing how infrastructure state is stored, shared, and protected from corruption or conflicts.
 - Drift Detection: Ensuring mechanisms exist to identify and reconcile differences between declared and actual infrastructure state.
 - Network Policy and Segmentation: Reviewing network rules to ensure services are isolated appropriately and follow least-privilege access.
 - Cost Attribution and Right-Sizing: Assessing whether provisioned resources are appropriately sized for their workload and tagged for cost tracking.
+- Capacity, Quotas, and Limits: Verifying that throughput, storage, concurrency, and tenant quotas are defined and enforced, and that capacity is planned with measurable headroom rather than discovered at the failure point.
 - Environment Reproducibility: Verifying that environments can be reliably recreated from their definitions without manual intervention.
 - Deployment and Rollback Safety: Ensuring that deployment processes support safe rollback and that environment parity is maintained across stages.
 - Secret and Configuration Injection: Ensuring that runtime secrets and configuration are delivered through secure, auditable channels rather than embedded in IaC definitions, baked into images, or stored in plaintext environment files.
@@ -221,7 +283,7 @@ Scope:
 - Solution Fit: High-level verification that the implementation aligns with the subject's stated purpose and architectural manifest.
 - System Design and Layering: Ensuring clear separation of concerns where each layer has a distinct responsibility and avoids leaky abstractions.
 - Component Boundaries: Verifying that interactions between modules are well-defined and do not violate the principle of least knowledge.
-- Repository Structure: Assessing if the file layout and directory organisation are intuitive and self-explanatory.
+- Repository Structure: Assessing whether the file layout and directory organisation are intuitive and self-explanatory.
 - Dependency Flow: Assessing the direction of dependencies to ensure high-level policy is protected from implementation details.
 - Modularity and Reusability: Identifying opportunities for abstraction that reduce coupling while avoiding premature generalisation.
 - API Design and Contracts: Evaluating the stability and clarity of interfaces to ensure they are difficult to misuse.
@@ -231,7 +293,7 @@ Scope:
 - Event-Driven Architecture: Assessing message ordering guarantees, schema evolution strategies, and dead letter handling in asynchronous systems.
 - Data Partitioning: Reviewing sharding strategies and partition key selection to avoid hot spots and ensure balanced distribution.
 - Database Integrity: Verifying that schema changes maintain data consistency and handle migrations safely.
-- Scalability and Extensibility: Assessing if the design accommodates growth in data volume or future requirements without requiring a rewrite.
+- Scalability and Extensibility: Assessing whether the design accommodates growth in data volume or future requirements without requiring a rewrite.
 - Tech Stack Coherence: Identifying library sprawl or conflicting tool choices that complicate the strategic technical direction.
 
 ### Maintainability Review
@@ -246,20 +308,22 @@ Scope:
 - Comment Utility: Ensuring comments are used to explain non-obvious decisions rather than restating the code.
 - Code Flow: Assessing the narrative of the code to ensure the most important logic is prominent.
 - Consistency and Conceptual Integrity: Verifying the subject follows established local idioms and reads as one coherent design rather than a patchwork of conflicting styles.
-- Cognitive Profile: Assessing if the overall solution complexity is proportionate to the problem domain being solved.
+- Cognitive Profile: Assessing whether the overall solution complexity is proportionate to the problem domain being solved.
 - Duplication and Redundancy: Identifying repeated logic, structural patterns, and boilerplate that should be centralised or simplified — without forcing premature generalisation.
 - Codebase Atrophy: Detecting signs of large-scale rot, such as abandoned modules, ghost directories, or obsolete features.
 - Dead Code and Unused Surface: Identifying unreachable branches, unused exports, commented-out blocks, and stale feature flags that have outlived their purpose.
 - External Accuracy: Ensuring that the README, public API docs, and help guides reflect the actual state of the code.
 - Developer Onboarding: Verifying that instructions for building, testing, and running the code remain clear.
 - Decision Records: Ensuring that significant design decisions and their rationale are captured in a durable form for future contributors.
-- Change Transparency: Assessing if the changelog accurately describes the impact of the changes for users.
+- Change Transparency: Assessing whether the changelog accurately describes the impact of the changes for users.
 
 ### Supply Chain Review
 
 Purpose: Review what the subject consumes and what it publishes, from third-party dependencies through build integrity to release.
 
-Scope:
+Scope is grouped into two clusters. Dependencies covers what the subject consumes. Build and release covers how it is built, attested, and published.
+
+Dependencies:
 
 - Justification: Evaluating whether a new dependency is necessary or if the problem could be solved with existing tools.
 - Maintenance and Health: Assessing the activity level, security history, and community support of external libraries.
@@ -267,6 +331,9 @@ Scope:
 - Licence Compatibility: Verifying that each dependency's licence is compatible with the subject's own licence and distribution model.
 - Supply Chain Risk: Assessing the trustworthiness of the dependency chain, including transitive dependencies, ownership changes, and typosquatting indicators.
 - Asset Impact: Evaluating the effect of the dependency on bundle sizes, startup times, or deployment complexity.
+
+Build and release:
+
 - First-Party Licensing and Attribution: Verifying that the subject declares its own licence correctly and that copied or vendored code carries the attribution its licence requires.
 - Project Hygiene: Checking for the presence and consistency of top-level configuration, build tooling, and environment setup.
 - Build Reproducibility: Assessing whether builds produce consistent artefacts from the same source without depending on ambient machine state.
