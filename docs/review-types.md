@@ -2,6 +2,8 @@
 
 A structured framework of analysis categories. Each type defines a specific set of concerns used to evaluate the integrity, security, and quality of a subject under review.
 
+This document defines three axes only: subject (what to look at), type (what to look for), and depth (how far down each bound type's scope list to go). It does not prescribe which types or depth a review must use. Invoking tasks bind subject, types, and depth; they use this document as the vocabulary and scope catalogue when authoring those instructions.
+
 ## Review Subject
 
 A review type defines what to look for. The subject defines what to look at. The two axes are independent: the invoking task binds a subject, and the type definitions below never assume one.
@@ -25,9 +27,11 @@ Subject binds what to look at. Types bind what to look for. Depth binds how far 
 
 The invoking task sets depth. Binding a type is not an order to empty every item on every run. Breadth across types is a depth choice, not a separate review type.
 
+Depth is both an instruction to the reviewer and a claim the review artefact must not contradict: a Survey must not present itself as having walked every scope item; a Deep review must not skip bound scope items without stating why they do not apply.
+
 ## Review Families
 
-Types are grouped into five families by the question they answer. The family is a navigation aid, not a scoping rule: a review binds types, never families.
+Types are grouped into five families by the question they answer. The family is a navigation aid, not a scoping rule: a review binds types, never families. Families are not bindable units, not depth settings, and not a substitute for listing types. When an orchestrator fans out one agent per family, each agent's bind still names its types explicitly.
 
 | Family | Type | Purpose |
 | --- | --- | --- |
@@ -44,11 +48,11 @@ Types are grouped into five families by the question they answer. The family is 
 
 ## Severity Rubric
 
-Every finding carries two independent properties: severity (how bad if true) and confidence (how sure it is true). Record both. Neither is a property of the review type.
+Every finding carries two independent properties: severity (how bad if true) and confidence (how sure it is true). Record both on every finding in the review artefact. Neither is a property of the review type. A finding without both is incomplete regardless of how severe or how certain the prose implies it is.
 
 ### Severity
 
-Score severity against these impact dimensions:
+Score severity against these impact dimensions. Rate only dimensions that apply; omit the rest. Omitted dimensions do not pull the finding down.
 
 - Blast Radius: How many systems, users, or records are affected.
 - Trigger Likelihood: How easily the issue can be triggered, intentionally or accidentally.
@@ -56,12 +60,14 @@ Score severity against these impact dimensions:
 - Data Sensitivity: What classification of data is involved (public, internal, confidential, regulated).
 - User Impact: What the affected user experiences.
 
-Severity levels:
+Rate each applicable dimension at one of four levels:
 
-- Critical: Broad blast radius, easy to trigger, hard to reverse, or affects regulated/sensitive data. Requires immediate attention.
-- High: Material impact on a defined scope, occurs under realistic conditions, or notable user disruption.
-- Medium: Limited blast radius or requires specific conditions to trigger. Should be addressed but not blocking.
-- Low: Cosmetic, contained, or trivially reversible. Best-effort fix.
+- Critical: Extreme on that dimension — for example very broad blast radius, trivial to trigger, effectively irreversible, regulated or highly sensitive data, or severe user harm. Requires immediate attention if this is the finding level.
+- High: Material on that dimension — defined scope meaningfully affected, realistic trigger conditions, costly recovery, confidential data, or notable user disruption.
+- Medium: Limited on that dimension — narrow blast radius, specific conditions to trigger, recoverable with effort, internal data, or moderate user friction. Should be addressed but not blocking if this is the finding level.
+- Low: Minor on that dimension — cosmetic or contained impact, unlikely trigger, trivially reversible, public or non-sensitive data, or negligible user effect. Best-effort fix if this is the finding level.
+
+Finding severity is the worst level among the dimensions rated. One Critical-grade dimension makes the finding Critical; weaker dimensions are not averaged in.
 
 ### Confidence
 
@@ -84,9 +90,20 @@ A finding belongs to the type whose question it answers. When several types coul
 - Fix the test suite or testability: Testing
 - Fix logic versus intended behaviour: Correctness
 - Fix what is consumed or published: Supply Chain
-- Fix the rendered user experience: Experience
+- Fix the interface the end user or end agent consumes: Experience
 
 Do not file the same issue under two types unless the remediation differs. A secondary type may cross-reference the primary finding instead of duplicating it.
+
+Secrets and sensitive data often touch several types. Primary by remediation:
+
+- Store, access, rotate, or audit credentials; purge secrets from revision history: Security
+- Change how secrets or configuration are delivered into the running process: Operability
+- Lawful basis, retention, or personal data in logs, metrics, traces, or analytics: Compliance
+- Credentials or secrets appearing in telemetry or error surfaces without a personal-data question: Security (Data Protection and Encryption, or Sensitive Data in Errors under Operability when the fix is error-path redaction only)
+
+When both rotate-and-purge and fix-delivery are required, file two findings with distinct remediations rather than one dual-owned item.
+
+Known vulnerable dependencies are Supply Chain. A reachable exploit path, missing access boundary, or first-party weakness that uses that dependency is Security, and may cross-reference the Supply Chain finding. File both only when remediations differ (for example upgrade the package versus close the exposure).
 
 ## Does It Work
 
@@ -106,6 +123,9 @@ Scope:
 - Numeric Precision and Overflow: Verifying that numeric types, rounding behaviour, and value ranges preserve accuracy and cannot silently overflow or lose precision.
 - Time and Clock Handling: Assessing the handling of time zones, daylight saving transitions, clock skew, and the distinction between wall-clock and monotonic time.
 - Absent Value Handling: Verifying that null, empty, zero, and undefined values are distinguished correctly and that absent data cannot cause unsafe dereferences or unchecked conversions.
+
+Concurrent logic that yields a wrong or permanently stuck outcome is Correctness. Correct synchronisation that only limits throughput under load is Performance (Contention and Lock Pressure).
+
 - Race Conditions: Identifying logic where the outcome depends on the non-deterministic timing of concurrent execution (threads, async tasks, processes, or equivalent local actors).
 - Deadlocks and Livelocks: Ensuring that synchronisation logic does not lead to states where the system is permanently stalled.
 - Thread Safety and Shared State: Verifying that shared resources are accessed safely, that mutable shared state is minimised, and that remaining shared state is necessary.
@@ -119,6 +139,8 @@ Scope:
 
 Purpose: Evaluate test quality, coverage, and the testability of production code.
 
+Findings about missing or weak tests, fixtures, isolation, or eval harnesses are Testing. Findings about production behaviour, structure, or posture belong to the product type (Correctness, Security, Performance, Operability, and so on) even when a test would have caught them.
+
 Scope:
 
 - Coverage Depth: Assessing whether tests verify the logic under review across a representative range of scenarios.
@@ -128,10 +150,10 @@ Scope:
 - Flakiness Prevention: Identifying tests that may fail intermittently due to timing or environmental factors.
 - Mocking and Stubbing: Evaluating the use of doubles to ensure they are realistic and do not mask actual integration issues.
 - Contract Testing: Verifying that service interfaces match consumer expectations and do not break downstream integrations.
-- Performance and Load Testing: Assessing whether critical paths are tested under realistic load to identify bottlenecks before production.
+- Performance and Load Test Coverage: Assessing whether critical paths are tested under realistic load to identify bottlenecks before production.
 - End-to-End Testing: Evaluating coverage of critical user journeys across service boundaries to ensure system-level correctness.
-- Chaos Testing: Assessing the use of controlled failure injection to validate system resilience under adverse conditions.
-- Security Testing: Assessing coverage of authentication, authorisation, input validation boundaries, and known attack patterns relevant to the reviewed subject.
+- Chaos Test Coverage: Assessing the use of controlled failure injection to validate system resilience under adverse conditions.
+- Security Test Coverage: Assessing coverage of authentication, authorisation, input validation boundaries, and known attack patterns relevant to the reviewed subject.
 - Non-Deterministic and Eval Behaviour: Assessing how tests handle non-deterministic model or agent output, including seeds, fixtures, eval harnesses, and tolerance bands that keep signal without masking regressions.
 
 ## Is It Safe
@@ -325,6 +347,8 @@ Scope is grouped into two clusters. Dependencies covers what the subject consume
 
 Dependencies:
 
+Presence of a known vulnerable third-party package is Supply Chain. A reachable exploit path, missing access boundary, or first-party weakness that uses that package is Security (cross-reference rather than duplicate when the only fix is upgrading or replacing the dependency).
+
 - Justification: Evaluating whether a new dependency is necessary or if the problem could be solved with existing tools.
 - Maintenance and Health: Assessing the activity level, security history, and community support of external libraries.
 - Dependency Vulnerabilities: Identifying third-party packages with known CVEs or unpatched security issues present in the reviewed subject.
@@ -345,18 +369,32 @@ Build and release:
 
 ### Experience Review
 
-Purpose: Assess whether a rendered user interface matches its design intent and serves users correctly across viewports, input methods, states, and abilities.
+Purpose: Assess whether the interface the end user or end agent consumes matches its design intent and serves them correctly across channels, states, input methods, and abilities.
 
-Scope:
+Experience covers graphical UI, CLI and TUI, and conversational or agent-facing surfaces. Operator-facing runtime errors and recovery paths remain Operability (Error Message Actionability). Durable contributor documentation (README, API docs, onboarding) remains Maintainability (External Accuracy, Developer Onboarding).
+
+Scope is grouped into three clusters. Graphical UI covers rendered visual interfaces. Command and conversational covers CLI, TUI, and agent-facing prose. Shared covers concerns that apply across channels.
+
+Graphical UI:
 
 - Visual Fidelity: Assessing whether the rendered output aligns with the design specifications across various viewports.
 - Responsive Behaviour: Verifying that the interface adapts correctly to different screen sizes and platform constraints.
 - Interaction States: Reviewing the behaviour and visual feedback of elements during user engagement.
-- State Coverage: Verifying that loading, empty, partial, and error states are deliberately designed and reachable rather than left to default behaviour.
-- Accessibility (WCAG/ARIA): Ensuring the implementation is usable by individuals with diverse needs and complies with established standards.
 - Keyboard and Focus Management: Ensuring the interface is fully operable without a pointer and that focus order and visibility follow the user's task.
 - Form and Validation Feedback: Assessing whether input requirements, validation timing, and error recovery guide the user toward a successful outcome.
-- Content and Microcopy: Verifying that labels, messages, and instructions are accurate, consistent in voice, and comprehensible without internal knowledge.
-- Internationalisation (i18n): Verifying that the code is prepared for localisation, handling diverse languages and cultural formats.
 - Theming and Visual Preferences: Ensuring the interface honours user preferences such as colour scheme, contrast, and reduced motion.
 - Perceived Performance: Assessing responsiveness as experienced by the user, including layout stability and feedback during long-running operations.
+
+Command and conversational:
+
+- Command and Flag Clarity: Verifying that command names, flags, subcommands, and positional arguments are discoverable, consistent, and hard to misuse.
+- Help and Usage Paths: Assessing whether help text, usage examples, and progressive disclosure guide the user to a successful outcome without internal knowledge.
+- Agent Document Fidelity: Assessing whether agent-facing prompts and role documents are clear per token, instruction-faithful, and free of conflicting or unreachable guidance.
+- Conversational Turn Quality: Assessing whether multi-turn agent or chat interfaces preserve task context, surface uncertainty, and recover from misunderstanding without trapping the user.
+
+Shared:
+
+- State Coverage: Verifying that loading, empty, partial, and error states are deliberately designed and reachable rather than left to default behaviour.
+- Accessibility: Ensuring the implementation is usable by individuals with diverse needs, including WCAG/ARIA for graphical UI and equivalent reach for CLI and conversational channels where applicable.
+- Content and Microcopy: Verifying that labels, messages, and instructions are accurate, consistent in voice, and comprehensible without internal knowledge.
+- Internationalisation (i18n): Verifying that the interface is prepared for localisation, handling diverse languages and cultural formats.
