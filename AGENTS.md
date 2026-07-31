@@ -165,6 +165,16 @@ Use Scoped Commits (https://scopedcommits.com) for every commit, not only publis
 
 The publish workflow's module-plus-index commit is the canonical multi-scope case (for example `start/module/author, index: ...`).
 
+## Interactive Walk Template
+
+Shared per-item finding template (history: docs/item-by-item-template.md):
+
+- tasks/project/review/task.md
+- tasks/design/review/task.md
+- tasks/review/pre-commit/task.md
+- tasks/review/multi-agent/orchestrator/task.md
+- ~/.agents/skills/one-by-one/SKILL.md
+
 ## References
 
 - Naming standards: contexts/start/library/naming/context.md

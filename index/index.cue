@@ -546,13 +546,13 @@ tasks: {
 	}
 	"review/pre-commit": {
 		module:      "github.com/start-cli/library/tasks/review/pre-commit@v1"
-		version:     "v1.8.0"
+		version:     "v1.9.0"
 		description: "Interactive pre-commit review that finds and fixes issues in git changes"
 		tags: ["review", "pre-commit", "fix", "code-changes", "code-quality"]
 	}
 	"review/multi-agent/orchestrator": {
 		module:      "github.com/start-cli/library/tasks/review/multi-agent/orchestrator@v1"
-		version:     "v1.5.0"
+		version:     "v1.6.0"
 		description: "Orchestrate parallel review agents, consolidate findings, and walk through fixing them"
 		tags: ["review", "orchestration", "multi-agent", "parallel", "fix"]
 	}
@@ -624,7 +624,7 @@ tasks: {
 	}
 	"project/review": {
 		module:      "github.com/start-cli/library/tasks/project/review@v1"
-		version:     "v1.1.0"
+		version:     "v1.2.0"
 		description: "Review the current project, surface open issues, and optionally resolve them"
 		tags: ["project", "review", "preparation", "analysis", "active", "current", "design", "issues"]
 	}
@@ -642,7 +642,7 @@ tasks: {
 	}
 	"design/review": {
 		module:      "github.com/start-cli/library/tasks/design/review@v1"
-		version:     "v1.1.0"
+		version:     "v1.2.0"
 		description: "Review and harden a design document before it becomes project documents"
 		tags: ["design", "review", "feature", "analysis", "architecture", "critique"]
 	}

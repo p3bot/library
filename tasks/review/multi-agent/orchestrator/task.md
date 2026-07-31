@@ -122,7 +122,7 @@ Let `T` be the count of remaining actionable findings — the critical, high, me
 Continue (`C`) walks the findings one at a time in severity order. For each finding:
 
 1. Verify the finding first. It came from another agent's report, not your own analysis — re-read the actual code at the location, and the source report if useful, to confirm the issue is real and current. If it no longer holds, say so and withdraw it before presenting.
-2. Build the Options and Recommendation from the verified issue and the code you just read, then present using the Per-item Template (below) with `n` as the position in the walk and `T` as the total.
+2. Build the Options and Recommendation from the verified issue and the code you just read. Lock the Recommendation: root fix vs local patch; reject the cheapest alternative only on maintenance or correctness, not effort. Rewrite until a reader who never saw the subagent report can decide after one read — or withdraw. Then present using the Per-item Template (below) with `n` as the position in the walk and `T` as the total.
 3. Display the Per-item Prompt (see Commands) and pause for an explicit decision. Never assume blanket approval from an earlier response. Accepting one finding does not authorise the next. If a response is ambiguous, ask which finding it applies to.
 
 Per-item command semantics. Outcomes are tracked in-session and surface in the Step 10 outcome table.
@@ -136,16 +136,16 @@ Per-item command semantics. Outcomes are tracked in-session and surface in the S
 All (`A`) applies recommendations automatically. Work through the `T` findings in severity order without displaying the Per-item Prompt. For each finding:
 
 1. Announce `(n of T) <ID> <short title>`.
-2. Verify the finding against the code as in the walk. If it no longer holds, say so and skip it, tracking as `Skipped`.
+2. Verify the finding against the code as in the walk. If it no longer holds, say so and skip it, tracking as `Skipped`. Before applying, run the same Recommendation lock as step 2 of the walk.
 3. Apply the recommended resolution — identical to `R` — and briefly confirm what was done. Track as `Fixed`.
 
 The edit is the checkpoint. If you deny an edit, stop and discuss that finding; once it is resolved, resume the run for the remaining findings or switch to the one-at-a-time walk.
 
-Save (`S`) writes the outstanding findings to a project file and stops. Outstanding findings are those not yet fixed or skipped. Verify each outstanding finding and build its Issue, Options, and Recommendation, then write them all into a single multi-finding project file (see Project File Format below). Findings already fixed, skipped, or spun out are recorded in an Already Handled block for context. Confirm the filename written.
+Save (`S`) writes the outstanding findings to a project file and stops. Outstanding findings are those not yet fixed or skipped. Verify each outstanding finding and build its Issue, Options, and Recommendation (with the same Recommendation lock as the walk), then write them all into a single multi-finding project file (see Project File Format below). Findings already fixed, skipped, or spun out are recorded in an Already Handled block for context. Confirm the filename written.
 
 Remediation guidance:
 
-- Bias recommendations toward the principled long-term solution that reduces maintenance and improves quality. Do not default to the smallest-diff resolution
+- Bias recommendations toward the principled long-term solution that reduces maintenance and improves quality. Do not default to the smallest-diff resolution. Prefer the option you would pick if writing the fix were free
 - Apply minimal, targeted edits to integrate the resolution. Refactor surrounding code only when required to make the resolution land cleanly
 - If a resolution would be too large or risky to apply inline, recommend `P` to spin it out rather than attempting it inline
 - Keep each fix focused on the issue being addressed and related code
@@ -210,6 +210,7 @@ Writing rules:
 - Never fabricate an observable. If the code path cannot be run as written, do not dress a structure diff up as command output — show the scenario instead
 - Length follows comprehension. Cut padding, never cut the setup that makes the rest land
 - Do not argue the finding is real or recap intent. The instance and the explanation carry it
+- Separate each option with a blank line. Never collapse options onto one line
 
 ```
 ### Issue n of T — <ID>: <short title>
@@ -233,6 +234,7 @@ the instance above. As long as it needs to be to land, and no longer.>
 **Options**
 
 A. <option — what it does, its tradeoff>
+
 B. <option>
 
 **Recommendation (B)**
@@ -267,6 +269,7 @@ Set Secure unconditionally, or only outside local development?
 
 A. Always set Secure, and serve local development over HTTPS. One code path,
    no environment-dependent security posture.
+
 B. Set Secure unless a development flag is set. Keeps plain-HTTP local setup
    working, at the cost of a weaker configuration that can ship by accident.
 
@@ -278,7 +281,7 @@ reaches production, and local HTTPS is a one-time setup cost.
 
 Display the Per-item Prompt (see Commands) immediately after presenting the finding.
 
-Include an Options block only when alternatives clarify the choice — otherwise omit it and lead with a single Recommendation that `R` accepts. When present, label options from `A`. The Recommendation names the option letter or letters it favours, and may combine options (for example `Recommendation (B + C)`).
+Include an Options block only when alternatives clarify the choice — otherwise omit it and lead with a single Recommendation that `R` accepts. When present, label options from `A` and separate each with a blank line. The Recommendation names the option letter or letters it favours, and may combine options (for example `Recommendation (B + C)`).
 
 ## Summary Format
 
@@ -397,7 +400,9 @@ Issue
 <verified description and why it matters>
 
 Options
+
 A. <option>
+
 B. <option>
 
 Recommendation (B): <which option, brief why>

@@ -35,7 +35,7 @@ Let `T` be the count of remaining actionable findings — the critical, high, me
 
 Continue (`C`) walks the findings one at a time in severity order. For each finding:
 
-1. Re-read the target code and related code carefully, then critically re-evaluate the recommendation. The original finding may have been wrong, or rendered obsolete by an earlier fix. If the recommendation no longer holds, say so and revise or withdraw it before presenting.
+1. Re-read the target code and related code carefully, then critically re-evaluate the recommendation. The original finding may have been wrong, or rendered obsolete by an earlier fix. If the recommendation no longer holds, say so and revise or withdraw it before presenting. Before locking it: is it the root fix in the code, or a local patch on a symptom? Name the cheapest alternative and reject it only if it is worse on maintenance or correctness, not effort (agent-time is cheap). If the finding still needs the code in the reader's head to make sense, rewrite the instance and Issue until it does not — or withdraw it.
 2. Present the finding using the Per-item Template (below) with `n` as the position in the walk and `T` as the total. `T` excludes safe items and info items.
 3. Display the Per-item Prompt (see Commands) and pause for an explicit decision. Never assume blanket approval from an earlier response. Accepting one finding does not authorise the next. If a response is ambiguous, ask which finding it applies to.
 
@@ -50,14 +50,14 @@ Per-item command semantics. Letters are case-insensitive. Outcomes are tracked i
 All (`A`) applies recommendations automatically. Work through the `T` findings in severity order without displaying the Per-item Prompt. For each finding:
 
 1. Announce `(n of T) <ID> <short title>`.
-2. Re-read the target code and related code and critically re-evaluate the recommendation, as in the walk. If it no longer holds, say so and skip it, tracking as `Skipped`.
+2. Re-read the target code and related code and critically re-evaluate the recommendation, as in the walk. If it no longer holds, say so and skip it, tracking as `Skipped`. Before applying, run the same Recommendation lock as the walk.
 3. Apply the recommended resolution — identical to `R` — and briefly confirm what was done. Track as `Fixed`.
 
 The edit is the checkpoint. If you deny an edit, stop and discuss that finding; once it is resolved, resume the run for the remaining findings or switch to the one-at-a-time walk.
 
 Remediation guidance:
 
-- Bias recommendations toward the principled long-term solution that reduces maintenance and improves quality. Do not default to the smallest-diff resolution
+- Bias recommendations toward the principled long-term solution that reduces maintenance and improves quality. Do not default to the smallest-diff resolution. Prefer the option you would pick if writing the fix were free
 - Apply minimal, targeted edits to integrate the resolution. Refactor surrounding code only when required to make the resolution land cleanly
 - If a resolution would be too large or risky to apply inline, recommend `P` to spin it out rather than attempting it inline
 - Keep each fix focused on the issue being addressed and related code
@@ -250,6 +250,7 @@ Writing rules:
 - Never fabricate an observable. If the code path cannot be run as written, do not dress a structure diff up as command output — show the scenario instead
 - Length follows comprehension. Cut padding, never cut the setup that makes the rest land
 - Do not argue the finding is real or recap intent. The instance and the explanation carry it
+- Separate each option with a blank line. Never collapse options onto one line
 
 ```
 ### Issue n of T — <ID>: <short title>
@@ -273,6 +274,7 @@ the instance above. As long as it needs to be to land, and no longer.>
 **Options**
 
 A. <option — what it does, its tradeoff>
+
 B. <option>
 
 **Recommendation (B)**
@@ -306,6 +308,7 @@ Rebuild from nanoseconds, or carry a float through?
 
 A. Build the duration from nanoseconds, then convert — exact, and mirrors how
    the standard library parses the same strings.
+
 B. Keep seconds and add a separate milliseconds field — wider change, more
    surface for the same result.
 
@@ -316,7 +319,7 @@ A nanosecond base matches `time.ParseDuration` and drops no precision.
 
 Display the Per-item Prompt (see Commands) immediately after presenting the finding.
 
-Include an Options block only when alternatives clarify the choice — otherwise omit it and lead with a single Recommendation that `R` accepts. When present, label options from `A`. The Recommendation names the option letter or letters it favours, and may combine options (for example `Recommendation (B + C)`).
+Include an Options block only when alternatives clarify the choice — otherwise omit it and lead with a single Recommendation that `R` accepts. When present, label options from `A` and separate each with a blank line. The Recommendation names the option letter or letters it favours, and may combine options (for example `Recommendation (B + C)`).
 
 ## Report Format
 

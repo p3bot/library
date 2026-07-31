@@ -53,8 +53,9 @@ Let `T` be the count of remaining actionable findings (everything not auto-appli
 Continue (`C`) walks the findings one at a time. For each finding:
 
 1. Re-read the relevant context — the project document and any referenced code — and critically re-evaluate the finding. The original may have been wrong, or rendered obsolete by an earlier fix. If the finding no longer holds, say so and revise or withdraw it before presenting.
-2. Present the finding using the Per-item Template (below) with `n` as the position in the walk and `T` as the total. `T` excludes safe items applied above.
-3. Display the Per-item Prompt (see Commands) and pause for an explicit decision. Never assume blanket approval from an earlier response. Accepting one finding does not authorise the next. If a response is ambiguous, ask which finding it applies to.
+2. Before presenting, lock the Recommendation: is it the root fix in the project content, or a local patch that leaves the underlying gap? Name the cheapest alternative and reject it only if it is worse on maintenance or correctness, not effort. If the finding still needs the document or code in the reader's head to make sense, rewrite the instance and Issue until it does not — or withdraw it.
+3. Present the finding using the Per-item Template (below) with `n` as the position in the walk and `T` as the total. `T` excludes safe items applied above.
+4. Display the Per-item Prompt (see Commands) and pause for an explicit decision. Never assume blanket approval from an earlier response. Accepting one finding does not authorise the next. If a response is ambiguous, ask which finding it applies to.
 
 Per-item command semantics. Letters are case-insensitive. Outcomes are tracked in-session — they are not written to disk at the moment of decision. They surface in the Phase 4 summary table and in the Remediation Summary if the review is saved.
 
@@ -67,14 +68,14 @@ Per-item command semantics. Letters are case-insensitive. Outcomes are tracked i
 All (`A`) applies recommendations automatically. Work through the `T` findings in order without displaying the Per-item Prompt. For each finding:
 
 1. Announce `(n of T) <short title>`.
-2. Re-read the relevant context and critically re-evaluate the finding, as in the walk. If it no longer holds, say so and skip it, tracking as `Skipped`.
+2. Re-read the relevant context and critically re-evaluate the finding, as in the walk. If it no longer holds, say so and skip it, tracking as `Skipped`. Before applying, run the same Recommendation lock as step 2 of the walk.
 3. Apply the recommended resolution — identical to `R` — and briefly confirm what was done. Track as `Fixed`.
 
 The edit is the checkpoint. If you deny an edit, stop and discuss that finding; once it is resolved, resume the run for the remaining findings or switch to the one-at-a-time walk. For `decision` findings, the recommended alternative is applied — deny the edit to discuss if a different choice is wanted.
 
 Remediation guidance:
 
-- Bias recommendations toward the principled long-term solution that reduces maintenance and improves quality. Do not default to the smallest-diff resolution.
+- Bias recommendations toward the principled long-term solution in the project document — correct the design or requirement at the root, not a downstream workaround the implementer would paper over. Do not default to the smallest-diff edit. Prefer the option you would pick if rewriting the section were free
 - Apply minimal, targeted edits to integrate the resolution. Refactor surrounding text only when required to make the resolution land cleanly.
 - If a resolution would be too large or risky to apply inline, recommend `P` to spin it out rather than attempting it inline.
 
@@ -134,6 +135,7 @@ Writing rules:
 - Never fabricate an observable. If the thing under review does not run yet, do not dress a structure diff up as command output — show the scenario instead
 - Length follows comprehension. Cut padding, never cut the setup that makes the rest land
 - Do not argue the finding is real or recap the project's intent. The instance and the explanation carry it
+- Separate each option with a blank line. Never collapse options onto one line
 
 ```
 ### Finding n of T: <short title>
@@ -157,6 +159,7 @@ the instance above. As long as it needs to be to land, and no longer.>
 **Options**
 
 A. <option — what it does, its tradeoff>
+
 B. <option>
 
 **Recommendation (B)**
@@ -202,6 +205,7 @@ How does the returned agent expose the provider list the CLI prints?
 A. Add a resolved-providers field alongside the built-in list — always
    populated, holding the built-in providers or the ones passed in. Keeps both
    the declared and the resolved sets visible.
+
 B. Replace the built-in list with the resolved one. Smaller surface, but the
    declared-versus-resolved distinction is lost.
 
@@ -213,7 +217,7 @@ and keeps the built-in list as the capability fact it is.
 
 Display the Per-item Prompt (see Commands) immediately after presenting the finding.
 
-For decisions, the Options block lists the alternatives the owner is choosing between, labelled from `A`. For other categories, include an Options block only when alternatives clarify the choice — otherwise omit it and lead with a single Recommendation that `R` accepts. The Recommendation names the option letter or letters it favours, and may combine options (for example `Recommendation (B + C)`).
+For decisions, the Options block lists the alternatives the owner is choosing between, labelled from `A`. For other categories, include an Options block only when alternatives clarify the choice — otherwise omit it and lead with a single Recommendation that `R` accepts. Separate each option with a blank line. The Recommendation names the option letter or letters it favours, and may combine options (for example `Recommendation (B + C)`).
 
 ## Report Format
 

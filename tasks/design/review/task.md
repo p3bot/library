@@ -45,8 +45,9 @@ Let `T` be the count of actionable findings. The top-level choice from Phase 1 s
 Continue (`C`) walks the findings one at a time. For each finding:
 
 1. Re-read the relevant context — the design document and any referenced code — and critically re-evaluate the finding. The original may have been wrong, or rendered obsolete by an earlier fix. If the finding no longer holds, say so and revise or withdraw it before presenting.
-2. Present the finding using the Per-item Template (below) with `n` as the position in the walk and `T` as the total.
-3. Display the Per-item Prompt (see Commands) and pause for an explicit decision. Never assume blanket approval from an earlier response. Accepting one finding does not authorise the next. If a response is ambiguous, ask which finding it applies to.
+2. Before presenting, lock the Recommendation: does it fix the design-level flaw (approach, assumption, tradeoff, risk), or only a surface wording? Name the cheapest alternative and reject it only if it is worse on soundness or long-term cost, not effort. If the finding still needs the design or code in the reader's head, rewrite until it does not — or withdraw it.
+3. Present the finding using the Per-item Template (below) with `n` as the position in the walk and `T` as the total.
+4. Display the Per-item Prompt (see Commands) and pause for an explicit decision. Never assume blanket approval from an earlier response. Accepting one finding does not authorise the next. If a response is ambiguous, ask which finding it applies to.
 
 Per-item command semantics. Letters are case-insensitive. Outcomes are tracked in-session — they are not written to disk at the moment of decision. They surface in the Phase 4 summary table and in the Remediation Summary if the review is saved.
 
@@ -59,14 +60,14 @@ Per-item command semantics. Letters are case-insensitive. Outcomes are tracked i
 All (`A`) applies recommendations automatically. Work through the `T` findings in order without displaying the Per-item Prompt. For each finding:
 
 1. Announce `(n of T) <short title>`.
-2. Re-read the relevant context and critically re-evaluate the finding, as in the walk. If it no longer holds, say so and skip it, tracking as `Skipped`.
+2. Re-read the relevant context and critically re-evaluate the finding, as in the walk. If it no longer holds, say so and skip it, tracking as `Skipped`. Before applying, run the same Recommendation lock as step 2 of the walk.
 3. Apply the recommended resolution — identical to `R` — and briefly confirm what was done. Track as `Fixed`.
 
 The edit is the checkpoint. If you deny an edit, stop and discuss that finding; once it is resolved, resume the run for the remaining findings or switch to the one-at-a-time walk. For `decision` findings, the recommended alternative is applied — deny the edit to discuss if a different choice is wanted.
 
 Remediation guidance:
 
-- Bias recommendations toward the principled long-term solution that reduces maintenance and improves quality. Do not default to the smallest-diff resolution.
+- Bias recommendations toward the principled long-term design choice. Prefer changing the Proposed Design (and recording the loser in Alternatives Considered) over a local caveat that leaves the approach intact. Do not default to the smallest-diff edit
 - Apply minimal, targeted edits to integrate the resolution. Refactor surrounding text only when required to make the resolution land cleanly.
 - Integrating an alternative does not mean discarding the record. When the chosen approach changes, move the former approach into Alternatives Considered with the reason it lost — the comparison is part of the design.
 - If a resolution would be too large or would open its own decision, recommend `G` to spin it out rather than forcing it inline.
@@ -131,6 +132,7 @@ Writing rules:
 - Never fabricate an observable. Do not dress a proposed type or structure up as command output — show the scenario instead
 - Length follows comprehension. Cut padding, never cut the setup that makes the rest land
 - Do not argue the finding is real or restate the design back to itself. The instance and the explanation carry it
+- Separate each option with a blank line. Never collapse options onto one line
 
 ```
 ### Finding n of T: <short title>
@@ -156,6 +158,7 @@ be to land, and no longer.>
 **Options**
 
 A. <option — what it does, its tradeoff>
+
 B. <option>
 
 **Recommendation (B)**
@@ -194,6 +197,7 @@ How are concurrent writes to the same record ordered across regions?
 
 A. Pin each record to a home region — writes elsewhere forward to it. Preserves
    the single-writer guarantee unchanged; adds cross-region latency on write.
+
 B. Accept last-write-wins on a shared clock and state it as the guarantee.
    Cheaper, but weakens a promise other sections already rely on.
 
@@ -205,7 +209,7 @@ downstream, and B would quietly invalidate it.
 
 Display the Per-item Prompt (see Commands) immediately after presenting the finding.
 
-For decisions, the Options block lists the alternatives the owner is choosing between, labelled from `A`. For other categories, include an Options block only when alternatives clarify the choice — otherwise omit it and lead with a single Recommendation that `R` accepts. The Recommendation names the option letter or letters it favours, and may combine options (for example `Recommendation (B + C)`).
+For decisions, the Options block lists the alternatives the owner is choosing between, labelled from `A`. For other categories, include an Options block only when alternatives clarify the choice — otherwise omit it and lead with a single Recommendation that `R` accepts. Separate each option with a blank line. The Recommendation names the option letter or letters it favours, and may combine options (for example `Recommendation (B + C)`).
 
 ## Report Format
 

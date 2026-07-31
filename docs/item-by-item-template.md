@@ -225,6 +225,7 @@ Writing rules:
 - Never fabricate an observable. If the code path cannot be run as written, do not dress a structure diff up as command output — show the scenario instead
 - Length follows comprehension. Cut padding, never cut the setup that makes the rest land
 - Do not argue the finding is real or recap intent. The instance and the explanation carry it
+- Separate each option with a blank line. Never collapse options onto one line
 
 ```
 ### Issue n of T — <ID>: <short title>
@@ -248,6 +249,7 @@ the instance above. As long as it needs to be to land, and no longer.>
 **Options**
 
 A. <option — what it does, its tradeoff>
+
 B. <option>
 
 **Recommendation (B)**
@@ -294,6 +296,7 @@ How does the returned agent expose the provider list the CLI prints?
 A. Add a resolved-providers field alongside the built-in list — always
    populated, holding the built-in providers or the ones passed in. Keeps both
    the declared and the resolved sets visible.
+
 B. Replace the built-in list with the resolved one. Smaller surface, but the
    declared-versus-resolved distinction is lost.
 
