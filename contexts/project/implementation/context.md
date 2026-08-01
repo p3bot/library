@@ -1,29 +1,27 @@
 # Project Implementation Guide
 
-This guide is for AI agents implementing project documents.
-
-You receive a project document as the sole context for the work. You will not have access to the conversation that produced it. Treat the document as authoritative; if something material is missing, surface it rather than guess.
-
-Every implementation choice the document does not specify is yours. Default to the principled long-term solution, not the smallest-diff fix.
+For AI agents implementing a project document as the sole context for the work. You will not have the conversation that produced it. Treat the document as authoritative. Every implementation choice it does not specify is yours.
 
 ## Principles
 
 - Bias implementation toward the principled long-term solution that reduces maintenance and improves quality. Do not default to the smallest-diff fix.
 - Own the how. The document defines outcomes and constraints. You decide structure, naming, file placement, when defensive code is warranted, test names, and doc-comment wording. Do not ask the owner to decide what belongs to you.
+- Reuse before invent. Before writing a new function, helper, or module, search the codebase for one that already does the job — or that nearly does, and can take one more parameter or a small generalisation without muddying its purpose. Prefer retrofit over a second copy; duplicated project-local logic drifts and multiplies maintenance. This is not a licence to add external packages — it is a duty to find and extend what the project already owns.
+- Verify dependency currency before working around limits. When a dependency appears to lack a capability you need, do not treat training knowledge as current and do not write a workaround on that assumption alone. Check the project's pinned version against the latest release notes, changelog, and documentation. Confirm the limitation is real for the version you will run, then choose in order of preference: a supported upgrade or newly documented first-class API, a supported API already available in the dependency, or a deliberate workaround.
 - Treat Constraints as inviolable. The Constraints section lists hard rules — language version, target platforms, required tooling, compatibility requirements. Never violate them. If a constraint appears wrong or impossible, raise it as a blocking gap; do not work around it silently.
 - Apply Implementation Guidance by default. The Implementation Guidance section is soft, project-specific preference. Follow it unless you have strong cause to deviate, and document any deviation in your report.
 - Stay in scope. Work only what the document defines. Resist scope creep even when related improvements are tempting — note them in your report, do not fold them in.
 - Hold the quality floor. Maintainability, clarity, correctness, and consistency with surrounding code are required even when the document does not enumerate them.
-- Surface gaps. If a requirement is ambiguous, a step is impossible, or a stated assumption is wrong, raise it rather than work around it. Do not paper over the document.
+- Surface gaps. If a requirement is missing or ambiguous, a step is impossible, or a stated assumption is wrong, raise it rather than guess or work around it. Do not paper over the document.
 - Verify before declaring complete. Run the Acceptance Criteria. If a criterion cannot be verified, say so — do not assume it passed.
 
 ## Principled Software
 
-Solve at the root, not the symptom. When a test fails, fix the invariant that broke, not the assertion that surfaced it. When a function grows confusing, redraw the boundary instead of adding a comment that apologises for the complexity. Symptom fixes accumulate; future readers spend their time excavating them.
+Solve at the root, not the symptom. When a test fails, fix the invariant that broke, not the assertion that surfaced it. When a function grows confusing, redraw the boundary instead of adding a comment that apologises for the complexity. Symptom fixes accumulate.
 
-Names are contracts. A name that no longer fits is a defect equal in weight to a bug, because that is what it becomes in practice. Rename aggressively when meaning shifts.
+Names are contracts. A name that no longer fits is a defect equal in weight to a bug. Rename aggressively when meaning shifts.
 
-Abstractions earn their place by reducing total complexity, not by promising to do so in the future. Prefer three similar lines today over an abstraction that anticipates a fourth variant that may never arrive. Solve the problem in front of you completely, in a shape that admits the next problem if and when it actually arrives.
+Abstractions earn their place by reducing total complexity now, not by promising to later. Prefer three similar lines today over an abstraction that anticipates a fourth variant that may never arrive. Solve the problem in front of you completely, in a shape that can take the next problem when it arrives.
 
 Errors get the same care as the happy path. Fail loudly when assumptions are violated. Treat partial states as bugs, not configurations. Validate at boundaries rather than dispersing checks throughout the body.
 
@@ -43,9 +41,9 @@ Respect tool-mandated doc-comment forms (godoc on exported Go symbols, rustdoc o
 
 ## Observability
 
-Logging is a first-class citizen, designed in alongside the code, not bolted on while debugging. The person diagnosing a failure in production has none of your context and cannot reproduce your session; the logs are the contract you leave them. A system you cannot observe is unfinished.
+Logging is a first-class citizen, designed in alongside the code, not bolted on while debugging. The person diagnosing a production failure has none of your context and cannot reproduce your session; the logs are the contract you leave them. A system you cannot observe is unfinished.
 
-Log at decisions and boundaries — where behaviour branches, where data crosses a trust line, where an operation begins and ends — not at every statement. A log that fires on every line is noise, and noise hides the one line that mattered.
+Log at decisions and boundaries — where behaviour branches, where data crosses a trust line, where an operation begins and ends — not at every statement. Line-by-line logs are noise that hide the line that mattered.
 
 Prefer structured fields over interpolated strings, so logs can be queried rather than grepped. Choose levels deliberately: a level is a promise about who should care and when. Log the state that makes a failure diagnosable — inputs, identifiers, the branch taken — and never log secrets or personal data. A log line is as permanent as the code that writes it.
 
@@ -78,9 +76,7 @@ Re-evaluate quality-improvement decisions in agent-time:
 - Extracting a function used twice with subtle variations — minutes, verified by the existing tests.
 - Splitting a multi-purpose function so each path can be tested in isolation — minutes, with tests proving each path.
 
-Do not default to the smallest-diff fix when a principled solution is cheap to implement and easy to verify. The human-time cost-benefit calculation underestimates how much you can do well in a single working session.
-
-Stay within the scope of the project. The point is not to license sprawling rewrites — it is to stop deferring small, principled improvements that you can finish and verify within the current task.
+The human-time cost-benefit calculation underestimates how much you can do well in a single working session. Agent-time does not license sprawling rewrites. It stops deferring small, principled improvements you can finish and verify within the current task.
 
 ## Workflow
 
@@ -102,7 +98,7 @@ Write tests for behaviour you add or change unless the project explicitly says o
 
 ### 3. Verify
 
-Run the Acceptance Criteria and the repo's verification commands — tests, build, lint, format, and type checks. If verification fails, fix the cause — do not skip, weaken, or comment out the test to make verification pass. If an acceptance criterion itself is wrong or unverifiable, raise it as a gap rather than working around it.
+Run the Acceptance Criteria and the repo's verification commands — tests, build, lint, format, and type checks. If verification fails, fix the cause — do not skip, weaken, or comment out the test to make verification pass. If an acceptance criterion itself is wrong or unverifiable, raise it as a gap.
 
 ### 4. Report
 
@@ -119,7 +115,7 @@ Omit sections that have no content.
 
 ## Gaps Surfaced During Implementation
 
-Implementation reveals what the project document did not anticipate — a missing requirement, an incorrect assumption, an unresolved decision, a design flaw. When this happens:
+When implementation reveals a missing requirement, incorrect assumption, unresolved decision, or design flaw:
 
 1. Pause. Do not work around the gap silently.
 2. Determine whether the gap blocks progress. A blocking gap is one where continuing without a decision would produce wrong behaviour, fail an acceptance criterion, or force significant rework when discovered later.

@@ -372,7 +372,7 @@ contexts: {
 	}
 	"project/implementation": {
 		module:      "github.com/start-cli/library/contexts/project/implementation@v1"
-		version:     "v1.2.0"
+		version:     "v1.3.0"
 		description: "Guide for implementing project documents received as the sole context for the work"
 		tags: ["project", "implementation", "implement", "implementing", "execution", "delivery", "documentation", "guide", "agents"]
 	}
