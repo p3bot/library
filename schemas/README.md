@@ -4,7 +4,7 @@ CUE schemas for the start AI agent launcher.
 
 ## Module Information
 
-- **Module:** `github.com/start-cli/library/schemas@v1`
+- **Module:** `github.com/p3bot/library/schemas@v1`
 - **Language:** CUE v0.16.0
 - **Source:** git
 
@@ -80,8 +80,8 @@ Defines the structure for the module discovery index.
 **Module Paths:**
 
 - Include full category in module path
-- Format: `github.com/start-cli/library/{category}/{name}@v{major}`
-- Example: `github.com/start-cli/library/tasks/review/git-diff@v0`
+- Format: `github.com/p3bot/library/{category}/{name}@v{major}`
+- Example: `github.com/p3bot/library/tasks/review/git-diff@v0`
 
 **Resolution Logic:**
 
@@ -259,7 +259,7 @@ cue export *.cue ../docs/examples/settings_example.cue
 // contexts/my_context.cue
 package contexts
 
-import "github.com/start-cli/library/schemas@v1"
+import "github.com/p3bot/library/schemas@v1"
 
 context: schemas.#UTD & {
     file:    "./PROJECT.md"
@@ -279,7 +279,7 @@ context: schemas.#UTD & {
 // tasks/golang/code-review/task.cue
 package task
 
-import "github.com/start-cli/library/schemas@v1"
+import "github.com/p3bot/library/schemas@v1"
 
 // Concrete task ready to use
 task: schemas.#Task & {
@@ -304,7 +304,7 @@ task: schemas.#Task & {
 // ~/.config/start/settings.cue
 package config
 
-import "github.com/start-cli/library/schemas@v1"
+import "github.com/p3bot/library/schemas@v1"
 
 // Apply global defaults to all tasks via pattern constraint
 tasks: [_]: schemas.#Task & {

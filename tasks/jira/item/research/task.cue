@@ -1,6 +1,6 @@
 package research
 
-import "github.com/start-cli/library/schemas@v1"
+import "github.com/p3bot/library/schemas@v1"
 
 task: schemas.#Task & {
 	description: "Deep cross-system research on a Jira work item"

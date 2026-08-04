@@ -1,6 +1,6 @@
 package begin
 
-import "github.com/start-cli/library/schemas@v1"
+import "github.com/p3bot/library/schemas@v1"
 
 task: schemas.#Task & {
 	description: "Begin working on the current project with full context"

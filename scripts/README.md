@@ -1,6 +1,6 @@
 # library Scripts
 
-Scripts in `./scripts/` for managing CUE modules in the start-cli/library repository.
+Scripts in `./scripts/` for managing CUE modules in the p3bot/library repository.
 All scripts are designed to be run from the repository root.
 Scripts automatically locate the repository root via their own path.
 

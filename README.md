@@ -1,8 +1,8 @@
 # start CLI Library
 
-Official module library for the [start](https://github.com/start-cli/start) CLI.
+Official module library for the [start](https://github.com/p3bot/start) CLI.
 
-The library provides CUE modules for AI agents, roles, contexts, and tasks. Modules are published to the CUE Central Registry under `github.com/start-cli/library` and resolved by the start CLI at runtime.
+The library provides CUE modules for AI agents, roles, contexts, and tasks. Modules are published to the CUE Central Registry under `github.com/p3bot/library` and resolved by the start CLI at runtime.
 
 ## Structure
 
@@ -21,7 +21,7 @@ The library provides CUE modules for AI agents, roles, contexts, and tasks. Modu
 Import a module from the registry:
 
 ```cue
-import "github.com/start-cli/library/roles/golang/assistant@v0"
+import "github.com/p3bot/library/roles/golang/assistant@v0"
 ```
 
 Modules are normally consumed indirectly through the start CLI:

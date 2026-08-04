@@ -1,6 +1,6 @@
 package update
 
-import "github.com/start-cli/library/schemas@v1"
+import "github.com/p3bot/library/schemas@v1"
 
 task: schemas.#Task & {
 	description: "Interactively customise the Claude Code statusline script"

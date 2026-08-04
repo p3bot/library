@@ -2,7 +2,7 @@
 
 ## Goal
 
-Introduce the skills category to the start-cli library: the schema, the agent
+Introduce the skills category to the p3bot library: the schema, the agent
 skill-path attribute, the index extension, and a first published skill module. This is
 the library half of the skills feature; the start CLI consumes it via the CUE Central
 Registry.
@@ -35,9 +35,9 @@ Out of scope:
 ## Current State
 
 - The library is a CUE-only repository published to the CUE Central Registry as
-  `github.com/start-cli/library`. Each module is a directory with a `*.cue` definition,
+  `github.com/p3bot/library`. Each module is a directory with a `*.cue` definition,
   a `cue.mod/module.cue`, and optional markdown, importing
-  `github.com/start-cli/library/schemas@v1`.
+  `github.com/p3bot/library/schemas@v1`.
 - `schemas/` holds base, utd, agent, role, context, task, index, and settings schemas.
   `#Base` provides description, tags, origin, and uses. `#UTD` provides file, command,
   prompt, shell, timeout. Roles, contexts, and tasks embed both; agents do not embed
@@ -69,7 +69,7 @@ Out of scope:
 
 ## References
 
-- `/home/grant/Projects/start-cli/design-skills.md` — the authoritative skills design.
+- `/home/grant/Projects/p3bot/design-skills.md` — the authoritative skills design.
   Read it first; this project implements its library half.
 - https://agentskills.io/specification — the Agent Skills format that SKILL.md must
   follow.
@@ -108,7 +108,7 @@ Out of scope:
 
 - Every `cue.mod/module.cue` pins the CUE language version used across the library
   (v0.16.0) and depends on `schemas@v1`.
-- Import schemas from `github.com/start-cli/library/schemas@v1`. Package names match the
+- Import schemas from `github.com/p3bot/library/schemas@v1`. Package names match the
   deepest directory segment with hyphens removed.
 - SKILL.md follows the Agent Skills specification, not the library agent-doc markdown
   rules. Its `name` must equal the parent directory name and satisfy the spec's name and

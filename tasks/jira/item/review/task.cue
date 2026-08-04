@@ -1,6 +1,6 @@
 package review
 
-import "github.com/start-cli/library/schemas@v1"
+import "github.com/p3bot/library/schemas@v1"
 
 task: schemas.#Task & {
 	description: "Comprehensive content review of a Jira work item"

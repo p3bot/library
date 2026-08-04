@@ -1,6 +1,6 @@
 package orchestrator
 
-import "github.com/start-cli/library/schemas@v1"
+import "github.com/p3bot/library/schemas@v1"
 
 task: schemas.#Task & {
 	description: "Orchestrate parallel review agents, consolidate findings, and walk through fixing them"

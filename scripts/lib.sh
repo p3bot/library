@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# lib.sh - Shared utilities for start-cli/library scripts
+# lib.sh - Shared utilities for p3bot/library scripts
 # Source this file from other scripts: source "${SCRIPT_DIR}/lib.sh"
 
 # Color support - disabled if stderr is not a terminal or NO_COLOR is set

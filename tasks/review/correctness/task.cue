@@ -1,6 +1,6 @@
 package correctness
 
-import "github.com/start-cli/library/schemas@v1"
+import "github.com/p3bot/library/schemas@v1"
 
 task: schemas.#Task & {
 	description: "Verify code logic correctly implements intended behaviour and handles data with precision"

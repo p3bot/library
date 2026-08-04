@@ -11,7 +11,7 @@ package schemas
 	tags?: [...string & =~"^[a-z0-9]+(-[a-z0-9]+)*$"]
 
 	// Module path when installed from registry
-	// Example: "github.com/start-cli/library/tasks/review/git-diff@v0"
+	// Example: "github.com/p3bot/library/tasks/review/git-diff@v0"
 	// Empty/undefined = user-defined module
 	origin?: string
 

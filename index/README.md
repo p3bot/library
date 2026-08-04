@@ -14,5 +14,5 @@ Maps friendly names to module paths, enabling CLI search and auto-setup detectio
 ## Importing
 
 ```cue
-import "github.com/start-cli/library/index@v1"
+import "github.com/p3bot/library/index@v1"
 ```

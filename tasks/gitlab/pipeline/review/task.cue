@@ -1,8 +1,8 @@
 package review
 
 import (
-	"github.com/start-cli/library/schemas@v1"
-	agentRole "github.com/start-cli/library/roles/gitlab/pipeline/agent@v1:agent"
+	"github.com/p3bot/library/schemas@v1"
+	agentRole "github.com/p3bot/library/roles/gitlab/pipeline/agent@v1:agent"
 )
 
 task: schemas.#Task & {

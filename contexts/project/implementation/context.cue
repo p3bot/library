@@ -1,6 +1,6 @@
 package implementation
 
-import "github.com/start-cli/library/schemas@v1"
+import "github.com/p3bot/library/schemas@v1"
 
 context: schemas.#Context & {
 	description: "Guide for implementing project documents received as the sole context for the work"

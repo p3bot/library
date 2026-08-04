@@ -1,6 +1,6 @@
 package duplication
 
-import "github.com/start-cli/library/schemas@v1"
+import "github.com/p3bot/library/schemas@v1"
 
 task: schemas.#Task & {
 	description: "Identify repeated code patterns that may benefit from consolidation"

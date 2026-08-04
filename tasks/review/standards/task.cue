@@ -1,6 +1,6 @@
 package standards
 
-import "github.com/start-cli/library/schemas@v1"
+import "github.com/p3bot/library/schemas@v1"
 
 task: schemas.#Task & {
 	description: "Verify changes meet applicable domain-specific standards and requirements"

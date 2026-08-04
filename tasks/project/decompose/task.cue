@@ -1,6 +1,6 @@
 package decompose
 
-import "github.com/start-cli/library/schemas@v1"
+import "github.com/p3bot/library/schemas@v1"
 
 task: schemas.#Task & {
 	description: "Decompose an accepted design into a right-sized set of project documents"

@@ -1,6 +1,6 @@
 package assistant
 
-import "github.com/start-cli/library/schemas@v1"
+import "github.com/p3bot/library/schemas@v1"
 
 role: schemas.#Role & {
 	description: "GitLab CI/CD pipeline expert - collaborative assistant mode"

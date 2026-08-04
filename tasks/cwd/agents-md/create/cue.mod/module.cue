@@ -1,4 +1,4 @@
-module: "github.com/start-cli/library/tasks/cwd/agents-md/create@v1"
+module: "github.com/p3bot/library/tasks/cwd/agents-md/create@v1"
 language: {
 	version: "v0.16.0"
 }
@@ -6,10 +6,10 @@ source: {
 	kind: "git"
 }
 deps: {
-	"github.com/start-cli/library/roles/markdown/low-token/agent@v1": {
+	"github.com/p3bot/library/roles/markdown/low-token/agent@v1": {
 		v: "v1.0.0"
 	}
-	"github.com/start-cli/library/schemas@v1": {
+	"github.com/p3bot/library/schemas@v1": {
 		v: "v1.0.0"
 	}
 }

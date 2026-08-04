@@ -1,6 +1,6 @@
 # start CLI Library
 
-CUE-based module library for the start AI agent launcher CLI. Modules include agents, roles, contexts, and tasks, published to the CUE Central Registry under `github.com/start-cli/library`.
+CUE-based module library for the start AI agent launcher CLI. Modules include agents, roles, contexts, and tasks, published to the CUE Central Registry under `github.com/p3bot/library`.
 
 ## Repository Structure
 
@@ -22,7 +22,7 @@ CUE conventions:
 - Use kebab-case for tags and identifiers
 - Schemas define pure constraints without defaults
 - Package names match the deepest directory segment (hyphens removed)
-- Import schemas from `github.com/start-cli/library/schemas@v1`
+- Import schemas from `github.com/p3bot/library/schemas@v1`
 - CUE language pin: `v0.16.0` in every `cue.mod/module.cue`
 
 Markdown for agent documents:
@@ -42,7 +42,7 @@ User-facing fully-qualified module addresses use the colon form `category:name`:
 - `contexts:cwd/agents-md`
 - `tasks:review/git-diff`
 
-Bare names (`claude/interactive`) continue to work as cross-category lookups. CUE module paths (`github.com/start-cli/library/agents/claude/interactive@v0`) remain slash-based; the colon form applies to user-facing input and display only.
+Bare names (`claude/interactive`) continue to work as cross-category lookups. CUE module paths (`github.com/p3bot/library/agents/claude/interactive@v0`) remain slash-based; the colon form applies to user-facing input and display only.
 
 Index keys inside the index module are bare names within their category struct (`agents: { "claude/interactive": ... }`). The colon prefix is not encoded in keys.
 
@@ -106,7 +106,7 @@ When adding a new module, register it in `index/index.cue`:
 
 ```cue
 "category/name": {
-    module:      "github.com/start-cli/library/<category>/<name>@v0"
+    module:      "github.com/p3bot/library/<category>/<name>@v0"
     version:     "v0.1.0"
     description: "Brief description of the module"
     tags: ["relevant", "tags"]
@@ -181,4 +181,4 @@ Shared per-item finding template (history: docs/item-by-item-template.md):
 - Agent patterns: docs/agent-patterns.md
 - Role patterns: docs/role-patterns.md
 - Schema reference: schemas/README.md
-- start CLI: https://github.com/start-cli/start
+- start CLI: https://github.com/p3bot/start

@@ -1,6 +1,6 @@
 package testing
 
-import "github.com/start-cli/library/schemas@v1"
+import "github.com/p3bot/library/schemas@v1"
 
 task: schemas.#Task & {
 	description: "Evaluate test quality, coverage, and the testability of production code"

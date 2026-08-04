@@ -1,8 +1,8 @@
 package github_homebrew
 
 import (
-	"github.com/start-cli/library/schemas@v1"
-	assistantRole "github.com/start-cli/library/roles/golang/assistant@v1:assistant"
+	"github.com/p3bot/library/schemas@v1"
+	assistantRole "github.com/p3bot/library/roles/golang/assistant@v1:assistant"
 )
 
 task: schemas.#Task & {

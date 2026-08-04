@@ -1,6 +1,6 @@
 package interactive
 
-import "github.com/start-cli/library/schemas@v1"
+import "github.com/p3bot/library/schemas@v1"
 
 agent: schemas.#Agent & {
 	bin:           "grok"

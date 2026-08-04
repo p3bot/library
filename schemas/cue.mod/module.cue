@@ -1,4 +1,4 @@
-module: "github.com/start-cli/library/schemas@v1"
+module: "github.com/p3bot/library/schemas@v1"
 language: {
 	version: "v0.16.0"
 }

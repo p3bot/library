@@ -1,8 +1,8 @@
 package update
 
 import (
-	"github.com/start-cli/library/schemas@v1"
-	agentRole "github.com/start-cli/library/roles/markdown/low-token/agent@v1:agent"
+	"github.com/p3bot/library/schemas@v1"
+	agentRole "github.com/p3bot/library/roles/markdown/low-token/agent@v1:agent"
 )
 
 task: schemas.#Task & {

@@ -1,6 +1,6 @@
 package holistic
 
-import "github.com/start-cli/library/schemas@v1"
+import "github.com/p3bot/library/schemas@v1"
 
 task: schemas.#Task & {
 	description: "Broad first-pass review assessing overall repository health, consistency, and structure"

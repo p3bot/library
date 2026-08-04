@@ -1,6 +1,6 @@
 # Library Publishing Guide
 
-This guide is the single source for publishing a module to the CUE Central Registry from the start-cli library repository. Follow it whenever you create or update an agent, role, context, or task. It assumes the module content is already written.
+This guide is the single source for publishing a module to the CUE Central Registry from the p3bot library repository. Follow it whenever you create or update an agent, role, context, or task. It assumes the module content is already written.
 
 Publishing is irreversible at the tag level: the registry treats every tag as immutable. A tag pushed by mistake cannot be moved or reused. The steps below are ordered to make that safe, and to make the two most common mistakes — forgetting the index, and reusing a tag — impossible to commit by accident.
 
@@ -139,7 +139,7 @@ start update pulls any newly published modules. start doctor validate --force pu
 If a GitHub issue tracks this work, close it:
 
 ```bash
-gh issue close <issue-number> --repo start-cli/library --comment "Published <module>@<version>"
+gh issue close <issue-number> --repo p3bot/library --comment "Published <module>@<version>"
 ```
 
 ## Versioning policy

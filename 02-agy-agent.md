@@ -49,7 +49,7 @@ Out of scope:
 
 ## References
 
-- `/home/grant/Projects/start-cli/design-skills.md` — explains why agy and
+- `/home/grant/Projects/p3bot/design-skills.md` — explains why agy and
   `~/.agents/skills` matter to the skills feature.
 - `docs/agent-patterns.md` — the variant naming and taxonomy to follow.
 - The Antigravity CLI documentation — the source for the binary name, invocation,
@@ -76,7 +76,7 @@ Out of scope:
 ## Constraints
 
 - Every `cue.mod/module.cue` pins the library CUE language version and depends on
-  `schemas@v1`. Import schemas from `github.com/start-cli/library/schemas@v1`. Package
+  `schemas@v1`. Import schemas from `github.com/p3bot/library/schemas@v1`. Package
   names match the deepest directory segment with hyphens removed.
 - Follow the variant taxonomy in `docs/agent-patterns.md`.
 - Do not invent CLI flags or modes. If Antigravity has no equivalent for a permission or

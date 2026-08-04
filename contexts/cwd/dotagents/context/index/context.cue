@@ -1,6 +1,6 @@
 package index
 
-import "github.com/start-cli/library/schemas@v1"
+import "github.com/p3bot/library/schemas@v1"
 
 context: schemas.#Context & {
 	description: "Index of curated reference material in .agents/context/"

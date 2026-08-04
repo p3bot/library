@@ -1,6 +1,6 @@
 package errorhandling
 
-import "github.com/start-cli/library/schemas@v1"
+import "github.com/p3bot/library/schemas@v1"
 
 task: schemas.#Task & {
 	description: "Review how failures are handled and whether edge cases are covered"

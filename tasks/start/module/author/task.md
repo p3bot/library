@@ -82,7 +82,7 @@ Agent definition template (with models):
 ```cue
 package <variant>
 
-import "github.com/start-cli/library/schemas@v1"
+import "github.com/p3bot/library/schemas@v1"
 
 agent: schemas.#Agent & {
 	bin:           "<binary-name>"
@@ -102,7 +102,7 @@ Without models, omit the `default_model` and `models` fields.
 cue.mod/module.cue depends only on the schemas module:
 
 ```cue
-module: "github.com/start-cli/library/agents/<path>@v1"
+module: "github.com/p3bot/library/agents/<path>@v1"
 language: {
 	version: "v0.16.0"
 }
@@ -110,7 +110,7 @@ source: {
 	kind: "git"
 }
 deps: {
-	"github.com/start-cli/library/schemas@v1": {
+	"github.com/p3bot/library/schemas@v1": {
 		v: "v1.0.0"
 	}
 }
@@ -136,7 +136,7 @@ Each mode's `role.cue` varies only by mode:
 ```cue
 package <mode>
 
-import "github.com/start-cli/library/schemas@v1"
+import "github.com/p3bot/library/schemas@v1"
 
 role: schemas.#Role & {
 	description: "<description-base> - <suffix>"
@@ -154,7 +154,7 @@ role: schemas.#Role & {
 cue.mod/module.cue for each mode depends only on the schemas module:
 
 ```cue
-module: "github.com/start-cli/library/roles/<path>/<mode>@v1"
+module: "github.com/p3bot/library/roles/<path>/<mode>@v1"
 language: {
 	version: "v0.16.0"
 }
@@ -162,7 +162,7 @@ source: {
 	kind: "git"
 }
 deps: {
-	"github.com/start-cli/library/schemas@v1": {
+	"github.com/p3bot/library/schemas@v1": {
 		v: "v1.0.0"
 	}
 }
@@ -321,7 +321,7 @@ Context definition templates:
 ```cue
 package <noun>
 
-import "github.com/start-cli/library/schemas@v1"
+import "github.com/p3bot/library/schemas@v1"
 
 context: schemas.#Context & {
 	description: "<description>"
@@ -338,7 +338,7 @@ Swap `file` for `command` and `{{.file_contents}}` for `{{.command_output}}` for
 cue.mod/module.cue depends only on the schemas module:
 
 ```cue
-module: "github.com/start-cli/library/contexts/<path>@v1"
+module: "github.com/p3bot/library/contexts/<path>@v1"
 language: {
 	version: "v0.16.0"
 }
@@ -346,7 +346,7 @@ source: {
 	kind: "git"
 }
 deps: {
-	"github.com/start-cli/library/schemas@v1": {
+	"github.com/p3bot/library/schemas@v1": {
 		v: "v1.0.0"
 	}
 }
@@ -367,8 +367,8 @@ task.cue template (with a role):
 package <packagename>
 
 import (
-	"github.com/start-cli/library/schemas@v1"
-	assistantRole "github.com/start-cli/library/roles/<role-path>@v1:<mode>"
+	"github.com/p3bot/library/schemas@v1"
+	assistantRole "github.com/p3bot/library/roles/<role-path>@v1:<mode>"
 )
 
 task: schemas.#Task & {
@@ -423,7 +423,7 @@ Write task.md for an AI agent to execute: explicit commands, expected results fo
 cue.mod/module.cue depends on the schemas module, plus any referenced role:
 
 ```cue
-module: "github.com/start-cli/library/tasks/<path>@v1"
+module: "github.com/p3bot/library/tasks/<path>@v1"
 language: {
 	version: "v0.16.0"
 }
@@ -431,10 +431,10 @@ source: {
 	kind: "git"
 }
 deps: {
-	"github.com/start-cli/library/roles/<role-path>@v1": {
+	"github.com/p3bot/library/roles/<role-path>@v1": {
 		v: "v1.0.0"
 	}
-	"github.com/start-cli/library/schemas@v1": {
+	"github.com/p3bot/library/schemas@v1": {
 		v: "v1.1.0"
 	}
 }

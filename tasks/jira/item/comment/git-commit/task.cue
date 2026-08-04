@@ -1,6 +1,6 @@
 package gitcommit
 
-import "github.com/start-cli/library/schemas@v1"
+import "github.com/p3bot/library/schemas@v1"
 
 task: schemas.#Task & {
 	description: "Summarise git commits for a period and post as a human-readable Jira item comment"

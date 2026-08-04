@@ -1,6 +1,6 @@
 # Naming Standards
 
-Naming conventions for all module types in the start-cli library.
+Naming conventions for all module types in the p3bot library.
 
 ## Address Form
 
@@ -60,8 +60,8 @@ Consumers importing a module whose package name does not match the last URL segm
 
 ```cue
 import (
-    ctx "github.com/start-cli/library/contexts/cwd/agents-md@v1:agentsmd"
-    tsk "github.com/start-cli/library/tasks/review/git-diff@v1:gitdiff"
+    ctx "github.com/p3bot/library/contexts/cwd/agents-md@v1:agentsmd"
+    tsk "github.com/p3bot/library/tasks/review/git-diff@v1:gitdiff"
 )
 ```
 

@@ -90,6 +90,6 @@ tasks/<domain>/<name>/
 - [review/test-coverage](review/test-coverage/) - Test-coverage review
 - [review/testing](review/testing/) - Testing review
 
-### start/module/ (authoring modules in the start-cli library)
+### start/module/ (authoring modules in the p3bot library)
 
 - [start/module/author](start/module/author/) - Create or update any agent, role, context, or task module
