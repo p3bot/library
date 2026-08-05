@@ -119,11 +119,12 @@ Findings are read by someone who has not opened the design document, cannot look
 
 The bar: that reader can restate the problem in their own words after reading it once. A finding that fails this has failed, however accurate it is.
 
-Open with the smallest concrete instance that shows the problem, then explain it. Three moves, in order:
+Open with the smallest concrete instance that shows the problem, then explain it. Four moves, in order:
 
 1. Establish what correct looks like and show the break against it. A design is not running code, so the instance is usually a scenario rather than an output — the case the chosen approach handles worse than an alternative, the condition under which a stated assumption stops holding, the cost the document never admits. Where the design makes a claim about existing code, a command and its output with the expected value alongside is stronger. Contrast two cases when the rule is conditional; the contrast is usually what makes the break obvious
-2. Say what causes it, in the same terms
-3. Say what it costs if the design ships as written
+2. Give the Simple Explanation — one or two sentences in everyday language naming the problem, so the reader has the gist before any cause chain
+3. Say what causes it, in the same terms
+4. Say what it costs if the design ships as written
 
 Writing rules:
 
@@ -145,7 +146,12 @@ condition that breaks a stated assumption, the cost left unstated — or, for a
 claim about existing code, command → output with the expected value alongside.
 Show it; do not describe it.>
 
-**Issue**
+**Simple Explanation**
+
+<one or two sentences naming the problem in everyday language — enough that the
+reader can restate it without reading Details. No cause chain, no options.>
+
+**Details**
 
 <continuous prose: what causes it and what it costs if the design ships as
 written, in the same plain terms as the instance above. As long as it needs to
@@ -177,7 +183,12 @@ Location: Proposed Design — Write path
   one region   → one writer per key, writes land in order
   two regions  → two writers, same key, no rule stated for which wins
 
-**Issue**
+**Simple Explanation**
+
+The design promises ordered writes under a single writer, then adds a second
+region that also accepts writes without saying which write wins.
+
+**Details**
 
 The design promises that updates to a record are applied in the order they were
 made, and gets that for free while there is exactly one writer. The rollout
@@ -224,7 +235,7 @@ Findings: <count by category, e.g. 1 approach, 2 tradeoff, 1 assumption>
 
 ## Findings
 
-A complete list of every finding — list all of them, do not truncate. The detail for each actionable finding (Issue, Options, Recommendation) is presented one at a time during the Phase 2 walk, not here.
+A complete list of every finding — list all of them, do not truncate. The detail for each actionable finding (Simple Explanation, Details, Options, Recommendation) is presented one at a time during the Phase 2 walk, not here.
 
 | # | Category | Finding |
 |---|----------|---------|

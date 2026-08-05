@@ -53,7 +53,7 @@ Let `T` be the count of remaining actionable findings (everything not auto-appli
 Continue (`C`) walks the findings one at a time. For each finding:
 
 1. Re-read the relevant context — the project document and any referenced code — and critically re-evaluate the finding. The original may have been wrong, or rendered obsolete by an earlier fix. If the finding no longer holds, say so and revise or withdraw it before presenting.
-2. Before presenting, lock the Recommendation: is it the root fix in the project content, or a local patch that leaves the underlying gap? Name the cheapest alternative and reject it only if it is worse on maintenance or correctness, not effort. If the finding still needs the document or code in the reader's head to make sense, rewrite the instance and Issue until it does not — or withdraw it.
+2. Before presenting, lock the Recommendation: is it the root fix in the project content, or a local patch that leaves the underlying gap? Name the cheapest alternative and reject it only if it is worse on maintenance or correctness, not effort. If the finding still needs the document or code in the reader's head to make sense, rewrite the instance, Simple Explanation, and Details until it does not — or withdraw it.
 3. Present the finding using the Per-item Template (below) with `n` as the position in the walk and `T` as the total. `T` excludes safe items applied above.
 4. Display the Per-item Prompt (see Commands) and pause for an explicit decision. Never assume blanket approval from an earlier response. Accepting one finding does not authorise the next. If a response is ambiguous, ask which finding it applies to.
 
@@ -122,11 +122,12 @@ Findings are read by someone who has not opened the project document, cannot loo
 
 The bar: that reader can restate the problem in their own words after reading it once. A finding that fails this has failed, however accurate it is.
 
-Open with the smallest concrete instance that shows the problem, then explain it. Three moves, in order:
+Open with the smallest concrete instance that shows the problem, then explain it. Four moves, in order:
 
 1. Establish what correct looks like and show the break against it. Where the target runs, that is a command and its output with the expected value alongside. Where it does not — a plan, a proposed design, a document — it is the scenario the change would break, in plain language. Contrast two cases when the rule is conditional; the contrast is usually what makes the break obvious
-2. Say what causes it, in the same terms
-3. Say what it costs
+2. Give the Simple Explanation — one or two sentences in everyday language naming the problem, so the reader has the gist before any cause chain
+3. Say what causes it, in the same terms
+4. Say what it costs
 
 Writing rules:
 
@@ -147,7 +148,12 @@ Location: <file:line, or section heading if relevant>
 alongside where the target runs; the scenario the change would break where it
 does not. Show it; do not describe it.>
 
-**Issue**
+**Simple Explanation**
+
+<one or two sentences naming the problem in everyday language — enough that the
+reader can restate it without reading Details. No cause chain, no options.>
+
+**Details**
 
 <continuous prose: what causes it and what it costs, in the same plain terms as
 the instance above. As long as it needs to be to land, and no longer.>
@@ -179,7 +185,12 @@ Location: R3 Query, result, and detail types
   agents get opencode --provider anthropic   → providers: anthropic   (today)
                                              → providers: <empty>     (under R3)
 
-**Issue**
+**Simple Explanation**
+
+After the redesign, the CLI can no longer show which provider an agent is
+using when that provider was passed on the command line rather than built in.
+
+**Details**
 
 The CLI prints a providers column for each agent. An agent like claude-code has
 a built-in provider, anthropic, so the column shows anthropic. An agent like
@@ -233,7 +244,7 @@ Safe items: <changes to apply on remediation, or "None">
 
 ## Findings
 
-A complete list of every finding — list all of them, do not truncate. The detail for each actionable finding (Issue, Options, Recommendation) is presented one at a time during the Phase 2 walk, not here.
+A complete list of every finding — list all of them, do not truncate. The detail for each actionable finding (Simple Explanation, Details, Options, Recommendation) is presented one at a time during the Phase 2 walk, not here.
 
 | # | Category | Finding |
 |---|----------|---------|

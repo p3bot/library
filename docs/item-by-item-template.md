@@ -182,7 +182,7 @@ B. Keep seconds, add a millisecond field — wider change, more surface.
 Nanosecond base matches time.ParseDuration and drops no precision.
 ````
 
-## v4 — comprehension-first (current)
+## v4 — comprehension-first
 
 Keeps v3's concrete opening instance but fixes two failures it produced. Against
 a target that does not run — a proposed design, a plan, a document — v3 still
@@ -271,6 +271,174 @@ Location: R3 Query, result, and detail types
                                              → providers: <empty>     (under R3)
 
 **Issue**
+
+The CLI prints a providers column for each agent. An agent like claude-code has
+a built-in provider, anthropic, so the column shows anthropic. An agent like
+opencode has no built-in provider — you tell it which one to use on the command
+line, and the column should then show what you passed.
+
+Today the library hands the CLI one ready-made field holding the providers
+actually used: the built-in ones, or the ones you passed. The CLI prints that
+field and nothing else. The redesign in R3 deletes that field and keeps only the
+built-in list, which for opencode is empty, so nothing in the returned data
+holds anthropic.
+
+The CLI's only recourse is to detect the no-built-in-provider case itself and
+substitute the value it passed in — which puts the provider-source decision back
+in the CLI, the exact thing R3 set out to remove.
+
+**Decision**
+
+How does the returned agent expose the provider list the CLI prints?
+
+**Options**
+
+A. Add a resolved-providers field alongside the built-in list — always
+   populated, holding the built-in providers or the ones passed in. Keeps both
+   the declared and the resolved sets visible.
+
+B. Replace the built-in list with the resolved one. Smaller surface, but the
+   declared-versus-resolved distinction is lost.
+
+**Recommendation (A)**
+
+Option A: it restores the field the CLI already reads with no special-casing,
+and keeps the built-in list as the capability fact it is.
+````
+
+## v5 — simple-explanation bridge (current)
+
+Keeps v4's comprehension bar, concrete instance, and continuous-prose causal
+block, but splits the explanation into two layers. The concrete instance shows
+the break; readers still needed a restatable gist before absorbing the cause
+chain. Mid-walk steering that asked for a "Simple Explanation" section per item
+proved that bridge.
+
+Changes from v4:
+
+- Renames `Issue` to `Details` — the block still holds cause and cost in continuous
+  prose; the label no longer competes with the finding title line
+- Adds `Simple Explanation` before `Details`: one or two sentences in everyday
+  language, enough that the reader can restate the problem without reading
+  Details. No cause chain, no options
+- Expands the moves list from three to four so Simple Explanation is required,
+  not optional colour
+
+````
+Findings are read by someone who has not opened the code, cannot look anything up, and has to decide something after one read.
+
+The bar: that reader can restate the problem in their own words after reading it once. A finding that fails this has failed, however accurate it is.
+
+Open with the smallest concrete instance that shows the problem, then explain it. Four moves, in order:
+
+1. Establish what correct looks like and show the break against it. Where the code runs, that is a command and its output, a call and its return, or a request and its response, with the expected value alongside — `ParseDuration("500ms") → 0s (want 500ms)`. Where the change is structural and produces no output, it is the scenario it would break, in plain language. Contrast two cases when the behaviour is conditional; the contrast is usually what makes the break obvious
+2. Give the Simple Explanation — one or two sentences in everyday language naming the problem, so the reader has the gist before any cause chain
+3. Say what causes it, in the same terms
+4. Say what it costs
+
+Writing rules:
+
+- Name things by what they are, not by what they are called in the code. "the retry counter", not `svc.rc`. Symbols and `file:line` follow the plain-language noun in parentheses as anchors; they never carry the explanation
+- Spell out internal shorthand on first use. Requirement ids, ticket numbers, and project acronyms mean nothing to the reader
+- Never fabricate an observable. If the code path cannot be run as written, do not dress a structure diff up as command output — show the scenario instead
+- Length follows comprehension. Cut padding, never cut the setup that makes the rest land
+- Do not argue the finding is real or recap intent. The instance and the explanation carry it
+- Separate each option with a blank line. Never collapse options onto one line
+
+```
+### Issue n of T — <ID>: <short title>
+
+Category: <e.g. Security, Correctness>
+Location: <file:line>
+
+<the smallest concrete instance: command → output, request → response, call →
+return, with the expected value alongside — or the scenario the change breaks
+where nothing runs. Show it; do not describe it.>
+
+**Simple Explanation**
+
+<one or two sentences naming the problem in everyday language — enough that the
+reader can restate it without reading Details. No cause chain, no options.>
+
+**Details**
+
+<continuous prose: what causes it and what it costs, in the same plain terms as
+the instance above. As long as it needs to be to land, and no longer.>
+
+**Decision**
+
+<the single question being put to the reader>
+
+**Options**
+
+A. <option — what it does, its tradeoff>
+
+B. <option>
+
+**Recommendation (B)**
+
+<option letter, then one clause on why, focused on the principled long-term solution>
+```
+````
+
+Worked example (code target):
+
+````
+### Issue 1 of 1 — M1: ParseDuration truncates sub-second values to zero
+
+Category: Correctness
+Location: internal/timeutil/parse.go:42
+
+  ParseDuration("500ms")  → 0s     (want 500ms)
+  ParseDuration("1500ms") → 1s     (want 1.5s)
+
+**Simple Explanation**
+
+Sub-second durations are silently rounded down to whole seconds, so a 500ms
+timeout becomes no timeout at all.
+
+**Details**
+
+The result is assembled in whole seconds, so the millisecond remainder is
+dropped before the duration is built. Any caller passing a sub-second timeout
+gets no timeout at all, and the failure is silent — the call returns a valid
+duration, just the wrong one.
+
+**Decision**
+
+Rebuild from nanoseconds, or carry a float through?
+
+**Options**
+
+A. Build the duration from nanoseconds, then convert — exact, and mirrors how
+   the standard library parses the same strings.
+
+B. Keep seconds and add a separate milliseconds field — wider change, more
+   surface for the same result.
+
+**Recommendation (A)**
+
+A nanosecond base matches `time.ParseDuration` and drops no precision.
+````
+
+Worked example (document target):
+
+````
+### Finding 2 of 4: Redesign drops the provider list the CLI prints
+
+Category: design
+Location: R3 Query, result, and detail types
+
+  agents get claude-code                     → providers: anthropic
+  agents get opencode --provider anthropic   → providers: anthropic   (today)
+                                             → providers: <empty>     (under R3)
+
+**Simple Explanation**
+
+After the redesign, the CLI can no longer show which provider an agent is
+using when that provider was passed on the command line rather than built in.
+
+**Details**
 
 The CLI prints a providers column for each agent. An agent like claude-code has
 a built-in provider, anthropic, so the column shows anthropic. An agent like

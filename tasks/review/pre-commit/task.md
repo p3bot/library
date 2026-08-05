@@ -35,7 +35,7 @@ Let `T` be the count of remaining actionable findings — the critical, high, me
 
 Continue (`C`) walks the findings one at a time in severity order. For each finding:
 
-1. Re-read the target code and related code carefully, then critically re-evaluate the recommendation. The original finding may have been wrong, or rendered obsolete by an earlier fix. If the recommendation no longer holds, say so and revise or withdraw it before presenting. Before locking it: is it the root fix in the code, or a local patch on a symptom? Name the cheapest alternative and reject it only if it is worse on maintenance or correctness, not effort (agent-time is cheap). If the finding still needs the code in the reader's head to make sense, rewrite the instance and Issue until it does not — or withdraw it.
+1. Re-read the target code and related code carefully, then critically re-evaluate the recommendation. The original finding may have been wrong, or rendered obsolete by an earlier fix. If the recommendation no longer holds, say so and revise or withdraw it before presenting. Before locking it: is it the root fix in the code, or a local patch on a symptom? Name the cheapest alternative and reject it only if it is worse on maintenance or correctness, not effort (agent-time is cheap). If the finding still needs the code in the reader's head to make sense, rewrite the instance, Simple Explanation, and Details until it does not — or withdraw it.
 2. Present the finding using the Per-item Template (below) with `n` as the position in the walk and `T` as the total. `T` excludes safe items and info items.
 3. Display the Per-item Prompt (see Commands) and pause for an explicit decision. Never assume blanket approval from an earlier response. Accepting one finding does not authorise the next. If a response is ambiguous, ask which finding it applies to.
 
@@ -237,11 +237,12 @@ Findings are read by someone who has not opened the code, cannot look anything u
 
 The bar: that reader can restate the problem in their own words after reading it once. A finding that fails this has failed, however accurate it is.
 
-Open with the smallest concrete instance that shows the problem, then explain it. Three moves, in order:
+Open with the smallest concrete instance that shows the problem, then explain it. Four moves, in order:
 
 1. Establish what correct looks like and show the break against it. Where the code runs, that is a command and its output, a call and its return, or a request and its response, with the expected value alongside — `ParseDuration("500ms") → 0s (want 500ms)`. Where the change is structural and produces no output, it is the scenario it would break, in plain language. Contrast two cases when the behaviour is conditional; the contrast is usually what makes the break obvious
-2. Say what causes it, in the same terms
-3. Say what it costs
+2. Give the Simple Explanation — one or two sentences in everyday language naming the problem, so the reader has the gist before any cause chain
+3. Say what causes it, in the same terms
+4. Say what it costs
 
 Writing rules:
 
@@ -262,7 +263,12 @@ Location: <file:line>
 return, with the expected value alongside — or the scenario the change breaks
 where nothing runs. Show it; do not describe it.>
 
-**Issue**
+**Simple Explanation**
+
+<one or two sentences naming the problem in everyday language — enough that the
+reader can restate it without reading Details. No cause chain, no options.>
+
+**Details**
 
 <continuous prose: what causes it and what it costs, in the same plain terms as
 the instance above. As long as it needs to be to land, and no longer.>
@@ -293,7 +299,12 @@ Location: internal/timeutil/parse.go:42
   ParseDuration("500ms")  → 0s     (want 500ms)
   ParseDuration("1500ms") → 1s     (want 1.5s)
 
-**Issue**
+**Simple Explanation**
+
+Sub-second durations are silently rounded down to whole seconds, so a 500ms
+timeout becomes no timeout at all.
+
+**Details**
 
 The result is assembled in whole seconds, so the millisecond remainder is
 dropped before the duration is built. Any caller passing a sub-second timeout
@@ -334,7 +345,7 @@ Findings: <count per severity, e.g. 2 critical, 1 high, 3 medium, 1 low, 4 info>
 
 ## Findings
 
-A complete list of every finding in severity order — list all of them, do not truncate. Info items are recorded for awareness only and are not walked. The detail for each actionable finding (Issue, Options, Recommendation) is presented one at a time during the Phase 2 walk, not here.
+A complete list of every finding in severity order — list all of them, do not truncate. Info items are recorded for awareness only and are not walked. The detail for each actionable finding (Simple Explanation, Details, Options, Recommendation) is presented one at a time during the Phase 2 walk, not here.
 
 | ID | Category | Location | Finding |
 |----|----------|----------|---------|

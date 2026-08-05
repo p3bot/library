@@ -141,7 +141,7 @@ All (`A`) applies recommendations automatically. Work through the `T` findings i
 
 The edit is the checkpoint. If you deny an edit, stop and discuss that finding; once it is resolved, resume the run for the remaining findings or switch to the one-at-a-time walk.
 
-Save (`S`) writes the outstanding findings to a project file and stops. Outstanding findings are those not yet fixed or skipped. Verify each outstanding finding and build its Issue, Options, and Recommendation (with the same Recommendation lock as the walk), then write them all into a single multi-finding project file (see Project File Format below). Findings already fixed, skipped, or spun out are recorded in an Already Handled block for context. Confirm the filename written.
+Save (`S`) writes the outstanding findings to a project file and stops. Outstanding findings are those not yet fixed or skipped. Verify each outstanding finding and build its Simple Explanation, Details, Options, and Recommendation (with the same Recommendation lock as the walk), then write them all into a single multi-finding project file (see Project File Format below). Findings already fixed, skipped, or spun out are recorded in an Already Handled block for context. Confirm the filename written.
 
 Remediation guidance:
 
@@ -197,11 +197,12 @@ Findings are read by someone who has not opened the code, cannot look anything u
 
 The bar: that reader can restate the problem in their own words after reading it once. A finding that fails this has failed, however accurate it is.
 
-Open with the smallest concrete instance that shows the problem, then explain it. Three moves, in order:
+Open with the smallest concrete instance that shows the problem, then explain it. Four moves, in order:
 
 1. Establish what correct looks like and show the break against it. Where the code runs, that is a command and its output, a call and its return, or a request and its response, with the expected value alongside — `ParseDuration("500ms") → 0s (want 500ms)`. Where the change is structural and produces no output, it is the scenario it would break, in plain language. Contrast two cases when the behaviour is conditional; the contrast is usually what makes the break obvious
-2. Say what causes it, in the same terms
-3. Say what it costs
+2. Give the Simple Explanation — one or two sentences in everyday language naming the problem, so the reader has the gist before any cause chain
+3. Say what causes it, in the same terms
+4. Say what it costs
 
 Writing rules:
 
@@ -222,7 +223,12 @@ Location: <file:line>
 return, with the expected value alongside — or the scenario the change breaks
 where nothing runs. Show it; do not describe it.>
 
-**Issue**
+**Simple Explanation**
+
+<one or two sentences naming the problem in everyday language — enough that the
+reader can restate it without reading Details. No cause chain, no options.>
+
+**Details**
 
 <continuous prose: what causes it and what it costs, in the same plain terms as
 the instance above. As long as it needs to be to land, and no longer.>
@@ -254,7 +260,12 @@ Location: internal/http/session.go:88
   → Set-Cookie: sid=abc123; HttpOnly; Path=/
                                      (want: ; Secure)
 
-**Issue**
+**Simple Explanation**
+
+The login cookie can be sent over plain HTTP, so anyone who can force one
+insecure request can steal the session.
+
+**Details**
 
 The cookie is built with HttpOnly but never sets Secure, so the browser will
 send it back over plain HTTP as well as HTTPS. Anyone able to induce a single
@@ -312,7 +323,7 @@ Failed: <review — what went wrong, or none>
 <overall assessment across all reviews, noting both strengths and weaknesses>
 ```
 
-List every finding in severity order — do not truncate. Info items are included in the table but are recorded for awareness only and are not walked. The detail for each actionable finding (Issue, Options, Recommendation) is presented one at a time during the Step 8 walk, not here.
+List every finding in severity order — do not truncate. Info items are included in the table but are recorded for awareness only and are not walked. The detail for each actionable finding (Simple Explanation, Details, Options, Recommendation) is presented one at a time during the Step 8 walk, not here.
 
 ## Project File Format
 
@@ -360,7 +371,7 @@ Hard rules: language version, target platforms, required tooling, compatibility 
 Observable, verifiable outcomes that signal completion. Project-specific only — do not list universals like "build passes" or "tests pass".
 ```
 
-`S` writes the outstanding findings as one multi-finding file. Generate a concise descriptive title for the review as a whole. Each finding carries the verified Issue, Options, and Recommendation built during the walk.
+`S` writes the outstanding findings as one multi-finding file. Generate a concise descriptive title for the review as a whole. Each finding carries the verified Simple Explanation, Details, Options, and Recommendation built during the walk.
 
 ```
 # <title>
@@ -396,8 +407,11 @@ Findings resolved before the save, for context. Omit if none.
 Review: <e.g. security>
 Location: <file:line>
 
-Issue
-<verified description and why it matters>
+Simple Explanation
+<one or two sentences naming the problem in everyday language>
+
+Details
+<verified description: what causes it and what it costs>
 
 Options
 
