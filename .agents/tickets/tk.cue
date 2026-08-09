@@ -1,2 +1,0 @@
-name:       "lib"
-autoCommit: false
