@@ -1,8 +1,8 @@
 # Design Document Review
 
-Interactive review of a design document — the design for a new system or substantial feature — before it is accepted and decomposed into project documents. Finds unsound architecture, better alternatives that were dismissed or never considered, unstated tradeoffs and assumptions, and unmanaged risks — the flaws that would make this an unsound or under-argued design — then walks through each one and integrates the resolution into the design content.
+Interactive review of a design document — the design for a new system or substantial feature — before it is accepted and decomposed into ticket documents. Finds unsound architecture, better alternatives that were dismissed or never considered, unstated tradeoffs and assumptions, and unmanaged risks — the flaws that would make this an unsound or under-argued design — then walks through each one and integrates the resolution into the design content.
 
-Goal: catch the design-level flaws that would cost far more to unwind once implementation has begun. Routine implementation judgement — naming, defensive code, local refactors — belongs to the project documents this design produces, not here.
+Goal: catch the design-level flaws that would cost far more to unwind once implementation has begun. Routine implementation judgement — naming, defensive code, local refactors — belongs to the ticket documents this design produces, not here.
 
 Finding no new issues is a valid outcome. If the design is sound and prior reviews have surfaced the real concerns, say so rather than invent findings to justify the run.
 
@@ -29,7 +29,7 @@ Finding no new issues is a valid outcome. If the design is sound and prior revie
 
 ### Coherence Check
 
-Signals that a document is designing more than one independent thing and should be split into separate designs:
+Signals that a document covers more than one independent design and should be split into separate designs:
 
 - Multiple independent systems or features with no shared architecture, each buildable on its own
 - Distinct problem statements bundled under one Summary
@@ -40,13 +40,13 @@ If these signals fire, the review short-circuits. Finer issues found against a d
 
 ### Phase 2: Remediation
 
-Let `T` be the count of actionable findings. The top-level choice from Phase 1 selects how they are handled: `C` walks them one at a time, `A` applies the recommended resolution to every finding automatically. Letters are case-insensitive.
+Let `m` be the count of actionable findings. The top-level choice from Phase 1 selects how they are handled: `C` walks them one at a time, `A` applies the recommended resolution to every finding automatically. Letters are case-insensitive.
 
 Continue (`C`) walks the findings one at a time. For each finding:
 
 1. Re-read the relevant context — the design document and any referenced code — and critically re-evaluate the finding. The original may have been wrong, or rendered obsolete by an earlier fix. If the finding no longer holds, say so and revise or withdraw it before presenting.
 2. Before presenting, lock the Recommendation: does it fix the design-level flaw (approach, assumption, tradeoff, risk), or only a surface wording? Name the cheapest alternative and reject it only if it is worse on soundness or long-term cost, not effort. If the finding still needs the design or code in the reader's head, rewrite until it does not — or withdraw it.
-3. Present the finding using the Per-item Template (below) with `n` as the position in the walk and `T` as the total.
+3. Present the finding using the Per-item Template (below) with `n` as the position in the walk and `m` as the total.
 4. Display the Per-item Prompt (see Commands) and pause for an explicit decision. Never assume blanket approval from an earlier response. Accepting one finding does not authorise the next. If a response is ambiguous, ask which finding it applies to.
 
 Per-item command semantics. Letters are case-insensitive. Outcomes are tracked in-session — they are not written to disk at the moment of decision. They surface in the Phase 4 summary table and in the Remediation Summary if the review is saved.
@@ -57,9 +57,9 @@ Per-item command semantics. Letters are case-insensitive. Outcomes are tracked i
 - `G` — spin the finding out as a standalone follow-up design (Desi(g)n; see Design File Format below). Track as `Design: <filename>`. Move to the next finding without offering an inline resolution.
 - `S` — see Save (below).
 
-All (`A`) applies recommendations automatically. Work through the `T` findings in order without displaying the Per-item Prompt. For each finding:
+All (`A`) applies recommendations automatically. Work through the `m` findings in order without displaying the Per-item Prompt. For each finding:
 
-1. Announce `(n of T) <short title>`.
+1. Announce `(n of m) <short title>`.
 2. Re-read the relevant context and critically re-evaluate the finding, as in the walk. If it no longer holds, say so and skip it, tracking as `Skipped`. Before applying, run the same Recommendation lock as step 2 of the walk.
 3. Apply the recommended resolution — identical to `R` — and briefly confirm what was done. Track as `Fixed`.
 
@@ -82,9 +82,9 @@ After all findings have been processed, re-read the design document with fresh e
 ### Phase 4: Wrap-up
 
 1. Declare the outcome:
-   - Sound — no blocking issues remain; the design is ready to decompose into project documents
+   - Sound — no blocking issues remain; the design is ready to decompose into ticket documents
    - Revise — blocking issues remain; list them by number and title
-   - Split the design — the document designs more than one independent thing; summarise the seam
+   - Split the design — the document covers more than one independent design; summarise the seam
 
    An issue blocks acceptance if it would make the design wrong, leave a load-bearing part of it unargued, or expose a risk with no mitigation or accepted rationale.
 2. Print a summary table of all findings and their outcomes (see Remediation Summary in the Report Format).
@@ -92,7 +92,7 @@ After all findings have been processed, re-read the design document with fresh e
 
 ## Reviewer Guidance
 
-- Review the design, not the implementation — routine judgement on naming, defensive code, local refactors, and style belongs to the project documents this design produces
+- Review the design, not the implementation — routine judgement on naming, defensive code, local refactors, and style belongs to the ticket documents this design produces
 - Goal bar — flag a finding only if leaving it unresolved would make the design wrong, leave it under-argued, or expose an unmanaged risk
 - Articulation Test — if you cannot articulate what goes wrong when an item is left unresolved, it does not belong in the list
 - Regret Filter — before finalising a finding, ask: would I regret not flagging this once implementation is underway and this design is expensive to reverse? If not, drop it
@@ -129,14 +129,14 @@ Open with the smallest concrete instance that shows the problem, then explain it
 Writing rules:
 
 - Name things by what they are, not by what they are called in the design. "the write path's ordering guarantee", not `R4`. Section names, symbols, and `file:line` follow the plain-language noun in parentheses as anchors; they never carry the explanation
-- Spell out internal shorthand on first use. Requirement ids, section codes, and project acronyms mean nothing to the reader
+- Spell out internal shorthand on first use. Requirement ids, section codes, and codebase acronyms mean nothing to the reader
 - Never fabricate an observable. Do not dress a proposed type or structure up as command output — show the scenario instead
 - Length follows comprehension. Cut padding, never cut the setup that makes the rest land
 - Do not argue the finding is real or restate the design back to itself. The instance and the explanation carry it
 - Separate each option with a blank line. Never collapse options onto one line
 
 ```
-### Finding n of T: <short title>
+### Finding n of m: <short title>
 
 Category: <approach | alternative | tradeoff | assumption | risk | gap | decision | dependency>
 Location: <section heading, or file:line for a current-state claim>

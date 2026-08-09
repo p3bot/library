@@ -1,4 +1,4 @@
-module: "github.com/p3bot/library/tasks/chore/comment/prune@v1"
+module: "github.com/p3bot/library/tasks/chore/comment/prune@v2"
 language: {
 	version: "v0.16.0"
 }

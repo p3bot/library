@@ -29,14 +29,14 @@ Apply safe items immediately, without prompting. Safe items are anything that do
 - Comments — add, remove, or change
 - Documentation — add, remove, or change
 
-State what was applied for each safe item. Safe items do not count toward `T`.
+State what was applied for each safe item. Safe items do not count toward `m`.
 
-Let `T` be the count of remaining actionable findings — the critical, high, medium, and low items, excluding info items (recorded only) and the safe items applied above. The top-level choice from Phase 1 selects how they are handled: `C` walks them one at a time in severity order, `A` applies the recommended resolution to every finding automatically. Letters are case-insensitive.
+Let `m` be the count of remaining actionable findings — the critical, high, medium, and low items, excluding info items (recorded only) and the safe items applied above. The top-level choice from Phase 1 selects how they are handled: `C` walks them one at a time in severity order, `A` applies the recommended resolution to every finding automatically. Letters are case-insensitive.
 
 Continue (`C`) walks the findings one at a time in severity order. For each finding:
 
 1. Re-read the target code and related code carefully, then critically re-evaluate the recommendation. The original finding may have been wrong, or rendered obsolete by an earlier fix. If the recommendation no longer holds, say so and revise or withdraw it before presenting. Before locking it: is it the root fix in the code, or a local patch on a symptom? Name the cheapest alternative and reject it only if it is worse on maintenance or correctness, not effort (agent-time is cheap). If the finding still needs the code in the reader's head to make sense, rewrite the instance, Simple Explanation, and Details until it does not — or withdraw it.
-2. Present the finding using the Per-item Template (below) with `n` as the position in the walk and `T` as the total. `T` excludes safe items and info items.
+2. Present the finding using the Per-item Template (below) with `n` as the position in the walk and `m` as the total. `m` excludes safe items and info items.
 3. Display the Per-item Prompt (see Commands) and pause for an explicit decision. Never assume blanket approval from an earlier response. Accepting one finding does not authorise the next. If a response is ambiguous, ask which finding it applies to.
 
 Per-item command semantics. Letters are case-insensitive. Outcomes are tracked in-session — they are not written to disk at the moment of decision. They surface in the Phase 4 summary table and in the Remediation Summary if the review is saved.
@@ -44,12 +44,12 @@ Per-item command semantics. Letters are case-insensitive. Outcomes are tracked i
 - An option letter (`A`, `B`, `C` …) — apply that specific option. Track as `Fixed`. Briefly confirm what was done.
 - `R` — apply exactly what the Recommendation states, which may be a single option, a combination, or a blend. Otherwise identical to applying an option. Track as `Fixed`.
 - `N` — acknowledge and move to the next finding. Track as `Skipped`.
-- `P` — spin the finding out as a standalone follow-up file (see Project File Format below). Track as `Project: <filename>`. Move to the next finding without offering an inline resolution.
+- `T` — spin the finding out as a standalone follow-up file (see Ticket File Format below). Track as `Ticket: <filename>`. Move to the next finding without offering an inline resolution.
 - `S` — see Save (below).
 
-All (`A`) applies recommendations automatically. Work through the `T` findings in severity order without displaying the Per-item Prompt. For each finding:
+All (`A`) applies recommendations automatically. Work through the `m` findings in severity order without displaying the Per-item Prompt. For each finding:
 
-1. Announce `(n of T) <ID> <short title>`.
+1. Announce `(n of m) <ID> <short title>`.
 2. Re-read the target code and related code and critically re-evaluate the recommendation, as in the walk. If it no longer holds, say so and skip it, tracking as `Skipped`. Before applying, run the same Recommendation lock as the walk.
 3. Apply the recommended resolution — identical to `R` — and briefly confirm what was done. Track as `Fixed`.
 
@@ -59,7 +59,7 @@ Remediation guidance:
 
 - Bias recommendations toward the principled long-term solution that reduces maintenance and improves quality. Do not default to the smallest-diff resolution. Prefer the option you would pick if writing the fix were free
 - Apply minimal, targeted edits to integrate the resolution. Refactor surrounding code only when required to make the resolution land cleanly
-- If a resolution would be too large or risky to apply inline, recommend `P` to spin it out rather than attempting it inline
+- If a resolution would be too large or risky to apply inline, recommend `T` to spin it out rather than attempting it inline
 - Keep each fix focused on the issue being addressed and related code
 
 ### Phase 3: Satisfaction Pass
@@ -254,7 +254,7 @@ Writing rules:
 - Separate each option with a blank line. Never collapse options onto one line
 
 ```
-### Issue n of T — <ID>: <short title>
+### Issue n of m — <ID>: <short title>
 
 Category: <e.g. Security, Correctness>
 Location: <file:line>
@@ -362,7 +362,7 @@ When the report is saved after remediation begins, append the following section.
 
 - `Fixed` — the change was applied
 - `Skipped` — the finding was acknowledged with `N` and left unresolved
-- `Project: <filename>` — spun out as a standalone follow-up (see Project File Format below)
+- `Ticket: <filename>` — spun out as a standalone follow-up (see Ticket File Format below)
 - `Pending` — `S` was invoked before the finding had been processed
 
 ```
@@ -372,13 +372,13 @@ When the report is saved after remediation begins, append the following section.
 |----|---------|---------|
 | C1 | Brief description | Fixed |
 | H1 | Brief description | Skipped |
-| M1 | Brief description | Project: 01-race-condition-in-token-refresh.md |
+| M1 | Brief description | Ticket: 01-race-condition-in-token-refresh.md |
 | L1 | Brief description | Pending |
 ```
 
-## Project File Format
+## Ticket File Format
 
-When `P` is selected during remediation, write a standalone file at the repository root named `NN-<slug>.md` where:
+When `T` is selected during remediation, write a standalone file at the repository root named `NN-<slug>.md` where:
 
 - `NN` starts at `01` and increments based on existing files matching the pattern
 - `<title>` is the `<short title>` value from the presentation template used during remediation
@@ -416,11 +416,11 @@ Ordered steps at a level that gives direction without prescribing code. Snippets
 
 ## Constraints
 
-Hard rules: language version, target platforms, required tooling, compatibility requirements. Items that cannot be violated without breaking the project.
+Hard rules: language version, target platforms, required tooling, compatibility requirements. Items that cannot be violated without making the work fail.
 
 ## Acceptance Criteria
 
-Observable, verifiable outcomes that signal completion. Project-specific only — do not list universals like "build passes" or "tests pass".
+Observable, verifiable outcomes that signal completion. Ticket-specific only — do not list universals like "build passes" or "tests pass".
 ```
 
 Writing guidelines:
@@ -455,5 +455,5 @@ Display verbatim at the end of Phase 1:
 Display verbatim after presenting each finding:
 
 ```
-(R)ecommended  (N)ext  (P)roject  (S)ave
+(R)ecommended  (N)ext  (T)icket  (S)ave
 ```

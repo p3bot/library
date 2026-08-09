@@ -1,16 +1,16 @@
 # Item-by-item Template Versions
 
 History of the per-item finding template used by the interactive review tasks
-(`tasks/review/pre-commit`, `tasks/project/review`, `tasks/design/review`, and
+(`tasks/review/pre-commit`, `tasks/ticket/review`, `tasks/design/review`, and
 `tasks/review/multi-agent/orchestrator`) and by the external `one-by-one` skill.
 They share this template; they differ only in the title line, the label, the
 category placeholder, and the worked example:
 
-- pre-commit: `### Issue n of T — <ID>: <short title>`, Category `<e.g. Security, Correctness>`
-- project review: `### Finding n of T: <short title>`, Category `<decision | design | gap | risk | dependency>`
-- design review: `### Finding n of T: <short title>`, Category `<approach | alternative | tradeoff | assumption | risk | gap | decision | dependency>`
-- orchestrator: `### Issue n of T — <ID>: <short title>`, labelled `Review:` rather than `Category:`
-- one-by-one: `### Finding k of T — <id or short title>`, labelled `Category / Severity:`, carried from the source list
+- pre-commit: `### Issue n of m — <ID>: <short title>`, Category `<e.g. Security, Correctness>`
+- ticket review: `### Finding n of m: <short title>`, Category `<decision | design | gap | risk | dependency>`
+- design review: `### Finding n of m: <short title>`, Category `<approach | alternative | tradeoff | assumption | risk | gap | decision | dependency>`
+- orchestrator: `### Issue n of m — <ID>: <short title>`, labelled `Review:` rather than `Category:`
+- one-by-one: `### Finding k of m — <id or short title>`, labelled `Category / Severity:`, carried from the source list
 
 Each version below shows the canonical (pre-commit) form. Recorded here for easier
 comparison when adjusting the template; the authoritative copies live in each task's
@@ -42,14 +42,14 @@ Recommendation (B): <which option, with a brief why focused on the principled lo
 ```
 ````
 
-## v2 — softened (current)
+## v2 — softened
 
 Source: commit `a51c953` (rewrite finding presentation for agent directors),
 with the menu-marking change in `404e655`. Splits `Issue` into `What is wrong`
 and `Why it matters`, adds a `Decision` line, and adds a preamble directing the
 finding at the person directing the agent rather than whoever wrote the code.
 
-The preamble wording differs slightly per task (project review says "document"
+The preamble wording differs slightly per task (ticket review says "document"
 and "sections"; pre-commit says "code" and "files or symbols").
 
 ````
@@ -87,7 +87,7 @@ Leads with concrete, observable evidence instead of prose, described from the
 perspective of someone who does not have the code in their head. Bold field
 labels on their own line for scannability. `Cause`, `Impact`, and `Options` are
 optional blocks; the evidence, `Decision`, and `Recommendation` always present.
-The companion Per-item Prompt collapses to `(R)ecommended  (N)ext  (P)roject  (S)ave`.
+The companion Per-item Prompt collapses to `(R)ecommended  (N)ext  (T)icket  (S)ave`.
 
 ````
 This template is a suggestion. Keep details succinct; expand only when the finding genuinely warrants it.
@@ -346,7 +346,7 @@ Writing rules:
 - Separate each option with a blank line. Never collapse options onto one line
 
 ```
-### Issue n of T — <ID>: <short title>
+### Issue n of m — <ID>: <short title>
 
 Category: <e.g. Security, Correctness>
 Location: <file:line>

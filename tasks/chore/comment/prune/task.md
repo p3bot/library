@@ -113,7 +113,7 @@ Marker comments — TODO, FIXME, XXX, HACK, KLUDGE, BUG, OPTIMIZE (case-insensit
 ## Constraints
 
 - Comments only. Do not refactor code, rename identifiers, change behaviour, restructure files, or modify tests beyond removing or compressing comments. Re-adding marker comments via Phase 3 step 6 option (R) is the only permitted addition.
-- Do not migrate extracted comment rationale to `docs/decisions.md`, `roadmap.md`, or any other source-adjacent document. If a rationale cannot compress to one source line, delete it and trust git history. Files created by Phase 3 step 6 dispositions (options S, P) are exempt.
+- Do not migrate extracted comment rationale to `docs/decisions.md`, `roadmap.md`, or any other source-adjacent document. If a rationale cannot compress to one source line, delete it and trust git history. Files created by Phase 3 step 6 dispositions (options S, T) are exempt.
 - Do not invent commit-body rationale for behaviour you do not understand. If a comment carries WHY you cannot evaluate, ask the user before deleting it.
 - Respect tool-mandated doc-comment forms. Stripping godoc on exported Go symbols, rustdoc on `pub` items, or Sphinx docstrings on Python public APIs will break linters and external documentation.
 - Do not commit per file or per phase. Commit once at Phase 3.
@@ -179,8 +179,8 @@ Resume protocol: if the session is interrupted mid-file, leave the file unchecke
    Investigate every hit. Either delete or justify to the user.
 6. Print every entry from the working document's TODOs section to the user as a numbered list, in collection order, with `path/to/file:line — text` per entry. The user must be able to review every TODO without opening another file and must be able to reference items by number when choosing per-TODO dispositions. Then present the disposition options and accept any combination — a single choice for the whole list, or different choices per TODO (e.g. "(T) for 1, 3, 5; (R) for 2; (D) for the rest"):
    - (S)ave: write the list to a dedicated document (e.g. `todos.md` at the repo root).
-   - (P)roject: create a standalone project document to walk through and resolve each TODO.
-   - (T)ickets: file one issue per TODO in the user's tracker (Jira, GitLab, GitHub).
+   - (T)icket: create a standalone ticket document to walk through and resolve each TODO.
+   - (I)ssues: file one issue per TODO in the user's tracker (Jira, GitLab, GitHub).
    - (R)estore: re-introduce specific TODOs to their original location in source.
    - (D)iscard: delete the list without further action.
    Do not act unilaterally. Wait for the user's choices before executing.
@@ -205,5 +205,5 @@ Resume protocol: if the session is interrupted mid-file, leave the file unchecke
 4. The full linter passes.
 5. Baseline and final comment-volume measurements are present in the working document's Current State section and the commit message, with the delta computed.
 6. A single commit on the working branch captures the entire cleanup, and the working document is not part of it.
-7. No new files were created to hold extracted comment rationale. Files created by Phase 3 step 6 dispositions (options S, P) are exempt.
+7. No new files were created to hold extracted comment rationale. Files created by Phase 3 step 6 dispositions (options S, T) are exempt.
 8. Every marker comment encountered during Phase 2 is recorded in the working document's TODOs section with a `path/to/file:line — text` entry, and its disposition is recorded in Phase 3 step 6.

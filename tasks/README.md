@@ -60,11 +60,12 @@ tasks/<domain>/<name>/
 - [jira/item/research](jira/item/research/) - Research a Jira item
 - [jira/item/review](jira/item/review/) - Review a single Jira item
 
-### project/
+### ticket/
 
-- [project/begin](project/begin/) - Resume an in-progress project document
-- [project/create](project/create/) - Create a project document
-- [project/review](project/review/) - Review a project document
+- [ticket/begin](ticket/begin/) - Begin working on the current ticket document
+- [ticket/create](ticket/create/) - Create a ticket document
+- [ticket/decompose](ticket/decompose/) - Decompose an accepted design into ticket documents
+- [ticket/review](ticket/review/) - Review a ticket document
 
 ### review/
 

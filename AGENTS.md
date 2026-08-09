@@ -169,7 +169,7 @@ The publish workflow's module-plus-index commit is the canonical multi-scope cas
 
 Shared per-item finding template (history: docs/item-by-item-template.md):
 
-- tasks/project/review/task.md
+- tasks/ticket/review/task.md
 - tasks/design/review/task.md
 - tasks/review/pre-commit/task.md
 - tasks/review/multi-agent/orchestrator/task.md

@@ -1,10 +1,11 @@
-package review
+package begin
 
 import "github.com/p3bot/library/schemas@v1"
 
 task: schemas.#Task & {
-	description: "Review and harden a design document before decomposition into ticket documents"
-	tags: ["design", "review", "feature", "analysis", "architecture", "critique"]
+	description: "Begin working on the current ticket with full context"
+	tags: ["ticket", "begin", "implementation", "active", "current"]
+	uses: ["contexts:ticket/implementation"]
 	file: "@module/task.md"
 	prompt: """
 		Read {{.file}} to understand your task.

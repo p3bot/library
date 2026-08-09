@@ -1,4 +1,4 @@
-module: "github.com/p3bot/library/tasks/review/multi-agent/orchestrator@v1"
+module: "github.com/p3bot/library/tasks/review/multi-agent/orchestrator@v2"
 language: {
 	version: "v0.16.0"
 }

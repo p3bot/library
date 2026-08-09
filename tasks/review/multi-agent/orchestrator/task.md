@@ -115,14 +115,14 @@ Apply safe items immediately, without prompting. Safe items are anything that do
 - Comments — add, remove, or change
 - Documentation — add, remove, or change
 
-State what was applied for each safe item. Safe items do not count toward `T`.
+State what was applied for each safe item. Safe items do not count toward `m`.
 
-Let `T` be the count of remaining actionable findings — the critical, high, medium, and low items, excluding info items (recorded only) and the safe items applied above. The top-level choice selects how they are handled: `C` walks them one at a time in severity order, `A` applies the recommended resolution to every finding automatically.
+Let `m` be the count of remaining actionable findings — the critical, high, medium, and low items, excluding info items (recorded only) and the safe items applied above. The top-level choice selects how they are handled: `C` walks them one at a time in severity order, `A` applies the recommended resolution to every finding automatically.
 
 Continue (`C`) walks the findings one at a time in severity order. For each finding:
 
 1. Verify the finding first. It came from another agent's report, not your own analysis — re-read the actual code at the location, and the source report if useful, to confirm the issue is real and current. If it no longer holds, say so and withdraw it before presenting.
-2. Build the Options and Recommendation from the verified issue and the code you just read. Lock the Recommendation: root fix vs local patch; reject the cheapest alternative only on maintenance or correctness, not effort. Rewrite until a reader who never saw the subagent report can decide after one read — or withdraw. Then present using the Per-item Template (below) with `n` as the position in the walk and `T` as the total.
+2. Build the Options and Recommendation from the verified issue and the code you just read. Lock the Recommendation: root fix vs local patch; reject the cheapest alternative only on maintenance or correctness, not effort. Rewrite until a reader who never saw the subagent report can decide after one read — or withdraw. Then present using the Per-item Template (below) with `n` as the position in the walk and `m` as the total.
 3. Display the Per-item Prompt (see Commands) and pause for an explicit decision. Never assume blanket approval from an earlier response. Accepting one finding does not authorise the next. If a response is ambiguous, ask which finding it applies to.
 
 Per-item command semantics. Outcomes are tracked in-session and surface in the Step 10 outcome table.
@@ -130,24 +130,24 @@ Per-item command semantics. Outcomes are tracked in-session and surface in the S
 - An option letter (`A`, `B`, `C` …) — apply that specific option. Track as `Fixed`. Briefly confirm what was done.
 - `R` — apply exactly what the Recommendation states, which may be a single option, a combination, or a blend. Track as `Fixed`.
 - `N` — acknowledge and move to the next finding. Track as `Skipped`.
-- `P` — spin the finding out as its own standalone project file (see Project File Format below), then continue to the next finding. Track as `Project: <filename>`.
+- `T` — spin the finding out as its own standalone ticket document (see Ticket File Format below), then continue to the next finding. Track as `Ticket: <filename>`.
 - `S` — see the Save behaviour below.
 
-All (`A`) applies recommendations automatically. Work through the `T` findings in severity order without displaying the Per-item Prompt. For each finding:
+All (`A`) applies recommendations automatically. Work through the `m` findings in severity order without displaying the Per-item Prompt. For each finding:
 
-1. Announce `(n of T) <ID> <short title>`.
+1. Announce `(n of m) <ID> <short title>`.
 2. Verify the finding against the code as in the walk. If it no longer holds, say so and skip it, tracking as `Skipped`. Before applying, run the same Recommendation lock as step 2 of the walk.
 3. Apply the recommended resolution — identical to `R` — and briefly confirm what was done. Track as `Fixed`.
 
 The edit is the checkpoint. If you deny an edit, stop and discuss that finding; once it is resolved, resume the run for the remaining findings or switch to the one-at-a-time walk.
 
-Save (`S`) writes the outstanding findings to a project file and stops. Outstanding findings are those not yet fixed or skipped. Verify each outstanding finding and build its Simple Explanation, Details, Options, and Recommendation (with the same Recommendation lock as the walk), then write them all into a single multi-finding project file (see Project File Format below). Findings already fixed, skipped, or spun out are recorded in an Already Handled block for context. Confirm the filename written.
+Save (`S`) writes the outstanding findings to a ticket document and stops. Outstanding findings are those not yet fixed or skipped. Verify each outstanding finding and build its Simple Explanation, Details, Options, and Recommendation (with the same Recommendation lock as the walk), then write them all into a single multi-finding ticket document (see Ticket File Format below). Findings already fixed, skipped, or spun out are recorded in an Already Handled block for context. Confirm the filename written.
 
 Remediation guidance:
 
 - Bias recommendations toward the principled long-term solution that reduces maintenance and improves quality. Do not default to the smallest-diff resolution. Prefer the option you would pick if writing the fix were free
 - Apply minimal, targeted edits to integrate the resolution. Refactor surrounding code only when required to make the resolution land cleanly
-- If a resolution would be too large or risky to apply inline, recommend `P` to spin it out rather than attempting it inline
+- If a resolution would be too large or risky to apply inline, recommend `T` to spin it out rather than attempting it inline
 - Keep each fix focused on the issue being addressed and related code
 
 ## Step 9: Satisfaction Pass
@@ -162,7 +162,7 @@ After all findings have been processed on the `C` or `A` path, do a focused re-c
 ## Step 10: Wrap-up
 
 1. Print the outcome table of all findings and their outcomes
-2. If any finding was skipped or left outstanding, prompt the user once: enter `S` to write those findings to a project file. Any other reply skips the save
+2. If any finding was skipped or left outstanding, prompt the user once: enter `S` to write those findings to a ticket document. Any other reply skips the save
 3. Remind the user to review the changes before committing
 
 Outcome table:
@@ -172,7 +172,7 @@ Outcome table:
 |----|---------------|-------------------|--------------------------------------------|
 | C1 | security      | Brief description | Fixed                                      |
 | H1 | correctness   | Brief description | Skipped                                    |
-| M1 | readability   | Brief description | Project: 01-race-condition-in-refresh.md   |
+| M1 | readability   | Brief description | Ticket: 01-race-condition-in-refresh.md   |
 | L1 | documentation | Brief description | Pending                                    |
 ```
 
@@ -180,7 +180,7 @@ Outcome values:
 
 - `Fixed` — the change was applied
 - `Skipped` — the finding was acknowledged with `N` and left unresolved
-- `Project: <filename>` — spun out as a standalone project file
+- `Ticket: <filename>` — spun out as a standalone ticket document
 - `Pending` — `S` was invoked before the finding had been processed
 
 ## Guidance
@@ -214,7 +214,7 @@ Writing rules:
 - Separate each option with a blank line. Never collapse options onto one line
 
 ```
-### Issue n of T — <ID>: <short title>
+### Issue n of m — <ID>: <short title>
 
 Review: <e.g. security, correctness>
 Location: <file:line>
@@ -325,14 +325,14 @@ Failed: <review — what went wrong, or none>
 
 List every finding in severity order — do not truncate. Info items are included in the table but are recorded for awareness only and are not walked. The detail for each actionable finding (Simple Explanation, Details, Options, Recommendation) is presented one at a time during the Step 8 walk, not here.
 
-## Project File Format
+## Ticket File Format
 
-Both `P` and `S` write standalone project files at the repository root named `NN-<slug>.md`, where:
+Both `T` and `S` write standalone ticket documents at the repository root named `NN-<slug>.md`, where:
 
-- `NN` starts at `01` and increments based on existing files matching the pattern, shared across all project files
+- `NN` starts at `01` and increments based on existing files matching the pattern, shared across all ticket documents
 - `<slug>` is the title lowercased and hyphenated (for example "Race condition in token refresh" becomes `race-condition-in-token-refresh`)
 
-`P` writes a single finding. Use the `<short title>` from the Per-item Template as the title. The file must be fully self-contained so a new agent session can pick it up with no extra context. Include only the sections that apply — right-size the document to the scope of the finding.
+`T` writes a single finding. Use the `<short title>` from the Per-item Template as the title. The file must be fully self-contained so a new agent session can pick it up with no extra context. Include only the sections that apply — right-size the document to the scope of the finding.
 
 ```
 # <title>
@@ -364,11 +364,11 @@ Ordered steps at a level that gives direction without prescribing code. Snippets
 
 ## Constraints
 
-Hard rules: language version, target platforms, required tooling, compatibility requirements. Items that cannot be violated without breaking the project.
+Hard rules: language version, target platforms, required tooling, compatibility requirements. Items that cannot be violated without making the work fail.
 
 ## Acceptance Criteria
 
-Observable, verifiable outcomes that signal completion. Project-specific only — do not list universals like "build passes" or "tests pass".
+Observable, verifiable outcomes that signal completion. Ticket-specific only — do not list universals like "build passes" or "tests pass".
 ```
 
 `S` writes the outstanding findings as one multi-finding file. Generate a concise descriptive title for the review as a whole. Each finding carries the verified Simple Explanation, Details, Options, and Recommendation built during the walk.
@@ -398,7 +398,7 @@ Findings resolved before the save, for context. Omit if none.
 
 - C2 Fixed — <brief>
 - M3 Skipped — <brief>
-- L1 Project: 02-<slug>.md
+- L1 Ticket: 02-<slug>.md
 
 ## Findings
 
@@ -442,7 +442,7 @@ Display verbatim after the summary:
 ```
 - (C)ontinue — walk the findings one at a time, fixing each
 - (A)ll — apply the recommended fix to every finding automatically
-- (S)ave — write the findings to a project file for later and stop
+- (S)ave — write the findings to a ticket document for later and stop
 ```
 
 ### Per-item Prompt
@@ -450,5 +450,5 @@ Display verbatim after the summary:
 Display verbatim after presenting each finding:
 
 ```
-(R)ecommended  (N)ext  (P)roject  (S)ave
+(R)ecommended  (N)ext  (T)icket  (S)ave
 ```

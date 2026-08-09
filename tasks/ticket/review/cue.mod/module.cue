@@ -1,4 +1,4 @@
-module: "github.com/p3bot/library/tasks/review/pre-commit@v2"
+module: "github.com/p3bot/library/tasks/ticket/review@v1"
 language: {
 	version: "v0.16.0"
 }

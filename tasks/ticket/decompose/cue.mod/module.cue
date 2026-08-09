@@ -1,4 +1,4 @@
-module: "github.com/p3bot/library/tasks/review/pre-commit@v2"
+module: "github.com/p3bot/library/tasks/ticket/decompose@v1"
 language: {
 	version: "v0.16.0"
 }
@@ -7,6 +7,6 @@ source: {
 }
 deps: {
 	"github.com/p3bot/library/schemas@v1": {
-		v: "v1.0.0"
+		v: "v1.1.0"
 	}
 }

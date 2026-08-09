@@ -4,11 +4,11 @@ This guide is for AI agents writing design documents.
 
 A design document specifies something new before it is built — a complete system designed from scratch, or a substantial feature added to an existing one. It captures the whole shape of that thing: what it does, how it is structured, how its parts fit together, and the reasoning that led to the design.
 
-Reach for a design document when there is genuine design work to settle first — the shape is not yet obvious, and more than one approach is worth weighing. When the approach is already clear and only the build remains, skip the design and write a project document directly. The trigger is design uncertainty, not size.
+Reach for a design document when there is genuine design work to settle first — the shape is not yet obvious, and more than one approach is worth weighing. When the approach is already clear and only the build remains, skip the design and write a ticket document directly. The trigger is design uncertainty, not size.
 
-The document is written after an interactive design session — ideas thrown around, concepts settled — and captures the result. It is then read cold: by a reviewer in a fresh session, and by the agent that decomposes it into the project documents that build it. Everything needed to understand and judge the design must be in the document itself.
+The document is written after an interactive design session — ideas thrown around, concepts settled — and captures the result. It is then read cold: by a reviewer in a fresh session, and by the agent that decomposes it into the ticket documents that build it. Everything needed to understand and judge the design must be in the document itself.
 
-A design document describes a solution. A project document schedules the work that builds part of it. Keep them separate. The design document owns the solution's shape and the reasoning behind it. It hands Goal, Current State, Constraints, and References forward to one or more project documents, which own the Requirements, Implementation Plan, and Acceptance Criteria this document deliberately omits.
+A design document describes a solution. A ticket document schedules the work that builds part of it. Keep them separate. The design document owns the solution's shape and the reasoning behind it. It hands Goal, Current State, Constraints, and References forward to one or more ticket documents, which own the Requirements, Implementation Plan, and Acceptance Criteria this document deliberately omits.
 
 ## Principles
 
@@ -19,7 +19,7 @@ The value of a design document is the reasoning it makes explicit and the soluti
 - Make tradeoffs explicit. Every design gives something up. State what the chosen shape costs, not only what it wins. A design with no stated downside is one not yet understood.
 - Surface load-bearing assumptions. Name the facts the design rests on — a dependency's behaviour, a scale target, a platform capability. If one is wrong the solution fails, so state it where review can test it.
 - Argue with evidence, not confidence. Prefer a measured number, a citation, or a small worked example over assertion. Confident prose hides weak designs, and review exists to find them.
-- Design the solution, not the code. Specify the architecture, the components and their responsibilities, and the interfaces and data that define the system. Leave function signatures, naming, file placement, and defensive detail to the project documents and their implementers.
+- Design the solution, not the code. Specify the architecture, the components and their responsibilities, and the interfaces and data that define the system. Leave function signatures, naming, file placement, and defensive detail to the ticket documents and their implementers.
 - Right-size to the design. A large system earns every section. A focused feature needs a Summary, a Proposed Design, the alternatives weighed, and the seams it touches, and little else. Omit sections that do not apply.
 - Be explicit and complete. The document is read cold. Do not reference the session that produced it. "The approach we settled on" means nothing to a fresh-session reader.
 - Resolve what you can; surface what you cannot. Fold settled questions into the body. Genuinely open decisions that need an owner go in Open Questions, not scattered through the prose.
@@ -79,7 +79,7 @@ Prior art, similar systems, benchmarks, and documentation consulted. Give the lo
 
 ## Handoff to Implementation
 
-A design document is not implemented directly. Once the solution is settled, decompose it into one or more project documents using the project writing guide at `contexts:project/writing`. Those documents carry the Requirements, Implementation Plan, and Acceptance Criteria this document leaves out. Carry Goal, Current State, Constraints, and References forward so the project documents do not re-derive them.
+A design document is not implemented directly. Once the solution is settled, decompose it into one or more ticket documents using the ticket writing guide at `contexts:ticket/writing`. Those documents carry the Requirements, Implementation Plan, and Acceptance Criteria this document leaves out. Carry Goal, Current State, Constraints, and References forward so the ticket documents do not re-derive them.
 
 ## File Placement
 

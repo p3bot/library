@@ -364,22 +364,22 @@ contexts: {
 		description: "Go CLI design guide: architecture, patterns, and conventions for command-line tools"
 		tags: ["golang", "design", "cli", "go", "guide"]
 	}
-	"project/writing": {
-		module:      "github.com/p3bot/library/contexts/project/writing@v1"
-		version:     "v1.1.0"
-		description: "Guide for writing project documents that serve as the sole context for an implementer agent"
-		tags: ["project", "writing", "documentation", "guide", "agents"]
+	"ticket/writing": {
+		module:      "github.com/p3bot/library/contexts/ticket/writing@v1"
+		version:     "v1.0.0"
+		description: "Guide for writing ticket documents that serve as the sole context for an implementer agent"
+		tags: ["ticket", "writing", "documentation", "guide", "agents"]
 	}
-	"project/implementation": {
-		module:      "github.com/p3bot/library/contexts/project/implementation@v1"
-		version:     "v1.3.0"
-		description: "Guide for implementing project documents received as the sole context for the work"
-		tags: ["project", "implementation", "implement", "implementing", "execution", "delivery", "documentation", "guide", "agents"]
+	"ticket/implementation": {
+		module:      "github.com/p3bot/library/contexts/ticket/implementation@v1"
+		version:     "v1.0.0"
+		description: "Guide for implementing ticket documents received as the sole context for the work"
+		tags: ["ticket", "implementation", "implement", "implementing", "execution", "delivery", "documentation", "guide", "agents"]
 	}
 	"design/writing": {
 		module:      "github.com/p3bot/library/contexts/design/writing@v1"
-		version:     "v1.0.0"
-		description: "Guide for writing design documents for a new system or substantial feature before it becomes project documents"
+		version:     "v1.1.0"
+		description: "Guide for writing design documents for a new system or substantial feature before decomposition into ticket documents"
 		tags: ["design", "writing", "feature", "architecture", "documentation", "guide", "agents"]
 	}
 	"start/library/naming": {
@@ -545,14 +545,14 @@ tasks: {
 		tags: ["review", "testing", "coverage", "test-gaps", "code-quality"]
 	}
 	"review/pre-commit": {
-		module:      "github.com/p3bot/library/tasks/review/pre-commit@v1"
-		version:     "v1.10.0"
-		description: "Interactive pre-commit review that finds and fixes issues in git changes"
+		module:      "github.com/p3bot/library/tasks/review/pre-commit@v2"
+		version:     "v2.0.0"
+		description: "Interactive pre-commit review that finds issues in git changes and walks through fixing them"
 		tags: ["review", "pre-commit", "fix", "code-changes", "code-quality"]
 	}
 	"review/multi-agent/orchestrator": {
-		module:      "github.com/p3bot/library/tasks/review/multi-agent/orchestrator@v1"
-		version:     "v1.7.0"
+		module:      "github.com/p3bot/library/tasks/review/multi-agent/orchestrator@v2"
+		version:     "v2.0.0"
 		description: "Orchestrate parallel review agents, consolidate findings, and walk through fixing them"
 		tags: ["review", "orchestration", "multi-agent", "parallel", "fix"]
 	}
@@ -616,34 +616,34 @@ tasks: {
 		description: "Create a new system prompt (role) for AI agent use"
 		tags: ["dotagents", "cwd", "role", "system-prompt", "ai"]
 	}
-	"project/create": {
-		module:      "github.com/p3bot/library/tasks/project/create@v1"
+	"ticket/create": {
+		module:      "github.com/p3bot/library/tasks/ticket/create@v1"
 		version:     "v1.0.0"
-		description: "Create a new project document"
-		tags: ["project", "create", "planning", "active", "current"]
+		description: "Create a new ticket document"
+		tags: ["ticket", "create", "planning", "active", "current"]
 	}
-	"project/review": {
-		module:      "github.com/p3bot/library/tasks/project/review@v1"
-		version:     "v1.3.0"
-		description: "Review the current project, surface open issues, and optionally resolve them"
-		tags: ["project", "review", "preparation", "analysis", "active", "current", "design", "issues"]
-	}
-	"project/begin": {
-		module:      "github.com/p3bot/library/tasks/project/begin@v1"
+	"ticket/review": {
+		module:      "github.com/p3bot/library/tasks/ticket/review@v1"
 		version:     "v1.0.0"
-		description: "Begin working on the current project with full context"
-		tags: ["project", "begin", "implementation", "active", "current"]
+		description: "Review and prepare the current ticket for implementation"
+		tags: ["ticket", "review", "preparation", "analysis", "active", "current"]
 	}
-	"project/decompose": {
-		module:      "github.com/p3bot/library/tasks/project/decompose@v1"
+	"ticket/begin": {
+		module:      "github.com/p3bot/library/tasks/ticket/begin@v1"
 		version:     "v1.0.0"
-		description: "Decompose an accepted design into a right-sized set of project documents"
-		tags: ["project", "decompose", "design", "planning", "breakdown", "seams", "active", "current"]
+		description: "Begin working on the current ticket with full context"
+		tags: ["ticket", "begin", "implementation", "active", "current"]
+	}
+	"ticket/decompose": {
+		module:      "github.com/p3bot/library/tasks/ticket/decompose@v1"
+		version:     "v1.0.0"
+		description: "Decompose an accepted design into a right-sized set of ticket documents"
+		tags: ["ticket", "decompose", "design", "planning", "breakdown", "seams", "active", "current"]
 	}
 	"design/review": {
 		module:      "github.com/p3bot/library/tasks/design/review@v1"
-		version:     "v1.3.0"
-		description: "Review and harden a design document before it becomes project documents"
+		version:     "v1.4.0"
+		description: "Review and harden a design document before decomposition into ticket documents"
 		tags: ["design", "review", "feature", "analysis", "architecture", "critique"]
 	}
 	"confluence/doc/read": {
@@ -695,8 +695,8 @@ tasks: {
 		tags: ["jira", "item", "comment", "git", "commits", "summary"]
 	}
 	"chore/comment/prune": {
-		module:      "github.com/p3bot/library/tasks/chore/comment/prune@v1"
-		version:     "v1.0.0"
+		module:      "github.com/p3bot/library/tasks/chore/comment/prune@v2"
+		version:     "v2.0.0"
 		description: "Prune comment bloat from source files, compressing real WHY and harvesting markers"
 		tags: ["chore", "comment", "prune", "code-quality", "cleanup"]
 	}
