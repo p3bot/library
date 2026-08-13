@@ -45,6 +45,7 @@ agents/<vendor>/<mode>/
 ### grok/ (xAI Grok Build TUI)
 
 - [grok/interactive](grok/interactive/) - Interactive Grok Build session
+- [grok/auto](grok/auto/) - Auto permission mode; fewer prompts with background safety checks
 
 ### agy/ (Google Antigravity CLI)
 

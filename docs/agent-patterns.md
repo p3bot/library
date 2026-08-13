@@ -11,7 +11,7 @@ Agents vary across two dimensions:
 | Dimension | Options |
 |-----------|---------|
 | Interactivity | Interactive (ongoing session) or Non-interactive (one-shot) |
-| Permissions | Default (prompt for approval), Auto-edit (approve file edits), Bypass (approve all) |
+| Permissions | Default (prompt for approval), Auto (safety-checked auto-approve), Auto-edit (approve file edits), Bypass (approve all) |
 
 ## Patterns
 
@@ -25,6 +25,19 @@ Interactive session with default permission prompts.
 - Standard mode for interactive development
 
 Best for: General development, exploratory work, learning a codebase.
+
+### Auto
+
+Interactive session with safety-checked auto-approval.
+
+- Ongoing conversation with the user
+- A safety check auto-approves routine local work
+- Other calls are blocked or escalated rather than always prompting
+- Fewer prompts than default, without full autonomy
+
+Best for: Interactive Grok sessions that want fewer prompts with background safety checks.
+
+Note: Currently published for Grok only. Grok's `auto` mode is not the same as Claude's `acceptEdits` or `bypassPermissions`.
 
 ### Edit
 
@@ -98,6 +111,7 @@ The fully-qualified user-facing address is `agents:<cli-tool>/<variant>` (e.g. `
 | `copilot/non-interactive` | Non-interactive | Default |
 | `copilot/unattended` | Non-interactive | Bypass all |
 | `grok/interactive` | Interactive | Default |
+| `grok/auto` | Interactive | Auto |
 | `agy/interactive` | Interactive | Default |
 | `agy/edit` | Interactive | Auto-edit |
 | `agy/bypass-permissions` | Interactive | Bypass all |
@@ -109,6 +123,7 @@ The fully-qualified user-facing address is `agents:<cli-tool>/<variant>` (e.g. `
 | Situation | Pattern |
 |-----------|---------|
 | Interactive development | Base |
+| Fewer prompts, interactive Grok | Auto |
 | Trusted editing session | Edit |
 | Full autonomy, interactive | Bypass Permissions |
 | Scripted with oversight | Non-interactive |
@@ -136,9 +151,10 @@ The patterns map to CLI flags:
 | Pattern | Claude Flags | Gemini Flags | Copilot Flags | Grok Flags | Agy Flags |
 |---------|--------------|--------------|---------------|------------|-----------|
 | Base | `--permission-mode default` | `--approval-mode default --prompt-interactive` | `--interactive` | `--permission-mode default` | `--prompt-interactive` |
+| Auto | — | — | — | `--permission-mode auto` | — |
 | Edit | `--permission-mode acceptEdits` | `--approval-mode auto_edit --prompt-interactive` | `--allow-tool=write --interactive` | — | `--mode accept-edits --prompt-interactive` |
 | Bypass Permissions | `--permission-mode bypassPermissions` | `--approval-mode yolo --prompt-interactive` | `--allow-all --interactive` | — | `--dangerously-skip-permissions --prompt-interactive` |
 | Non-interactive | `--permission-mode default --print` | `--approval-mode default --prompt` | `--allow-all-tools --prompt` | — | `--print` |
 | Unattended | `--permission-mode bypassPermissions --print` | `--approval-mode yolo --prompt` | `--allow-all --prompt` | — | `--dangerously-skip-permissions --print` |
 
-Note: Copilot's "Non-interactive" variant uses `--allow-all-tools` rather than a default-permission flag, so its effective permission posture differs from the Claude and Gemini Non-interactive variants. The pattern label captures the interactivity dimension; consult each agent's `command` field for the exact flags it runs. Only `grok/interactive` is published for Grok so far. Agy has no system-prompt CLI flag; roles rely on workspace `AGENTS.md` / `GEMINI.md` discovery.
+Note: Copilot's "Non-interactive" variant uses `--allow-all-tools` rather than a default-permission flag, so its effective permission posture differs from the Claude and Gemini Non-interactive variants. The pattern label captures the interactivity dimension; consult each agent's `command` field for the exact flags it runs. Grok currently publishes `interactive` and `auto` only. Agy has no system-prompt CLI flag; roles rely on workspace `AGENTS.md` / `GEMINI.md` discovery.

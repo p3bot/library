@@ -120,10 +120,17 @@ agents: {
 	}
 	"grok/interactive": {
 		module:      "github.com/p3bot/library/agents/grok/interactive@v1"
-		version:     "v1.0.0"
+		version:     "v1.1.0"
 		description: "Grok Build TUI by xAI - agentic coding assistant"
 		bin:         "grok"
 		tags: ["xai", "grok", "coding", "agent"]
+	}
+	"grok/auto": {
+		module:      "github.com/p3bot/library/agents/grok/auto@v1"
+		version:     "v1.0.0"
+		description: "Grok Build TUI with auto permission mode - fewer prompts with background safety checks"
+		bin:         "grok"
+		tags: ["xai", "grok", "coding", "agent", "auto"]
 	}
 	"agy/interactive": {
 		module:      "github.com/p3bot/library/agents/agy/interactive@v1"
