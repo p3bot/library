@@ -22,7 +22,7 @@ CUE conventions:
 - Modules are identified by index keys, not by `name` fields
 - Use kebab-case for tags and identifiers
 - Schemas define pure constraints without defaults
-- `#Skill.file` defaults to `"@module/SKILL.md"`; this is an intentional exception (the entry pointer `start get` / `start describe` emit)
+- `#Skill.file` is `"@module/SKILL.md"`; that is the standard entry pointer, not a default
 - Package names match the deepest directory segment (hyphens removed)
 - Import schemas from `github.com/p3bot/library/schemas@v1`
 - CUE language pin: `v0.16.0` in every `cue.mod/module.cue`
@@ -153,7 +153,7 @@ Publishing a module to the CUE Central Registry follows one canonical workflow. 
 start get contexts:start/library/publishing
 ```
 
-It owns the full procedure — validation, version determination from the remote, tag-collision preflight, the mandatory index update, the single module-plus-index commit, the explicit tag pushes, the registry publish, and verification.
+It owns the full procedure — validation, version determination from the remote, tag-collision preflight, the explicit tag pushes, the registry publish, and verification. Index update and the module-plus-index commit apply to agents, roles, contexts, tasks, and skills; they do not apply to schemas.
 
 ## Versioning
 
@@ -178,7 +178,7 @@ Shared per-item finding template (history: docs/item-by-item-template.md):
 - tasks/design/review/task.md
 - tasks/review/pre-commit/task.md
 - tasks/review/multi-agent/orchestrator/task.md
-- ~/.agents/skills/one-by-one/SKILL.md
+- skills/workflows/one-by-one/SKILL.md
 
 ## References
 

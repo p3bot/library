@@ -240,12 +240,12 @@ Unlike roles, contexts, and tasks, skills do **not** embed `#UTD`. There is no p
 - `tags` ([]string, optional) - Tags for categorization/search
 - `origin` (string, optional) - Source module path for installed copies
 - `uses` ([]string, optional) - Other library modules this module pulls in at runtime via `start get`
-- `file` (string) - Entry pointer emitted by `start get` and `start describe`. Default: `"@module/SKILL.md"`
+- `file` (string) - Standard entry pointer `"@module/SKILL.md"`, emitted by `start get` and `start describe`
 
 **Constraints:**
 
 - Does not embed `#UTD`; `command`, `prompt`, `shell`, and `timeout` are not skill fields
-- `file` defaults to `"@module/SKILL.md"`. This default is an intentional exception to the no-defaults rule: it is the entry pointer `start get` / `start describe` emit
+- `file` is `"@module/SKILL.md"`; that is the standard entry path, not a schema default
 - Agent Skills frontmatter (`name`, `description`, `license`, and so on) lives in SKILL.md and is not mirrored into CUE
 
 ## Usage

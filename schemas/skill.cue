@@ -12,7 +12,6 @@ package schemas
 #Skill: {
 	#Base
 
-	// Entry file emitted by `start get` and `start describe`.
-	// Default is an intentional exception to the no-defaults rule.
+	// Standard entry pointer. Not a user-config default.
 	file: string | *"@module/SKILL.md"
 }
