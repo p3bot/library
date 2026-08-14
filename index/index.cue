@@ -397,7 +397,7 @@ contexts: {
 	}
 	"start/library/publishing": {
 		module:      "github.com/p3bot/library/contexts/start/library/publishing@v1"
-		version:     "v1.0.0"
+		version:     "v1.1.0"
 		description: "Canonical workflow for publishing library modules to the CUE Central Registry"
 		tags: ["start", "library", "publishing", "publish", "release", "registry", "workflow", "guide"]
 	}
@@ -706,5 +706,17 @@ tasks: {
 		version:     "v2.0.0"
 		description: "Prune comment bloat from source files, compressing real WHY and harvesting markers"
 		tags: ["chore", "comment", "prune", "code-quality", "cleanup"]
+	}
+}
+
+// Skill index - maps friendly names to module paths
+skills: [string]: schemas.#IndexEntry
+
+skills: {
+	"workflows/one-by-one": {
+		module:      "github.com/p3bot/library/skills/workflows/one-by-one@v1"
+		version:     "v1.0.0"
+		description: "Walk a list of findings one at a time and resolve each with a principled fix"
+		tags: ["workflow", "remediation", "review"]
 	}
 }

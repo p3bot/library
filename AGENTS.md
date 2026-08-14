@@ -1,6 +1,6 @@
 # start CLI Library
 
-CUE-based module library for the start AI agent launcher CLI. Modules include agents, roles, contexts, and tasks, published to the CUE Central Registry under `github.com/p3bot/library`.
+CUE-based module library for the start AI agent launcher CLI. Modules include agents, roles, contexts, tasks, and skills, published to the CUE Central Registry under `github.com/p3bot/library`.
 
 ## Repository Structure
 
@@ -10,6 +10,7 @@ CUE-based module library for the start AI agent launcher CLI. Modules include ag
 | roles/ | System prompt and behaviour definitions |
 | contexts/ | Environmental context definitions |
 | tasks/ | Task instruction definitions |
+| skills/ | Agent Skills (SKILL.md plus optional resources) |
 | schemas/ | CUE schema definitions |
 | index/ | Module discovery index |
 | docs/ | Naming standards and authoring patterns |
@@ -21,6 +22,7 @@ CUE conventions:
 - Modules are identified by index keys, not by `name` fields
 - Use kebab-case for tags and identifiers
 - Schemas define pure constraints without defaults
+- `#Skill.file` defaults to `"@module/SKILL.md"`; this is an intentional exception (the entry pointer `start get` / `start describe` emit)
 - Package names match the deepest directory segment (hyphens removed)
 - Import schemas from `github.com/p3bot/library/schemas@v1`
 - CUE language pin: `v0.16.0` in every `cue.mod/module.cue`
@@ -33,6 +35,8 @@ Markdown for agent documents:
 - Single blank lines between sections
 - Callout prefixes (Note:, Warning:) without bold
 
+SKILL.md follows the Agent Skills specification, not these agent-doc markdown rules.
+
 ## Address Scheme
 
 User-facing fully-qualified module addresses use the colon form `category:name`:
@@ -41,6 +45,7 @@ User-facing fully-qualified module addresses use the colon form `category:name`:
 - `roles:golang/assistant`
 - `contexts:cwd/agents-md`
 - `tasks:review/git-diff`
+- `skills:workflows/one-by-one`
 
 Bare names (`claude/interactive`) continue to work as cross-category lookups. CUE module paths (`github.com/p3bot/library/agents/claude/interactive@v0`) remain slash-based; the colon form applies to user-facing input and display only.
 
@@ -54,7 +59,7 @@ When a published module's content fetches another library module at runtime with
 uses: ["contexts:start/library/publishing"]
 ```
 
-`uses` records runtime fetches only. It is not a CUE import — do not add the referenced module to `cue.mod` `deps`.
+`uses` records runtime fetches only. It is not a CUE import — do not add the referenced module to `cue.mod` `deps`. The category may be `agents`, `roles`, `contexts`, `tasks`, or `skills`.
 
 ## Module Patterns
 

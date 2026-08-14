@@ -10,6 +10,7 @@ Maps friendly names to module paths, enabling CLI search and auto-setup detectio
 - **contexts** - Context documents for prompt composition
 - **roles** - System prompt definitions
 - **tasks** - Task-specific prompts and workflows
+- **skills** - Agent Skills published for install via `start install skills:…`
 
 ## Importing
 

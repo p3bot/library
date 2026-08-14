@@ -1,6 +1,6 @@
 # Library Publishing Guide
 
-This guide is the single source for publishing a module to the CUE Central Registry from the p3bot library repository. Follow it whenever you create or update an agent, role, context, or task. It assumes the module content is already written.
+This guide is the single source for publishing a module to the CUE Central Registry from the p3bot library repository. Follow it whenever you create or update an agent, role, context, task, or skill. It assumes the module content is already written. Schema-only publishes follow the Schema-only publish section; schemas are not an index category.
 
 Publishing is irreversible at the tag level: the registry treats every tag as immutable. A tag pushed by mistake cannot be moved or reused. The steps below are ordered to make that safe, and to make the two most common mistakes — forgetting the index, and reusing a tag — impossible to commit by accident.
 
@@ -8,14 +8,15 @@ Publishing is irreversible at the tag level: the registry treats every tag as im
 
 Identify these before starting:
 
-- Category: one of agents, roles, contexts, tasks. The category is also the top-level directory.
-- Noun: the singular form (agent, role, context, task), used in commit descriptions.
+- Category: one of agents, roles, contexts, tasks, skills. The category is also the top-level directory.
+- Noun: the singular form (agent, role, context, task, skill), used in commit descriptions.
+- Definition file: agent.cue, role.cue, context.cue, task.cue, or skill.cue.
 - Module paths: the path under the category for each module being published. One module in most cases; a role publishes one to three (agent, assistant, teacher).
 - Operation: create (a new module, first publication) or update (an existing module).
 
 ## Procedure
 
-Steps, in order. Do not skip or reorder.
+This procedure is for the five indexed categories (agents, roles, contexts, tasks, skills). Schemas use Schema-only publish instead. Steps, in order. Do not skip or reorder.
 
 ### 1. Validate
 
@@ -65,11 +66,11 @@ Empty output means the tag is free. If any command returns a line, stop: someone
 
 ### 4. Update the index
 
-This step is mandatory. Forgetting it is the most common publishing error.
+This step is mandatory for agents, roles, contexts, tasks, and skills. It does not apply to schemas. Forgetting it is the most common publishing error.
 
 Edit index/index.cue:
 
-- create: add an entry per module. Copy an existing entry in the same category as a template rather than writing one from memory. Agent entries include a bin field; a role adds one entry per mode.
+- create: add an entry per module. Copy an existing entry in the same category as a template rather than writing one from memory. Agent entries include a bin field; a role adds one entry per mode; a skill entry has no bin.
 - update: set the version field of each affected entry to the new module version.
 
 The version in each index entry must equal the module tag pushed in step 6.
@@ -125,7 +126,7 @@ Warning: if cue mod publish fails after the tag is already pushed, the tag is sp
 
 ### 8. Verify
 
-Refresh and validate the whole library, then fix anything reported:
+For agents, roles, contexts, and tasks, refresh and validate the whole library, then fix anything reported:
 
 ```bash
 start update
@@ -134,6 +135,8 @@ start doctor validate --force
 
 start update pulls any newly published modules. start doctor validate --force pulls the latest index and every module and runs full consistency checks, including that each module's uses references resolve. Resolve any issue it reports before considering the publish complete.
 
+For skills, follow Skills verify below. Still run `start doctor validate --force` as a regression check on the other four categories.
+
 ### 9. Close the issue
 
 If a GitHub issue tracks this work, close it:
@@ -141,6 +144,82 @@ If a GitHub issue tracks this work, close it:
 ```bash
 gh issue close <issue-number> --repo p3bot/library --comment "Published <module>@<version>"
 ```
+
+## Schema-only publish
+
+Schemas is not an index category. Do not edit index/index.cue. Do not follow the mandatory index step above.
+
+### 1. Validate
+
+Validate from schemas/:
+
+```bash
+cue vet ./...
+cue vet *.cue ../docs/examples/<affected>_example.cue
+```
+
+Vet every example the schema change touches. Also confirm any unification change (for example a new `uses` category) with a throwaway value against the changed definition. Do not proceed if validation fails.
+
+### 2. Determine the next schemas version from the remote only
+
+```bash
+git ls-remote --tags origin "refs/tags/schemas/*" | sed 's|.*/||' | sort -V | tail -1
+```
+
+Bump per the Versioning policy. Never read local tags for this.
+
+### 3. Tag-collision preflight
+
+```bash
+git ls-remote --tags origin "refs/tags/schemas/<version>"
+```
+
+Empty output means the tag is free. If a line returns, stop, re-read the remote, and re-derive. Never force, move, or reuse a tag.
+
+### 4. Commit the schemas module
+
+Commit the schemas module and any new schema examples together. Do not stage index/index.cue. Scoped commit, for example `schemas: add #Skill and skills index map`.
+
+### 5. Tag and push
+
+```bash
+git tag "schemas/<version>"
+git push origin main
+git push origin "schemas/<version>"
+```
+
+Never `git push --tags`.
+
+### 6. Publish from schemas/
+
+```bash
+cue mod publish <version>
+```
+
+If publish fails after the tag is on origin, the tag is spent. Return to step 2, bump, and start over.
+
+### 7. Verify
+
+All of the following must hold:
+
+- `git ls-remote --tags origin "refs/tags/schemas/<version>"` returns the tag
+- A throwaway CUE module that depends on `github.com/p3bot/library/schemas@v1` pinned to `<version>` can unify a value against the changed schema
+- Exporting that value includes any new schema default that the change introduced
+
+Do not use `start update` or `start doctor validate --force` as proof the schema landed.
+
+## Skills verify
+
+Until start recognises the skills category:
+
+- `start get skills:…` and `start library skills` return unknown-category. That is expected and is not a publish failure
+- `start doctor validate --force` is silent about the skill. It never loads it. Treat doctor as a regression check on the other four categories only
+
+Proof the skill landed is registry resolution and the git tag:
+
+- The skill git tag is on origin
+- A throwaway CUE module can fetch `github.com/p3bot/library/skills/<group>/<name>@v1` at the published version
+- The fetched index contains `skills["<group>/<name>"]` with `version` equal to the skill tag
 
 ## Versioning policy
 

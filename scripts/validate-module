@@ -75,7 +75,7 @@ fi
 log_success "CUE module found"
 
 declare cue_file=""
-for f in role task context agent index; do
+for f in role task context agent skill index; do
   if [[ -f "${module_path}/${f}.cue" ]]; then
     cue_file="${f}.cue"
     break
@@ -83,7 +83,7 @@ for f in role task context agent index; do
 done
 
 if [[ -z "${cue_file}" ]]; then
-  log_failure "No recognised CUE file found (expected role.cue, task.cue, context.cue, agent.cue, or index.cue)"
+  log_failure "No recognised CUE file found (expected role.cue, task.cue, context.cue, agent.cue, skill.cue, or index.cue)"
   exit 1
 fi
 log_success "CUE file detected: '${cue_file}'"

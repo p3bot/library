@@ -2,7 +2,7 @@
 
 Official module library for the [start](https://github.com/p3bot/start) CLI.
 
-The library provides CUE modules for AI agents, roles, contexts, and tasks. Modules are published to the CUE Central Registry under `github.com/p3bot/library` and resolved by the start CLI at runtime.
+The library provides CUE modules for AI agents, roles, contexts, tasks, and skills. Modules are published to the CUE Central Registry under `github.com/p3bot/library` and resolved by the start CLI at runtime.
 
 ## Structure
 
@@ -12,6 +12,7 @@ The library provides CUE modules for AI agents, roles, contexts, and tasks. Modu
 | [roles/](roles/) | System prompt and behaviour definitions |
 | [contexts/](contexts/) | Environmental context definitions |
 | [tasks/](tasks/) | Task instruction definitions |
+| [skills/](skills/) | Agent Skills (SKILL.md plus optional resources) |
 | [schemas/](schemas/) | CUE schema definitions |
 | [index/](index/) | Module discovery index |
 | [docs/](docs/) | Authoring patterns and schema examples |
@@ -40,6 +41,7 @@ agents:claude/interactive
 roles:golang/assistant
 contexts:cwd/agents-md
 tasks:review/git-diff
+skills:workflows/one-by-one
 ```
 
 Bare names (without the `category:` prefix) work as cross-category lookups. Module paths in CUE imports remain slash-based — the colon scheme applies only to user-facing input and display.

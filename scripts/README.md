@@ -7,7 +7,7 @@ Scripts automatically locate the repository root via their own path.
 ## validate-module
 
 Validate a CUE module by running cue vet and cue export.
-The module type file (role.cue, task.cue, context.cue, agent.cue, index.cue)
+The module type file (role.cue, task.cue, context.cue, agent.cue, skill.cue, index.cue)
 is detected automatically.
 
 Usage: validate-module <module-dir>
@@ -151,7 +151,7 @@ Notes:
 
 ## Common Workflows
 
-### Creating a new role, task, context, or agent
+### Creating a new role, task, context, agent, or skill
 
 1. Create module directories and files
 2. Run cue mod tidy in each module directory to download dependencies
