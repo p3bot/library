@@ -48,7 +48,7 @@ See: UTD pattern documentation in the start CLI repo for complete documentation.
 
 ### #Base
 
-Shared metadata embedded by `#Role`, `#Context`, `#Agent`, and `#Task`. Carries the fields common to every module type.
+Shared metadata embedded by `#Role`, `#Context`, `#Agent`, `#Task`, and `#Skill`. Carries the fields common to every module type.
 
 **Fields:**
 
@@ -59,7 +59,7 @@ Shared metadata embedded by `#Role`, `#Context`, `#Agent`, and `#Task`. Carries 
 
 **Constraints:**
 
-- Each `uses` entry must be a fully-qualified colon-form address `<category>:<path>` where category is one of `agents`, `roles`, `contexts`, `tasks`; bare names and unknown categories are rejected
+- Each `uses` entry must be a fully-qualified colon-form address `<category>:<path>` where category is one of `agents`, `roles`, `contexts`, `tasks`, `skills`; bare names and unknown categories are rejected
 
 ### #Index
 
@@ -70,6 +70,11 @@ Defines the structure for the module discovery index.
 - Enable CLI search and discovery without OCI catalog API
 - Map friendly "category/item" paths to full module URLs
 - Support search by name, description, and tags
+
+**Category Maps:**
+
+- `agents`, `roles`, `contexts`, `tasks`, `skills` — each an optional map of `#IndexEntry`
+- Skill keys use `group/name` form (e.g., `"workflows/one-by-one"`); the group is library taxonomy and does not appear in the installed path
 
 **Index Keys:**
 
@@ -217,6 +222,32 @@ Defines the schema for task workflows. Embeds `#UTD` for content generation.
 - `shell` must not be empty string if provided (inherited from #UTD)
 - `timeout` must be between 1 and 3600 seconds if provided (inherited from #UTD)
 
+### #Skill
+
+Defines the schema for skill modules. Skills are Agent Skills (agentskills.io): a `SKILL.md` plus optional resources, published for start to materialise onto disk.
+
+Unlike roles, contexts, and tasks, skills do **not** embed `#UTD`. There is no prompt to render.
+
+**Skill Identification:**
+
+- Skills are identified by their **map key** (e.g., `skills["workflows/one-by-one"]`)
+- There is no `name` field - the key IS the name
+- User-facing address is `skills:<group>/<name>` with a mandatory group segment
+
+**Fields:**
+
+- `description` (string, optional) - Library-discovery metadata (index, `get`, `describe`). Distinct from the SKILL.md description, which is the agent-facing trigger text
+- `tags` ([]string, optional) - Tags for categorization/search
+- `origin` (string, optional) - Source module path for installed copies
+- `uses` ([]string, optional) - Other library modules this module pulls in at runtime via `start get`
+- `file` (string) - Entry pointer emitted by `start get` and `start describe`. Default: `"@module/SKILL.md"`
+
+**Constraints:**
+
+- Does not embed `#UTD`; `command`, `prompt`, `shell`, and `timeout` are not skill fields
+- `file` defaults to `"@module/SKILL.md"`. This default is an intentional exception to the no-defaults rule: it is the entry pointer `start get` / `start describe` emit
+- Agent Skills frontmatter (`name`, `description`, `license`, and so on) lives in SKILL.md and is not mirrored into CUE
+
 ## Usage
 
 ### Validate Schemas
@@ -237,6 +268,7 @@ cue vet *.cue ../docs/examples/role_example.cue
 cue vet *.cue ../docs/examples/context_example.cue
 cue vet *.cue ../docs/examples/agent_example.cue
 cue vet *.cue ../docs/examples/index_example.cue
+cue vet *.cue ../docs/examples/skill_example.cue
 cue vet *.cue ../docs/examples/utd_example.cue
 cue vet *.cue ../docs/examples/settings_example.cue
 ```
@@ -249,6 +281,7 @@ cue export *.cue ../docs/examples/role_example.cue
 cue export *.cue ../docs/examples/context_example.cue
 cue export *.cue ../docs/examples/agent_example.cue
 cue export *.cue ../docs/examples/index_example.cue
+cue export *.cue ../docs/examples/skill_example.cue
 cue export *.cue ../docs/examples/utd_example.cue
 cue export *.cue ../docs/examples/settings_example.cue
 ```

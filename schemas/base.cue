@@ -1,7 +1,7 @@
 package schemas
 
 // #Base defines common fields for all module types.
-// Embedded by #Agent, #Role, #Task, and #Context.
+// Embedded by #Agent, #Role, #Task, #Context, and #Skill.
 #Base: {
 	// Human-readable description of the module
 	description?: string
@@ -17,7 +17,7 @@ package schemas
 
 	// Other library modules this module pulls in at runtime via `start get`.
 	// Fully-qualified colon-form addresses only: "<category>:<path>" where
-	// category is one of agents, roles, contexts, tasks. Bare names and
-	// unknown categories are rejected.
-	uses?: [...string & =~"^(agents|roles|contexts|tasks):[a-z0-9]+(-[a-z0-9]+)*(/[a-z0-9]+(-[a-z0-9]+)*)*$"]
+	// category is one of agents, roles, contexts, tasks, skills. Bare names
+	// and unknown categories are rejected.
+	uses?: [...string & =~"^(agents|roles|contexts|tasks|skills):[a-z0-9]+(-[a-z0-9]+)*(/[a-z0-9]+(-[a-z0-9]+)*)*$"]
 }

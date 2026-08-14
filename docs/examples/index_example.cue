@@ -94,6 +94,15 @@ index: #Index & {
 			version: "v0.1.0"
 		}
 	}
+
+	skills: {
+		"workflows/one-by-one": {
+			module:      "github.com/p3bot/library/skills/workflows/one-by-one@v1"
+			description: "Walk a list of findings one at a time and resolve each"
+			tags: ["workflow", "remediation", "review"]
+			version: "v1.0.0"
+		}
+	}
 }
 
 // Example resolution model:
