@@ -218,8 +218,8 @@ Until start recognises the skills category:
 Proof the skill landed is registry resolution and the git tag:
 
 - The skill git tag is on origin
-- A throwaway CUE module can fetch `github.com/p3bot/library/skills/<group>/<name>@v1` at the published version
-- The fetched index contains `skills["<group>/<name>"]` with `version` equal to the skill tag
+- A throwaway CUE module can fetch `github.com/p3bot/library/skills/<path>@v1` at the published version
+- The fetched index contains `skills["<path>"]` with `version` equal to the skill tag
 
 ## Versioning policy
 

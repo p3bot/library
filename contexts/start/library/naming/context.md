@@ -18,6 +18,7 @@ This document describes the structure of the name for each category. Examples be
 - The name reads broad to specific, left to right
 - Use only the segments needed for clarity
 - Each segment of the name maps to a directory in the repository
+- Noun segments are singular. The segment names the kind of thing, not the collection: `item`, not `items`; `finding`, not `findings`
 - No name may be an ancestor of another name in the same category — every module is a leaf (see Leaf-Only Names)
 
 ## Leaf-Only Names
@@ -174,8 +175,6 @@ finding/one-by-one
 ```
 
 The capability leaf must be unique across all skills. Two skills that share a leaf would collide on disk after the domain is stripped.
-
-Noun segments are singular. The domain names the kind of thing, not the collection: `finding`, not `findings`. This matches `jira/item`, `github/issue`, and `confluence/doc`.
 
 ## Reserved Domains
 
