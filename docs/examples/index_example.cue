@@ -96,10 +96,10 @@ index: #Index & {
 	}
 
 	skills: {
-		"workflows/one-by-one": {
-			module:      "github.com/p3bot/library/skills/workflows/one-by-one@v1"
+		"finding/one-by-one": {
+			module:      "github.com/p3bot/library/skills/finding/one-by-one@v1"
 			description: "Walk a list of findings one at a time and resolve each"
-			tags: ["workflow", "remediation", "review"]
+			tags: ["finding", "one-by-one", "workflow", "remediation", "review"]
 			version: "v1.0.0"
 		}
 	}

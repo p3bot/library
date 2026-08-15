@@ -1,4 +1,4 @@
-module: "github.com/p3bot/library/skills/workflows/one-by-one@v1"
+module: "github.com/p3bot/library/skills/finding/one-by-one@v1"
 language: {
 	version: "v0.16.0"
 }

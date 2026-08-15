@@ -41,7 +41,7 @@ agents:claude/interactive
 roles:golang/assistant
 contexts:cwd/agents-md
 tasks:review/git-diff
-skills:workflows/one-by-one
+skills:finding/one-by-one
 ```
 
 Bare names (without the `category:` prefix) work as cross-category lookups. Module paths in CUE imports remain slash-based — the colon scheme applies only to user-facing input and display.

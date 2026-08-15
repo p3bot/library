@@ -391,7 +391,7 @@ contexts: {
 	}
 	"start/library/naming": {
 		module:      "github.com/p3bot/library/contexts/start/library/naming@v1"
-		version:     "v1.1.0"
+		version:     "v1.2.0"
 		description: "Naming conventions for all module types in the p3bot library"
 		tags: ["start", "library", "naming", "conventions", "standards", "modules", "guide"]
 	}
@@ -713,10 +713,10 @@ tasks: {
 skills: [string]: schemas.#IndexEntry
 
 skills: {
-	"workflows/one-by-one": {
-		module:      "github.com/p3bot/library/skills/workflows/one-by-one@v1"
+	"finding/one-by-one": {
+		module:      "github.com/p3bot/library/skills/finding/one-by-one@v1"
 		version:     "v1.0.0"
 		description: "Walk a list of findings one at a time and resolve each with a principled fix"
-		tags: ["workflow", "remediation", "review"]
+		tags: ["finding", "one-by-one", "workflow", "remediation", "review"]
 	}
 }

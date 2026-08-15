@@ -45,7 +45,7 @@ User-facing fully-qualified module addresses use the colon form `category:name`:
 - `roles:golang/assistant`
 - `contexts:cwd/agents-md`
 - `tasks:review/git-diff`
-- `skills:workflows/one-by-one`
+- `skills:finding/one-by-one`
 
 Bare names (`claude/interactive`) continue to work as cross-category lookups. CUE module paths (`github.com/p3bot/library/agents/claude/interactive@v0`) remain slash-based; the colon form applies to user-facing input and display only.
 
@@ -178,7 +178,7 @@ Shared per-item finding template (history: docs/item-by-item-template.md):
 - tasks/design/review/task.md
 - tasks/review/pre-commit/task.md
 - tasks/review/multi-agent/orchestrator/task.md
-- skills/workflows/one-by-one/SKILL.md
+- skills/finding/one-by-one/SKILL.md
 
 ## References
 

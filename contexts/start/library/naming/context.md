@@ -24,7 +24,7 @@ This document describes the structure of the name for each category. Examples be
 
 Within a category, a name must not be a proper prefix of another name when both are split on `/`. Put differently: no name may be an ancestor of another. Every module occupies a leaf position in its category's name tree, and an intermediate path node is never itself a module.
 
-The per-category patterns below tend to produce leaf names on their own: each ends in a terminal segment — agent variant, role mode, context noun, task action — that an intermediate node does not carry. Contexts (`domain/[specialisation/]noun`) are the most prone to violation, because a noun can also read as a specialisation:
+The per-category patterns below tend to produce leaf names on their own: each ends in a terminal segment — agent variant, role mode, context noun, task action, skill capability — that an intermediate node does not carry. Contexts (`domain/[specialisation/]noun`) are the most prone to violation, because a noun can also read as a specialisation:
 
 Wrong:
 
@@ -155,6 +155,28 @@ cwd/dotagents/role/create
 start/module/author
 ```
 
+## Skills
+
+Pattern: `domain/[specialisation/]capability`
+
+A skill is a named capability the library publishes and start installs. The domain is library taxonomy only: it does not appear in the installed path or in the SKILL.md `name`. The capability segment is the Agent Skills name and must equal the module directory leaf.
+
+| Segment | Required | Purpose |
+|---------|----------|---------|
+| domain | yes | The subject area or the kind of thing the skill operates on |
+| specialisation | no | Narrows the domain |
+| capability | yes | The skill's identity — the Agent Skills name that installs on disk |
+
+Examples:
+
+```
+finding/one-by-one
+```
+
+The capability leaf must be unique across all skills. Two skills that share a leaf would collide on disk after the domain is stripped.
+
+Noun segments are singular. The domain names the kind of thing, not the collection: `finding`, not `findings`. This matches `jira/item`, `github/issue`, and `confluence/doc`.
+
 ## Reserved Domains
 
 `cwd` and `home` are reserved domain names used across all module types:
@@ -210,6 +232,7 @@ Other action verbs (`read`, `review`, `research`, `debug`, and so on) are free-f
 | Roles | `domain/[specialisation/]mode` | domain, mode |
 | Contexts | `domain/[specialisation/]noun` | domain, noun |
 | Tasks | `[domain/][specialisation/][noun/]action` | action |
+| Skills | `domain/[specialisation/]capability` | domain, capability |
 
 Rules that apply across all categories:
 
