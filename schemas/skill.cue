@@ -7,7 +7,7 @@ package schemas
 // Unlike roles, contexts, and tasks, skills do not embed #UTD.
 // There is no prompt to render; start distributes the file bundle.
 //
-// Note: Skills are identified by their map key (e.g., skills["workflows/one-by-one"]).
+// Note: Skills are identified by their map key (e.g., skills["finding/one-by-one"]).
 // There is no 'name' field - the key IS the name.
 #Skill: {
 	#Base

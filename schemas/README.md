@@ -74,7 +74,7 @@ Defines the structure for the module discovery index.
 **Category Maps:**
 
 - `agents`, `roles`, `contexts`, `tasks`, `skills` — each an optional map of `#IndexEntry`
-- Skill keys use `group/name` form (e.g., `"workflows/one-by-one"`); the group is library taxonomy and does not appear in the installed path
+- Skill keys use `domain/capability` form (e.g., `"finding/one-by-one"`); the domain is library taxonomy and does not appear in the installed path
 
 **Index Keys:**
 
@@ -230,9 +230,9 @@ Unlike roles, contexts, and tasks, skills do **not** embed `#UTD`. There is no p
 
 **Skill Identification:**
 
-- Skills are identified by their **map key** (e.g., `skills["workflows/one-by-one"]`)
+- Skills are identified by their **map key** (e.g., `skills["finding/one-by-one"]`)
 - There is no `name` field - the key IS the name
-- User-facing address is `skills:<group>/<name>` with a mandatory group segment
+- User-facing address is `skills:<domain>/<capability>` with a mandatory domain segment
 
 **Fields:**
 

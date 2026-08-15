@@ -45,7 +45,7 @@ package schemas
 	// Examples: "review/git-diff", "git/pre-commit"
 	tasks?: [string]: #IndexEntry
 
-	// skills maps "group/name" to module info
-	// Examples: "workflows/one-by-one"
+	// skills maps "domain/capability" to module info
+	// Examples: "finding/one-by-one"
 	skills?: [string]: #IndexEntry
 }
