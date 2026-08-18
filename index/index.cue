@@ -707,6 +707,36 @@ tasks: {
 		description: "Prune comment bloat from source files, compressing real WHY and harvesting markers"
 		tags: ["chore", "comment", "prune", "code-quality", "cleanup"]
 	}
+	"tk/next/build": {
+		module:      "github.com/p3bot/library/tasks/tk/next/build@v1"
+		version:     "v1.0.0"
+		description: "Using tk, build the next available ticket"
+		tags: ["tk", "next", "build", "implementation", "ticket"]
+	}
+	"tk/id/continue": {
+		module:      "github.com/p3bot/library/tasks/tk/id/continue@v1"
+		version:     "v1.0.0"
+		description: "Using tk, continue this ticket"
+		tags: ["tk", "id", "continue", "implementation", "ticket"]
+	}
+	"tk/id/review": {
+		module:      "github.com/p3bot/library/tasks/tk/id/review@v1"
+		version:     "v1.0.0"
+		description: "Using tk, review this ticket document"
+		tags: ["tk", "id", "review", "ticket", "document"]
+	}
+	"tk/board/reorder": {
+		module:      "github.com/p3bot/library/tasks/tk/board/reorder@v1"
+		version:     "v1.0.0"
+		description: "Using tk, fix the sequence of the board"
+		tags: ["tk", "board", "reorder", "order", "depends"]
+	}
+	"tk/board/groom": {
+		module:      "github.com/p3bot/library/tasks/tk/board/groom@v1"
+		version:     "v1.0.0"
+		description: "Using tk, groom the board"
+		tags: ["tk", "board", "groom", "status", "hygiene"]
+	}
 }
 
 // Skill index - maps friendly names to module paths

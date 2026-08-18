@@ -67,6 +67,14 @@ tasks/<domain>/<name>/
 - [ticket/decompose](ticket/decompose/) - Decompose an accepted design into ticket documents
 - [ticket/review](ticket/review/) - Review a ticket document
 
+### tk/
+
+- [tk/next/build](tk/next/build/) - Using tk, build the next available ticket
+- [tk/id/continue](tk/id/continue/) - Using tk, continue this ticket
+- [tk/id/review](tk/id/review/) - Using tk, review this ticket document
+- [tk/board/reorder](tk/board/reorder/) - Using tk, fix the sequence of the board
+- [tk/board/groom](tk/board/groom/) - Using tk, groom the board
+
 ### review/
 
 - [review/architecture](review/architecture/) - Architecture review
