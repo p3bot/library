@@ -71,6 +71,7 @@ tasks/<domain>/<name>/
 
 - [tk/next/build](tk/next/build/) - Using tk, build the next available ticket
 - [tk/id/continue](tk/id/continue/) - Using tk, continue this ticket
+- [tk/id/expand](tk/id/expand/) - Using tk, expand this ticket to the writing guide
 - [tk/id/review](tk/id/review/) - Using tk, review this ticket document
 - [tk/board/reorder](tk/board/reorder/) - Using tk, fix the sequence of the board
 - [tk/board/groom](tk/board/groom/) - Using tk, groom the board

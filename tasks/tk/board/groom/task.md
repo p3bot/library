@@ -25,6 +25,7 @@ Look for:
 
 - Leftover doctor residue except tokens whose names start with `depends_` and `order_long`
 - Status hygiene: stale `in-progress`, `blocked` with no path, empty `todo`, parked `review`, `backlog` that should come up
+- Stub in `todo`: read each `todo` body. No writing-guide section headings under the H1, or the body is primarily a log or paste. Propose `tk mark <id> draft`. Do not expand
 
 Do not unclaim `in-progress` just because this machine did not claim it. Ask if the owner is unclear.
 

@@ -719,9 +719,15 @@ tasks: {
 		description: "Using tk, continue this ticket"
 		tags: ["tk", "id", "continue", "implementation", "ticket"]
 	}
+	"tk/id/expand": {
+		module:      "github.com/p3bot/library/tasks/tk/id/expand@v1"
+		version:     "v1.0.0"
+		description: "Using tk, expand this ticket to the writing guide"
+		tags: ["tk", "id", "expand", "ticket", "writing", "stub"]
+	}
 	"tk/id/review": {
 		module:      "github.com/p3bot/library/tasks/tk/id/review@v1"
-		version:     "v1.1.0"
+		version:     "v1.2.0"
 		description: "Using tk, review this ticket document"
 		tags: ["tk", "id", "review", "ticket", "document"]
 	}
@@ -733,7 +739,7 @@ tasks: {
 	}
 	"tk/board/groom": {
 		module:      "github.com/p3bot/library/tasks/tk/board/groom@v1"
-		version:     "v1.1.0"
+		version:     "v1.2.0"
 		description: "Using tk, groom the board"
 		tags: ["tk", "board", "groom", "status", "hygiene"]
 	}
