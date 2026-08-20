@@ -248,6 +248,29 @@ Unlike roles, contexts, and tasks, skills do **not** embed `#UTD`. There is no p
 - `file` is `"@module/SKILL.md"`; that is the standard entry path, not a schema default
 - Agent Skills frontmatter (`name`, `description`, `license`, and so on) lives in SKILL.md and is not mirrored into CUE
 
+Do not unify start `skills.cue` inventory records against `#Skill`. Those entries use `#SkillInstall`.
+
+### #SkillInstall
+
+Defines one installed-skill inventory entry in start's `skills.cue` (global `~/.config/start/`, local `./.start/`). This is user-config inventory, not the published library module type `#Skill`.
+
+Start records installed skills keyed by library address `group/name` (for example `finding/one-by-one`). Each entry is origin and version only. Dest paths are not stored; disk plus agentdex is truth for where files live.
+
+**Purpose:**
+
+- Constrain start `skills.cue` inventory entries for doctor and other consumers
+- Distinct from `#Skill` in `skill.cue`, which describes published library skill modules
+
+**Fields:**
+
+- `origin` (string, required) - CUE module path of the installed skill; must not be empty
+- `version` (string, required) - Published version of the installed skill; must not be empty
+
+**Constraints:**
+
+- Does not embed `#Skill` or `#Base`
+- Dest, targets, path, and file are not inventory fields
+
 ## Usage
 
 ### Validate Schemas
@@ -269,6 +292,7 @@ cue vet *.cue ../docs/examples/context_example.cue
 cue vet *.cue ../docs/examples/agent_example.cue
 cue vet *.cue ../docs/examples/index_example.cue
 cue vet *.cue ../docs/examples/skill_example.cue
+cue vet *.cue ../docs/examples/skill_install_example.cue
 cue vet *.cue ../docs/examples/utd_example.cue
 cue vet *.cue ../docs/examples/settings_example.cue
 ```
@@ -282,6 +306,7 @@ cue export *.cue ../docs/examples/context_example.cue
 cue export *.cue ../docs/examples/agent_example.cue
 cue export *.cue ../docs/examples/index_example.cue
 cue export *.cue ../docs/examples/skill_example.cue
+cue export *.cue ../docs/examples/skill_install_example.cue
 cue export *.cue ../docs/examples/utd_example.cue
 cue export *.cue ../docs/examples/settings_example.cue
 ```
