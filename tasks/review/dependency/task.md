@@ -15,10 +15,7 @@ Review the use of third-party packages and libraries across the codebase. This r
 4. For each direct dependency, assess justification, maintenance status, and license compatibility
 5. Search for patterns where standard library alternatives could replace third-party packages
 6. Evaluate the scope points below against what you have observed
-7. Produce a structured report of findings
-8. Unless instructed otherwise, save the report to `.start/reviews/YYYY-MM-DD-dependency-NN.md`
-   - Use today's date for `YYYY-MM-DD`
-   - Increment `NN` based on existing files in `.start/reviews/` matching the date and type, starting at `01`
+7. Produce a structured report of findings and present it inline. Save only if the user asked, or if they instructed this run to proceed without intervention. Use the path they gave. If they asked to save but named no path, ask. If they instructed this run to proceed without intervention and named no path, write to `.start/reviews/YYYY-MM-DD-dependency-NN.md` (`NN` starts at `01`, incrementing against existing files matching the date and type)
 
 ## Reviewer Guidance
 

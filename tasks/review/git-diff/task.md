@@ -11,19 +11,15 @@ This is not a general-purpose repository review. The diff output is the guide --
 ## Workflow
 
 1. Run git status to confirm we are in a Git repository and determine the state of changes (staged, unstaged, or both)
-2. Determine the appropriate diff command:
+2. Use the diff they named. If they did not name one, pick the command that matches the working tree:
    - `git diff` for unstaged only
    - `git diff --staged` for staged only
    - `git diff HEAD` for both
    - `git diff <default>..HEAD` for changes since a branch point
-   - Follow user instructions if provided
 3. Run the diff command and read the output to understand the scope and intent of the changes
 4. For each changed file, read the full file and related files to understand surrounding context
 5. Review the changes against all criteria below
-6. Produce a structured report of findings
-7. Unless instructed otherwise, save the report to `.start/reviews/YYYY-MM-DD-git-diff-NN.md`
-   - Use today's date for `YYYY-MM-DD`
-   - Increment `NN` based on existing files in `.start/reviews/` matching the date and type, starting at `01`
+6. Produce a structured report of findings and present it inline. Save only if the user asked, or if they instructed this run to proceed without intervention. Use the path they gave. If they asked to save but named no path, ask. If they instructed this run to proceed without intervention and named no path, write to `.start/reviews/YYYY-MM-DD-git-diff-NN.md` (`NN` starts at `01`, incrementing against existing files matching the date and type)
 
 ## Reviewer Guidance
 

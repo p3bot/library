@@ -172,9 +172,10 @@ The publish workflow's module-plus-index commit is the canonical multi-scope cas
 
 ## Interactive Walk Template
 
-Shared per-item finding template (history: docs/item-by-item-template.md):
+Shared per-item finding template (history: docs/item-by-item-template.md). Ticket (T) is copied in each of these except tk/id/review, which fetches it from ticket/review; keep the copies in sync:
 
 - tasks/ticket/review/task.md
+- tasks/tk/id/review/task.md
 - tasks/design/review/task.md
 - tasks/review/pre-commit/task.md
 - tasks/review/multi-agent/orchestrator/task.md

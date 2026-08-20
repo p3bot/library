@@ -2,17 +2,11 @@
 
 Using tk, review this ticket document.
 
-The tk skill is assumed installed. Do not re-teach the CLI.
-
-`tasks:ticket/review` is fetched later for methodology only: phases, templates, goal bar, report format. This envelope is the only binding source for path, edits, T, and status.
+`tasks:ticket/review` is fetched later for methodology only: phases, templates, goal bar, report format, and T. This envelope is the only binding source for path, edits, and status.
 
 These sections of the fetched protocol do not apply:
 
 - Identification of the ticket document
-- The unmanaged-file rule
-- Whole-document edits
-- T writing `NN-slug.md` at the repository root
-- The Ticket File Format heading
 
 ## Sync
 
@@ -44,17 +38,7 @@ The working path is the last path printed by `tk get` or `tk mark`. After a reop
 start get tasks:ticket/review
 ```
 
-Run the fetched methodology against the working path. Edit only under the H1. Do not write `NN-slug.md`.
-
-When T is selected:
-
-1. Run `tk create` for the follow-up
-2. Then `start get contexts:ticket/writing`. Never fetch the writing guide at review start
-3. The writing guide's File Placement section does not apply. The path is the one `tk create` printed
-4. Fill the remaining Ticket File Format sections under that H1. Do not paste a second heading
-5. The writing guide supplies principles, section purpose, and formatting only
-6. Track as `Ticket: <id>`
-7. On tk-driven, `tk sync` after the body fill
+Run the fetched methodology against the working path. Edit only under the H1. `T` follows the fetched Ticket (T) section. `tk` is available in this envelope, so offer it.
 
 ### Step 3: Status
 

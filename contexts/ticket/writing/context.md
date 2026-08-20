@@ -67,7 +67,7 @@ Acceptance criteria verify completion, not quality. Quality is shaped by how the
 
 ## File Placement
 
-Place the ticket document at the repository root unless the user specifies a different location. Use the filename the user provides. If none is given, continue the repo's existing `NN-<slug>.md` numbering when that convention is already in use, otherwise use a short kebab-case name derived from the goal.
+Use the path they gave. If none, ask, offering to continue any existing `NN-<slug>.md` sequence at the repository root, else a short kebab-case name derived from the goal. Place it at the repository root unless they specified a different location.
 
 ## Formatting
 

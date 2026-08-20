@@ -14,10 +14,7 @@ Verify that the codebase meets applicable domain-specific standards and requirem
 3. Search for standards-related configuration: linting rules, accessibility checks, locale files, compliance documentation, and engineering playbooks
 4. Read source code with applicable standards in mind, focusing on areas where compliance is expected
 5. Evaluate the scope points below against what you have observed
-6. Produce a structured report of findings
-7. Unless instructed otherwise, save the report to `.start/reviews/YYYY-MM-DD-standards-NN.md`
-   - Use today's date for `YYYY-MM-DD`
-   - Increment `NN` based on existing files in `.start/reviews/` matching the date and type, starting at `01`
+6. Produce a structured report of findings and present it inline. Save only if the user asked, or if they instructed this run to proceed without intervention. Use the path they gave. If they asked to save but named no path, ask. If they instructed this run to proceed without intervention and named no path, write to `.start/reviews/YYYY-MM-DD-standards-NN.md` (`NN` starts at `01`, incrementing against existing files matching the date and type)
 
 ## Reviewer Guidance
 

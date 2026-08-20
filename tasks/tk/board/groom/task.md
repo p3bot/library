@@ -2,31 +2,39 @@
 
 Using tk, groom the board.
 
-The tk skill is assumed installed. Do not re-teach the CLI.
-
 Do not reorder. Do not add, remove, or rewrite depends. Do not run `--re-space-order`.
 
-## Sync
+Never propose `draft` → `todo`. That mark is a user action.
 
-When `tk status mode` is `tk-driven`, run `tk sync` first. Skip on repo-driven and plain-files. If sync needs-attention, stop.
+A ticket is terminal when its status is `done` or `cancelled`.
 
-## Doctor
+## Prepare
 
-Run bare `tk doctor`. Mechanical `--repair` if those tokens are present. `--repair` rewrites ids, equal order keys, and archive layout. State what it will do before running it.
+- Sync: when `tk status mode` is `tk-driven`, run `tk sync` first. Skip on repo-driven and plain-files. If sync needs-attention, stop.
+- Doctor: Run bare `tk doctor`. Mechanical `--repair` if those tokens are present. `--repair` rewrites ids, equal order keys, and archive layout. State what it will do before running it.
 
-## Inventory
+### Inventory
 
-```bash
-tk list --all --no-lens
-```
-
-Drop every terminal row. A ticket is terminal when its path is under `archive/`, or when its status is `done` or `cancelled`. That is the full non-terminal set on every machine: backlog stays, terminals go, the lens is off.
+- Board: Run `tk list --all --no-lens` to get the full non-terminal set
+- Ignore every terminal row
+- Do not use `tk status` counts as the board. They are lens-filtered.
 
 ## Process
 
-One findings list:
+Look for:
 
 - Leftover doctor residue except tokens whose names start with `depends_` and `order_long`
-- Status hygiene: stale `in-progress`, `blocked` with no path, `draft` that is ready, empty `todo`, parked `review`, `backlog` that should come up
+- Status hygiene: stale `in-progress`, `blocked` with no path, empty `todo`, parked `review`, `backlog` that should come up
 
-Propose, then apply only after approval. Apply with `tk mark`. Use `tk meta` only for a non-depends field a hygiene finding needs.
+Do not unclaim `in-progress` just because this machine did not claim it. Ask if the owner is unclear.
+
+Report only items that need a decision. Number them. Each line: id or path, what is wrong, the proposed command or delete. Omit clean categories.
+
+Propose, then apply only after approval.
+
+- `tk mark` for status
+- Delete or move stray `non_allowlist` paths
+- `tk meta` only for a non-depends field a hygiene finding needs
+
+Re-run bare `tk doctor` and if needed `tk sync` after residue cleanup.
+

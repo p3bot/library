@@ -373,7 +373,7 @@ contexts: {
 	}
 	"ticket/writing": {
 		module:      "github.com/p3bot/library/contexts/ticket/writing@v1"
-		version:     "v1.0.0"
+		version:     "v1.1.0"
 		description: "Guide for writing ticket documents that serve as the sole context for an implementer agent"
 		tags: ["ticket", "writing", "documentation", "guide", "agents"]
 	}
@@ -439,127 +439,127 @@ tasks: {
 	}
 	"review/holistic": {
 		module:      "github.com/p3bot/library/tasks/review/holistic@v1"
-		version:     "v1.0.0"
+		version:     "v1.1.0"
 		description: "Broad first-pass review assessing overall repository health, consistency, and structure"
 		tags: ["review", "holistic", "code-quality", "repository", "comprehensive"]
 	}
 	"review/security": {
 		module:      "github.com/p3bot/library/tasks/review/security@v1"
-		version:     "v1.0.0"
+		version:     "v1.1.0"
 		description: "Identify vulnerabilities, security weaknesses, and potential attack vectors"
 		tags: ["review", "security", "vulnerabilities", "attack-vectors", "code-quality"]
 	}
 	"review/correctness": {
 		module:      "github.com/p3bot/library/tasks/review/correctness@v1"
-		version:     "v1.0.0"
+		version:     "v1.1.0"
 		description: "Verify code logic correctly implements intended behaviour and handles data with precision"
 		tags: ["review", "correctness", "logic", "behaviour", "code-quality"]
 	}
 	"review/architecture": {
 		module:      "github.com/p3bot/library/tasks/review/architecture@v1"
-		version:     "v1.0.0"
+		version:     "v1.1.0"
 		description: "Evaluate system structure, design decisions, and component organisation"
 		tags: ["review", "architecture", "design", "structure", "code-quality"]
 	}
 	"review/comments": {
 		module:      "github.com/p3bot/library/tasks/review/comments@v1"
-		version:     "v1.0.0"
+		version:     "v1.1.0"
 		description: "Review code comments for accuracy, usefulness, and completeness"
 		tags: ["review", "comments", "documentation", "code-quality"]
 	}
 	"review/concurrency": {
 		module:      "github.com/p3bot/library/tasks/review/concurrency@v1"
-		version:     "v1.0.0"
+		version:     "v1.1.0"
 		description: "Identify threading, parallelism, and asynchronous execution issues"
 		tags: ["review", "concurrency", "threading", "parallelism", "code-quality"]
 	}
 	"review/performance": {
 		module:      "github.com/p3bot/library/tasks/review/performance@v1"
-		version:     "v1.0.0"
+		version:     "v1.1.0"
 		description: "Analyse code efficiency and resource usage"
 		tags: ["review", "performance", "efficiency", "resources", "code-quality"]
 	}
 	"review/error-handling": {
 		module:      "github.com/p3bot/library/tasks/review/error-handling@v1"
-		version:     "v1.0.0"
+		version:     "v1.1.0"
 		description: "Review how failures are handled and whether edge cases are covered"
 		tags: ["review", "error-handling", "errors", "resilience", "code-quality"]
 	}
 	"review/observability": {
 		module:      "github.com/p3bot/library/tasks/review/observability@v1"
-		version:     "v1.0.0"
+		version:     "v1.1.0"
 		description: "Assess whether the code can be understood and debugged in production"
 		tags: ["review", "observability", "logging", "metrics", "code-quality"]
 	}
 	"review/standards": {
 		module:      "github.com/p3bot/library/tasks/review/standards@v1"
-		version:     "v1.0.0"
+		version:     "v1.1.0"
 		description: "Verify changes meet applicable domain-specific standards and requirements"
 		tags: ["review", "standards", "compliance", "accessibility", "code-quality"]
 	}
 	"review/testing": {
 		module:      "github.com/p3bot/library/tasks/review/testing@v1"
-		version:     "v1.0.0"
+		version:     "v1.1.0"
 		description: "Evaluate test quality, coverage, and the testability of production code"
 		tags: ["review", "testing", "tests", "coverage", "code-quality"]
 	}
 	"review/readability": {
 		module:      "github.com/p3bot/library/tasks/review/readability@v1"
-		version:     "v1.0.0"
+		version:     "v1.1.0"
 		description: "Assess whether the code is clear and understandable to other developers"
 		tags: ["review", "readability", "naming", "clarity", "code-quality"]
 	}
 	"review/dependency": {
 		module:      "github.com/p3bot/library/tasks/review/dependency@v1"
-		version:     "v1.0.0"
+		version:     "v1.1.0"
 		description: "Review the use of third-party packages and libraries"
 		tags: ["review", "dependency", "packages", "supply-chain", "code-quality"]
 	}
 	"review/duplication": {
 		module:      "github.com/p3bot/library/tasks/review/duplication@v1"
-		version:     "v1.0.0"
+		version:     "v1.1.0"
 		description: "Identify repeated code patterns that may benefit from consolidation"
 		tags: ["review", "duplication", "dry", "patterns", "code-quality"]
 	}
 	"review/documentation": {
 		module:      "github.com/p3bot/library/tasks/review/documentation@v1"
-		version:     "v1.0.0"
+		version:     "v1.1.0"
 		description: "Review external documentation, API documentation, and developer guides"
 		tags: ["review", "documentation", "api-docs", "readme", "code-quality"]
 	}
 	"review/css": {
 		module:      "github.com/p3bot/library/tasks/review/css@v1"
-		version:     "v1.0.0"
+		version:     "v1.1.0"
 		description: "Review CSS stylesheets for consistency, maintainability, and correctness"
 		tags: ["review", "css", "stylesheets", "front-end", "code-quality"]
 	}
 	"review/random-file": {
 		module:      "github.com/p3bot/library/tasks/review/random-file@v1"
-		version:     "v1.0.0"
+		version:     "v1.1.0"
 		description: "Select a random file from the repository and perform a thorough review"
 		tags: ["review", "random", "spot-check", "code-quality"]
 	}
 	"review/git-diff": {
 		module:      "github.com/p3bot/library/tasks/review/git-diff@v1"
-		version:     "v1.0.0"
+		version:     "v1.1.0"
 		description: "Comprehensive review of code changes from git diff to catch regressions and bugs"
 		tags: ["review", "diff", "regression", "code-changes", "code-quality"]
 	}
 	"review/test-coverage": {
 		module:      "github.com/p3bot/library/tasks/review/test-coverage@v1"
-		version:     "v1.0.0"
+		version:     "v1.1.0"
 		description: "Identify test coverage gaps in the codebase and optionally create tests to fill them"
 		tags: ["review", "testing", "coverage", "test-gaps", "code-quality"]
 	}
 	"review/pre-commit": {
 		module:      "github.com/p3bot/library/tasks/review/pre-commit@v2"
-		version:     "v2.0.0"
+		version:     "v2.1.0"
 		description: "Interactive pre-commit review that finds issues in git changes and walks through fixing them"
 		tags: ["review", "pre-commit", "fix", "code-changes", "code-quality"]
 	}
 	"review/multi-agent/orchestrator": {
 		module:      "github.com/p3bot/library/tasks/review/multi-agent/orchestrator@v2"
-		version:     "v2.0.0"
+		version:     "v2.1.0"
 		description: "Orchestrate parallel review agents, consolidate findings, and walk through fixing them"
 		tags: ["review", "orchestration", "multi-agent", "parallel", "fix"]
 	}
@@ -625,31 +625,31 @@ tasks: {
 	}
 	"ticket/create": {
 		module:      "github.com/p3bot/library/tasks/ticket/create@v1"
-		version:     "v1.0.0"
+		version:     "v1.1.0"
 		description: "Create a new ticket document"
 		tags: ["ticket", "create", "planning", "active", "current"]
 	}
 	"ticket/review": {
 		module:      "github.com/p3bot/library/tasks/ticket/review@v1"
-		version:     "v1.0.0"
+		version:     "v1.1.0"
 		description: "Review and prepare the current ticket for implementation"
 		tags: ["ticket", "review", "preparation", "analysis", "active", "current"]
 	}
 	"ticket/begin": {
 		module:      "github.com/p3bot/library/tasks/ticket/begin@v1"
-		version:     "v1.0.0"
+		version:     "v1.1.0"
 		description: "Begin working on the current ticket with full context"
 		tags: ["ticket", "begin", "implementation", "active", "current"]
 	}
 	"ticket/decompose": {
 		module:      "github.com/p3bot/library/tasks/ticket/decompose@v1"
-		version:     "v1.0.0"
+		version:     "v1.1.0"
 		description: "Decompose an accepted design into a right-sized set of ticket documents"
 		tags: ["ticket", "decompose", "design", "planning", "breakdown", "seams", "active", "current"]
 	}
 	"design/review": {
 		module:      "github.com/p3bot/library/tasks/design/review@v1"
-		version:     "v1.4.0"
+		version:     "v1.5.0"
 		description: "Review and harden a design document before decomposition into ticket documents"
 		tags: ["design", "review", "feature", "analysis", "architecture", "critique"]
 	}
@@ -703,37 +703,37 @@ tasks: {
 	}
 	"chore/comment/prune": {
 		module:      "github.com/p3bot/library/tasks/chore/comment/prune@v2"
-		version:     "v2.0.0"
+		version:     "v2.1.0"
 		description: "Prune comment bloat from source files, compressing real WHY and harvesting markers"
 		tags: ["chore", "comment", "prune", "code-quality", "cleanup"]
 	}
 	"tk/next/build": {
 		module:      "github.com/p3bot/library/tasks/tk/next/build@v1"
-		version:     "v1.0.0"
+		version:     "v1.1.0"
 		description: "Using tk, build the next available ticket"
 		tags: ["tk", "next", "build", "implementation", "ticket"]
 	}
 	"tk/id/continue": {
 		module:      "github.com/p3bot/library/tasks/tk/id/continue@v1"
-		version:     "v1.0.0"
+		version:     "v1.1.0"
 		description: "Using tk, continue this ticket"
 		tags: ["tk", "id", "continue", "implementation", "ticket"]
 	}
 	"tk/id/review": {
 		module:      "github.com/p3bot/library/tasks/tk/id/review@v1"
-		version:     "v1.0.0"
+		version:     "v1.1.0"
 		description: "Using tk, review this ticket document"
 		tags: ["tk", "id", "review", "ticket", "document"]
 	}
 	"tk/board/reorder": {
 		module:      "github.com/p3bot/library/tasks/tk/board/reorder@v1"
-		version:     "v1.0.0"
+		version:     "v1.1.0"
 		description: "Using tk, fix the sequence of the board"
 		tags: ["tk", "board", "reorder", "order", "depends"]
 	}
 	"tk/board/groom": {
 		module:      "github.com/p3bot/library/tasks/tk/board/groom@v1"
-		version:     "v1.0.0"
+		version:     "v1.1.0"
 		description: "Using tk, groom the board"
 		tags: ["tk", "board", "groom", "status", "hygiene"]
 	}
@@ -745,7 +745,7 @@ skills: [string]: schemas.#IndexEntry
 skills: {
 	"finding/one-by-one": {
 		module:      "github.com/p3bot/library/skills/finding/one-by-one@v1"
-		version:     "v1.0.0"
+		version:     "v1.1.0"
 		description: "Walk a list of findings one at a time and resolve each with a principled fix"
 		tags: ["finding", "one-by-one", "workflow", "remediation", "review"]
 	}

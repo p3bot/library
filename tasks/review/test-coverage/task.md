@@ -15,11 +15,8 @@ Identify gaps in test coverage across the codebase and optionally create tests t
 4. Discover all test files and map them to the production code they exercise
 5. Identify production code with no corresponding tests, and production code with partial test coverage
 6. Evaluate coverage gaps against the risk and complexity of each area
-7. Produce a coverage gap report
-8. Unless instructed otherwise, save the report to `.start/reviews/YYYY-MM-DD-test-coverage-NN.md`
-   - Use today's date for `YYYY-MM-DD`
-   - Increment `NN` based on existing files in `.start/reviews/` matching the date and type, starting at `01`
-9. Ask the user whether to create tests for any of the identified gaps
+7. Produce a coverage gap report and present it inline. Save only if the user asked, or if they instructed this run to proceed without intervention. Use the path they gave. If they asked to save but named no path, ask. If they instructed this run to proceed without intervention and named no path, write to `.start/reviews/YYYY-MM-DD-test-coverage-NN.md` (`NN` starts at `01`, incrementing against existing files matching the date and type)
+8. Ask the user whether to create tests for any of the identified gaps
 
 ## Reviewer Guidance
 

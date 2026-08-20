@@ -2,8 +2,6 @@
 
 Using tk, continue this ticket.
 
-The tk skill is assumed installed. Do not re-teach the CLI.
-
 ## Sync
 
 When `tk status mode` is `tk-driven`, run `tk sync` first. Skip on repo-driven and plain-files. If sync needs-attention, stop.

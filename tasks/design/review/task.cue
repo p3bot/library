@@ -5,6 +5,7 @@ import "github.com/p3bot/library/schemas@v1"
 task: schemas.#Task & {
 	description: "Review and harden a design document before decomposition into ticket documents"
 	tags: ["design", "review", "feature", "analysis", "architecture", "critique"]
+	uses: ["contexts:ticket/writing"]
 	file: "@module/task.md"
 	prompt: """
 		Read {{.file}} to understand your task.

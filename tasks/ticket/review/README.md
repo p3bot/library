@@ -50,7 +50,7 @@ Decisions carry their options because alternatives are the point. Other categori
 
 ### Integrated resolutions
 
-Findings are numbered within a run for reference during the walk; the numbers are not preserved in the ticket document. A resolution is integrated directly into the ticket content as polished prose rather than logged — no Issues Discovered section lingers. The review history lives in the saved reports under .start/reviews/, not in the ticket document itself.
+Findings are numbered within a run for reference during the walk; the numbers are not preserved in the ticket document. A resolution is integrated directly into the ticket content as polished prose rather than logged — no Issues Discovered section lingers. The review is presented inline. A report file is written only when asked, or when the run is instructed to proceed without intervention — not into the ticket document itself.
 
 ## The Size Check
 

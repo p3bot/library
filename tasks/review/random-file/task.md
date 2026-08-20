@@ -25,10 +25,7 @@ Select a random file from the repository and perform a thorough review of its qu
 4. Find callers and usages to understand the file's role in the codebase
 5. Check if a corresponding test file exists and assess its coverage of the selected file
 6. Review the file against all scope points below and any other concerns relevant to the file
-7. Produce a structured report of findings
-8. Unless instructed otherwise, save the report to `.start/reviews/YYYY-MM-DD-random-file-<file-name>-NN.md`
-   - Use today's date for `YYYY-MM-DD` and the name of the selected file for `<file-name>`
-   - Increment `NN` based on existing files in `.start/reviews/` matching the date and type, starting at `01`
+7. Produce a structured report of findings and present it inline. Save only if the user asked, or if they instructed this run to proceed without intervention. Use the path they gave. If they asked to save but named no path, ask. If they instructed this run to proceed without intervention and named no path, write to `.start/reviews/YYYY-MM-DD-random-file-<file-name>-NN.md` (`NN` starts at `01`, incrementing against existing files matching the date and type)
 
 ## Reviewer Guidance
 

@@ -44,7 +44,7 @@ Finding no new issues is a valid outcome. A late-run review that produces no fin
 
 ### Integrated resolutions
 
-Findings are numbered within a run for reference during the walk; the numbers are not preserved in the design document. A resolution is integrated directly into the design content — an alternative promoted into the Proposed Design, a tradeoff or assumption recorded in its section — rather than logged in an Issues Discovered list. When the approach changes, the former approach moves into Alternatives Considered with the reason it lost; the comparison is part of the design. The review history lives in the saved reports under `.start/reviews/`.
+Findings are numbered within a run for reference during the walk; the numbers are not preserved in the design document. A resolution is integrated directly into the design content — an alternative promoted into the Proposed Design, a tradeoff or assumption recorded in its section — rather than logged in an Issues Discovered list. When the approach changes, the former approach moves into Alternatives Considered with the reason it lost; the comparison is part of the design. The review is presented inline. A report file is written only when asked, or when the run is instructed to proceed without intervention.
 
 ## The Coherence Check
 

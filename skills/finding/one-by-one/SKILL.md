@@ -38,14 +38,14 @@ Fixes must not introduce comment bloat. When you edit code:
 - Document WHY, not WHAT. Code shows what it does; a comment exists only for a non-obvious constraint, invariant, or rejected alternative.
 - Do not restate the identifier or paraphrase the next line.
 - No roadmap, future-work, ticket, PR, or conversation references; no commented-out code; no apologetic or decorative comments.
-- Leave no TODO or FIXME stubs behind. Resolve the issue or spin it out via P.
+- Leave no TODO or FIXME stubs behind. Resolve the issue or spin it out via T.
 - Respect tool-mandated doc-comment forms (godoc, rustdoc, Sphinx, TypeDoc) on public APIs.
 - Compress a genuine WHY to one short line.
 
 ## Phase 1: Enumerate and triage
 
 1. Identify the list. Enumerate the issues and state the total count K.
-2. Display the full findings table before any action — every issue, including safe-to-apply and info-only items (distinguished by the Category / Severity column; neither counts toward the walk total T):
+2. Display the full findings table before any action — every issue, including safe-to-apply and info-only items (distinguished by the Category / Severity column; neither counts toward the walk total m):
 
 ```
 | # | Category / Severity | Location | Finding |
@@ -54,9 +54,9 @@ Fixes must not introduce comment bloat. When you edit code:
 ```
 
 3. Apply all safe-to-apply issues in one pass, without prompting. State what was applied for each. Safe items do not count toward the walk.
-4. Let T be the count of issues to walk: K minus the auto-applied safe items and any info-only items. Source-list IDs such as a pre-commit `M2` are independent of this count. Display the Top-level Prompt and wait for the choice.
+4. Let m be the count of issues to walk: K minus the auto-applied safe items and any info-only items. Source-list IDs such as a pre-commit `M2` are independent of this count. Display the Top-level Prompt and wait for the choice.
 
-If the source list carries info-only items (for example the `info` severity from a pre-commit review), record them but do not walk them by default and do not count them in T. Fold them in only if the user asks (see Steering the walk).
+If the source list carries info-only items (for example the `info` severity from a pre-commit review), record them but do not walk them by default and do not count them in m. Fold them in only if the user asks (see Steering the walk).
 
 ### Safe-to-apply
 
@@ -74,7 +74,7 @@ When the target is a document, prompt, spec, or skill file, its prose is the sub
 
 ## Phase 2: The walk
 
-The top-level choice selects how the T remaining findings are handled. `C` walks them one at a time; `A` applies the recommended resolution to every finding. Letters are case-insensitive.
+The top-level choice selects how the m remaining findings are handled. `C` walks them one at a time; `A` applies the recommended resolution to every finding. Letters are case-insensitive.
 
 Both modes process the findings in severity order (critical, high, medium, low) when the source list carries a severity; otherwise keep the list's existing order.
 
@@ -84,12 +84,12 @@ Walk the findings one at a time. For each finding:
 
 1. Re-read the relevant context — the finding's target code and any related files — and critically re-evaluate it. The original may have been wrong or rendered obsolete by an earlier fix. If it no longer holds, say so and revise or withdraw it before presenting.
 2. Lock the Recommendation under Principled bias and Agent-time above. Prefer the root fix over a symptom patch. Name the cheapest alternative and reject it only if it is worse on maintenance or correctness, not effort. If the finding still needs the target in the reader's head, rewrite until it does not — or withdraw it.
-3. Present the finding using the Per-item Template, with k as the position in the walk and T as the total.
+3. Present the finding using the Per-item Template, with k as the position in the walk and m as the total.
 4. Display the Per-item Prompt and pause for an explicit decision. Never assume blanket approval from an earlier response. Accepting one finding does not authorise the next. If a response is ambiguous, ask which finding it applies to.
 
 ### All (A)
 
-Apply recommendations automatically. Work through the T findings in order without displaying the Per-item Prompt. `A` is not a blind "just do it": it carries the principled bias, the safe-item handling, and the edit-as-checkpoint rule below. For each finding:
+Apply recommendations automatically. Work through the m findings in order without displaying the Per-item Prompt. `A` is not a blind "just do it": it carries the principled bias, the safe-item handling, and the edit-as-checkpoint rule below. For each finding:
 
 1. Re-read the relevant context and critically re-evaluate the finding, as in the walk. If it no longer holds, say so and skip it; track as Skipped. Before presenting, run the same Recommendation lock as step 2 of the walk.
 2. Present the finding using the Per-item Template — including its options and recommendation — so the choice is visible before it is applied. Do not display the Per-item Prompt or pause.
@@ -104,8 +104,8 @@ Letters are case-insensitive. Outcomes are tracked in-session and surface in the
 - An option letter (A, B, C …) — apply that specific option. Track as Fixed. Briefly confirm what was done.
 - R — apply exactly what the Recommendation states, which may be a single option, a combination, or a blend. Track as Fixed.
 - N — acknowledge and move to the next finding. Track as Skipped.
-- P — spin this one finding out as its own standalone project document (see P: spin out one finding). Track as `Project: <filename>`. Move on without an inline resolution.
-- S — bundle the remaining findings into a single project document and stop (see S: spin out the remaining set).
+- T — create a tk ticket for this finding (see Ticket (T) below). Track as `Ticket: <id>`. Move on without an inline resolution. Omit this command unless the Ticket (T) check succeeded.
+- S — bundle the remaining findings into a ticket document and stop (see S: spin out the remaining set).
 
 After applying a fix, run whatever checks the project has for the touched files — linters, formatters, type checks, tests — skipping any that do not apply to the target (a prose target may have none). In the C walk, run them after each fix. In A mode, run the fast checks per item but the full test suite once at the end of the run — sooner if a fix is high-risk. Address whatever they surface.
 
@@ -113,7 +113,7 @@ Remediation guidance:
 
 - Bias recommendations toward the principled long-term solution. Do not default to the minimal-diff resolution.
 - Apply minimal, targeted edits to integrate the resolution. Refactor surrounding code only when required to make the fix land cleanly.
-- If a resolution would be too large or risky to apply inline, recommend P to spin it out rather than attempting it inline.
+- If a resolution would be too large or risky to apply inline, recommend T when `tk` is available, otherwise S for the remaining set
 
 ### Steering the walk
 
@@ -126,7 +126,7 @@ The walk responds to natural-language scoping. Honour requests that narrow, reor
 
 ## Phase 3: Satisfaction pass
 
-After all findings are processed, run the `sat` satisfaction check over the work touched by the fixes. Skip this pass when no work was touched — for example when every finding was deferred via P. Handle any new findings it surfaces under the mode chosen at the top level — walk them under C, auto-apply under A. This is a regression check on the changes the fixes introduced, not a fresh full review.
+After all findings are processed, run the `sat` satisfaction check over the work touched by the fixes. Skip this pass when no work was touched — for example when every finding was deferred via T. Handle any new findings it surfaces under the mode chosen at the top level — walk them under C, auto-apply under A. This is a regression check on the changes the fixes introduced, not a fresh full review.
 
 ## Phase 4: Wrap-up
 
@@ -137,27 +137,40 @@ Print a summary table of all findings and their outcomes. Rows cross-reference t
 |---|---------|---------|
 | 1 | Brief description | Fixed |
 | 2 | Brief description | Skipped |
-| 3 | Brief description | Project: 01-<slug>.md |
+| 3 | Brief description | Ticket: lib-a3 |
 | 4 | Brief description | Bundled: 02-<slug>.md |
 ```
 
-Outcome values: `Fixed`, `Skipped`, `Project: <filename>` (one finding spun out via P), `Bundled: <filename>` (deferred into the S set).
-
-## P: spin out one finding
-
-When P is selected, write a standalone project document for that single finding so a fresh agent session can pick it up with no extra context.
-
-1. Run `start get project/writing` and follow that guide to author the document.
-2. Save at the repository root as `NN-<slug>.md`, where `NN` is one greater than the highest existing `NN-` numeric prefix among files at the repository root (start at `01` if none), and `<slug>` is the finding's short title lowercased and hyphenated.
-3. Track the finding as `Project: <filename>` and move to the next finding without offering an inline resolution.
+Outcome values: `Fixed`, `Skipped`, `Ticket: <id>` (one finding spun out via T), `Bundled: <filename>` (deferred into the S set).
 
 ## S: spin out the remaining set
 
-When S is selected at the top level or mid-walk, bundle the findings — all of them at the top level, or the unprocessed remainder mid-walk — into a single project document whose scope is to resolve them one-by-one later. This differs from P: P creates a project for one finding; S creates one project covering the outstanding set. Safe items applied in Phase 1 are already on disk and are not part of the bundle.
+When S is selected at the top level or mid-walk, bundle the findings — all of them at the top level, or the unprocessed remainder mid-walk — into a single ticket document whose scope is to resolve them one-by-one later. This differs from T: T creates a tk ticket; S writes a file. Safe items applied in Phase 1 are already on disk and are not part of the bundle.
 
-1. Run `start get project/writing` and follow that guide to author the document.
-2. Frame the project's scope as walking the listed findings one at a time (obo) under this skill. List each outstanding finding with enough context (location, issue, recommended direction) that the work is self-contained.
-3. Save at the repository root as `NN-<slug>.md`, numbered by the same highest-`NN-`-prefix rule as P. Print the Phase 4 summary, then stop.
+1. Run `start get contexts:ticket/writing` and follow that guide to author the document. File Placement applies
+2. Frame the ticket's scope as walking the listed findings one at a time (obo) under this skill
+3. Re-check each remaining finding with the same Recommendation lock as the walk. Skip any that no longer hold. Write each that still holds with its instance, Simple Explanation, Details, Options, and Recommendation so a fresh session can walk the set
+4. Use the path they gave. If none, ask, offering `NN-<slug>.md` at the repository root (`NN` continues any existing `NN-` sequence, else `01`). Print the Phase 4 summary, then stop.
+
+## Ticket (T)
+
+Before showing either prompt, run `command -v tk`. Offer `T` only if it succeeds. Omit it from both prompts otherwise. Do not mention tk when it is absent.
+
+Per-item `T` creates one tk ticket for that finding and continues the walk. Top-level `T` creates one tk ticket covering the remaining findings and stops.
+
+When `T` is selected:
+
+1. Run `tk create` with a title from the finding's short title (per-item) or a title covering the remaining set (top-level)
+2. Then `start get contexts:ticket/writing`. Never fetch the writing guide at walk start
+3. The writing guide's File Placement section does not apply. The path is the one `tk create` printed
+4. Fill under that H1. Do not paste a second heading
+5. The writing guide supplies principles, section purpose, and formatting only
+6. Track as `Ticket: <id>`
+7. If `tk status mode` is `tk-driven`, `tk sync` after the body fill
+
+Per-item fill: the ticket is that finding. Carry the instance, Simple Explanation, Details, Options, and Recommendation already presented.
+
+Top-level fill: re-check each remaining finding with the same Recommendation lock as the walk. Skip any that no longer hold. Write each that still holds with its instance, Simple Explanation, Details, Options, and Recommendation so a fresh session can walk the set. Then stop.
 
 ## Per-item Template
 
@@ -184,7 +197,7 @@ Writing rules:
 - Separate each option with a blank line. Never collapse options onto one line
 
 ```
-### Finding k of T — <id or short title>
+### Finding k of m — <id or short title>
 
 Category / Severity: <as carried by the source list, or omit>
 Location: <file:line, or section>
@@ -265,22 +278,23 @@ Include an Options block only when alternatives clarify the choice; otherwise om
 
 ### Top-level Prompt
 
-Display verbatim at the end of Phase 1:
+Display at the end of Phase 1. Include the Ticket line only if the Ticket (T) check succeeded.
 
 ```
  (C)ontinue — walk the findings one at a time
  (A)ll — apply the recommended resolution to every finding (principled bias; deny an edit to pause and discuss)
- (S)ave — bundle the findings into a project document and stop
+ (S)ave — bundle the findings into a ticket document and stop
+ (T)icket — create a tk ticket for the remaining findings and stop
 ```
 
 ### Per-item Prompt
 
-Display verbatim after presenting each finding:
+Display after presenting each finding. Include Ticket only if the Ticket (T) check succeeded.
 
 ```
  A, B, C … — apply the matching option
  (R)ecommendation — apply exactly what was recommended
  (N)ext — skip this finding and move on
- (P)roject — spin this one finding out as its own project document
- (S)ave — bundle the remaining findings into a project document and stop
+ (T)icket — create a tk ticket for this finding
+ (S)ave — bundle the remaining findings into a ticket document and stop
 ```

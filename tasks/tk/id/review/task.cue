@@ -5,7 +5,7 @@ import "github.com/p3bot/library/schemas@v1"
 task: schemas.#Task & {
 	description: "Using tk, review this ticket document"
 	tags: ["tk", "id", "review", "ticket", "document"]
-	uses: ["tasks:ticket/review", "contexts:ticket/writing"]
+	uses: ["tasks:ticket/review"]
 	file: "@module/task.md"
 	prompt: """
 		Read {{.file}} to understand your task.

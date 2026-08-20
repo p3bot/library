@@ -12,10 +12,7 @@ Review of code comments across the repository for accuracy, usefulness, and comp
 2. Read source files systematically, paying attention to both the comments and the code they describe
 3. For each comment, assess whether it is accurate, useful, and well-placed in relation to the current code
 4. Review against the scope points below and any other concerns relevant to the commentary layer
-5. Produce a structured report of findings
-6. Unless instructed otherwise, save the report to `.start/reviews/YYYY-MM-DD-comments-NN.md`
-   - Use today's date for `YYYY-MM-DD`
-   - Increment `NN` based on existing files in `.start/reviews/` matching the date and type, starting at `01`
+5. Produce a structured report of findings and present it inline. Save only if the user asked, or if they instructed this run to proceed without intervention. Use the path they gave. If they asked to save but named no path, ask. If they instructed this run to proceed without intervention and named no path, write to `.start/reviews/YYYY-MM-DD-comments-NN.md` (`NN` starts at `01`, incrementing against existing files matching the date and type)
 
 ## Reviewer Guidance
 

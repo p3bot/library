@@ -177,12 +177,12 @@ Resume protocol: if the session is interrupted mid-file, leave the file unchecke
    - `Used by`
    - `Fix from PR`
    Investigate every hit. Either delete or justify to the user.
-6. Print every entry from the working document's TODOs section to the user as a numbered list, in collection order, with `path/to/file:line — text` per entry. The user must be able to review every TODO without opening another file and must be able to reference items by number when choosing per-TODO dispositions. Then present the disposition options and accept any combination — a single choice for the whole list, or different choices per TODO (e.g. "(T) for 1, 3, 5; (R) for 2; (D) for the rest"):
-   - (S)ave: write the list to a dedicated document (e.g. `todos.md` at the repo root).
-   - (T)icket: create a standalone ticket document to walk through and resolve each TODO.
-   - (I)ssues: file one issue per TODO in the user's tracker (Jira, GitLab, GitHub).
-   - (R)estore: re-introduce specific TODOs to their original location in source.
-   - (D)iscard: delete the list without further action.
+6. Print every entry from the working document's TODOs section to the user as a numbered list, in collection order, with `path/to/file:line — text` per entry. The user must be able to review every TODO without opening another file and must be able to reference items by number when choosing per-TODO dispositions. Before presenting dispositions, run `command -v tk`. Then present the options and accept any combination — a single choice for the whole list, or different choices per TODO (e.g. "(T) for 1, 3, 5; (R) for 2; (D) for the rest"):
+   - (S)ave: write the list to a dedicated document (e.g. `todos.md` at the repo root)
+   - (T)icket: create a tk ticket for the selected TODOs. Offer T only if `command -v tk` succeeded. Omit it otherwise and do not mention tk. If T is chosen: `tk create` with a title covering those TODOs, then `start get contexts:ticket/writing`. File Placement does not apply. Fill under the H1 so a fresh session can walk the list. Track as `Ticket: <id>`. If `tk status mode` is `tk-driven`, `tk sync` after the body fill
+   - (I)ssues: file one issue per TODO in the user's tracker (Jira, GitLab, GitHub)
+   - (R)estore: re-introduce specific TODOs to their original location in source
+   - (D)iscard: delete the list without further action
    Do not act unilaterally. Wait for the user's choices before executing.
 7. Stage every modified source and test file. Do not stage the working document.
 8. Commit with a structured message:

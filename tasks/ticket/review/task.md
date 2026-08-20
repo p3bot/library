@@ -10,25 +10,17 @@ Finding no new issues is a valid outcome. If the ticket document is complete and
 
 ### Phase 1: Review
 
-1. Identify the ticket document. If the user named one — in the task instructions or the conversation — use it. If the user or custom instructions resolve a path with `tk get`, `tk next`, or `tk next --claim`, honour that path as the ticket document without treating the file as a tk-managed ticket. Otherwise look for clues in:
-   - `AGENTS.md` — check for any reference to a current or active ticket
-   - Repository root — scan for a ticket or specification document among the markdown or document files present
-   - Agent directories: `.agents/`, `.claude/`, `.cursor/`, `.gemini/`, or similar
-   - Documentation folders: `docs/`
+1. Identify the ticket document from the user's instructions. If they named a path, use it. If they asked you to find it, look where they pointed. Otherwise ask.
 
-   A library ticket document is a standalone markdown plan for one implementation pass. It is not created with `tk create`, need not live in a tk scope, and need not carry YAML frontmatter. Default discovery is file path, AGENTS.md clues, and document-file scans. Do not teach tk workflows end-to-end.
-
-   When auto-selecting (no path named by the user or custom instructions), do not treat a file as the library ticket document if it has tk-shaped YAML frontmatter (`id` and `status`) or sits on a tk scope board path. Skip those candidates and continue the scan; if only such files remain, ask which document to use rather than auto-selecting them.
-
-   The ticket may be described as "active", "current", "in progress", "working on", or similar terms. Do not assume a fixed filename. If exactly one clear candidate is found, use it. If multiple candidates are found, or none can be identified with confidence, ask the user which file to use.
+   A library ticket document is a standalone markdown plan for one implementation pass.
 2. Read the ticket document thoroughly.
-3. Run the Size and Coherence Check (below). If it fires, skip to Phase 4 and declare Split the ticket.
+3. Run the Size and Coherence Check (below). If it fires, still produce the report header and What this ticket does, then skip to Phase 4 and declare Split the ticket.
 4. Analyse the repository:
    - Validate the stated current state against the actual codebase
    - Check whether the proposed approach covers all stated requirements
    - Research external facts only when the ticket's approach turns on them — a specific dependency version, an API behaviour, or a platform capability. Generic dependency scans produce noise over repeated runs
 5. Identify concerns that meet the Goal bar — issues that would force rework, cause incorrect behaviour, or leave a critical requirement unmet. Apply the Articulation Test and Regret Filter (see Reviewer Guidance) before listing each one.
-6. Produce a structured report of findings using the Report Format (below) and present it inline. No disk writes.
+6. Produce a structured report using the Report Format (below) and present it inline. Do not write a report file unless Save applies.
 7. If there are no actionable findings, skip to Phase 4 and declare Ready to implement. Otherwise display the Top-level Prompt (see Commands).
 
 ### Size and Coherence Check
@@ -66,7 +58,7 @@ Per-item command semantics. Letters are case-insensitive. Outcomes are tracked i
 - An option letter (`A`, `B`, `C` …) — apply that specific option to the ticket document, fully integrating it so the underlying issue is covered by the new content. Do not leave an Issues Discovered section; resolved items become polished ticket content. Track as `Fixed`. Briefly confirm what was done.
 - `R` — apply exactly what the Recommendation states, which may be a single option, a combination, or a blend. Otherwise identical to applying an option. Track as `Fixed`.
 - `N` — acknowledge and move to the next finding. Track as `Skipped`.
-- `T` — spin the finding out as a standalone follow-up file (see Ticket File Format below). Track as `Ticket: <filename>`. Move to the next finding without offering an inline resolution.
+- `T` — create a tk ticket for this finding (see Ticket (T) below). Track as `Ticket: <id>`. Move to the next finding without offering an inline resolution. Omit this command unless the Ticket (T) check succeeded
 - `S` — see Save (below).
 
 All (`A`) applies recommendations automatically. Work through the `m` findings in order without displaying the Per-item Prompt. For each finding:
@@ -81,7 +73,7 @@ Remediation guidance:
 
 - Bias recommendations toward the principled long-term solution in the ticket document — correct the design or requirement at the root, not a downstream workaround the implementer would paper over. Do not default to the smallest-diff edit. Prefer the option you would pick if rewriting the section were free
 - Apply minimal, targeted edits to integrate the resolution. Refactor surrounding text only when required to make the resolution land cleanly.
-- If a resolution would be too large or risky to apply inline, recommend `T` to spin it out rather than attempting it inline.
+- If a resolution would be too large or risky to apply inline, recommend `T` when `tk` is available, otherwise leave it for Save or a later pass
 
 ### Phase 3: Satisfaction Pass
 
@@ -98,8 +90,7 @@ After all findings have been processed, re-read the ticket document with fresh e
    - Split the ticket — the document is too broad for a single implementation pass; summarise the seam
 
    An issue blocks implementation if proceeding without resolving it would force significant rework, cause incorrect behaviour, or leave a critical requirement unmet.
-2. Print a summary table of all findings and their outcomes (see Remediation Summary in the Report Format).
-3. Prompt the user once: enter `S` to write the final report. Any other reply skips the save.
+2. Print a summary table of all findings and their outcomes (see Remediation Summary in the Report Format). Do not prompt to save.
 
 ## Reviewer Guidance
 
@@ -236,7 +227,7 @@ For decisions, the Options block lists the alternatives the owner is choosing be
 
 ## Report Format
 
-Structure the inline review report as follows:
+Structure the inline review report as follows. After the header, bullet what the ticket does before listing findings. Each bullet is one outcome or change after the ticket lands — not the implementation plan and not a dump of the requirements.
 
 ```
 ## Ticket Document Review
@@ -245,6 +236,11 @@ Ticket: <path to ticket document>
 Intent: <one sentence on what the ticket sets out to do>
 Findings: <count by category, e.g. 1 decision, 2 design, 1 gap>
 Safe items: <changes to apply on remediation, or "None">
+
+## What this ticket does
+
+- <outcome or change>
+- <outcome or change>
 
 ## Findings
 
@@ -265,7 +261,7 @@ When the report is saved after remediation begins, append the section below. Out
 
 - `Fixed` — the resolution was applied to the ticket document
 - `Skipped` — the finding was acknowledged with `N` and left unresolved
-- `Ticket: <filename>` — spun out as a standalone follow-up
+- `Ticket: <id>` — spun out as a tk ticket
 - `Pending` — `S` was invoked before the finding had been processed
 
 ```
@@ -275,85 +271,54 @@ When the report is saved after remediation begins, append the section below. Out
 |---|----------|---------|---------|
 | 1 | design | Brief description | Fixed |
 | 2 | decision | Brief description | Skipped |
-| 3 | gap | Brief description | Ticket: 01-add-rate-limiting.md |
+| 3 | gap | Brief description | Ticket: lib-a3 |
 | 4 | risk | Brief description | Pending |
 ```
 
-## Ticket File Format
+## Ticket (T)
 
-When `T` is selected during remediation, write a standalone file at the repository root named `NN-<slug>.md` where:
+Before showing either prompt, run `command -v tk`. Offer `T` only if it succeeds. Omit it from both prompts otherwise. Do not mention tk when it is absent.
 
-- `NN` starts at `01` and increments based on existing files matching the pattern
-- `<slug>` is the short title lowercased and hyphenated (e.g. "Race condition in token refresh" becomes `race-condition-in-token-refresh`)
+Per-item `T` creates one tk ticket for that finding and continues the walk. Top-level `T` creates one tk ticket covering the remaining findings and stops.
 
-The file must be fully self-contained so a new AI agent session can pick it up with no extra context. Include only the sections below that apply — right-size the document to the scope of the finding.
+When `T` is selected:
 
-```
-# <title>
+1. Run `tk create` with a title from the finding's short title (per-item) or a title covering the remaining set (top-level)
+2. Then `start get contexts:ticket/writing`. Never fetch the writing guide at review start
+3. The writing guide's File Placement section does not apply. The path is the one `tk create` printed
+4. Fill under that H1. Do not paste a second heading
+5. The writing guide supplies principles, section purpose, and formatting only
+6. Track as `Ticket: <id>`
+7. If `tk status mode` is `tk-driven`, `tk sync` after the body fill
 
-Source: ticket-doc-review on YYYY-MM-DD
-Category: <decision | design | gap | risk | dependency>
-Location: <file:line, or section heading>
+Per-item fill: the ticket is that finding. Carry the instance, Simple Explanation, Details, Options, and Recommendation already presented.
 
-## Goal
-
-One to three sentences on what is being built or changed and why. Focus on outcome and motivation, not tasks.
-
-## Scope
-
-What is in scope; what is explicitly out of scope.
-
-## Current State
-
-Relevant existing state — files, configuration, and the finding itself — enough that the implementer can read the requirements with understanding.
-
-## Requirements
-
-Numbered, clear, verifiable deliverables. State what must be produced, not how.
-
-## Implementation Plan
-
-Ordered steps at a level that gives direction without prescribing code. Snippets are acceptable to clarify non-obvious integration. Omit if the requirements are self-explanatory.
-
-## Constraints
-
-Hard rules: language version, target platforms, required tooling, compatibility requirements. Items that cannot be violated without making the work fail.
-
-## Acceptance Criteria
-
-Observable, verifiable outcomes that signal completion. Ticket-specific only — do not list universals like "build passes" or "tests pass".
-```
-
-Writing guidelines:
-
-- Define outcomes and constraints, not keystrokes. The implementing agent owns implementation details
-- Be explicit and complete — do not reference the conversation that produced the finding
-- Code snippets are acceptable for clarification; full implementations are not
-- Use direct language: "do X", not "consider doing X"
+Top-level fill: re-check each remaining finding with the same Recommendation lock as the walk. Skip any that no longer hold. Write each that still holds with its instance, Simple Explanation, Details, Options, and Recommendation so a fresh session can walk the set. Then stop.
 
 ## Save
 
-When `S` is invoked at any phase:
+Write the report only when the user asked to save it — including by invoking `S` — or when they instructed this run to proceed without intervention.
 
-1. Discover the next available filename: `.start/reviews/YYYY-MM-DD-ticket-doc-review-NN.md` where `YYYY-MM-DD` is today's date and `NN` starts at `01`, incrementing based on existing files matching the date and slug
-2. Write the current report. If remediation has started, include the Remediation Summary section with current outcomes. Findings not yet processed are recorded as `Pending`
-3. Confirm the filename written
+Use the path they gave. If they asked to save but named no path, ask. If they instructed this run to proceed without intervention and named no path, write to `.start/reviews/YYYY-MM-DD-ticket-doc-review-NN.md` (`NN` starts at `01`, incrementing against existing files matching the date and slug).
+
+When writing after remediation has started, include the Remediation Summary with current outcomes. Findings not yet processed are recorded as `Pending`. Confirm the filename written.
 
 ## Commands
 
 ### Top-level Prompt
 
-Display verbatim at the end of Phase 1:
+Display at the end of Phase 1. Include the Ticket line only if the Ticket (T) check succeeded.
 
 ```
 - (C)ontinue — walk through the findings one at a time
 - (A)ll — apply the recommended resolution to every finding automatically
-- (S)ave — write the report to .start/reviews/ and stop
+- (S)ave — write the report and stop
+- (T)icket — create a tk ticket for the remaining findings and stop
 ```
 
 ### Per-item Prompt
 
-Display verbatim after presenting each finding:
+Display after presenting each finding. Include Ticket only if the Ticket (T) check succeeded.
 
 ```
 (R)ecommended  (N)ext  (T)icket  (S)ave

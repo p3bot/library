@@ -10,21 +10,16 @@ Finding no new issues is a valid outcome. If the design is sound and prior revie
 
 ### Phase 1: Review
 
-1. Identify the design document. Prefer the document named in the instructions or by the user. If none is named, look for clues in:
-   - Design documents at the repo root: `design.md`, `rfc.md`, `adr/*.md`
-   - Documentation folders: `docs/`, `.start/`
-   - `AGENTS.md` — check for any reference to a current design or decision
-
-   If multiple candidates are found, ask the user to confirm. If none are found, ask the user which document to review.
+1. Identify the design document from the user's instructions. If they named a path, use it. If they asked you to find it, look where they pointed. Otherwise ask.
 2. Read the design document thoroughly.
-3. Run the Coherence Check (below). If it fires, skip to Phase 4 and declare Split the design.
+3. Run the Coherence Check (below). If it fires, still produce the report header and What this design does, then skip to Phase 4 and declare Split the design.
 4. Analyse the design:
    - Validate the stated current state against the actual codebase
    - Test whether the chosen approach actually meets the stated goals and non-goals
    - Look for approaches the document did not consider, and pressure-test the reasons the considered alternatives were rejected
    - Research external facts only when the design turns on them — a dependency's behaviour, an API contract, a platform capability, a benchmark. Generic scans produce noise over repeated runs
 5. Identify concerns that meet the Goal bar — issues that would make the design wrong, leave it under-argued, or expose an unmanaged risk. Apply the Articulation Test and Regret Filter (see Reviewer Guidance) before listing each one.
-6. Produce a structured report of findings using the Report Format (below) and present it inline. No disk writes.
+6. Produce a structured report using the Report Format (below) and present it inline. Do not write a report file unless Save applies.
 7. If there are no actionable findings, skip to Phase 4 and declare Sound. Otherwise display the Top-level Prompt (see Commands).
 
 ### Coherence Check
@@ -54,7 +49,8 @@ Per-item command semantics. Letters are case-insensitive. Outcomes are tracked i
 - An option letter (`A`, `B`, `C` …) — apply that specific option to the design document, fully integrating it so the underlying issue is covered by the new content. Switch the Proposed Design, add the rejected option to Alternatives Considered, record the missing tradeoff or assumption — whatever the option calls for. Do not leave an Issues Discovered section; resolved items become polished design content. Track as `Fixed`. Briefly confirm what was done.
 - `R` — apply exactly what the Recommendation states, which may be a single option, a combination, or a blend. Otherwise identical to applying an option. Track as `Fixed`.
 - `N` — acknowledge and move to the next finding. Track as `Skipped`.
-- `G` — spin the finding out as a standalone follow-up design (Desi(g)n; see Design File Format below). Track as `Design: <filename>`. Move to the next finding without offering an inline resolution.
+- `G` — spin the finding out as a standalone follow-up design (Desi(g)n; see Design File Format below). Track as `Design: <filename>`. Move to the next finding without offering an inline resolution
+- `T` — create a tk ticket for this finding (see Ticket (T) below). Track as `Ticket: <id>`. Move to the next finding without offering an inline resolution. Omit this command unless the Ticket (T) check succeeded
 - `S` — see Save (below).
 
 All (`A`) applies recommendations automatically. Work through the `m` findings in order without displaying the Per-item Prompt. For each finding:
@@ -70,7 +66,7 @@ Remediation guidance:
 - Bias recommendations toward the principled long-term design choice. Prefer changing the Proposed Design (and recording the loser in Alternatives Considered) over a local caveat that leaves the approach intact. Do not default to the smallest-diff edit
 - Apply minimal, targeted edits to integrate the resolution. Refactor surrounding text only when required to make the resolution land cleanly.
 - Integrating an alternative does not mean discarding the record. When the chosen approach changes, move the former approach into Alternatives Considered with the reason it lost — the comparison is part of the design.
-- If a resolution would be too large or would open its own decision, recommend `G` to spin it out rather than forcing it inline.
+- If a resolution would be too large or would open its own decision, recommend `G` to spin it out as a design, or `T` when `tk` is available to spin it out as a tk ticket
 
 ### Phase 3: Satisfaction Pass
 
@@ -87,8 +83,7 @@ After all findings have been processed, re-read the design document with fresh e
    - Split the design — the document covers more than one independent design; summarise the seam
 
    An issue blocks acceptance if it would make the design wrong, leave a load-bearing part of it unargued, or expose a risk with no mitigation or accepted rationale.
-2. Print a summary table of all findings and their outcomes (see Remediation Summary in the Report Format).
-3. Prompt the user once: enter `S` to write the final report. Any other reply skips the save.
+2. Print a summary table of all findings and their outcomes (see Remediation Summary in the Report Format). Do not prompt to save.
 
 ## Reviewer Guidance
 
@@ -224,7 +219,7 @@ For decisions, the Options block lists the alternatives the owner is choosing be
 
 ## Report Format
 
-Structure the inline review report as follows:
+Structure the inline review report as follows. After the header, bullet what the design does before listing findings. Each bullet is one outcome or change the design would put in place — not a restatement of the Proposed Design and not a dump of the alternatives.
 
 ```
 ## Design Document Review
@@ -232,6 +227,11 @@ Structure the inline review report as follows:
 Design: <path to design document>
 Intent: <one sentence on what the design sets out to do>
 Findings: <count by category, e.g. 1 approach, 2 tradeoff, 1 assumption>
+
+## What this design does
+
+- <outcome or change>
+- <outcome or change>
 
 ## Findings
 
@@ -253,6 +253,7 @@ When the report is saved after remediation begins, append the section below. Out
 - `Fixed` — the resolution was applied to the design document
 - `Skipped` — the finding was acknowledged with `N` and left unresolved
 - `Design: <filename>` — spun out as a standalone follow-up design
+- `Ticket: <id>` — spun out as a tk ticket
 - `Pending` — `S` was invoked before the finding had been processed
 
 ```
@@ -268,34 +269,55 @@ When the report is saved after remediation begins, append the section below. Out
 
 ## Design File Format
 
-When `G` is selected during remediation, write a standalone file for the follow-up design, placed beside the design under review. Ask the user what to name it, offering the finding's short title lowercased and hyphenated as a starting point (e.g. "Cache invalidation strategy" becomes `cache-invalidation-strategy.md`).
+When `G` is selected during remediation, write a standalone file for the follow-up design. Use the path they gave. If none, ask, offering a name beside the design under review (finding's short title lowercased and hyphenated, e.g. "Cache invalidation strategy" becomes `cache-invalidation-strategy.md`).
 
 The file must be self-contained so a fresh session can pick up the design with no extra context. Draw its structure from the design document itself: state the Problem, the Current State, and the Alternatives in play, and leave the Proposed Design open where deferring the approach is the point of spinning it out.
 
+## Ticket (T)
+
+Before showing either prompt, run `command -v tk`. Offer `T` only if it succeeds. Omit it from both prompts otherwise. Do not mention tk when it is absent.
+
+Per-item `T` creates one tk ticket for that finding and continues the walk. Top-level `T` creates one tk ticket covering the remaining findings and stops.
+
+When `T` is selected:
+
+1. Run `tk create` with a title from the finding's short title (per-item) or a title covering the remaining set (top-level)
+2. Then `start get contexts:ticket/writing`. Never fetch the writing guide at review start
+3. The writing guide's File Placement section does not apply. The path is the one `tk create` printed
+4. Fill under that H1. Do not paste a second heading
+5. The writing guide supplies principles, section purpose, and formatting only
+6. Track as `Ticket: <id>`
+7. If `tk status mode` is `tk-driven`, `tk sync` after the body fill
+
+Per-item fill: the ticket is that finding. Carry the instance, Simple Explanation, Details, Options, and Recommendation already presented.
+
+Top-level fill: re-check each remaining finding with the same Recommendation lock as the walk. Skip any that no longer hold. Write each that still holds with its instance, Simple Explanation, Details, Options, and Recommendation so a fresh session can walk the set. Then stop.
+
 ## Save
 
-When `S` is invoked at any phase:
+Write the report only when the user asked to save it — including by invoking `S` — or when they instructed this run to proceed without intervention.
 
-1. Discover the next available filename: `.start/reviews/YYYY-MM-DD-design-review-NN.md` where `YYYY-MM-DD` is today's date and `NN` starts at `01`, incrementing based on existing files matching the date and type
-2. Write the current report. If remediation has started, include the Remediation Summary section with current outcomes. Findings not yet processed are recorded as `Pending`
-3. Confirm the filename written
+Use the path they gave. If they asked to save but named no path, ask. If they instructed this run to proceed without intervention and named no path, write to `.start/reviews/YYYY-MM-DD-design-review-NN.md` (`NN` starts at `01`, incrementing against existing files matching the date and type).
+
+When writing after remediation has started, include the Remediation Summary with current outcomes. Findings not yet processed are recorded as `Pending`. Confirm the filename written.
 
 ## Commands
 
 ### Top-level Prompt
 
-Display verbatim at the end of Phase 1:
+Display at the end of Phase 1. Include the Ticket line only if the Ticket (T) check succeeded.
 
 ```
 - (C)ontinue — walk through the findings one at a time
 - (A)ll — apply the recommended resolution to every finding automatically
-- (S)ave — write the report to .start/reviews/ and stop
+- (S)ave — write the report and stop
+- (T)icket — create a tk ticket for the remaining findings and stop
 ```
 
 ### Per-item Prompt
 
-Display verbatim after presenting each finding:
+Display after presenting each finding. Include Ticket only if the Ticket (T) check succeeded.
 
 ```
-(R)ecommended  (N)ext  Desi(g)n  (S)ave
+(R)ecommended  (N)ext  Desi(g)n  (T)icket  (S)ave
 ```

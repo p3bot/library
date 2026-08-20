@@ -93,12 +93,7 @@ If the design is a focused feature, a localised change, or a tightly coupled set
 
 ### Phase 1: Orient
 
-1. Identify the design document(s). Prefer documents named by the user. Otherwise look for:
-   - `design.md`, `rfc.md`, or similar at the repo root
-   - Design folders: `docs/design/`, `.agents/design/`, `design/`
-   - References in `AGENTS.md`
-
-   One design may span multiple files (main design plus design records). Read all that apply. If multiple unrelated designs are candidates, ask which to decompose.
+1. Identify the design document(s) from the user's instructions. If they named a path, use it. If they asked you to find it, look where they pointed. Otherwise ask. One design may span multiple files — read all they named.
 
 2. Confirm the design is ready for decomposition. If it still has unresolved architectural decisions, open alternatives, or contradictions, stop and say so. Point the owner at design review rather than inventing ticket boundaries around unfinished design.
 

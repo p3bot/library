@@ -1,8 +1,9 @@
 # Item-by-item Template Versions
 
 History of the per-item finding template used by the interactive review tasks
-(`tasks/review/pre-commit`, `tasks/ticket/review`, `tasks/design/review`, and
-`tasks/review/multi-agent/orchestrator`) and by the external `one-by-one` skill.
+(`tasks/review/pre-commit`, `tasks/ticket/review`, `tasks/tk/id/review`,
+`tasks/design/review`, and `tasks/review/multi-agent/orchestrator`) and by
+`skills/finding/one-by-one`.
 They share this template; they differ only in the title line, the label, the
 category placeholder, and the worked example:
 
