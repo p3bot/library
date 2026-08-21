@@ -751,13 +751,13 @@ skills: [string]: schemas.#IndexEntry
 skills: {
 	"finding/one-by-one": {
 		module:      "github.com/p3bot/library/skills/finding/one-by-one@v1"
-		version:     "v1.1.0"
+		version:     "v1.2.0"
 		description: "Walk a list of findings one at a time and resolve each with a principled fix"
 		tags: ["finding", "one-by-one", "workflow", "remediation", "review"]
 	}
 	"finding/satisfaction-check": {
 		module:      "github.com/p3bot/library/skills/finding/satisfaction-check@v1"
-		version:     "v1.0.0"
+		version:     "v1.1.0"
 		description: "Critical fresh-eyes self-review of the work just produced, surfacing what is wrong rather than reassuring"
 		tags: ["finding", "satisfaction-check", "review", "critic", "sat"]
 	}

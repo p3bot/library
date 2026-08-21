@@ -44,6 +44,8 @@ Fixes must not introduce comment bloat. When you edit code:
 
 ## Phase 1: Enumerate and triage
 
+When the caller already presented this list and the user already chose C, A, S, or T — the satisfaction-check handoff — skip steps 2 and 4. Keep the caller's list. Still apply safe-to-apply items (step 3), compute m, and proceed under the chosen mode.
+
 1. Identify the list. Enumerate the issues and state the total count K.
 2. Display the full findings table before any action — every issue, including safe-to-apply and info-only items (distinguished by the Category / Severity column; neither counts toward the walk total m):
 
@@ -126,7 +128,7 @@ The walk responds to natural-language scoping. Honour requests that narrow, reor
 
 ## Phase 3: Satisfaction pass
 
-After all findings are processed, run the `sat` satisfaction check over the work touched by the fixes. Skip this pass when no work was touched — for example when every finding was deferred via T. Handle any new findings it surfaces under the mode chosen at the top level — walk them under C, auto-apply under A. This is a regression check on the changes the fixes introduced, not a fresh full review.
+After all findings are processed, run the `sat` satisfaction check over the work touched by the fixes. Skip this pass when no work was touched — for example when every finding was deferred via T. Nested sat must not re-prompt; it returns new findings to this walk. Handle them under the mode chosen at the top level — walk them under C, auto-apply under A. This is a regression check on the changes the fixes introduced, not a fresh full review.
 
 ## Phase 4: Wrap-up
 

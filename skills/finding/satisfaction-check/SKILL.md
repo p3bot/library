@@ -5,7 +5,7 @@ description: Critical fresh-eyes self-review of the work just produced, surfacin
 
 # Satisfaction Check — sat
 
-Review the work just produced as if it were someone else's and your job is to find what is wrong. This skill is a critic, not a fixer: it surfaces a findings list and hands that list to one-by-one (obo) for principled remediation.
+Review the work just produced as if it were someone else's and your job is to find what is wrong. This skill is a critic, not a fixer: it surfaces a findings list, then offers the one-by-one top-level menu so the user can walk, apply, save, or ticket that list.
 
 Targets can be code or prose — application source, or documents, prompts, specs, and skill files. The dimensions and checks below adapt to which.
 
@@ -103,10 +103,17 @@ Report what you find as a findings table. Use the same shape one-by-one consumes
 
 ## Handoff to one-by-one
 
-The findings table is the list obo consumes. After presenting it, when there is at least one finding, offer to remediate:
+The findings table is the list obo consumes. Do not fix anything inline — sat finds, obo fixes.
+
+If this skill is running as the satisfaction pass inside an already-started one-by-one walk, present the table and return any new findings to that walk. Do not display the Top-level Prompt. Do not load or fetch one-by-one. The current walk handles them under the mode already chosen.
+
+Otherwise, when there is at least one finding, run `command -v tk`, display the Top-level Prompt, and wait. Include the Ticket line only if that check succeeded. Do not mention tk when it is absent. Letters are case-insensitive. Treat `obo` or `one-by-one` as C.
 
 ```
-Run obo to walk these findings one at a time, or A to apply the recommended fix to each.
+ (C)ontinue — walk the findings one at a time
+ (A)ll — apply the recommended resolution to every finding (principled bias; deny an edit to pause and discuss)
+ (S)ave — bundle the findings into a ticket document and stop
+ (T)icket — create a tk ticket for the remaining findings and stop
 ```
 
-If the user proceeds, hand off to one-by-one (obo): these findings become its Phase 1 list, and it walks or auto-applies them under the principled bias. Do not fix anything inline — sat finds, obo fixes.
+The user's letter is the handoff. Follow the one-by-one skill with this list and this mode. Skip its Phase 1 re-prompt: do not reprint the table, do not wait for a second choice. If that skill is not already in context, run `start get skills:finding/one-by-one` and follow it.
