@@ -8,112 +8,112 @@ agents: [string]: schemas.#IndexEntry
 agents: {
 	"claude/interactive": {
 		module:      "github.com/p3bot/library/agents/claude/interactive@v1"
-		version:     "v1.1.0"
+		version:     "v1.2.0"
 		description: "Claude Code by Anthropic - agentic coding assistant"
 		bin:         "claude"
 		tags: ["anthropic", "claude", "coding", "agent"]
 	}
 	"claude/bypass-permissions": {
 		module:      "github.com/p3bot/library/agents/claude/bypass-permissions@v1"
-		version:     "v1.1.0"
+		version:     "v1.2.0"
 		description: "Claude Code with all permissions bypassed - for background and automated tasks"
 		bin:         "claude"
 		tags: ["anthropic", "claude", "coding", "agent", "automation", "background", "bypass-permissions"]
 	}
 	"claude/edit": {
 		module:      "github.com/p3bot/library/agents/claude/edit@v1"
-		version:     "v1.1.0"
+		version:     "v1.2.0"
 		description: "Claude Code with auto-accepted file edits - for trusted editing sessions"
 		bin:         "claude"
 		tags: ["anthropic", "claude", "coding", "agent", "trusted", "auto-edit"]
 	}
 	"claude/non-interactive": {
 		module:      "github.com/p3bot/library/agents/claude/non-interactive@v1"
-		version:     "v1.1.0"
+		version:     "v1.2.0"
 		description: "Claude Code in non-interactive mode - completes task and exits"
 		bin:         "claude"
 		tags: ["anthropic", "claude", "coding", "agent", "non-interactive", "scripted"]
 	}
 	"claude/unattended": {
 		module:      "github.com/p3bot/library/agents/claude/unattended@v1"
-		version:     "v1.1.0"
+		version:     "v1.2.0"
 		description: "Claude Code in unattended mode - non-interactive with all permissions bypassed"
 		bin:         "claude"
 		tags: ["anthropic", "claude", "coding", "agent", "unattended", "non-interactive", "bypass-permissions", "automation"]
 	}
 	"gemini/interactive": {
 		module:      "github.com/p3bot/library/agents/gemini/interactive@v1"
-		version:     "v1.0.0"
+		version:     "v1.1.0"
 		description: "Gemini CLI by Google - agentic coding assistant"
 		bin:         "gemini"
 		tags: ["google", "gemini", "coding", "agent"]
 	}
 	"gemini/bypass-permissions": {
 		module:      "github.com/p3bot/library/agents/gemini/bypass-permissions@v1"
-		version:     "v1.0.0"
+		version:     "v1.1.0"
 		description: "Gemini CLI with all approvals bypassed - for background and automated tasks"
 		bin:         "gemini"
 		tags: ["google", "gemini", "coding", "agent", "automation", "background", "bypass-permissions"]
 	}
 	"gemini/edit": {
 		module:      "github.com/p3bot/library/agents/gemini/edit@v1"
-		version:     "v1.0.0"
+		version:     "v1.1.0"
 		description: "Gemini CLI with auto-accepted file edits - for trusted editing sessions"
 		bin:         "gemini"
 		tags: ["google", "gemini", "coding", "agent", "trusted", "auto-edit"]
 	}
 	"gemini/non-interactive": {
 		module:      "github.com/p3bot/library/agents/gemini/non-interactive@v1"
-		version:     "v1.0.0"
+		version:     "v1.1.0"
 		description: "Gemini CLI in non-interactive mode - completes task and exits"
 		bin:         "gemini"
 		tags: ["google", "gemini", "coding", "agent", "non-interactive", "scripted"]
 	}
 	"gemini/unattended": {
 		module:      "github.com/p3bot/library/agents/gemini/unattended@v1"
-		version:     "v1.0.0"
+		version:     "v1.1.0"
 		description: "Gemini CLI in unattended mode - non-interactive with all approvals bypassed"
 		bin:         "gemini"
 		tags: ["google", "gemini", "coding", "agent", "unattended", "non-interactive", "bypass-permissions", "automation"]
 	}
 	"aichat/interactive": {
 		module:      "github.com/p3bot/library/agents/aichat/interactive@v1"
-		version:     "v1.0.0"
+		version:     "v1.1.0"
 		description: "AIChat - All-in-one LLM CLI tool by sigoden"
 		bin:         "aichat"
 		tags: ["aichat", "multi-provider", "rag", "agents"]
 	}
 	"copilot/interactive": {
 		module:      "github.com/p3bot/library/agents/copilot/interactive@v1"
-		version:     "v1.0.0"
+		version:     "v1.1.0"
 		description: "GitHub Copilot CLI - agentic coding assistant"
 		bin:         "copilot"
 		tags: ["github", "copilot", "coding", "agent"]
 	}
 	"copilot/edit": {
 		module:      "github.com/p3bot/library/agents/copilot/edit@v1"
-		version:     "v1.0.0"
+		version:     "v1.1.0"
 		description: "GitHub Copilot CLI with auto-accepted file edits - for trusted editing sessions"
 		bin:         "copilot"
 		tags: ["github", "copilot", "coding", "agent", "trusted", "auto-edit"]
 	}
 	"copilot/bypass-permissions": {
 		module:      "github.com/p3bot/library/agents/copilot/bypass-permissions@v1"
-		version:     "v1.0.0"
+		version:     "v1.1.0"
 		description: "GitHub Copilot CLI with all permissions bypassed - for background and automated tasks"
 		bin:         "copilot"
 		tags: ["github", "copilot", "coding", "agent", "automation", "background", "bypass-permissions"]
 	}
 	"copilot/non-interactive": {
 		module:      "github.com/p3bot/library/agents/copilot/non-interactive@v1"
-		version:     "v1.0.0"
+		version:     "v1.1.0"
 		description: "GitHub Copilot CLI in non-interactive mode - completes task and exits"
 		bin:         "copilot"
 		tags: ["github", "copilot", "coding", "agent", "non-interactive", "scripted"]
 	}
 	"copilot/unattended": {
 		module:      "github.com/p3bot/library/agents/copilot/unattended@v1"
-		version:     "v1.0.0"
+		version:     "v1.1.0"
 		description: "GitHub Copilot CLI in unattended mode - non-interactive with all permissions bypassed"
 		bin:         "copilot"
 		tags: ["github", "copilot", "coding", "agent", "unattended", "non-interactive", "bypass-permissions", "automation"]
@@ -134,35 +134,35 @@ agents: {
 	}
 	"agy/interactive": {
 		module:      "github.com/p3bot/library/agents/agy/interactive@v1"
-		version:     "v1.1.0"
+		version:     "v1.2.0"
 		description: "Antigravity CLI by Google - agentic coding assistant"
 		bin:         "agy"
 		tags: ["google", "agy", "antigravity", "coding", "agent"]
 	}
 	"agy/edit": {
 		module:      "github.com/p3bot/library/agents/agy/edit@v1"
-		version:     "v1.1.0"
+		version:     "v1.2.0"
 		description: "Antigravity CLI with auto-accepted file edits - for trusted editing sessions"
 		bin:         "agy"
 		tags: ["google", "agy", "antigravity", "coding", "agent", "trusted", "auto-edit"]
 	}
 	"agy/bypass-permissions": {
 		module:      "github.com/p3bot/library/agents/agy/bypass-permissions@v1"
-		version:     "v1.1.0"
+		version:     "v1.2.0"
 		description: "Antigravity CLI with all permissions bypassed - for background and automated tasks"
 		bin:         "agy"
 		tags: ["google", "agy", "antigravity", "coding", "agent", "automation", "background", "bypass-permissions"]
 	}
 	"agy/non-interactive": {
 		module:      "github.com/p3bot/library/agents/agy/non-interactive@v1"
-		version:     "v1.1.0"
+		version:     "v1.2.0"
 		description: "Antigravity CLI in non-interactive mode - completes task and exits"
 		bin:         "agy"
 		tags: ["google", "agy", "antigravity", "coding", "agent", "non-interactive", "scripted"]
 	}
 	"agy/unattended": {
 		module:      "github.com/p3bot/library/agents/agy/unattended@v1"
-		version:     "v1.1.0"
+		version:     "v1.2.0"
 		description: "Antigravity CLI in unattended mode - non-interactive with all permissions bypassed"
 		bin:         "agy"
 		tags: ["google", "agy", "antigravity", "coding", "agent", "unattended", "non-interactive", "bypass-permissions", "automation"]
@@ -175,145 +175,145 @@ roles: [string]: schemas.#IndexEntry
 roles: {
 	"golang/agent": {
 		module:      "github.com/p3bot/library/roles/golang/agent@v1"
-		version:     "v1.0.0"
+		version:     "v1.1.0"
 		description: "Go programming language expert - autonomous agent mode"
 		tags: ["golang", "programming", "agent", "autonomous", "automation"]
 	}
 	"golang/assistant": {
 		module:      "github.com/p3bot/library/roles/golang/assistant@v1"
-		version:     "v1.0.0"
+		version:     "v1.1.0"
 		description: "Go programming language expert - collaborative assistant mode"
 		tags: ["golang", "programming", "assistant", "collaborative"]
 	}
 	"golang/teacher": {
 		module:      "github.com/p3bot/library/roles/golang/teacher@v1"
-		version:     "v1.0.0"
+		version:     "v1.1.0"
 		description: "Go programming language expert - instructional teacher mode"
 		tags: ["golang", "programming", "teacher", "instructional", "learning"]
 	}
 	"start/library/agent": {
 		module:      "github.com/p3bot/library/roles/start/library/agent@v1"
-		version:     "v1.0.0"
+		version:     "v1.1.0"
 		description: "library expert - autonomous agent mode"
 		tags: ["library", "cue", "agent", "autonomous"]
 	}
 	"start/library/assistant": {
 		module:      "github.com/p3bot/library/roles/start/library/assistant@v1"
-		version:     "v1.0.0"
+		version:     "v1.1.0"
 		description: "library expert - collaborative assistant mode"
 		tags: ["library", "cue", "assistant", "collaborative"]
 	}
 	"start/library/teacher": {
 		module:      "github.com/p3bot/library/roles/start/library/teacher@v1"
-		version:     "v1.0.0"
+		version:     "v1.1.0"
 		description: "library expert - educational teacher mode"
 		tags: ["library", "cue", "teacher", "educational"]
 	}
 	"home/dotagents/default": {
 		module:      "github.com/p3bot/library/roles/home/dotagents/default@v1"
-		version:     "v1.0.0"
+		version:     "v1.1.0"
 		description: "User's global default role from ~/.agents/roles/default.md"
 		tags: ["dotagents", "home", "global", "default"]
 	}
 	"cwd/dotagents/default": {
 		module:      "github.com/p3bot/library/roles/cwd/dotagents/default@v1"
-		version:     "v1.0.0"
+		version:     "v1.1.0"
 		description: "Project-specific default role from .agents/roles/default.md"
 		tags: ["dotagents", "cwd", "project", "default"]
 	}
 	"cwd/role-md": {
 		module:      "github.com/p3bot/library/roles/cwd/role-md@v1"
-		version:     "v1.0.0"
+		version:     "v1.1.0"
 		description: "Project-specific role from role.md"
 		tags: ["cwd", "project", "role"]
 	}
 	"markdown/low-token/agent": {
 		module:      "github.com/p3bot/library/roles/markdown/low-token/agent@v1"
-		version:     "v1.0.0"
+		version:     "v1.1.0"
 		description: "Low-token markdown expert - autonomous agent mode"
 		tags: ["markdown", "low-token", "commonmark", "agent", "autonomous"]
 	}
 	"markdown/low-token/assistant": {
 		module:      "github.com/p3bot/library/roles/markdown/low-token/assistant@v1"
-		version:     "v1.0.0"
+		version:     "v1.1.0"
 		description: "Low-token markdown expert - collaborative assistant mode"
 		tags: ["markdown", "low-token", "commonmark", "assistant", "collaborative"]
 	}
 	"markdown/low-token/teacher": {
 		module:      "github.com/p3bot/library/roles/markdown/low-token/teacher@v1"
-		version:     "v1.0.0"
+		version:     "v1.1.0"
 		description: "Low-token markdown expert - instructional teacher mode"
 		tags: ["markdown", "low-token", "commonmark", "teacher", "instructional"]
 	}
 	"gitlab/pipeline/agent": {
 		module:      "github.com/p3bot/library/roles/gitlab/pipeline/agent@v1"
-		version:     "v1.0.0"
+		version:     "v1.1.0"
 		description: "GitLab CI/CD pipeline expert - autonomous agent mode"
 		tags: ["gitlab", "ci-cd", "pipeline", "agent", "autonomous"]
 	}
 	"gitlab/pipeline/assistant": {
 		module:      "github.com/p3bot/library/roles/gitlab/pipeline/assistant@v1"
-		version:     "v1.0.0"
+		version:     "v1.1.0"
 		description: "GitLab CI/CD pipeline expert - collaborative assistant mode"
 		tags: ["gitlab", "ci-cd", "pipeline", "assistant", "collaborative"]
 	}
 	"gitlab/pipeline/teacher": {
 		module:      "github.com/p3bot/library/roles/gitlab/pipeline/teacher@v1"
-		version:     "v1.0.0"
+		version:     "v1.1.0"
 		description: "GitLab CI/CD pipeline expert - instructional teacher mode"
 		tags: ["gitlab", "ci-cd", "pipeline", "teacher", "instructional"]
 	}
 	"git/agent": {
 		module:      "github.com/p3bot/library/roles/git/agent@v1"
-		version:     "v1.0.0"
+		version:     "v1.1.0"
 		description: "Git version control expert - autonomous agent mode"
 		tags: ["git", "version-control", "vcs", "agent", "autonomous"]
 	}
 	"git/assistant": {
 		module:      "github.com/p3bot/library/roles/git/assistant@v1"
-		version:     "v1.0.0"
+		version:     "v1.1.0"
 		description: "Git version control expert - collaborative assistant mode"
 		tags: ["git", "version-control", "vcs", "assistant", "collaborative"]
 	}
 	"git/teacher": {
 		module:      "github.com/p3bot/library/roles/git/teacher@v1"
-		version:     "v1.0.0"
+		version:     "v1.1.0"
 		description: "Git version control expert - instructional teacher mode"
 		tags: ["git", "version-control", "vcs", "teacher", "instructional", "learning"]
 	}
 	"linux/endeavouros/agent": {
 		module:      "github.com/p3bot/library/roles/linux/endeavouros/agent@v1"
-		version:     "v1.0.0"
+		version:     "v1.1.0"
 		description: "EndeavourOS Linux system administration expert - autonomous agent mode"
 		tags: ["linux", "endeavouros", "arch", "system-administration", "agent", "autonomous"]
 	}
 	"linux/endeavouros/assistant": {
 		module:      "github.com/p3bot/library/roles/linux/endeavouros/assistant@v1"
-		version:     "v1.0.0"
+		version:     "v1.1.0"
 		description: "EndeavourOS Linux system administration expert - collaborative assistant mode"
 		tags: ["linux", "endeavouros", "arch", "system-administration", "assistant", "collaborative"]
 	}
 	"linux/endeavouros/teacher": {
 		module:      "github.com/p3bot/library/roles/linux/endeavouros/teacher@v1"
-		version:     "v1.0.0"
+		version:     "v1.1.0"
 		description: "EndeavourOS Linux system administration expert - instructional teacher mode"
 		tags: ["linux", "endeavouros", "arch", "system-administration", "teacher", "instructional", "learning"]
 	}
 	"role/design/agent": {
 		module:      "github.com/p3bot/library/roles/role/design/agent@v1"
-		version:     "v1.0.0"
+		version:     "v1.1.0"
 		description: "AI role designer and prompt engineering expert - autonomous agent mode"
 		tags: ["role", "prompt-engineering", "design", "agent", "autonomous"]
 	}
 	"role/design/assistant": {
 		module:      "github.com/p3bot/library/roles/role/design/assistant@v1"
-		version:     "v1.0.0"
+		version:     "v1.1.0"
 		description: "AI role designer and prompt engineering expert - collaborative assistant mode"
 		tags: ["role", "prompt-engineering", "design", "assistant", "collaborative"]
 	}
 	"role/design/teacher": {
 		module:      "github.com/p3bot/library/roles/role/design/teacher@v1"
-		version:     "v1.0.0"
+		version:     "v1.1.0"
 		description: "AI role designer and prompt engineering expert - instructional teacher mode"
 		tags: ["role", "prompt-engineering", "design", "teacher", "instructional", "learning"]
 	}
@@ -325,49 +325,49 @@ contexts: [string]: schemas.#IndexEntry
 contexts: {
 	"cwd/agents-md": {
 		module:      "github.com/p3bot/library/contexts/cwd/agents-md@v1"
-		version:     "v1.1.0"
+		version:     "v1.2.0"
 		description: "Repository introduction from AGENTS.md"
 		tags: ["agents", "repository", "cwd"]
 	}
 	"home/dotagents/environment": {
 		module:      "github.com/p3bot/library/contexts/home/dotagents/environment@v1"
-		version:     "v1.0.0"
+		version:     "v1.1.0"
 		description: "Local environment information including user, system, and tool context"
 		tags: ["dotagents", "home", "environment", "system", "user"]
 	}
 	"home/dotagents/workflow": {
 		module:      "github.com/p3bot/library/contexts/home/dotagents/workflow@v1"
-		version:     "v1.0.0"
+		version:     "v1.1.0"
 		description: "Feature development workflow for Documentation Driven Development"
 		tags: ["dotagents", "home", "workflow", "development"]
 	}
 	"home/dotagents/context/index": {
 		module:      "github.com/p3bot/library/contexts/home/dotagents/context/index@v1"
-		version:     "v1.0.0"
+		version:     "v1.1.0"
 		description: "Index of curated reference material in ~/.agents/context/"
 		tags: ["dotagents", "home", "context", "index", "reference"]
 	}
 	"cwd/dotagents/context/index": {
 		module:      "github.com/p3bot/library/contexts/cwd/dotagents/context/index@v1"
-		version:     "v1.0.0"
+		version:     "v1.1.0"
 		description: "Index of curated reference material in .agents/context/"
 		tags: ["dotagents", "cwd", "context", "index", "reference"]
 	}
 	"cwd/dotagents/workspace": {
 		module:      "github.com/p3bot/library/contexts/cwd/dotagents/workspace@v1"
-		version:     "v1.0.0"
+		version:     "v1.1.0"
 		description: "Workspace context from .agents/workspace.md"
 		tags: ["dotagents", "cwd", "workspace"]
 	}
 	"cli/design": {
 		module:      "github.com/p3bot/library/contexts/cli/design@v1"
-		version:     "v1.0.0"
+		version:     "v1.1.0"
 		description: "Agent-first CLI design guide for designing and auditing command-line tools"
 		tags: ["cli", "design", "agents", "guide"]
 	}
 	"golang/design/cli": {
 		module:      "github.com/p3bot/library/contexts/golang/design/cli@v1"
-		version:     "v1.0.0"
+		version:     "v1.1.0"
 		description: "Go CLI design guide: architecture, patterns, and conventions for command-line tools"
 		tags: ["golang", "design", "cli", "go", "guide"]
 	}
@@ -397,13 +397,13 @@ contexts: {
 	}
 	"start/library/naming": {
 		module:      "github.com/p3bot/library/contexts/start/library/naming@v1"
-		version:     "v1.2.0"
+		version:     "v1.3.0"
 		description: "Naming conventions for all module types in the p3bot library"
 		tags: ["start", "library", "naming", "conventions", "standards", "modules", "guide"]
 	}
 	"start/library/publishing": {
 		module:      "github.com/p3bot/library/contexts/start/library/publishing@v1"
-		version:     "v1.1.0"
+		version:     "v1.2.0"
 		description: "Canonical workflow for publishing library modules to the CUE Central Registry"
 		tags: ["start", "library", "publishing", "publish", "release", "registry", "workflow", "guide"]
 	}
@@ -415,31 +415,31 @@ tasks: [string]: schemas.#IndexEntry
 tasks: {
 	"claude/statusline/create": {
 		module:      "github.com/p3bot/library/tasks/claude/statusline/create@v1"
-		version:     "v1.0.0"
+		version:     "v1.1.0"
 		description: "Install the Claude Code statusline script and wire it into settings.json"
 		tags: ["claude", "statusline", "configuration", "settings", "shell"]
 	}
 	"claude/statusline/update": {
 		module:      "github.com/p3bot/library/tasks/claude/statusline/update@v1"
-		version:     "v1.0.0"
+		version:     "v1.1.0"
 		description: "Interactively customise the Claude Code statusline script"
 		tags: ["claude", "statusline", "customise", "interactive", "settings"]
 	}
 	"golang/debug": {
 		module:      "github.com/p3bot/library/tasks/golang/debug@v1"
-		version:     "v1.0.0"
+		version:     "v1.1.0"
 		description: "Systematically debug and resolve issues in Go code"
 		tags: ["golang", "debug", "troubleshooting", "bugs", "investigation"]
 	}
 	"golang/release/github-homebrew": {
 		module:      "github.com/p3bot/library/tasks/golang/release/github-homebrew@v1"
-		version:     "v1.0.0"
+		version:     "v1.1.0"
 		description: "Release Go project to GitHub with Homebrew tap distribution"
 		tags: ["golang", "release", "github", "homebrew", "ci-cd"]
 	}
 	"golang/refactor": {
 		module:      "github.com/p3bot/library/tasks/golang/refactor@v1"
-		version:     "v1.0.0"
+		version:     "v1.1.0"
 		description: "Refactor Go code to improve structure, readability, and maintainability"
 		tags: ["golang", "refactor", "code-quality", "maintainability", "structure"]
 	}
@@ -571,61 +571,61 @@ tasks: {
 	}
 	"gitlab/pipeline/review": {
 		module:      "github.com/p3bot/library/tasks/gitlab/pipeline/review@v1"
-		version:     "v1.0.0"
+		version:     "v1.1.0"
 		description: "Review and investigate a GitLab pipeline or job to diagnose failures and recommend fixes"
 		tags: ["gitlab", "ci-cd", "pipeline", "review", "debugging", "investigation"]
 	}
 	"github/issue/triage": {
 		module:      "github.com/p3bot/library/tasks/github/issue/triage@v1"
-		version:     "v1.0.0"
+		version:     "v1.1.0"
 		description: "Investigate the next GitHub issue, analyse code, and assess effort"
 		tags: ["github", "issue", "triage", "investigation", "planning"]
 	}
 	"git/conflict/resolve": {
 		module:      "github.com/p3bot/library/tasks/git/conflict/resolve@v1"
-		version:     "v1.0.0"
+		version:     "v1.1.0"
 		description: "Resolve git conflicts from merge, rebase, cherry-pick, revert, stash, and patch operations"
 		tags: ["git", "merge", "rebase", "conflict", "resolve"]
 	}
 	"git/ignore/generate": {
 		module:      "github.com/p3bot/library/tasks/git/ignore/generate@v1"
-		version:     "v1.0.0"
+		version:     "v1.1.0"
 		description: "Analyse the repository and generate a precise .gitignore file"
 		tags: ["git", "ignore", "gitignore", "generate"]
 	}
 	"start/module/author": {
 		module:      "github.com/p3bot/library/tasks/start/module/author@v1"
-		version:     "v1.0.0"
+		version:     "v1.1.0"
 		description: "Create or update any agent, role, context, or task module in the library repository"
 		tags: ["library", "module", "author", "create", "update", "cue", "interactive"]
 	}
 	"cwd/readme/create": {
 		module:      "github.com/p3bot/library/tasks/cwd/readme/create@v1"
-		version:     "v1.0.0"
+		version:     "v1.1.0"
 		description: "Create a README.md for the current working directory"
 		tags: ["readme", "cwd", "documentation", "markdown"]
 	}
 	"cwd/readme/update": {
 		module:      "github.com/p3bot/library/tasks/cwd/readme/update@v1"
-		version:     "v1.0.0"
+		version:     "v1.1.0"
 		description: "Update an existing README.md for the current working directory"
 		tags: ["readme", "cwd", "documentation", "markdown"]
 	}
 	"cwd/agents-md/create": {
 		module:      "github.com/p3bot/library/tasks/cwd/agents-md/create@v1"
-		version:     "v1.0.0"
+		version:     "v1.1.0"
 		description: "Create a repository AGENTS.md file for AI coding agents"
 		tags: ["agents-md", "cwd", "documentation", "markdown", "agents"]
 	}
 	"cwd/agents-md/update": {
 		module:      "github.com/p3bot/library/tasks/cwd/agents-md/update@v1"
-		version:     "v1.0.0"
+		version:     "v1.1.0"
 		description: "Update a repository AGENTS.md file for AI coding agents"
 		tags: ["agents-md", "cwd", "documentation", "markdown", "agents"]
 	}
 	"cwd/dotagents/role/create": {
 		module:      "github.com/p3bot/library/tasks/cwd/dotagents/role/create@v1"
-		version:     "v1.0.0"
+		version:     "v1.1.0"
 		description: "Create a new system prompt (role) for AI agent use"
 		tags: ["dotagents", "cwd", "role", "system-prompt", "ai"]
 	}
@@ -661,49 +661,49 @@ tasks: {
 	}
 	"confluence/doc/read": {
 		module:      "github.com/p3bot/library/tasks/confluence/doc/read@v1"
-		version:     "v1.0.0"
+		version:     "v1.1.0"
 		description: "Read and summarize a Confluence document"
 		tags: ["confluence", "document", "read", "summary"]
 	}
 	"confluence/doc/tree": {
 		module:      "github.com/p3bot/library/tasks/confluence/doc/tree@v1"
-		version:     "v1.0.0"
+		version:     "v1.1.0"
 		description: "Read a Confluence document and its child pages"
 		tags: ["confluence", "document", "tree", "hierarchy", "read"]
 	}
 	"jira/item/read": {
 		module:      "github.com/p3bot/library/tasks/jira/item/read@v1"
-		version:     "v1.0.0"
+		version:     "v1.1.0"
 		description: "Read and summarise a Jira work item with its status"
 		tags: ["jira", "item", "read", "summary"]
 	}
 	"jira/item/research": {
 		module:      "github.com/p3bot/library/tasks/jira/item/research@v1"
-		version:     "v1.0.0"
+		version:     "v1.1.0"
 		description: "Deep cross-system research on a Jira work item"
 		tags: ["jira", "item", "research", "investigation"]
 	}
 	"jira/item/review": {
 		module:      "github.com/p3bot/library/tasks/jira/item/review@v1"
-		version:     "v1.0.0"
+		version:     "v1.1.0"
 		description: "Comprehensive content review of a Jira work item"
 		tags: ["jira", "item", "review", "quality"]
 	}
 	"jira/item/backlog/review": {
 		module:      "github.com/p3bot/library/tasks/jira/item/backlog/review@v1"
-		version:     "v1.0.0"
+		version:     "v1.1.0"
 		description: "Review my backlog items for status accuracy"
 		tags: ["jira", "item", "backlog", "review", "triage"]
 	}
 	"jira/item/blocked/review": {
 		module:      "github.com/p3bot/library/tasks/jira/item/blocked/review@v1"
-		version:     "v1.0.0"
+		version:     "v1.1.0"
 		description: "Review my blocked items for resolution paths"
 		tags: ["jira", "item", "blocked", "review", "resolution"]
 	}
 	"jira/item/comment/git-commit": {
 		module:      "github.com/p3bot/library/tasks/jira/item/comment/git-commit@v1"
-		version:     "v1.0.0"
+		version:     "v1.1.0"
 		description: "Summarise git commits for a period and post as a human-readable Jira item comment"
 		tags: ["jira", "item", "comment", "git", "commits", "summary"]
 	}
