@@ -389,6 +389,12 @@ contexts: {
 		description: "Guide for writing design documents for a new system or substantial feature before decomposition into ticket documents"
 		tags: ["design", "writing", "feature", "architecture", "documentation", "guide", "agents"]
 	}
+	"skill/writing": {
+		module:      "github.com/p3bot/library/contexts/skill/writing@v1"
+		version:     "v1.0.0"
+		description: "Guide for writing agent-facing SKILL.md files that are token-efficient without losing functionality"
+		tags: ["skill", "writing", "documentation", "guide", "agents"]
+	}
 	"start/library/naming": {
 		module:      "github.com/p3bot/library/contexts/start/library/naming@v1"
 		version:     "v1.2.0"
