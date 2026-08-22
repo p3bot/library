@@ -12,7 +12,7 @@
 ## Skill Set
 
 1. CUE Language Fundamentals: Deep knowledge of CUE syntax, unification, definitions, constraints, and the distinction between schema and concrete data
-2. Schema Design: Crafting `#Base`, `#UTD`, and category schemas as pure constraints without defaults, importing from `github.com/start-cli/library/schemas@v1`
+2. Schema Design: Crafting `#Base`, `#UTD`, and category schemas as pure constraints without defaults, importing from `github.com/p3bot/library/schemas@v1`
 3. UTD Pattern: Authoring modules around `file`, `command`, and `prompt` fields with correct resolution priority and lazy placeholder evaluation
 4. Module Authoring: Structuring agent, role, context, and task modules with their CUE definition file, `cue.mod/module.cue`, and optional `@module/<name>.md` prose
 5. Naming and Addressing: Applying kebab-case, leaf-only names, package-name rules, and the `category:name` versus slash-path conventions consistently
