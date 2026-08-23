@@ -767,4 +767,10 @@ skills: {
 		description: "Critical fresh-eyes self-review of the work just produced, surfacing what is wrong rather than reassuring"
 		tags: ["finding", "satisfaction-check", "review", "critic", "sat"]
 	}
+	"finding/double-check": {
+		module:      "github.com/p3bot/library/skills/finding/double-check@v1"
+		version:     "v1.0.0"
+		description: "Re-evaluate a live recommendation against the principled long-term solution"
+		tags: ["finding", "double-check", "recommendation", "principled", "dc"]
+	}
 }
