@@ -725,6 +725,12 @@ tasks: {
 		description: "Using tk, continue this ticket"
 		tags: ["tk", "id", "continue", "implementation", "ticket"]
 	}
+	"tk/id/discuss": {
+		module:      "github.com/p3bot/library/tasks/tk/id/discuss@v1"
+		version:     "v1.0.0"
+		description: "Using tk, discuss this ticket"
+		tags: ["tk", "id", "discuss", "ticket"]
+	}
 	"tk/id/expand": {
 		module:      "github.com/p3bot/library/tasks/tk/id/expand@v1"
 		version:     "v1.0.0"
