@@ -391,7 +391,7 @@ contexts: {
 	}
 	"skill/writing": {
 		module:      "github.com/p3bot/library/contexts/skill/writing@v1"
-		version:     "v1.0.0"
+		version:     "v1.1.0"
 		description: "Guide for writing agent-facing SKILL.md files that are token-efficient without losing functionality"
 		tags: ["skill", "writing", "documentation", "guide", "agents"]
 	}

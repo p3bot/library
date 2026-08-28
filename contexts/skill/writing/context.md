@@ -93,7 +93,7 @@ Work the description before polishing the body. Trigger failure is total failure
 - Imperative, aimed at the deciding agent: "Use when…" or "Use this skill when…", not "This skill does…"
 - User intent and task shape, not internal mechanics
 - Pushy: cover soft intents. Err toward loading when relevance is plausible
-- Concrete keywords beat abstract categories. Prefer "pj", ".pptx", "mark it done" over "project tooling" alone
+- Concrete keywords beat abstract categories. Prefer "tk", ".pptx", "mark it done" over "ticket tooling" alone
 - Command or subcommand names may appear as trigger keywords when users say them; do not explain what those commands do
 - One tight paragraph (YAML `>-` fold is fine). No recipe lists. No negative gate lists
 
@@ -102,32 +102,32 @@ Work the description before polishing the body. Trigger failure is total failure
 Bad (vague; no when; no cues):
 
 ```
-Helps with project management.
+Helps with ticket management.
 ```
 
 Bad (teaches the workflow; burns tier-1 tokens on post-load content):
 
 ```
-Project management via the pj CLI. Path hand-off, not a web board: create or
-resolve work with pj, edit the printed document path, change status and order
-through the CLI. Prefer pj over ad-hoc TODO files or inventing filenames.
+Ticket management via the tk CLI. Path hand-off, not a web board: create or
+resolve work with tk, edit the printed document path, change status and order
+through the CLI. Prefer tk over ad-hoc TODO files or inventing filenames.
 ```
 
 Bad (negative gates; optimises for not firing):
 
 ```
-Use for pj project files. Do NOT use for Jira, Linear, GitHub Issues, or
+Use for tk ticket files. Do NOT use for Jira, Linear, GitHub Issues, or
 ordinary markdown unrelated to a scope.
 ```
 
 Good (domain + when + cues + soft intents; teaching left for the body):
 
 ```
-Project management with the pj CLI: plain markdown project, plan, or spec
-files in a scope. Use when the user is doing feature or ticket work in a
-pj-managed repo, or mentions pj, scope, the board, next, claim, mark,
-depends, tickets, or project files — even if they only say "pick up the next
-task", "what's on the board", "mark it done", or "create a project".
+Ticket management with the tk CLI: plain markdown tickets in a scope
+(plans, specs, or feature work). Use when doing feature or ticket work
+in a repo, or the user mentions tk, scope, the board, next, claim, mark,
+depends, tickets, or ticket files — even if they only say "pick up the next
+task", "what's on the board", "mark it done", or "create a ticket".
 ```
 
 Good (same pattern, different domain — file-type skill):
