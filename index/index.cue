@@ -755,6 +755,12 @@ tasks: {
 		description: "Using tk, groom the board"
 		tags: ["tk", "board", "groom", "status", "hygiene"]
 	}
+	"tk/scope/orchestrate": {
+		module:      "github.com/p3bot/library/tasks/tk/scope/orchestrate@v1"
+		version:     "v1.0.0"
+		description: "Using tk, orchestrate work across scopes"
+		tags: ["tk", "scope", "orchestrate", "ticket"]
+	}
 }
 
 // Skill index - maps friendly names to module paths

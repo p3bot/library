@@ -76,6 +76,7 @@ tasks/<domain>/<name>/
 - [tk/id/review](tk/id/review/) - Using tk, review this ticket document
 - [tk/board/reorder](tk/board/reorder/) - Using tk, fix the sequence of the board
 - [tk/board/groom](tk/board/groom/) - Using tk, groom the board
+- [tk/scope/orchestrate](tk/scope/orchestrate/) - Using tk, orchestrate work across scopes
 
 ### review/
 
