@@ -70,6 +70,7 @@ tasks/<domain>/<name>/
 ### tk/
 
 - [tk/next/build](tk/next/build/) - Using tk, build the next available ticket
+- [tk/id/build](tk/id/build/) - Using tk, build this ticket
 - [tk/id/continue](tk/id/continue/) - Using tk, continue this ticket
 - [tk/id/discuss](tk/id/discuss/) - Using tk, discuss this ticket
 - [tk/id/expand](tk/id/expand/) - Using tk, expand this ticket to the writing guide

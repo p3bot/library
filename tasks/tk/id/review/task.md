@@ -32,8 +32,8 @@ Run `tk get <id>`. Apply the terminal test to that path and status before any ma
 
 A ticket is terminal when the path is under `archive/`, or when its status is `done` or `cancelled`.
 
-- Terminal: ask whether to continue the review and reopen as `draft`. Explicit no: stop, leave the ticket terminal. Explicit yes: `tk mark <id> draft` and proceed
-- Status `review`: `tk mark <id> draft` first. Do not use the `review` status
+- Terminal: ask whether to continue the review and reopen as `draft`. Explicit no: stop, leave the ticket terminal. Explicit yes: `tk mark draft <id>` and proceed
+- Status `review`: `tk mark draft <id>` first. Do not use the `review` status
 - Leave `in-progress`, `blocked`, `todo`, `backlog`, and `draft` alone
 
 The working path is the last path printed by `tk get` or `tk mark`. After a reopen-as-`draft` mark, that printed path replaces the earlier get path.

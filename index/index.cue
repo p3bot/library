@@ -719,6 +719,12 @@ tasks: {
 		description: "Using tk, build the next available ticket"
 		tags: ["tk", "next", "build", "implementation", "ticket"]
 	}
+	"tk/id/build": {
+		module:      "github.com/p3bot/library/tasks/tk/id/build@v1"
+		version:     "v1.0.0"
+		description: "Using tk, build this ticket"
+		tags: ["tk", "id", "build", "implementation", "ticket"]
+	}
 	"tk/id/continue": {
 		module:      "github.com/p3bot/library/tasks/tk/id/continue@v1"
 		version:     "v1.1.0"
@@ -757,7 +763,7 @@ tasks: {
 	}
 	"tk/scope/orchestrate": {
 		module:      "github.com/p3bot/library/tasks/tk/scope/orchestrate@v1"
-		version:     "v1.0.0"
+		version:     "v1.1.0"
 		description: "Using tk, orchestrate work across scopes"
 		tags: ["tk", "scope", "orchestrate", "ticket"]
 	}

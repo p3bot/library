@@ -2,28 +2,22 @@
 
 Using tk, build the next available ticket.
 
-## Sync
-
-When `tk status mode` is `tk-driven`, run `tk sync` first. Skip on repo-driven and plain-files. If sync needs-attention, stop.
-
-After ticket-body edits, `tk sync` again on tk-driven. `next --claim` and `mark` already self-commit.
-
-Do not run `tk doctor` unless `tk next --claim` fails.
-
 ## Process
 
-### Step 1: Claim
-
-Run `tk next --claim`. That command honours the lens and only sees `todo`. The last path it prints is the working path. Empty queue: stop. Do not scan for standalone ticket files. Do not call `tasks:ticket/begin`.
-
-### Step 2: Implement
+### Step 1: Fetch
 
 ```bash
-start get contexts:ticket/implementation
+start get tasks:tk/id/build
 ```
 
-Follow that guide against the working path. Orient, implement, verify, report.
+### Step 2: Select
 
-### Step 3: Close
+Run `tk next`. That command honours the lens and only sees `todo`. The last path it prints is the ticket. Empty queue: stop. Do not scan for standalone ticket files. Do not call `tasks:ticket/begin`.
 
-On success, `tk mark <id> done`.
+The ticket id is the `id` field in that file.
+
+Do not run `tk doctor` unless `tk next` fails.
+
+### Step 3: Build
+
+Follow the fetched task with that id. Do not ask for an id. Custom instructions still apply.

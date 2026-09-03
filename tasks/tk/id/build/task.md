@@ -1,6 +1,6 @@
-# Continue a Ticket
+# Build a Ticket
 
-Using tk, continue this ticket.
+Using tk, build this ticket.
 
 ## Sync
 
@@ -16,7 +16,14 @@ Do not run `tk doctor` unless `tk get` or `tk mark` fails.
 
 The ticket id is the instruction. If none was supplied, ask for it. Do not guess. Do not fall back to `tk next`.
 
-Run `tk get <id>`, then `tk mark in-progress <id>` whatever status it had. This unarchives `done` and `cancelled`. The last path `tk mark` printed is the working path; it replaces the earlier `tk get` path.
+Run `tk get <id>`, then `tk meta get <id> status`.
+
+A ticket is terminal when that status is `done` or `cancelled`.
+
+- Terminal: stop. Use `tasks:tk/id/continue` to reopen
+- Otherwise: `tk mark todo <id>`, then `tk mark in-progress <id>`
+
+The working path is the last path `tk mark` printed.
 
 ### Step 2: Implement
 
