@@ -1,10 +1,10 @@
-package architecture
+package supplychain
 
 import "github.com/p3bot/library/schemas@v1"
 
 task: schemas.#Task & {
-	description: "Evaluate structure, design decisions, and whether the shape fits the stated purpose"
-	tags: ["review", "architecture", "design", "structure", "code-quality"]
+	description: "Review what the subject consumes and what it publishes, from dependencies through release"
+	tags: ["review", "supply-chain", "dependencies", "release", "code-quality"]
 	file: "@module/task.md"
 	prompt: """
 		Read {{.file}} to understand your task.

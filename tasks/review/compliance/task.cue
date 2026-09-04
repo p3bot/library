@@ -1,10 +1,10 @@
-package architecture
+package compliance
 
 import "github.com/p3bot/library/schemas@v1"
 
 task: schemas.#Task & {
-	description: "Evaluate structure, design decisions, and whether the shape fits the stated purpose"
-	tags: ["review", "architecture", "design", "structure", "code-quality"]
+	description: "Verify the subject meets legal, regulatory, and organisational policy obligations"
+	tags: ["review", "compliance", "privacy", "policy", "code-quality"]
 	file: "@module/task.md"
 	prompt: """
 		Read {{.file}} to understand your task.

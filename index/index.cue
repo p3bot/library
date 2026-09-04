@@ -443,95 +443,71 @@ tasks: {
 		description: "Refactor Go code to improve structure, readability, and maintainability"
 		tags: ["golang", "refactor", "code-quality", "maintainability", "structure"]
 	}
-	"review/holistic": {
-		module:      "github.com/p3bot/library/tasks/review/holistic@v1"
-		version:     "v1.1.0"
-		description: "Broad first-pass review assessing overall repository health, consistency, and structure"
-		tags: ["review", "holistic", "code-quality", "repository", "comprehensive"]
+	"review/correctness": {
+		module:      "github.com/p3bot/library/tasks/review/correctness@v1"
+		version:     "v1.2.0"
+		description: "Verify the subject implements intended behaviour precisely, including under concurrency"
+		tags: ["review", "correctness", "logic", "behaviour", "concurrency", "code-quality"]
+	}
+	"review/testing": {
+		module:      "github.com/p3bot/library/tasks/review/testing@v1"
+		version:     "v1.2.0"
+		description: "Evaluate test quality, coverage, and the testability of the subject"
+		tags: ["review", "testing", "tests", "coverage", "code-quality"]
 	}
 	"review/security": {
 		module:      "github.com/p3bot/library/tasks/review/security@v1"
-		version:     "v1.1.0"
+		version:     "v1.2.0"
 		description: "Identify vulnerabilities, security weaknesses, and potential attack vectors"
 		tags: ["review", "security", "vulnerabilities", "attack-vectors", "code-quality"]
 	}
-	"review/correctness": {
-		module:      "github.com/p3bot/library/tasks/review/correctness@v1"
-		version:     "v1.1.0"
-		description: "Verify code logic correctly implements intended behaviour and handles data with precision"
-		tags: ["review", "correctness", "logic", "behaviour", "code-quality"]
+	"review/compliance": {
+		module:      "github.com/p3bot/library/tasks/review/compliance@v1"
+		version:     "v1.0.0"
+		description: "Verify the subject meets legal, regulatory, and organisational policy obligations"
+		tags: ["review", "compliance", "privacy", "policy", "code-quality"]
+	}
+	"review/performance": {
+		module:      "github.com/p3bot/library/tasks/review/performance@v1"
+		version:     "v1.2.0"
+		description: "Analyse the subject's efficiency and resource usage"
+		tags: ["review", "performance", "efficiency", "resources", "code-quality"]
+	}
+	"review/operability": {
+		module:      "github.com/p3bot/library/tasks/review/operability@v1"
+		version:     "v1.0.0"
+		description: "Assess whether the subject can be run, observed, kept serving, and recovered in production"
+		tags: ["review", "operability", "reliability", "observability", "code-quality"]
 	}
 	"review/architecture": {
 		module:      "github.com/p3bot/library/tasks/review/architecture@v1"
-		version:     "v1.1.0"
-		description: "Evaluate system structure, design decisions, and component organisation"
+		version:     "v1.2.0"
+		description: "Evaluate structure, design decisions, and whether the shape fits the stated purpose"
 		tags: ["review", "architecture", "design", "structure", "code-quality"]
+	}
+	"review/maintainability": {
+		module:      "github.com/p3bot/library/tasks/review/maintainability@v1"
+		version:     "v1.0.0"
+		description: "Assess whether the subject can be read, navigated, documented, and changed safely"
+		tags: ["review", "maintainability", "clarity", "documentation", "code-quality"]
+	}
+	"review/supply-chain": {
+		module:      "github.com/p3bot/library/tasks/review/supply-chain@v1"
+		version:     "v1.0.0"
+		description: "Review what the subject consumes and what it publishes, from dependencies through release"
+		tags: ["review", "supply-chain", "dependencies", "release", "code-quality"]
+	}
+	"review/experience": {
+		module:      "github.com/p3bot/library/tasks/review/experience@v1"
+		version:     "v1.0.0"
+		description: "Assess whether the interface the end user or end agent consumes matches its design intent"
+		tags: ["review", "experience", "interface", "accessibility", "code-quality"]
 	}
 	"review/comments": {
 		module:      "github.com/p3bot/library/tasks/review/comments@v1"
 		version:     "v1.1.0"
 		description: "Review code comments for accuracy, usefulness, and completeness"
 		tags: ["review", "comments", "documentation", "code-quality"]
-	}
-	"review/concurrency": {
-		module:      "github.com/p3bot/library/tasks/review/concurrency@v1"
-		version:     "v1.1.0"
-		description: "Identify threading, parallelism, and asynchronous execution issues"
-		tags: ["review", "concurrency", "threading", "parallelism", "code-quality"]
-	}
-	"review/performance": {
-		module:      "github.com/p3bot/library/tasks/review/performance@v1"
-		version:     "v1.1.0"
-		description: "Analyse code efficiency and resource usage"
-		tags: ["review", "performance", "efficiency", "resources", "code-quality"]
-	}
-	"review/error-handling": {
-		module:      "github.com/p3bot/library/tasks/review/error-handling@v1"
-		version:     "v1.1.0"
-		description: "Review how failures are handled and whether edge cases are covered"
-		tags: ["review", "error-handling", "errors", "resilience", "code-quality"]
-	}
-	"review/observability": {
-		module:      "github.com/p3bot/library/tasks/review/observability@v1"
-		version:     "v1.1.0"
-		description: "Assess whether the code can be understood and debugged in production"
-		tags: ["review", "observability", "logging", "metrics", "code-quality"]
-	}
-	"review/standards": {
-		module:      "github.com/p3bot/library/tasks/review/standards@v1"
-		version:     "v1.1.0"
-		description: "Verify changes meet applicable domain-specific standards and requirements"
-		tags: ["review", "standards", "compliance", "accessibility", "code-quality"]
-	}
-	"review/testing": {
-		module:      "github.com/p3bot/library/tasks/review/testing@v1"
-		version:     "v1.1.0"
-		description: "Evaluate test quality, coverage, and the testability of production code"
-		tags: ["review", "testing", "tests", "coverage", "code-quality"]
-	}
-	"review/readability": {
-		module:      "github.com/p3bot/library/tasks/review/readability@v1"
-		version:     "v1.1.0"
-		description: "Assess whether the code is clear and understandable to other developers"
-		tags: ["review", "readability", "naming", "clarity", "code-quality"]
-	}
-	"review/dependency": {
-		module:      "github.com/p3bot/library/tasks/review/dependency@v1"
-		version:     "v1.1.0"
-		description: "Review the use of third-party packages and libraries"
-		tags: ["review", "dependency", "packages", "supply-chain", "code-quality"]
-	}
-	"review/duplication": {
-		module:      "github.com/p3bot/library/tasks/review/duplication@v1"
-		version:     "v1.1.0"
-		description: "Identify repeated code patterns that may benefit from consolidation"
-		tags: ["review", "duplication", "dry", "patterns", "code-quality"]
-	}
-	"review/documentation": {
-		module:      "github.com/p3bot/library/tasks/review/documentation@v1"
-		version:     "v1.1.0"
-		description: "Review external documentation, API documentation, and developer guides"
-		tags: ["review", "documentation", "api-docs", "readme", "code-quality"]
 	}
 	"review/css": {
 		module:      "github.com/p3bot/library/tasks/review/css@v1"
@@ -545,12 +521,6 @@ tasks: {
 		description: "Select a random file from the repository and perform a thorough review"
 		tags: ["review", "random", "spot-check", "code-quality"]
 	}
-	"review/git-diff": {
-		module:      "github.com/p3bot/library/tasks/review/git-diff@v1"
-		version:     "v1.1.0"
-		description: "Comprehensive review of code changes from git diff to catch regressions and bugs"
-		tags: ["review", "diff", "regression", "code-changes", "code-quality"]
-	}
 	"review/test-coverage": {
 		module:      "github.com/p3bot/library/tasks/review/test-coverage@v1"
 		version:     "v1.1.0"
@@ -559,13 +529,13 @@ tasks: {
 	}
 	"review/pre-commit": {
 		module:      "github.com/p3bot/library/tasks/review/pre-commit@v2"
-		version:     "v2.1.0"
+		version:     "v2.2.0"
 		description: "Interactive pre-commit review that finds issues in git changes and walks through fixing them"
 		tags: ["review", "pre-commit", "fix", "code-changes", "code-quality"]
 	}
 	"review/multi-agent/orchestrator": {
 		module:      "github.com/p3bot/library/tasks/review/multi-agent/orchestrator@v2"
-		version:     "v2.1.0"
+		version:     "v2.2.0"
 		description: "Orchestrate parallel review agents, consolidate findings, and walk through fixing them"
 		tags: ["review", "orchestration", "multi-agent", "parallel", "fix"]
 	}

@@ -1,6 +1,6 @@
 # Multi-Agent Review Orchestrator
 
-Orchestrate a comprehensive code review by discovering relevant review types, spawning parallel review agents, consolidating their findings into a single prioritised summary, and walking through fixing them.
+Orchestrate a comprehensive code review by spawning the ten type review tasks in parallel, consolidating their findings into a single prioritised summary, and walking through fixing them.
 
 ## Step 1: Discover Edit Agent
 
@@ -30,15 +30,22 @@ If no edit agent is available at all, use a standard agent.
 
 Record the selected agent name for use in Step 5.
 
-## Step 2: Discover Review Tasks
+## Step 2: Select Review Tasks
 
-Run the following command to list available review tasks:
+The review types to consider are exactly these ten:
 
-```
-start search review/
-```
+- review/correctness
+- review/testing
+- review/security
+- review/compliance
+- review/performance
+- review/operability
+- review/architecture
+- review/maintainability
+- review/supply-chain
+- review/experience
 
-Extract review task names from the output. Exclude any task with "orchestrator" in the name.
+Do not search the library for other review tasks. Do not spawn review/pre-commit, review/random-file, review/css, review/comments, or review/test-coverage.
 
 ## Step 3: Install Missing Modules
 
@@ -48,7 +55,7 @@ Check installed modules:
 start list
 ```
 
-Install each review task from Step 2 that is not already installed:
+Install each of the ten type tasks from Step 2 that is not already installed:
 
 ```
 start install review/<name>
@@ -56,7 +63,7 @@ start install review/<name>
 
 ## Step 4: Analyse Codebase for Relevance
 
-Analyse the project structure, source files, dependencies, and patterns to determine which of the discovered review types apply. Select only the reviews that are relevant to what the project actually contains.
+Analyse the project structure, source files, dependencies, and patterns to determine which of the ten type tasks apply. Select only the types that are relevant to what the project actually contains. Skip a type with a reason (for example Experience on a library with no user surface). Skips show in Coverage.
 
 ## Step 5: Spawn Parallel Reviews
 
@@ -85,9 +92,9 @@ Status: <N> done, <N> running, <N> pending
 
 | Review      | Status  | Output                                    |
 |-------------|---------|-------------------------------------------|
-| security    | Done    | <collection>/YYYY-MM-DD-security-01.md    |
-| correctness | Running | —                                         |
-| holistic    | Pending | —                                         |
+| security      | Done    | <collection>/YYYY-MM-DD-security-01.md    |
+| correctness   | Running | —                                         |
+| maintainability | Pending | —                                       |
 ```
 
 After each review completes, verify:
@@ -103,7 +110,7 @@ After all reviews complete, read every generated report in the collection direct
 
 Collect every finding across all reports into a single set. Assign each a globally-unique ID: its severity letter (`C`, `H`, `M`, `L`, `I`) plus a running per-severity number — `C1`, `C2`, `H1`, `H2`, `M1`, `L1`, `I1`. There is only one `C1` across the whole summary. The ID carries the severity, so severity is not repeated as a separate column.
 
-Severity reflects impact. Most reviews will not reach critical or high; descriptive reviews such as documentation, readability, and duplication naturally cluster at low and info. Normalise across reports: backfill a severity for any finding that arrived untagged, and adjudicate a sub-agent's classification down or up where the cross-report view warrants it. Info items are recorded for awareness only and are not walked.
+Severity reflects impact. Most reviews will not reach critical or high; descriptive reviews such as maintainability naturally cluster at low and info. Normalise across reports: backfill a severity for any finding that arrived untagged, and adjudicate a sub-agent's classification down or up where the cross-report view warrants it. Info items are recorded for awareness only and are not walked.
 
 Present the consolidated summary using the Summary Format (below).
 
@@ -171,10 +178,10 @@ Outcome table:
 ```
 | ID | Review        | Finding           | Outcome                                    |
 |----|---------------|-------------------|--------------------------------------------|
-| C1 | security      | Brief description | Fixed                                      |
-| H1 | correctness   | Brief description | Skipped                                    |
-| M1 | readability   | Brief description | Ticket: lib-a3                            |
-| L1 | documentation | Brief description | Pending                                    |
+| C1 | security         | Brief description | Fixed                                      |
+| H1 | correctness      | Brief description | Skipped                                    |
+| M1 | maintainability  | Brief description | Ticket: lib-a3                            |
+| L1 | supply-chain     | Brief description | Pending                                    |
 ```
 
 Outcome values:
@@ -188,7 +195,7 @@ Outcome values:
 
 - The sub-agent reports are your input, but the findings are second-hand — verify each against the actual code before acting on it
 - Recommendations target the principled long-term solution. Do not default to the minimal-diff resolution
-- Severity reflects impact, not category. Not every review produces findings at every severity level — use the levels that fit rather than forcing findings into categories that do not apply
+- Severity reflects impact, not category. Not every review produces findings at every severity level — use the levels that fit rather than forcing findings into categories that do not apply. Descriptive reviews such as maintainability naturally cluster at low and info
 - It is acceptable to find no issues. Do not manufacture findings to justify the review
 - The Findings table lists every finding in severity order; the count line summarises the totals
 
@@ -317,7 +324,7 @@ Failed: <review — what went wrong, or none>
 |----|---------------|----------------|--------------------|
 | C1 | security      | src/auth.go:88 | <one-line summary> |
 | H1 | correctness   | src/calc.go:12 | <one-line summary> |
-| I1 | documentation | README.md:1    | <one-line summary> |
+| I1 | maintainability | README.md:1  | <one-line summary> |
 
 ## Assessment
 

@@ -62,7 +62,7 @@ Consumers importing a module whose package name does not match the last URL segm
 ```cue
 import (
     ctx "github.com/p3bot/library/contexts/cwd/agents-md@v1:agentsmd"
-    tsk "github.com/p3bot/library/tasks/review/git-diff@v1:gitdiff"
+    tsk "github.com/p3bot/library/tasks/review/pre-commit@v2:precommit"
 )
 ```
 
@@ -147,7 +147,7 @@ Examples:
 ```
 golang/debug
 review/security
-review/git-diff
+review/pre-commit
 jira/item/read
 jira/item/research
 confluence/doc/read

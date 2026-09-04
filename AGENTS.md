@@ -44,7 +44,7 @@ User-facing fully-qualified module addresses use the colon form `category:name`:
 - `agents:claude/interactive`
 - `roles:golang/assistant`
 - `contexts:cwd/agents-md`
-- `tasks:review/git-diff`
+- `tasks:review/pre-commit`
 - `skills:finding/one-by-one`
 
 Bare names (`claude/interactive`) continue to work as cross-category lookups. CUE module paths (`github.com/p3bot/library/agents/claude/interactive@v0`) remain slash-based; the colon form applies to user-facing input and display only.
@@ -98,7 +98,7 @@ Module file structure:
 Each module contains a CUE definition file and `cue.mod/module.cue`. Modules carrying long-form prose also ship a markdown file referenced via `file: "@module/<name>.md"`.
 
 ```
-tasks/review/git-diff/
+tasks/review/pre-commit/
   task.cue
   task.md
   cue.mod/

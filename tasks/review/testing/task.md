@@ -1,6 +1,8 @@
 # Testing Review
 
-Evaluate test quality, coverage, and the testability of production code. This review focuses on whether the test suite effectively verifies behaviour and whether the production code is structured for testability. It does not cover code correctness, performance characteristics, or architectural design unless they directly affect testability.
+Evaluate test quality, coverage, and the testability of the subject.
+
+Findings about missing or weak tests, fixtures, isolation, eval harnesses, or testability are Testing. Findings about production behaviour that are not a testability fix belong to the product type (Correctness, Security, Performance, Operability, and so on) even when a test would have caught them.
 
 ## Prerequisites
 
@@ -27,12 +29,19 @@ Evaluate test quality, coverage, and the testability of production code. This re
 
 ## Scope
 
-- Coverage Depth: Assessing whether tests verify the logic of the change across a representative range of scenarios.
-- Test Quality: Ensuring tests are readable, maintainable, and verify behavior rather than implementation details.
-- Production Testability: Identifying code structures that make automated testing difficult and suggesting refactors.
-- Test Isolation: Verifying that tests do not share state or depend on external environments.
+- Coverage Depth: Assessing whether tests verify the logic under review across a representative range of scenarios.
+- Suite Gating: Verifying that the suite runs on every proposed change and can block merge when it fails.
+- Test Quality: Ensuring tests are readable, maintainable, and verify behaviour rather than implementation details.
+- Testability: Verifying that the subject can be driven by automated tests through explicit seams and deterministic behaviour, rather than hidden state or live side effects.
+- Test Isolation: Verifying that isolated tests do not share state or depend on ambient environment, and that tests which use real dependencies declare that choice rather than leaking it.
 - Flakiness Prevention: Identifying tests that may fail intermittently due to timing or environmental factors.
 - Mocking and Stubbing: Evaluating the use of doubles to ensure they are realistic and do not mask actual integration issues.
+- Contract Testing: Verifying that service interfaces match consumer expectations and do not break downstream integrations.
+- Performance and Load Test Coverage: Assessing whether critical paths have tests under realistic load.
+- End-to-End Testing: Assessing whether critical user journeys across service boundaries are covered by end-to-end tests.
+- Chaos Test Coverage: Assessing whether controlled failure injection covers resilience under adverse conditions.
+- Security Test Coverage: Assessing whether tests cover authentication, authorisation, input validation boundaries, and known attack patterns relevant to the reviewed subject.
+- Non-Deterministic and Eval Behaviour: Assessing how tests handle non-deterministic model or agent output, including seeds, fixtures, eval harnesses, and tolerance bands that keep signal without masking regressions.
 
 ## Report Format
 

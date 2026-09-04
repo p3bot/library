@@ -1,10 +1,10 @@
-package architecture
+package experience
 
 import "github.com/p3bot/library/schemas@v1"
 
 task: schemas.#Task & {
-	description: "Evaluate structure, design decisions, and whether the shape fits the stated purpose"
-	tags: ["review", "architecture", "design", "structure", "code-quality"]
+	description: "Assess whether the interface the end user or end agent consumes matches its design intent"
+	tags: ["review", "experience", "interface", "accessibility", "code-quality"]
 	file: "@module/task.md"
 	prompt: """
 		Read {{.file}} to understand your task.

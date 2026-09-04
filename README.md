@@ -29,7 +29,7 @@ Modules are normally consumed indirectly through the start CLI:
 
 ```
 start --role golang/assistant
-start task review/git-diff
+start task review/pre-commit
 ```
 
 ## Address Scheme
@@ -40,7 +40,7 @@ User-facing fully-qualified addresses use `category:name`, for example:
 agents:claude/interactive
 roles:golang/assistant
 contexts:cwd/agents-md
-tasks:review/git-diff
+tasks:review/pre-commit
 skills:finding/one-by-one
 ```
 

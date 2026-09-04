@@ -1,10 +1,10 @@
-package architecture
+package maintainability
 
 import "github.com/p3bot/library/schemas@v1"
 
 task: schemas.#Task & {
-	description: "Evaluate structure, design decisions, and whether the shape fits the stated purpose"
-	tags: ["review", "architecture", "design", "structure", "code-quality"]
+	description: "Assess whether the subject can be read, navigated, documented, and changed safely"
+	tags: ["review", "maintainability", "clarity", "documentation", "code-quality"]
 	file: "@module/task.md"
 	prompt: """
 		Read {{.file}} to understand your task.

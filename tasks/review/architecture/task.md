@@ -1,6 +1,6 @@
 # Architecture Review
 
-Evaluate the system's structure, design decisions, and component organisation. This review focuses on how the system is divided, how its parts interact, and whether the design supports stability and growth. It does not cover security vulnerabilities, code correctness, or performance characteristics unless they are a direct consequence of architectural decisions.
+Evaluate system structure, design decisions, component organisation, and whether the shape of the subject fits its stated purpose.
 
 ## Prerequisites
 
@@ -27,16 +27,21 @@ Evaluate the system's structure, design decisions, and component organisation. T
 
 ## Scope
 
+- Solution Fit: Assessing whether the current solution is the right one for the subject's stated purpose, not only whether the implementation matches the stated architecture.
 - System Design and Layering: Ensuring clear separation of concerns where each layer has a distinct responsibility and avoids leaky abstractions.
 - Component Boundaries: Verifying that interactions between modules are well-defined and do not violate the principle of least knowledge.
+- Repository Structure: Assessing whether the file layout and directory organisation are intuitive and self-explanatory.
 - Dependency Flow: Assessing the direction of dependencies to ensure high-level policy is protected from implementation details.
-- Modularity and Reusability: Identifying opportunities for abstraction that reduce coupling while avoiding premature generalization.
+- Modularity and Reusability: Identifying opportunities for abstraction that reduce coupling while avoiding premature generalisation.
 - API Design and Contracts: Evaluating the stability and clarity of interfaces to ensure they are difficult to misuse.
-- Backwards Compatibility: Ensuring changes do not break existing integrations, data formats, or downstream expectations.
-- Configuration Management: Verifying that system behavior can be adjusted safely through structured configuration without code changes.
-- Rollout Strategy: Reviewing how features are exposed to allow for safe deployment and incremental validation.
-- Scalability and Extensibility: Assessing if the design accommodates growth in data volume or future requirements without requiring a rewrite.
+- Backwards Compatibility: Ensuring integrations, data formats, and downstream expectations remain intact.
+- Portability and Runtime Compatibility: Verifying that assumptions about platform, runtime version, filesystem paths, character encoding, and locale hold across every supported target.
+- Configuration Management: Verifying that non-secret runtime configuration (feature flags, tunables, environment-specific settings) can adjust system behaviour safely through structured mechanisms without code changes.
+- Event-Driven Architecture: Assessing message ordering guarantees, schema evolution strategies, and dead letter handling in asynchronous systems.
+- Data Partitioning: Reviewing sharding strategies and partition key selection for balanced distribution and a stable growth path.
 - Database Integrity: Verifying that schema changes maintain data consistency and handle migrations safely.
+- Scalability and Extensibility: Assessing whether the design accommodates growth in data volume or future requirements without requiring a rewrite.
+- Tech Stack Coherence: Identifying library sprawl or conflicting tool choices that complicate the strategic technical direction.
 
 ## Report Format
 

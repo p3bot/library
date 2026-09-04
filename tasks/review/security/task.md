@@ -1,6 +1,6 @@
 # Security Review
 
-Identify vulnerabilities, security weaknesses, and potential attack vectors across the codebase. This review focuses on how the system protects itself and its users from malicious or unintended access. It does not cover general code correctness, performance, or architectural concerns unless they have direct security implications.
+Identify vulnerabilities, security weaknesses, and potential attack vectors.
 
 ## Prerequisites
 
@@ -30,18 +30,31 @@ Identify vulnerabilities, security weaknesses, and potential attack vectors acro
 ## Scope
 
 - Authentication and Authorisation: Verifying the integrity of identity verification and the strict enforcement of access boundaries across all layers.
-- Input Validation and Sanitisation: Ensuring all untrusted data is validated and cleaned to prevent injection and manipulation attacks.
-- Secrets Management: Confirming that sensitive credentials and configuration data are handled via secure, externalized mechanisms.
+- Session Management: Reviewing the lifecycle and security properties of user sessions and tokens to prevent hijacking or unauthorised reuse.
+- Privilege Escalation: Analysing logic for flaws that could allow a user to perform actions beyond their intended permission level.
+- Insecure Direct Object References: Verifying that access to resources by identifier enforces authorisation checks rather than relying on obscurity.
+- Tenant Isolation: Verifying that data stores, caches, queues, background jobs, and search indices enforce tenant boundaries so no request can reach another tenant's records.
+- Network Policy and Segmentation: Reviewing network rules to ensure services are isolated appropriately and follow least-privilege access.
+- Secrets Management: Confirming that sensitive credentials are stored, accessed, rotated, and audited safely through externalised mechanisms.
+- Secrets in Version Control History: Verifying secrets are absent from the full revision history (not only the current tree), and that any past exposure has been rotated and purged or otherwise rendered unusable.
 - Data Protection and Encryption: Assessing the safety of sensitive information at rest and in transit, including the prevention of data leakage in logs.
 - Cryptography Usage: Evaluating the implementation of cryptographic primitives to ensure the use of proven, industry-standard protocols.
-- Session Management: Reviewing the lifecycle and security properties of user sessions and tokens to prevent hijacking or unauthorized reuse.
-- API Security: Identifying risks in endpoint design, including improper resource exposure or excessive data return.
+- Input Validation and Sanitisation: Ensuring all untrusted data is validated and cleaned to prevent injection and manipulation attacks.
+- Excessive Data Exposure: Verifying that API and service responses return only fields the caller needs, and that debug, internal, or sensitive attributes are not leaked through over-fetch or verbose error payloads.
 - CORS and CSRF Protection: Verifying that cross-origin policies and request forgery protections are correctly configured.
 - Rate Limiting: Assessing the system's resilience against automated abuse, brute-force attempts, and resource exhaustion.
 - Secure Headers: Confirming the presence of security-related HTTP headers that harden the client-side execution environment.
 - Path Traversal: Ensuring that file and resource pathing logic cannot be manipulated to access restricted areas.
-- Deserialization Safety: Verifying that the conversion of data formats into objects does not introduce execution risks.
-- Privilege Escalation: Analyzing logic for flaws that could allow a user to perform actions beyond their intended permission level.
+- Server-Side Request Forgery: Ensuring server-side requests cannot be manipulated to access internal resources or unintended external targets.
+- Mass Assignment: Verifying that object binding from external input does not allow modification of unintended fields or properties.
+- File Upload Security: Ensuring uploaded files are validated for content type, scanned for malicious content, and stored in isolated locations.
+- Deserialisation Safety: Verifying that the conversion of data formats into objects does not introduce execution risks.
+- Webhook and Callback Verification: Ensuring inbound callbacks from external systems are authenticated by signature and protected against replay.
+- Prompt Injection and Untrusted Content: Verifying that untrusted content cannot override system instructions, exfiltrate secrets, or redirect tool use when incorporated into model prompts or agent context.
+- Tool and Agent Permission Scope: Verifying that tools, functions, and side-effecting actions available to a model or agent are least-privilege, explicitly granted, and cannot be expanded by untrusted input.
+- Model Output Validation: Ensuring model or agent output is validated, sandboxed, or human-gated before it drives side effects such as code execution, data mutation, or external requests.
+- Time-of-Check to Time-of-Use: Identifying races where a permission, existence, or integrity check is separated from use so an attacker can change the resource in the gap.
+- Audit Trail: Confirming that security-relevant events are captured completely and stored with tamper-resistance sufficient for forensic analysis.
 
 ## Report Format
 

@@ -1,6 +1,6 @@
 # Performance Review
 
-Analyse code efficiency and resource usage across the codebase. This review focuses on how the system uses computational resources, manages memory, and handles I/O. It does not cover code correctness, architectural design, or concurrency safety unless they directly cause performance degradation.
+Analyse the subject's efficiency and resource usage.
 
 ## Prerequisites
 
@@ -28,12 +28,16 @@ Analyse code efficiency and resource usage across the codebase. This review focu
 ## Scope
 
 - Algorithmic Complexity: Identifying logic with sub-optimal complexity that could degrade as input size grows.
-- Memory Management: Assessing allocation patterns to minimize unnecessary pressure on the garbage collector or memory limits.
-- I/O Efficiency: Evaluating the frequency and size of network and disk operations to minimize latency.
+- Memory Management: Assessing allocation patterns to minimise unnecessary allocator, heap, or garbage-collector pressure and to stay within memory limits.
+- I/O Efficiency: Evaluating the frequency and size of network and disk operations to minimise latency.
 - Database Efficiency: Identifying N+1 query patterns or expensive join operations that impact system throughput.
+- Contention and Lock Pressure: Identifying synchronisation points that limit throughput under concurrent load.
 - Resource Lifecycles: Ensuring that connections, file handles, and other finite resources are closed promptly.
-- Caching Strategy: Identifying opportunities to reuse expensive computations while ensuring invalidation is sound.
-- Infrastructure Impact: Assessing whether the code introduces excessive compute or storage costs relative to its value.
+- Caching Strategy: Identifying opportunities to reuse expensive computations, and assessing hit rate, cache size, and eviction cost.
+- Cold Start and Warm-up: Evaluating initialisation latency in serverless or JIT-compiled environments and strategies to mitigate it.
+- Token and Context Budget: Assessing prompt size, context window use, retrieval volume, and model-call batching so cost and latency stay within budget as input and history grow.
+- Infrastructure Impact: Assessing whether runtime behaviour drives excessive compute, network, or storage consumption relative to the value delivered.
+- Performance Instrumentation: Ensuring critical paths emit latency, throughput, and saturation metrics that allow efficiency regressions to be detected in production.
 
 ## Report Format
 

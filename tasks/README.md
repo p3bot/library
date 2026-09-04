@@ -83,23 +83,18 @@ tasks/<domain>/<name>/
 
 - [review/architecture](review/architecture/) - Architecture review
 - [review/comments](review/comments/) - Code-comment review
-- [review/concurrency](review/concurrency/) - Concurrency review
+- [review/compliance](review/compliance/) - Compliance review
 - [review/correctness](review/correctness/) - Correctness review
 - [review/css](review/css/) - CSS review
-- [review/dependency](review/dependency/) - Dependency review
-- [review/documentation](review/documentation/) - Documentation review
-- [review/duplication](review/duplication/) - Duplication review
-- [review/error-handling](review/error-handling/) - Error-handling review
-- [review/git-diff](review/git-diff/) - Review the current git diff
-- [review/holistic](review/holistic/) - Holistic review
+- [review/experience](review/experience/) - Experience review
+- [review/maintainability](review/maintainability/) - Maintainability review
 - [review/multi-agent/orchestrator](review/multi-agent/orchestrator/) - Orchestrate a multi-agent review
-- [review/observability](review/observability/) - Observability review
+- [review/operability](review/operability/) - Operability review
 - [review/performance](review/performance/) - Performance review
 - [review/pre-commit](review/pre-commit/) - Pre-commit review
 - [review/random-file](review/random-file/) - Review a random file
-- [review/readability](review/readability/) - Readability review
 - [review/security](review/security/) - Security review
-- [review/standards](review/standards/) - Standards review
+- [review/supply-chain](review/supply-chain/) - Supply chain review
 - [review/test-coverage](review/test-coverage/) - Test-coverage review
 - [review/testing](review/testing/) - Testing review
 

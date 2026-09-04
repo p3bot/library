@@ -3,7 +3,7 @@ package testing
 import "github.com/p3bot/library/schemas@v1"
 
 task: schemas.#Task & {
-	description: "Evaluate test quality, coverage, and the testability of production code"
+	description: "Evaluate test quality, coverage, and the testability of the subject"
 	tags: ["review", "testing", "tests", "coverage", "code-quality"]
 	file: "@module/task.md"
 	prompt: """
