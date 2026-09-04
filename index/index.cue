@@ -397,7 +397,7 @@ contexts: {
 	}
 	"start/library/naming": {
 		module:      "github.com/p3bot/library/contexts/start/library/naming@v1"
-		version:     "v1.3.0"
+		version:     "v1.4.0"
 		description: "Naming conventions for all module types in the p3bot library"
 		tags: ["start", "library", "naming", "conventions", "standards", "modules", "guide"]
 	}
