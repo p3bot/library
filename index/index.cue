@@ -685,37 +685,37 @@ tasks: {
 	}
 	"tk/next/build": {
 		module:      "github.com/p3bot/library/tasks/tk/next/build@v1"
-		version:     "v1.2.0"
+		version:     "v1.3.0"
 		description: "Using tk, build the next available ticket"
 		tags: ["tk", "next", "build", "implementation", "ticket"]
 	}
 	"tk/id/build": {
 		module:      "github.com/p3bot/library/tasks/tk/id/build@v1"
-		version:     "v1.0.0"
+		version:     "v1.1.0"
 		description: "Using tk, build this ticket"
 		tags: ["tk", "id", "build", "implementation", "ticket"]
 	}
 	"tk/id/continue": {
 		module:      "github.com/p3bot/library/tasks/tk/id/continue@v1"
-		version:     "v1.2.0"
+		version:     "v1.3.0"
 		description: "Using tk, continue this ticket"
 		tags: ["tk", "id", "continue", "implementation", "ticket"]
 	}
 	"tk/id/discuss": {
 		module:      "github.com/p3bot/library/tasks/tk/id/discuss@v1"
-		version:     "v1.0.0"
+		version:     "v1.1.0"
 		description: "Using tk, discuss this ticket"
 		tags: ["tk", "id", "discuss", "ticket"]
 	}
 	"tk/id/expand": {
 		module:      "github.com/p3bot/library/tasks/tk/id/expand@v1"
-		version:     "v1.1.0"
+		version:     "v1.2.0"
 		description: "Using tk, expand this ticket to the writing guide"
 		tags: ["tk", "id", "expand", "ticket", "writing", "stub"]
 	}
 	"tk/id/review": {
 		module:      "github.com/p3bot/library/tasks/tk/id/review@v1"
-		version:     "v1.3.0"
+		version:     "v1.4.0"
 		description: "Using tk, review this ticket document"
 		tags: ["tk", "id", "review", "ticket", "document"]
 	}

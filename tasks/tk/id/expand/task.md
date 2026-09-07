@@ -16,7 +16,7 @@ Do not run `tk doctor` unless `tk get` or `tk mark` fails.
 
 ### Step 1: Resolve
 
-The ticket id is the instruction. If none was supplied, ask for it. Do not guess. Do not fall back to `tk next`.
+The ticket id is the instruction. If none was supplied, ask for it. Do not guess or claim the next ticket.
 
 Run `tk get <id>`. Apply the terminal test to that path and status before any mark.
 

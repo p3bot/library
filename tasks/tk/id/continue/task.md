@@ -14,7 +14,7 @@ Do not run `tk doctor` unless `tk get` or `tk mark` fails.
 
 ### Step 1: Resolve
 
-The ticket id is the instruction. If none was supplied, ask for it. Do not guess. Do not fall back to `tk next`.
+The ticket id is the instruction. If none was supplied, ask for it. Do not guess or claim the next ticket.
 
 Run `tk get <id>`, then `tk mark in-progress <id>` whatever status it had. This unarchives `done` and `cancelled`. The last path `tk mark` printed is the working path; it replaces the earlier `tk get` path.
 

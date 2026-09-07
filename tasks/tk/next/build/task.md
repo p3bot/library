@@ -12,11 +12,11 @@ start get tasks:tk/id/build
 
 ### Step 2: Select
 
-Run `tk next`. That command honours the lens and only sees `todo`. The last path it prints is the ticket. Empty queue: stop. Do not scan for standalone ticket files. Do not call `tasks:ticket/begin`.
+Run `tk next --claim`. That command honours the lens and only sees `todo`. The last path it prints is the ticket. If "nothing ready" then stop this task.
 
 The ticket id is the `id` field in that file.
 
-Do not run `tk doctor` unless `tk next` fails.
+Do not run `tk doctor` unless `tk next --claim` fails.
 
 ### Step 3: Build
 
