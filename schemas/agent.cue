@@ -19,6 +19,11 @@ package schemas
 	// Binary name for auto-detection and {{.bin}} placeholder
 	bin?: string & !=""
 
+	// Agentdex catalog id of the product this recipe launches.
+	// Omit for custom or uncatalogued agents. When set, start resolves
+	// bin and live models from agentdex at launch.
+	agentdex?: string & =~"^[a-z0-9]+(-[a-z0-9]+)*$"
+
 	// Model configuration
 	default_model?: string
 	models?: [string]: string & !=""

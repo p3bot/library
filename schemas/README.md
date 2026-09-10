@@ -169,16 +169,19 @@ Defines the schema for AI agent configurations. Agents are command templates tha
 
 Unlike other schemas, agents do NOT use UTD - they define command execution, not content generation.
 
+A library agent is a launch recipe (invocation). agentdex catalogs the outside of a product (identity, location, paths, capability) and never reads internal configuration or executes the binary. The optional `agentdex` field is the join key from recipe to catalog id. The schema module does not depend on the agentdex CUE catalog; it does not fetch or check that the id exists.
+
 **Agent Identification:**
 
-- Agents are identified by their **map key** (e.g., `agents["claude"]`)
+- Agents are identified by their **map key** (e.g., `agents["claude/interactive"]`)
 - There is no `name` field - the key IS the name
-- Tasks reference agents by this key (e.g., `agent: "claude"`)
+- Tasks reference agents by this key (e.g., `agent: "claude/interactive"`)
 
 **Fields:**
 
 - `command` (string, required) - Command template with placeholders
 - `bin` (string, optional) - Binary name for auto-detection and `{{.bin}}` placeholder
+- `agentdex` (string, optional) - agentdex catalog id of the product the recipe launches (`^[a-z0-9]+(-[a-z0-9]+)*$`). Omit for custom or uncatalogued agents. When set, start resolves bin and live models from agentdex at launch
 - `description` (string, optional) - Human-readable description
 - `tags` ([]string, optional) - Tags for categorization/search
 - `default_model` (string, optional) - Default model when `--model` not specified
@@ -186,7 +189,7 @@ Unlike other schemas, agents do NOT use UTD - they define command execution, not
 
 **Agent Placeholders:**
 
-- `{{.bin}}` - The bin field value
+- `{{.bin}}` - The bin field value (from `bin`, or from agentdex at launch when `agentdex` is set)
 - `{{.model}}` - Resolved model identifier
 - `{{.prompt}}` - Composed prompt (from UTD resolution)
 - `{{.role}}` - Role content (inline)
@@ -196,7 +199,10 @@ Unlike other schemas, agents do NOT use UTD - they define command execution, not
 
 - `command` must not be empty
 - `bin` must not be empty if provided
+- `agentdex` must match `^[a-z0-9]+(-[a-z0-9]+)*$` if provided
 - Tags must match pattern `[a-z0-9]+(-[a-z0-9]+)*`
+- `agentdex` and `bin` are independent: command-only agents (echo, wrappers) remain valid; joined recipes may omit `bin`; unjoined agents may still set `bin`. This is policy, not a CUE oneOf
+- `models` and `default_model` are unconstrained relative to `agentdex`
 
 ### #Task
 

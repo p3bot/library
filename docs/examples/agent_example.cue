@@ -3,16 +3,16 @@ package schemas
 // Examples demonstrating agent configurations
 // Agents are command templates that launch AI CLI tools
 
-// Example 1: Full-featured Claude agent
-agents: "claude": {
-	bin:           "claude"
+// Example 1: Joined recipe — agentdex catalog id, no bin, CLI-alias models
+agents: "claude/interactive": {
+	agentdex:      "claude-code"
 	command:       "{{.bin}} --model {{.model}} --append-system-prompt {{.role}} {{.prompt}}"
 	description:   "Claude Code by Anthropic"
 	default_model: "sonnet"
 	models: {
-		haiku:  "claude-3-5-haiku-20241022"
-		sonnet: "claude-3-7-sonnet-20250219"
-		opus:   "claude-opus-4-20250514"
+		haiku:  "haiku"
+		sonnet: "sonnet"
+		opus:   "opus"
 	}
 	tags: ["anthropic", "claude", "ai"]
 }
