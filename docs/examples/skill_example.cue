@@ -20,7 +20,7 @@ skills: "review/pre-commit": #Skill & {
 // Example 3: #Base.uses accepts skills and the four existing categories
 _usesExisting: #Base & {
 	uses: [
-		"agents:claude/interactive",
+		"agents:claude-code/interactive",
 		"roles:golang/assistant",
 		"contexts:cwd/agents-md",
 		"tasks:review/git-diff",

@@ -6,8 +6,8 @@ Naming conventions for all module types in the p3bot library.
 
 Every module has two related identifiers:
 
-- The name is what appears within a category, structured as one or more slash-separated segments (e.g. `claude/interactive`)
-- The fully-qualified address combines the category and the name with a colon: `category:name` (e.g. `agents:claude/interactive`). This is the canonical user-facing form for inputs and display
+- The name is what appears within a category, structured as one or more slash-separated segments (e.g. `claude-code/interactive`)
+- The fully-qualified address combines the category and the name with a colon: `category:name` (e.g. `agents:claude-code/interactive`). This is the canonical user-facing form for inputs and display
 
 This document describes the structure of the name for each category. Examples below are bare names; the fully-qualified address is the same string prefixed with `<category>:`.
 
@@ -74,16 +74,16 @@ Every agent has an explicit variant name. No bare tool names as defaults.
 
 | Segment | Required | Purpose |
 |---------|----------|---------|
-| tool | yes | The CLI tool name |
+| tool | yes | The agentdex catalog id for joined recipes; the CLI name for unjoined tools |
 | variant | yes | The configuration variant |
 
 Examples:
 
 ```
-claude/interactive
-claude/edit
-claude/non-interactive
-claude/unattended
+claude-code/interactive
+claude-code/edit
+claude-code/non-interactive
+claude-code/unattended
 gemini/interactive
 gemini/bypass-permissions
 ```

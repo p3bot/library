@@ -7,11 +7,11 @@ package schemas
 
 index: #Index & {
 	agents: {
-		"claude/interactive": {
-			module:      "github.com/p3bot/library/agents/claude/interactive@v0"
+		"claude-code/interactive": {
+			module:      "github.com/p3bot/library/agents/claude-code/interactive@v1"
 			description: "Anthropic Claude AI agent (interactive mode)"
-			tags: ["ai", "anthropic", "claude", "llm"]
-			version: "v0.1.0"
+			tags: ["ai", "anthropic", "claude", "claude-code", "llm"]
+			version: "v1.0.0"
 			bin:     "claude"
 		}
 

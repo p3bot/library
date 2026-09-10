@@ -1,0 +1,16 @@
+package unattended
+
+import "github.com/p3bot/library/schemas@v1"
+
+agent: schemas.#Agent & {
+	agentdex:      "claude-code"
+	command:       "{{.bin}} --model {{.model}} --permission-mode bypassPermissions --system-prompt-file {{.role_file}} --print {{.prompt}}"
+	description:   "Claude Code in unattended mode - non-interactive with all permissions bypassed"
+	default_model: "sonnet"
+	models: {
+		haiku:  "haiku"
+		sonnet: "sonnet"
+		opus:   "opus"
+	}
+	tags: ["claude-code", "anthropic", "claude", "coding", "agent", "unattended", "non-interactive", "bypass-permissions", "automation"]
+}

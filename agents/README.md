@@ -7,20 +7,20 @@ Each subdirectory contains a CUE package defining an agent with its command temp
 ## Structure
 
 ```
-agents/<vendor>/<mode>/
+agents/<tool>/<variant>/
 ├── agent.cue
 └── cue.mod/module.cue
 ```
 
 ## Available Agents
 
-### claude/ (Anthropic Claude Code)
+### claude-code/ (Anthropic Claude Code)
 
-- [claude/interactive](claude/interactive/) - Interactive Claude Code session
-- [claude/non-interactive](claude/non-interactive/) - Non-interactive mode; completes the task and exits
-- [claude/edit](claude/edit/) - Auto-accepted file edits for trusted editing sessions
-- [claude/bypass-permissions](claude/bypass-permissions/) - All permissions bypassed for automated tasks
-- [claude/unattended](claude/unattended/) - Non-interactive with all permissions bypassed
+- [claude-code/interactive](claude-code/interactive/) - Interactive Claude Code session
+- [claude-code/non-interactive](claude-code/non-interactive/) - Non-interactive mode; completes the task and exits
+- [claude-code/edit](claude-code/edit/) - Auto-accepted file edits for trusted editing sessions
+- [claude-code/bypass-permissions](claude-code/bypass-permissions/) - All permissions bypassed for automated tasks
+- [claude-code/unattended](claude-code/unattended/) - Non-interactive with all permissions bypassed
 
 ### copilot/ (GitHub Copilot CLI)
 

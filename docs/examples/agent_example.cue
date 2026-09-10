@@ -4,7 +4,7 @@ package schemas
 // Agents are command templates that launch AI CLI tools
 
 // Example 1: Joined recipe — agentdex catalog id, no bin, CLI-alias models
-agents: "claude/interactive": {
+agents: "claude-code/interactive": {
 	agentdex:      "claude-code"
 	command:       "{{.bin}} --model {{.model}} --append-system-prompt {{.role}} {{.prompt}}"
 	description:   "Claude Code by Anthropic"

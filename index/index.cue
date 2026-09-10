@@ -6,40 +6,40 @@ import "github.com/p3bot/library/schemas@v1"
 agents: [string]: schemas.#IndexEntry
 
 agents: {
-	"claude/interactive": {
-		module:      "github.com/p3bot/library/agents/claude/interactive@v1"
-		version:     "v1.2.0"
+	"claude-code/interactive": {
+		module:      "github.com/p3bot/library/agents/claude-code/interactive@v1"
+		version:     "v1.0.0"
 		description: "Claude Code by Anthropic - agentic coding assistant"
 		bin:         "claude"
-		tags: ["anthropic", "claude", "coding", "agent"]
+		tags: ["claude-code", "anthropic", "claude", "coding", "agent"]
 	}
-	"claude/bypass-permissions": {
-		module:      "github.com/p3bot/library/agents/claude/bypass-permissions@v1"
-		version:     "v1.2.0"
+	"claude-code/bypass-permissions": {
+		module:      "github.com/p3bot/library/agents/claude-code/bypass-permissions@v1"
+		version:     "v1.0.0"
 		description: "Claude Code with all permissions bypassed - for background and automated tasks"
 		bin:         "claude"
-		tags: ["anthropic", "claude", "coding", "agent", "automation", "background", "bypass-permissions"]
+		tags: ["claude-code", "anthropic", "claude", "coding", "agent", "automation", "background", "bypass-permissions"]
 	}
-	"claude/edit": {
-		module:      "github.com/p3bot/library/agents/claude/edit@v1"
-		version:     "v1.2.0"
+	"claude-code/edit": {
+		module:      "github.com/p3bot/library/agents/claude-code/edit@v1"
+		version:     "v1.0.0"
 		description: "Claude Code with auto-accepted file edits - for trusted editing sessions"
 		bin:         "claude"
-		tags: ["anthropic", "claude", "coding", "agent", "trusted", "auto-edit"]
+		tags: ["claude-code", "anthropic", "claude", "coding", "agent", "trusted", "auto-edit"]
 	}
-	"claude/non-interactive": {
-		module:      "github.com/p3bot/library/agents/claude/non-interactive@v1"
-		version:     "v1.2.0"
+	"claude-code/non-interactive": {
+		module:      "github.com/p3bot/library/agents/claude-code/non-interactive@v1"
+		version:     "v1.0.0"
 		description: "Claude Code in non-interactive mode - completes task and exits"
 		bin:         "claude"
-		tags: ["anthropic", "claude", "coding", "agent", "non-interactive", "scripted"]
+		tags: ["claude-code", "anthropic", "claude", "coding", "agent", "non-interactive", "scripted"]
 	}
-	"claude/unattended": {
-		module:      "github.com/p3bot/library/agents/claude/unattended@v1"
-		version:     "v1.2.0"
+	"claude-code/unattended": {
+		module:      "github.com/p3bot/library/agents/claude-code/unattended@v1"
+		version:     "v1.0.0"
 		description: "Claude Code in unattended mode - non-interactive with all permissions bypassed"
 		bin:         "claude"
-		tags: ["anthropic", "claude", "coding", "agent", "unattended", "non-interactive", "bypass-permissions", "automation"]
+		tags: ["claude-code", "anthropic", "claude", "coding", "agent", "unattended", "non-interactive", "bypass-permissions", "automation"]
 	}
 	"gemini/interactive": {
 		module:      "github.com/p3bot/library/agents/gemini/interactive@v1"
@@ -85,84 +85,84 @@ agents: {
 	}
 	"copilot/interactive": {
 		module:      "github.com/p3bot/library/agents/copilot/interactive@v1"
-		version:     "v1.1.0"
+		version:     "v1.2.0"
 		description: "GitHub Copilot CLI - agentic coding assistant"
 		bin:         "copilot"
 		tags: ["github", "copilot", "coding", "agent"]
 	}
 	"copilot/edit": {
 		module:      "github.com/p3bot/library/agents/copilot/edit@v1"
-		version:     "v1.1.0"
+		version:     "v1.2.0"
 		description: "GitHub Copilot CLI with auto-accepted file edits - for trusted editing sessions"
 		bin:         "copilot"
 		tags: ["github", "copilot", "coding", "agent", "trusted", "auto-edit"]
 	}
 	"copilot/bypass-permissions": {
 		module:      "github.com/p3bot/library/agents/copilot/bypass-permissions@v1"
-		version:     "v1.1.0"
+		version:     "v1.2.0"
 		description: "GitHub Copilot CLI with all permissions bypassed - for background and automated tasks"
 		bin:         "copilot"
 		tags: ["github", "copilot", "coding", "agent", "automation", "background", "bypass-permissions"]
 	}
 	"copilot/non-interactive": {
 		module:      "github.com/p3bot/library/agents/copilot/non-interactive@v1"
-		version:     "v1.1.0"
+		version:     "v1.2.0"
 		description: "GitHub Copilot CLI in non-interactive mode - completes task and exits"
 		bin:         "copilot"
 		tags: ["github", "copilot", "coding", "agent", "non-interactive", "scripted"]
 	}
 	"copilot/unattended": {
 		module:      "github.com/p3bot/library/agents/copilot/unattended@v1"
-		version:     "v1.1.0"
+		version:     "v1.2.0"
 		description: "GitHub Copilot CLI in unattended mode - non-interactive with all permissions bypassed"
 		bin:         "copilot"
 		tags: ["github", "copilot", "coding", "agent", "unattended", "non-interactive", "bypass-permissions", "automation"]
 	}
 	"grok/interactive": {
 		module:      "github.com/p3bot/library/agents/grok/interactive@v1"
-		version:     "v1.1.0"
+		version:     "v1.2.0"
 		description: "Grok Build TUI by xAI - agentic coding assistant"
 		bin:         "grok"
 		tags: ["xai", "grok", "coding", "agent"]
 	}
 	"grok/auto": {
 		module:      "github.com/p3bot/library/agents/grok/auto@v1"
-		version:     "v1.0.0"
+		version:     "v1.1.0"
 		description: "Grok Build TUI with auto permission mode - fewer prompts with background safety checks"
 		bin:         "grok"
 		tags: ["xai", "grok", "coding", "agent", "auto"]
 	}
 	"agy/interactive": {
 		module:      "github.com/p3bot/library/agents/agy/interactive@v1"
-		version:     "v1.2.0"
+		version:     "v1.3.0"
 		description: "Antigravity CLI by Google - agentic coding assistant"
 		bin:         "agy"
 		tags: ["google", "agy", "antigravity", "coding", "agent"]
 	}
 	"agy/edit": {
 		module:      "github.com/p3bot/library/agents/agy/edit@v1"
-		version:     "v1.2.0"
+		version:     "v1.3.0"
 		description: "Antigravity CLI with auto-accepted file edits - for trusted editing sessions"
 		bin:         "agy"
 		tags: ["google", "agy", "antigravity", "coding", "agent", "trusted", "auto-edit"]
 	}
 	"agy/bypass-permissions": {
 		module:      "github.com/p3bot/library/agents/agy/bypass-permissions@v1"
-		version:     "v1.2.0"
+		version:     "v1.3.0"
 		description: "Antigravity CLI with all permissions bypassed - for background and automated tasks"
 		bin:         "agy"
 		tags: ["google", "agy", "antigravity", "coding", "agent", "automation", "background", "bypass-permissions"]
 	}
 	"agy/non-interactive": {
 		module:      "github.com/p3bot/library/agents/agy/non-interactive@v1"
-		version:     "v1.2.0"
+		version:     "v1.3.0"
 		description: "Antigravity CLI in non-interactive mode - completes task and exits"
 		bin:         "agy"
 		tags: ["google", "agy", "antigravity", "coding", "agent", "non-interactive", "scripted"]
 	}
 	"agy/unattended": {
 		module:      "github.com/p3bot/library/agents/agy/unattended@v1"
-		version:     "v1.2.0"
+		version:     "v1.3.0"
 		description: "Antigravity CLI in unattended mode - non-interactive with all permissions bypassed"
 		bin:         "agy"
 		tags: ["google", "agy", "antigravity", "coding", "agent", "unattended", "non-interactive", "bypass-permissions", "automation"]

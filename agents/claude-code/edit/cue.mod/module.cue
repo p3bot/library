@@ -1,4 +1,4 @@
-module: "github.com/p3bot/library/agents/claude/edit@v1"
+module: "github.com/p3bot/library/agents/claude-code/edit@v1"
 language: {
 	version: "v0.16.0"
 }
@@ -7,6 +7,6 @@ source: {
 }
 deps: {
 	"github.com/p3bot/library/schemas@v1": {
-		v: "v1.0.0"
+		v: "v1.4.1"
 	}
 }

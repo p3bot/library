@@ -37,7 +37,7 @@ start task review/pre-commit
 User-facing fully-qualified addresses use `category:name`, for example:
 
 ```
-agents:claude/interactive
+agents:claude-code/interactive
 roles:golang/assistant
 contexts:cwd/agents-md
 tasks:review/pre-commit

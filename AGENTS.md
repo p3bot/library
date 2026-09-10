@@ -102,15 +102,15 @@ SKILL.md follows the Agent Skills specification, not these agent-doc markdown ru
 
 User-facing fully-qualified module addresses use the colon form `category:name`:
 
-- `agents:claude/interactive`
+- `agents:claude-code/interactive`
 - `roles:golang/assistant`
 - `contexts:cwd/agents-md`
 - `tasks:review/pre-commit`
 - `skills:finding/one-by-one`
 
-Bare names (`claude/interactive`) continue to work as cross-category lookups. CUE module paths (`github.com/p3bot/library/agents/claude/interactive@v0`) remain slash-based; the colon form applies to user-facing input and display only.
+Bare names (`claude-code/interactive`) continue to work as cross-category lookups. CUE module paths (`github.com/p3bot/library/agents/claude-code/interactive@v1`) remain slash-based; the colon form applies to user-facing input and display only.
 
-Index keys inside the index module are bare names within their category struct (`agents: { "claude/interactive": ... }`). The colon prefix is not encoded in keys.
+Index keys inside the index module are bare names within their category struct (`agents: { "claude-code/interactive": ... }`). The colon prefix is not encoded in keys.
 
 ### Recursive Module References
 
@@ -195,7 +195,7 @@ cue vet index.cue ../docs/examples/index_example.cue
 Module validation from a module directory (resolves `schemas@v1` from the registry):
 
 ```bash
-cd agents/claude/interactive
+cd agents/claude-code/interactive
 cue mod tidy
 cue vet ./...
 ```

@@ -88,18 +88,18 @@ Best for: CI/CD pipelines, background tasks, batch operations, scheduled jobs.
 Agent names follow a consistent pattern within the agents category:
 
 ```
-<cli-tool>/<variant>
+<tool>/<variant>
 ```
 
-The fully-qualified user-facing address is `agents:<cli-tool>/<variant>` (e.g. `agents:claude/interactive`). The table below lists agents by their bare name; prefix with `agents:` for the full address.
+The `tool` segment is the agentdex catalog id for joined recipes (`claude-code`, `grok`, `copilot`, `agy`) and the CLI name for unjoined tools (`gemini`, `aichat`). The fully-qualified user-facing address is `agents:<tool>/<variant>` (e.g. `agents:claude-code/interactive`). The table below lists agents by their bare name; prefix with `agents:` for the full address.
 
 | Agent | Interactivity | Permissions |
 |-------|---------------|-------------|
-| `claude/interactive` | Interactive | Default |
-| `claude/edit` | Interactive | Auto-edit |
-| `claude/bypass-permissions` | Interactive | Bypass all |
-| `claude/non-interactive` | Non-interactive | Default |
-| `claude/unattended` | Non-interactive | Bypass all |
+| `claude-code/interactive` | Interactive | Default |
+| `claude-code/edit` | Interactive | Auto-edit |
+| `claude-code/bypass-permissions` | Interactive | Bypass all |
+| `claude-code/non-interactive` | Non-interactive | Default |
+| `claude-code/unattended` | Non-interactive | Bypass all |
 | `gemini/interactive` | Interactive | Default |
 | `gemini/edit` | Interactive | Auto-edit |
 | `gemini/bypass-permissions` | Interactive | Bypass all |
