@@ -173,9 +173,9 @@ A library agent is a launch recipe (invocation). agentdex catalogs the outside o
 
 **Agent Identification:**
 
-- Agents are identified by their **map key** (e.g., `agents["claude/interactive"]`)
+- Agents are identified by their **map key** (e.g., `agents["claude-code/interactive"]`)
 - There is no `name` field - the key IS the name
-- Tasks reference agents by this key (e.g., `agent: "claude/interactive"`)
+- Tasks reference agents by this key (e.g., `agent: "claude-code/interactive"`)
 
 **Fields:**
 

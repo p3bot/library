@@ -30,7 +30,7 @@ package schemas
 // Keys map directly to the directory structure and module naming.
 #Index: {
 	// agents maps "category/name" to module info
-	// Examples: "claude/interactive", "gemini/interactive"
+	// Examples: "claude-code/interactive", "gemini/interactive"
 	agents?: [string]: #IndexEntry
 
 	// roles maps "category/name" to module info

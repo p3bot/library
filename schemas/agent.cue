@@ -3,7 +3,7 @@ package schemas
 // #Agent defines the schema for AI agent configurations.
 // Agents are command templates that launch AI CLI tools.
 //
-// Note: Agents are identified by their map key (e.g., agents["claude/interactive"]).
+// Note: Agents are identified by their map key (e.g., agents["claude-code/interactive"]).
 // There is no 'name' field - the key IS the name.
 //
 // Unlike other schemas, agents do NOT use UTD.
