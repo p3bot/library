@@ -59,15 +59,16 @@ Schema fields:
 | command | yes | string | Shell command template with placeholders |
 | description | yes | string | Brief description of the agent |
 | tags | no | list | Kebab-case keywords for discovery |
-| bin | no | string | Binary name for auto-detection |
+| bin | no | string | Binary name for auto-detection and `{{.bin}}` when unjoined |
+| agentdex | no | string | agentdex catalog id of the product this recipe launches. Omit for custom or uncatalogued agents |
 | default_model | no | string | Default model alias (must be a key in models) |
-| models | no | map | Short alias to full model identifier mapping |
+| models | no | map | CLI aliases (joined) or short alias to full model identifier (unjoined) |
 
 Command template placeholders:
 
 | Placeholder | Purpose |
 | --- | --- |
-| `{{.bin}}` | Replaced with the `bin` field value |
+| `{{.bin}}` | Binary name at launch. Unjoined recipes take it from `bin`. Joined recipes still use the placeholder; start fills it from agentdex. The schema does not define precedence when both fields are set |
 | `{{.model}}` | Replaced with the resolved model identifier |
 | `{{.prompt}}` | Replaced with the task prompt content |
 | `{{.role}}` | Replaced with the role prompt content (inline) |
@@ -75,7 +76,7 @@ Command template placeholders:
 
 Role injection varies by tool. Common patterns: a command-line flag (`--append-system-prompt-file {{.role_file}}`), an environment variable (`GEMINI_SYSTEM_MD={{.role_file}}`), or an inline argument (`--system {{.role}}`). Check the target tool's documentation for the correct approach.
 
-Agent definition template (with models):
+Joined recipe (default). Catalog id, no `bin`, optional CLI-alias `models`:
 
 ```cue
 package <variant>
@@ -83,21 +84,35 @@ package <variant>
 import "github.com/p3bot/library/schemas@v1"
 
 agent: schemas.#Agent & {
-	bin:           "<binary-name>"
+	agentdex:      "<catalog-id>"
 	command:       "<command-template>"
 	description:   "<description>"
 	default_model: "<default-alias>"
 	models: {
-		"<alias>": "<full-model-id>"
-		"<alias>": "<full-model-id>"
+		"<alias>": "<cli-alias>"
 	}
 	tags: ["<tag1>", "<tag2>"]
 }
 ```
 
-Without models, omit the `default_model` and `models` fields.
+`agentdex` must match `^[a-z0-9]+(-[a-z0-9]+)*$` (for example `claude-code`). The schema does not check that the id exists in the catalog. Omit `default_model` and `models` when start should use live agentdex models only.
 
-cue.mod/module.cue depends only on the schemas module:
+Unjoined custom (command-only, or `bin` without a catalog id):
+
+```cue
+package <variant>
+
+import "github.com/p3bot/library/schemas@v1"
+
+agent: schemas.#Agent & {
+	command:     "<command-template>"
+	description: "<description>"
+}
+```
+
+Add `bin` when the wrapper is on PATH and the command uses `{{.bin}}`. `agentdex` and `bin` are independent: joined recipes may omit `bin`; unjoined agents may still set it.
+
+cue.mod/module.cue depends only on the schemas module. Pin a schemas version that includes `#Agent.agentdex` (`v1.4.0` or later):
 
 ```cue
 module: "github.com/p3bot/library/agents/<path>@v1"
@@ -109,7 +124,7 @@ source: {
 }
 deps: {
 	"github.com/p3bot/library/schemas@v1": {
-		v: "v1.0.0"
+		v: "v1.4.0"
 	}
 }
 ```
@@ -119,6 +134,7 @@ Notes:
 - The `agent:` key is always the literal `agent`; the index key supplies the friendly name
 - `uses` stays empty for agents — they fetch no other module at runtime
 - A `default_model` must name a key present in `models`
+- Module identity is the index key, not `agentdex`
 
 ## Role Specifics
 
