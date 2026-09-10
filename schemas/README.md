@@ -189,7 +189,7 @@ A library agent is a launch recipe (invocation). agentdex catalogs the outside o
 
 **Agent Placeholders:**
 
-- `{{.bin}}` - The bin field value (from `bin`, or from agentdex at launch when `agentdex` is set)
+- `{{.bin}}` - Binary name substituted at launch. Unjoined recipes take it from `bin`. Joined recipes still use the placeholder; start fills it from agentdex. The schema does not define precedence when both fields are set
 - `{{.model}}` - Resolved model identifier
 - `{{.prompt}}` - Composed prompt (from UTD resolution)
 - `{{.role}}` - Role content (inline)
