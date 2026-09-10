@@ -15,7 +15,7 @@ The library provides CUE modules for AI agents, roles, contexts, tasks, and skil
 | [skills/](skills/) | Agent Skills (SKILL.md plus optional resources) |
 | [schemas/](schemas/) | CUE schema definitions |
 | [index/](index/) | Module discovery index |
-| [docs/](docs/) | Authoring patterns and schema examples |
+| [docs/](docs/) | Naming, publishing, authoring, and pattern catalogs |
 
 ## Usage
 
@@ -48,7 +48,9 @@ Bare names (without the `category:` prefix) work as cross-category lookups. Modu
 
 ## Documentation
 
-- [contexts/start/library/naming/context.md](contexts/start/library/naming/context.md) - Module naming conventions
+- [docs/naming.md](docs/naming.md) - Module naming conventions
+- [docs/publishing.md](docs/publishing.md) - Publishing to the CUE Central Registry
+- [docs/authoring.md](docs/authoring.md) - Create or update a library module
 - [docs/agent-patterns.md](docs/agent-patterns.md) - Agent authoring patterns
 - [docs/role-patterns.md](docs/role-patterns.md) - Role authoring patterns
 - [schemas/README.md](schemas/README.md) - Schema reference

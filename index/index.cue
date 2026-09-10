@@ -191,24 +191,6 @@ roles: {
 		description: "Go programming language expert - instructional teacher mode"
 		tags: ["golang", "programming", "teacher", "instructional", "learning"]
 	}
-	"start/library/agent": {
-		module:      "github.com/p3bot/library/roles/start/library/agent@v1"
-		version:     "v1.1.0"
-		description: "library expert - autonomous agent mode"
-		tags: ["library", "cue", "agent", "autonomous"]
-	}
-	"start/library/assistant": {
-		module:      "github.com/p3bot/library/roles/start/library/assistant@v1"
-		version:     "v1.1.0"
-		description: "library expert - collaborative assistant mode"
-		tags: ["library", "cue", "assistant", "collaborative"]
-	}
-	"start/library/teacher": {
-		module:      "github.com/p3bot/library/roles/start/library/teacher@v1"
-		version:     "v1.1.0"
-		description: "library expert - educational teacher mode"
-		tags: ["library", "cue", "teacher", "educational"]
-	}
 	"home/dotagents/default": {
 		module:      "github.com/p3bot/library/roles/home/dotagents/default@v1"
 		version:     "v1.1.0"
@@ -395,18 +377,6 @@ contexts: {
 		description: "Guide for writing agent-facing SKILL.md files that are token-efficient without losing functionality"
 		tags: ["skill", "writing", "documentation", "guide", "agents"]
 	}
-	"start/library/naming": {
-		module:      "github.com/p3bot/library/contexts/start/library/naming@v1"
-		version:     "v1.4.0"
-		description: "Naming conventions for all module types in the p3bot library"
-		tags: ["start", "library", "naming", "conventions", "standards", "modules", "guide"]
-	}
-	"start/library/publishing": {
-		module:      "github.com/p3bot/library/contexts/start/library/publishing@v1"
-		version:     "v1.2.0"
-		description: "Canonical workflow for publishing library modules to the CUE Central Registry"
-		tags: ["start", "library", "publishing", "publish", "release", "registry", "workflow", "guide"]
-	}
 }
 
 // Task index - maps friendly names to module paths
@@ -562,12 +532,6 @@ tasks: {
 		version:     "v1.1.0"
 		description: "Analyse the repository and generate a precise .gitignore file"
 		tags: ["git", "ignore", "gitignore", "generate"]
-	}
-	"start/module/author": {
-		module:      "github.com/p3bot/library/tasks/start/module/author@v1"
-		version:     "v1.1.0"
-		description: "Create or update any agent, role, context, or task module in the library repository"
-		tags: ["library", "module", "author", "create", "update", "cue", "interactive"]
 	}
 	"cwd/readme/create": {
 		module:      "github.com/p3bot/library/tasks/cwd/readme/create@v1"

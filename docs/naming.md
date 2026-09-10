@@ -6,8 +6,8 @@ Naming conventions for all module types in the p3bot library.
 
 Every module has two related identifiers:
 
-- The name is what appears within a category, structured as one or more slash-separated segments (e.g. `claude/interactive`).
-- The fully-qualified address combines the category and the name with a colon: `category:name` (e.g. `agents:claude/interactive`). This is the canonical user-facing form for inputs and display.
+- The name is what appears within a category, structured as one or more slash-separated segments (e.g. `claude/interactive`)
+- The fully-qualified address combines the category and the name with a colon: `category:name` (e.g. `agents:claude/interactive`). This is the canonical user-facing form for inputs and display
 
 This document describes the structure of the name for each category. Examples below are bare names; the fully-qualified address is the same string prefixed with `<category>:`.
 
@@ -106,7 +106,7 @@ Examples:
 golang/agent
 gitlab/pipeline/assistant
 markdown/low-token/teacher
-start/library/agent
+role/design/agent
 ```
 
 Exception: file-based roles under `cwd/` and `home/` may use alternative final segments such as `default` or a filename reference (e.g., `cwd/role-md`, `cwd/dotagents/default`) where no mode applies.
@@ -127,6 +127,7 @@ Examples:
 cwd/agents-md
 home/dotagents/environment
 golang/design/cli
+ticket/writing
 ```
 
 ## Tasks
@@ -153,7 +154,7 @@ jira/item/research
 confluence/doc/read
 gitlab/pipeline/review
 cwd/dotagents/role/create
-start/module/author
+tk/next/build
 ```
 
 ## Skills
@@ -210,14 +211,17 @@ tags: ["jira", "item", "backlog", "review", "triage"]
 ## Action Verbs
 
 Use `create` and `update` as a pair when the workflows are meaningfully different:
+
 - `create` — the target does not exist yet
 - `update` — the target exists and is being modified
 
 Use `generate` when the task is analysis-driven and state-agnostic:
+
 - The agent analyses context and produces or updates the target
 - The workflow is the same whether the target exists or not
 
 Use a single combined verb such as `author` when one interactive module owns both create and update for its subject:
+
 - The module determines whether the target exists and follows the matching flow within itself
 - Prefer this when create and update share most of their design and differ only in whether the target already exists, so the create/update pair would be near-duplicates
 
@@ -235,5 +239,5 @@ Other action verbs (`read`, `review`, `research`, `debug`, and so on) are free-f
 
 Rules that apply across all categories:
 
-- Leaf-only: no name may be an ancestor of another within a category (see Leaf-Only Names).
-- Reserved domains: `cwd` and `home` map to local filesystem paths (see Reserved Domains).
+- Leaf-only: no name may be an ancestor of another within a category (see Leaf-Only Names)
+- Reserved domains: `cwd` and `home` map to local filesystem paths (see Reserved Domains)

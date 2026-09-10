@@ -65,9 +65,3 @@ roles/<domain>/<style>/
 - [role/design/agent](role/design/agent/) - Role-design agent (writes new roles)
 - [role/design/assistant](role/design/assistant/) - Role-design assistant
 - [role/design/teacher](role/design/teacher/) - Role-design teacher
-
-### start/library/ (working in the p3bot library)
-
-- [start/library/agent](start/library/agent/) - Agent for working in the p3bot library
-- [start/library/assistant](start/library/assistant/) - Assistant for working in the p3bot library
-- [start/library/teacher](start/library/teacher/) - Teacher for working in the p3bot library

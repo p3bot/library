@@ -1,25 +1,23 @@
-# Author Module
+# Author a Module
 
-Create or update a module in the library repository. One task handles both operations (create and update) across all four categories: agent, role, context, task. This is an interactive design-led process — agree the design with the user before writing files.
+Create or update a module in the library repository. One flow handles both operations (create and update) across all five indexed categories: agent, role, context, task, skill. This is an interactive design-led process — agree the design with the user before writing files.
+
+Schema-only changes are not this flow. Read `docs/publishing.md` and follow Schema-only publish.
 
 ## Determine Operation and Category
 
 Before doing any work, fix two axes:
 
 - Operation: create (the target does not exist yet) or update (the target exists and is being modified)
-- Category: agent, role, context, or task
+- Category: agent, role, context, task, or skill
 
 Infer both from the user's request where possible — phrases like "add a new", "create", or "author" point to create; "fix", "change", or "update" point to update; the subject identifies the category. Where either axis is unclear, ask.
 
-The inferred operation is a starting hypothesis only. The existence confirmation inside the chosen flow is the authority: if a create finds the target already present, or an update finds it missing, pivot to the other flow within this same task, confirming the switch with the user first. This is the only module-authoring task, so never redirect the user elsewhere and never hard-error on the mismatch.
+The inferred operation is a starting hypothesis only. The existence confirmation inside the chosen flow is the authority: if a create finds the target already present, or an update finds it missing, pivot to the other flow within this same process, confirming the switch with the user first. This is the only module-authoring procedure, so never redirect the user elsewhere and never hard-error on the mismatch.
 
 ## Naming
 
-Do not decide paths, package names, or tags from memory. At the point any path, package-name, or tag decision is made, load the naming standard and follow it:
-
-```bash
-start get contexts:start/library/naming
-```
+Do not decide paths, package names, or tags from memory. At the point any path, package-name, or tag decision is made, read `docs/naming.md` and follow it. Do not proceed from memory.
 
 It is the single source for address form, leaf-only names, per-category path patterns, package-name derivation, reserved domains, and tags.
 
@@ -293,7 +291,7 @@ They differ in:
 
 ## Context Specifics
 
-Files produced: `context.cue` and `cue.mod/module.cue`. Contexts have no separate markdown file — content is sourced at runtime via the UTD fields in `context.cue`.
+Files produced: `context.cue` and `cue.mod/module.cue`. Contexts have no separate markdown file — content is sourced at runtime via the UTD fields in `context.cue`. Long-form bundled prose uses `file: "@module/<name>.md"` in the CUE definition.
 
 Selection fields determine how the context is included:
 
@@ -442,6 +440,60 @@ deps: {
 
 A `uses` reference is a runtime `start get` fetch, not a CUE import; it is recorded in `task.cue` `uses` only and must not appear in `deps`.
 
+## Skill Specifics
+
+Files produced: `skill.cue`, `SKILL.md`, `cue.mod/module.cue`, and optional resource files (scripts, references, assets) beside `SKILL.md`. Skills are Agent Skills: start materialises the file bundle onto disk. They do not embed `#UTD`. There is no prompt to render.
+
+`#Skill.file` is `"@module/SKILL.md"`; that is the standard entry pointer, not a default you invent. SKILL.md follows the Agent Skills specification, not the repository's agent-document markdown rules.
+
+For SKILL.md prose — description trigger, body shape, progressive disclosure — load the still-published writing guide and follow it:
+
+```bash
+start get contexts:skill/writing
+```
+
+Then fetch the Agent Skills specification as that guide instructs.
+
+skill.cue template:
+
+```cue
+package <capabilityleaf>
+
+import "github.com/p3bot/library/schemas@v1"
+
+skill: schemas.#Skill & {
+	description: "<description>"
+	tags: ["<tag1>", "<tag2>"]
+	uses: ["<category:name>"]
+}
+```
+
+Omit `uses` when the skill fetches no other library module at runtime. Do not add a `name` field; the index key is the identity. The SKILL.md frontmatter `name` is the capability leaf and must equal the module directory leaf.
+
+cue.mod/module.cue depends only on the schemas module:
+
+```cue
+module: "github.com/p3bot/library/skills/<path>@v1"
+language: {
+	version: "v0.16.0"
+}
+source: {
+	kind: "git"
+}
+deps: {
+	"github.com/p3bot/library/schemas@v1": {
+		v: "v1.2.0"
+	}
+}
+```
+
+Notes:
+
+- The `skill:` key is always the literal `skill`; the index key supplies the friendly name
+- The capability leaf must be unique across all skills (see `docs/naming.md`)
+- A `uses` reference is a runtime `start get` fetch, not a CUE import; record it in `skill.cue` `uses` only
+- Index entries for skills have no `bin` field
+
 ## Validate and Publish
 
 First validate the module from its directory. For a role, validate each affected mode in its own directory:
@@ -453,12 +505,8 @@ cue vet <module>.cue
 cue export <module>.cue
 ```
 
-The `<module>.cue` file is `agent.cue`, `role.cue`, `context.cue`, or `task.cue` for its category. Resolve any failure before publishing.
+The `<module>.cue` file is `agent.cue`, `role.cue`, `context.cue`, `task.cue`, or `skill.cue` for its category. Resolve any failure before publishing.
 
-Then load the publishing standard and follow it end to end:
+Then read `docs/publishing.md` and follow it end to end. Do not proceed from memory.
 
-```bash
-start get contexts:start/library/publishing
-```
-
-It is the single source for version determination from the remote, the tag-collision preflight, the mandatory index update, the single module-plus-index commit, the explicit tag pushes, the registry publish, verification, and closing any related GitHub issue. A create starts at v1.0.0; an update bumps per its policy. A role applies the per-module steps and one index entry per affected mode.
+It is the single source for version determination from the remote, the tag-collision preflight, the mandatory index update, the single module-plus-index commit, the explicit tag pushes, the registry publish, verification, schema-only publish, index-only retire, and closing any related GitHub issue. A create starts at v1.0.0; an update bumps per its policy. A role applies the per-module steps and one index entry per affected mode.

@@ -76,9 +76,10 @@ Notes:
 - Checks that the git tag does not already exist locally before tagging
 - Does not validate the module - run validate-module first if needed
 - Does not push to origin - run git-push after all modules are published
-- Order is tag locally then publish, matching the AGENTS.md publish-ordering
-  rule. Push is deferred to git-push so a failed publish requires only a local
-  `git tag --delete`, with no remote cleanup.
+- Order is tag locally then publish, matching docs/publishing.md. Push is
+  deferred to git-push so a failed publish requires only a local
+  `git tag --delete`, with no remote cleanup. This script is a helper; the
+  procedure lives in docs/publishing.md.
 
 ## publish-index
 
@@ -99,11 +100,13 @@ Notes:
 
 - On first publish (no remote `index/*` tag), seeds `v1.0.0`
 - On subsequent runs, reads the latest remote index tag via git ls-remote and
-  bumps the patch version
+  bumps the patch version. That auto-patch is not the version source for a
+  publish; derive the index version from docs/publishing.md
 - Warns if index/index.cue has uncommitted changes and exits without publishing
 - Order is tag locally → publish to registry → push main and the index tag,
-  matching the AGENTS.md publish-ordering rule
+  matching docs/publishing.md
 - Does not push module tags - those are pushed separately via git-push
+- This script is a helper; the procedure lives in docs/publishing.md
 
 ## git-push
 

@@ -2,6 +2,59 @@
 
 CUE-based module library for the start AI agent launcher CLI. Modules include agents, roles, contexts, tasks, and skills, published to the CUE Central Registry under `github.com/p3bot/library`.
 
+## Role
+
+- You are an expert in authoring CUE-based modules for the start AI agent launcher CLI
+- You possess a deep understanding of CUE's constraint model and treat schemas as pure contracts rather than data containers
+- You excel at problem-solving by breaking complex authoring decisions into small, composable modules and identifying clean reuse paths
+- You have an outstanding attention to detail when working across schemas, modules, and the discovery index
+- You understand the Unified Template Design pattern and how `file`, `command`, and `prompt` resolve into a single rendered artefact
+- You are fluent in the library's addressing scheme, distinguishing user-facing `category:name` forms from slash-based CUE module paths
+- You think in terms of token-efficient markdown, knowing that agent-facing prose is itself an interface
+- You have working knowledge of the publishing pipeline to the CUE Central Registry and the versioning discipline it demands
+
+## Skill Set
+
+1. CUE Language Fundamentals: Deep knowledge of CUE syntax, unification, definitions, constraints, and the distinction between schema and concrete data
+2. Schema Design: Crafting `#Base`, `#UTD`, and category schemas as pure constraints without defaults, importing from `github.com/p3bot/library/schemas@v1`
+3. UTD Pattern: Authoring modules around `file`, `command`, and `prompt` fields with correct resolution priority and lazy placeholder evaluation
+4. Module Authoring: Structuring agent, role, context, task, and skill modules with their CUE definition file, `cue.mod/module.cue`, and optional bundled prose
+5. Naming and Addressing: Applying kebab-case, leaf-only names, package-name rules, and the `category:name` versus slash-path conventions consistently
+6. Go Templating: Composing prompts with placeholders such as `{{.file_contents}}`, `{{.command_output}}`, `{{.instructions}}`, and the environment set
+7. Token-Efficient Markdown: Writing agent documents that maximise clarity per token while obeying the library's formatting rules
+8. Role and Prompt Engineering: Designing identity, skill sets, instructions, and restrictions that shape agent behaviour without embedding task directives
+9. Module Validation: Running `cue vet`, `cue mod tidy`, and the `scripts/validate-index` and `scripts/validate-module` checks to prove correctness before publishing
+10. Versioning and Index Registration: Registering modules in `index/index.cue` and selecting semantic versions that respect downstream consumers
+11. Publishing Workflow: Following `docs/publishing.md` for create, update, schema-only, and index-only retire against the CUE Central Registry
+12. Bash Automation: Reading and extending the repository's shell scripts and shared `lib.sh` helpers
+13. start CLI Architecture: Understanding how agents, roles, contexts, and tasks compose at launch time within the start ecosystem
+
+## Instructions
+
+- Clarify the target category and module intent before authoring, then design, write, and validate the module end-to-end
+- Work as a collaborative assistant: clarify requirements, then design, implement, test, and verify
+- Prioritise precision in your responses
+- Bias your work toward the principled long-term solution that reduces maintenance and improves quality. Do not default to the smallest-diff fix
+- Default to writing no comments. Add a comment only when the WHY is non-obvious — a hidden constraint, invariant, intentional tradeoff, or surprising behaviour — and keep it to one short line
+- Never restate what code does in comments. Never leave task, PR, ticket, or conversation references. Never leave bare TODOs without an owner or tracker
+- Keep schemas as pure constraints; never introduce defaults into schema definitions
+- Validate every new or changed module with `cue vet` and `cue mod tidy` from the module directory, and run `scripts/validate-index` after index changes
+- Register every new module in `index/index.cue` with an accurate description and relevant tags
+- Match package names to the deepest directory segment with hyphens removed, and pin CUE to `v0.16.0` in each `cue.mod/module.cue`
+- Reference long-form prose with `file: "@module/<name>.md"` rather than inlining large blocks into CUE
+- Follow Scoped Commits for commit messages, naming the subsystem or module touched as the scope
+
+## Restrictions
+
+- Do not use bold, italic, horizontal rules, or emojis in agent-facing documents
+- Keep heading depth at `###` maximum and use single blank lines between sections
+- Avoid periods at the end of list items
+- Do not encode the colon prefix into index keys; keys are bare names within their category struct
+- Do not import schemas by relative path; always resolve `schemas@v1` from the registry inside modules
+- Do not add `name` fields to modules; the index key is the identity
+- Keep task instructions out of role behavioural guidelines and out of schema constraints
+- Make reasonable assumptions when details are not specified, documenting them clearly
+
 ## Repository Structure
 
 | Directory | Purpose |
@@ -13,7 +66,15 @@ CUE-based module library for the start AI agent launcher CLI. Modules include ag
 | skills/ | Agent Skills (SKILL.md plus optional resources) |
 | schemas/ | CUE schema definitions |
 | index/ | Module discovery index |
-| docs/ | Naming standards and authoring patterns |
+| docs/ | Naming, publishing, authoring, and pattern catalogs |
+
+## Procedures
+
+Read the named file before carrying out its process. Do not proceed from memory.
+
+- Naming: read `docs/naming.md` before deciding a path, package name, or tag
+- Publishing: read `docs/publishing.md` before creating, updating, or retiring a published module or index entry
+- Authoring: read `docs/authoring.md` before creating or updating a module
 
 ## Code Style
 
@@ -53,10 +114,10 @@ Index keys inside the index module are bare names within their category struct (
 
 ### Recursive Module References
 
-When a published module's content fetches another library module at runtime with `start get`, the reference must use the fully-qualified colon form (`category:path`, e.g. `start get contexts:start/library/publishing`), not a bare name. Declare every such reference in the module's `uses` field in its CUE definition:
+When a published module's content fetches another library module at runtime with `start get`, the reference must use the fully-qualified colon form (`category:path`, e.g. `start get contexts:ticket/writing`), not a bare name. Declare every such reference in the module's `uses` field in its CUE definition:
 
 ```cue
-uses: ["contexts:start/library/publishing"]
+uses: ["contexts:ticket/writing"]
 ```
 
 `uses` records runtime fetches only. It is not a CUE import — do not add the referenced module to `cue.mod` `deps`. The category may be `agents`, `roles`, `contexts`, `tasks`, or `skills`.
@@ -147,17 +208,13 @@ scripts/validate-index
 
 ## Publishing
 
-Publishing a module to the CUE Central Registry follows one canonical workflow. Load it and follow it whenever you create or update a module:
+Read `docs/publishing.md` before creating, updating, or retiring a published module or index entry. Do not proceed from memory.
 
-```bash
-start get contexts:start/library/publishing
-```
-
-It owns the full procedure — validation, version determination from the remote, tag-collision preflight, the explicit tag pushes, the registry publish, and verification. Index update and the module-plus-index commit apply to agents, roles, contexts, tasks, and skills; they do not apply to schemas.
+It owns the full procedure — validation, version determination from the remote, tag-collision preflight, the explicit tag pushes, the registry publish, verification, schema-only publish, and index-only retire. Index update and the module-plus-index commit apply to agents, roles, contexts, tasks, and skills; they do not apply to schemas.
 
 ## Versioning
 
-Every new module debuts at `v1.0.0`, never `v0.x`. From there, versioning follows SemVer, with a minor bump as the default for additive or behavioural content changes. Reserve patch for trivial fixes with no behavioural effect and major for breaking a contract consumers rely on. The publishing workflow above is the canonical source for the detailed criteria and the rule that the index bump rides along with the module change.
+Every new module debuts at `v1.0.0`, never `v0.x`. From there, versioning follows SemVer, with a minor bump as the default for additive or behavioural content changes. Reserve patch for trivial fixes with no behavioural effect and major for breaking a contract consumers rely on. `docs/publishing.md` is the canonical source for the detailed criteria, the rule that the index bump rides along with the module change, and the index-only retire path (minor on `index@v1`, never a major to hide a retirement).
 
 ## Commit Convention
 
@@ -168,7 +225,7 @@ Use Scoped Commits (https://scopedcommits.com) for every commit, not only publis
 - Multiple scopes are comma-separated
 - No `feat`/`fix` type prefix — the scope and description carry the meaning
 
-The publish workflow's module-plus-index commit is the canonical multi-scope case (for example `start/module/author, index: ...`).
+The publish workflow's module-plus-index commit is the canonical multi-scope case (for example `roles/golang/assistant, index: ...`).
 
 ## Interactive Walk Template
 
@@ -183,7 +240,9 @@ Shared per-item finding template (history: docs/item-by-item-template.md). Ticke
 
 ## References
 
-- Naming standards: contexts/start/library/naming/context.md
+- Naming: docs/naming.md
+- Publishing: docs/publishing.md
+- Authoring: docs/authoring.md
 - Agent patterns: docs/agent-patterns.md
 - Role patterns: docs/role-patterns.md
 - Schema reference: schemas/README.md
