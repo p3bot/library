@@ -1,19 +1,22 @@
 # Ticket Implementation Guide
 
-For AI agents implementing a ticket document as the sole context for the work. You will not have the conversation that produced it. Treat the document as authoritative. Every implementation choice it does not specify is yours.
+For AI agents working a ticket document as the sole context for the work. You will not have the conversation that produced it. Treat the document as authoritative. Work the profile in front of you. Every choice the matched profile assigns to you is yours. Owner decisions are not yours to guess.
+
+Do not invent an Implementation Plan for a profile that does not have one.
 
 ## Principles
 
-- Bias implementation toward the principled long-term solution that reduces maintenance and improves quality. Do not default to the smallest-diff fix.
-- Own the how. The document defines outcomes and constraints. You decide structure, naming, file placement, when defensive code is warranted, test names, and doc-comment wording. Do not ask the owner to decide what belongs to you.
+- Bias toward the principled long-term solution that reduces maintenance and improves quality. Do not default to the smallest-diff fix.
+- Own the how when the work is implement, or a bug whose work is a fix. The document defines outcomes and constraints. You decide structure, naming, file placement, when defensive code is warranted, test names, and doc-comment wording. Do not ask the owner to decide what belongs to you.
+- For design, decide, and investigate, the document is the work. Fill that profile's body. Do not treat missing Requirements as a defect.
 - Reuse before invent. Before writing a new function, helper, or module, search the codebase for one that already does the job — or that nearly does, and can take one more parameter or a small generalisation without muddying its purpose. Prefer retrofit over a second copy; duplicated codebase-local logic drifts and multiplies maintenance. This is not a licence to add external packages — it is a duty to find and extend what the codebase already owns.
 - Verify dependency currency before working around limits. When a dependency appears to lack a capability you need, do not treat training knowledge as current and do not write a workaround on that assumption alone. Check the codebase's pinned version against the latest release notes, changelog, and documentation. Confirm the limitation is real for the version you will run, then choose in order of preference: a supported upgrade or newly documented first-class API, a supported API already available in the dependency, or a deliberate workaround.
-- Treat Constraints as inviolable. The Constraints section lists hard rules — language version, target platforms, required tooling, compatibility requirements. Never violate them. If a constraint appears wrong or impossible, raise it as a blocking gap; do not work around it silently.
-- Apply Implementation Guidance by default. The Implementation Guidance section is soft, ticket-specific preference. Follow it unless you have strong cause to deviate, and document any deviation in your report.
+- Treat Constraints as inviolable when that section exists. Never violate them. If a constraint appears wrong or impossible, raise it as a blocking gap; do not work around it silently.
+- Apply Implementation Guidance by default when that section exists. It is soft, ticket-specific preference. Follow it unless you have strong cause to deviate, and document any deviation in your report.
 - Stay in scope. Work only what the document defines. Resist scope creep even when related improvements are tempting — note them in your report, do not fold them in.
 - Hold the quality floor. Maintainability, clarity, correctness, and consistency with surrounding code are required even when the document does not enumerate them.
-- Surface gaps. If a requirement is missing or ambiguous, a step is impossible, or a stated assumption is wrong, raise it rather than guess or work around it. Do not paper over the document.
-- Verify before declaring complete. Run the Acceptance Criteria. If a criterion cannot be verified, say so — do not assume it passed.
+- Surface gaps. If something the matched profile needs is missing or ambiguous, a step is impossible, or a stated assumption is wrong, raise it rather than guess or work around it. Do not paper over the document.
+- Verify before declaring complete. Check that profile's done-condition. For implement, run the Acceptance Criteria. If a criterion cannot be verified, say so — do not assume it passed.
 
 ## Principled Software
 
@@ -76,48 +79,77 @@ Re-evaluate quality-improvement decisions in agent-time:
 - Extracting a function used twice with subtle variations — minutes, verified by the existing tests.
 - Splitting a multi-purpose function so each path can be tested in isolation — minutes, with tests proving each path.
 
-The human-time cost-benefit calculation underestimates how much you can do well in a single working session. Agent-time does not license sprawling rewrites. It stops deferring small, principled improvements you can finish and verify within the current task.
+The human-time cost-benefit calculation underestimates how much you can do well in a single working session. Agent-time does not license sprawling rewrites. It does not license product change on a profile whose work is the document. It stops deferring small, principled improvements you can finish and verify within the current task.
 
 ## Workflow
 
 ### 1. Orient
 
-Read the ticket document end-to-end before touching code. Validate the Current State section against the actual codebase. If the document's description of current state is wrong, the error will propagate through every step — pause and resolve it.
+Read the ticket document end-to-end before changing the target system or rewriting the body.
+
+```bash
+start get contexts:ticket/writing
+```
+
+Run that guide's matcher and stub test. Do not paste a second copy.
+
+Validate the Current State section against the actual codebase when that section exists. If the document's description of current state is wrong, the error will propagate through every step — pause and resolve it.
 
 Read repo-level instructions — `AGENTS.md`, `CONTRIBUTING.md`, or equivalent — before starting. The ticket document deliberately excludes generic standards that live at the repo root.
 
 If the document has a References section, read enough of the cited sources — repositories, documentation, external links — to understand the basis of the decisions in the document.
 
-### 2. Implement
+### 2. Work
 
-Work the Implementation Plan in the order given unless a dependency forces a different order. Keep the codebase in a working state between steps. Commit granularity is your choice.
+Work the matched profile. Keep the target in a working state between steps when the work changes the system. Commit granularity is your choice.
 
-Match the surrounding code's conventions where they exist. Do not introduce new patterns unless the ticket document explicitly calls for one.
+- implement: work the Implementation Plan in the order given unless a dependency forces a different order
+- design:
 
-Write tests for behaviour you add or change unless the ticket document explicitly says otherwise. Tests are part of the work, not a separate deliverable.
+  ```bash
+  start get contexts:design/writing
+  ```
+
+  Run that session against this ticket. Fill the existing document; do not create a second ticket. Do not mark the ticket done. If the shape is already closed enough to decompose or to stop, do not rerun the session; report that the owner must accept, then decompose
+- decide: record Decision, Rationale, Rejected alternatives, and Follow-up. Do not guess among owner decisions. Create follow-up tickets only after the owner approves
+- investigate: answer the question. Fill Recommendation so a later session can act without re-deriving it. No product change. Create follow-up tickets only after the owner approves
+- bug: diagnose and fix, or record Blocked on / Already done when the next step is outside this session
+- capture: if the ticket plus the codebase is enough to choose a later profile and finish that work without an owner decision, rewrite in place to that profile then continue; if an owner decision remains, or you are unsure, stop and say so
+- stub: stop. Do not invent a profile or an Implementation Plan. Say the ticket is not ready to work
+
+When the work changes the target system, match the surrounding code's conventions where they exist. Write tests for behaviour you add or change unless the document says otherwise. Tests are part of the work, not a separate deliverable.
+
+Write Progress into the ticket when stopping mid-work or when the work spanned a session. Place it after the last profile section. Use Remaining, Done this session, Blockers, and Next action. Omit empty overlay headings. Keep it short. Do not dump logs. On a successful close, drop or empty Remaining.
+
+Do not introduce new patterns unless the ticket document explicitly calls for one.
 
 ### 3. Verify
 
-Run the Acceptance Criteria and the repo's verification commands — tests, build, lint, format, and type checks. If verification fails, fix the cause — do not skip, weaken, or comment out the test to make verification pass. If an acceptance criterion itself is wrong or unverifiable, raise it as a gap.
+Check that profile's done-condition. For implement, run the Acceptance Criteria. For design, closed enough to decompose or to stop means ready for the owner to accept, not to mark the ticket done. When the work changed the target system, also run the repo's verification commands — tests, build, lint, format, and type checks. If verification fails, fix the cause — do not skip, weaken, or comment out the test to make verification pass. If an acceptance criterion itself is wrong or unverifiable, raise it as a gap.
 
 ### 4. Report
 
-Summarise the work so the owner can verify without re-reading the ticket document. Use the following shape:
+Summarise the work so the owner can verify without re-reading the ticket document. Use the following shape, omitting sections that do not apply to this profile:
 
-- Summary — one short paragraph on what was built
-- Requirements — each requirement and how it was satisfied
-- Acceptance criteria — each criterion and the verification result
-- Deviations — from the Implementation Plan or Implementation Guidance, with reasons. Requirements or Constraints that could not be met should already appear as surfaced gaps; do not record them only at report time.
-- Open gaps — items surfaced during implementation that remain unresolved
-- Follow-ups — out-of-scope improvements worth flagging
+- Summary — one short paragraph on what was done
+- Requirements — each requirement and how it was satisfied (implement)
+- Acceptance criteria — each criterion and the verification result (implement)
+- Decision — the recorded choice (decide)
+- Recommendation — the recorded answer (investigate)
+- Design — whether the shape is closed enough to decompose (design). Do not mark the ticket done; the owner accepts, then decompose
+- Deviations — from the Implementation Plan or Implementation Guidance, with reasons. Requirements or Constraints that could not be met should already appear as surfaced gaps; do not record them only at report time
+- Open gaps — items surfaced during the work that remain unresolved
+- Follow-ups — out-of-scope improvements worth flagging, or tickets the owner would need to approve
 
 Omit sections that have no content.
 
-## Gaps Surfaced During Implementation
+## Gaps Surfaced During Work
 
-When implementation reveals a missing requirement, incorrect assumption, unresolved decision, or design flaw:
+When the work reveals something the matched profile needs is missing or ambiguous, an incorrect assumption, an unresolved decision, or a design flaw:
 
 1. Pause. Do not work around the gap silently.
-2. Determine whether the gap blocks progress. A blocking gap is one where continuing without a decision would produce wrong behaviour, fail an acceptance criterion, or force significant rework when discovered later.
+2. Determine whether the gap blocks progress. A blocking gap is one where continuing without a decision would produce wrong behaviour, fail a done-condition, or force significant rework when discovered later.
 3. For blocking gaps, raise the issue and request a decision before continuing.
 4. For non-blocking gaps, note them in your final report so they can be addressed as follow-up.
+
+Do not invent an Implementation Plan for a decide, design, or investigate ticket in order to keep moving.

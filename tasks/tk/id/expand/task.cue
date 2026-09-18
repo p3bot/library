@@ -3,7 +3,7 @@ package expand
 import "github.com/p3bot/library/schemas@v1"
 
 task: schemas.#Task & {
-	description: "Using tk, expand this ticket to the writing guide"
+	description: "Using tk, expand this ticket to a matching writing-guide profile"
 	tags: ["tk", "id", "expand", "ticket", "writing", "stub"]
 	uses: ["contexts:ticket/writing"]
 	file: "@module/task.md"

@@ -61,5 +61,5 @@ If new tickets need to be created:
 start get contexts:ticket/writing
 ```
 
-Then `tk create <title> --scope S` and fill from that guide. Edit the returned ticket document path.
+Then `tk create <title> --scope S` and fill the profile that fits under the H1 it printed. Unmanaged File Placement does not apply. Edit the returned ticket document path.
 

@@ -3,7 +3,7 @@ package decompose
 import "github.com/p3bot/library/schemas@v1"
 
 task: schemas.#Task & {
-	description: "Decompose an accepted design into a right-sized set of ticket documents"
+	description: "Decompose an accepted design into a right-sized set of tickets by profile"
 	tags: ["ticket", "decompose", "design", "planning", "breakdown", "seams", "active", "current"]
 	uses: ["contexts:ticket/writing"]
 	file: "@module/task.md"

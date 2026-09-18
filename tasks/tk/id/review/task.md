@@ -44,11 +44,11 @@ The working path is the last path printed by `tk get` or `tk mark`. After a reop
 start get tasks:tk/id/expand
 ```
 
-Run the fetched Match test, and Write if it fails, against the working path. Write includes investigate, a design session if owner decisions remain, and the rewrite.
+Run the fetched Match test against the working path. Write only on stub (Match failure). Do not Write on capture. Capture is not a Match failure; continue to review. Write includes investigate, a design session if owner decisions remain, and the rewrite.
 
 If Write ran: stop. The ticket was a stub; it now matches the writing guide. Tell the user to run this task again for the review.
 
-If the ticket already matched: continue.
+If the ticket already matched, including capture: continue.
 
 ### Step 3: Review
 
@@ -56,8 +56,22 @@ If the ticket already matched: continue.
 start get tasks:ticket/review
 ```
 
-Run the fetched methodology against the working path. Edit only under the H1. The fetched Ticket (T) section applies. `tk` is available in this envelope, so offer it.
+Run the fetched methodology against the working path. Edit only under the H1. The fetched Ticket (T) section applies. `tk` is available in this envelope, so offer it. If that methodology dispatches to `tasks:design/review`, that walk is this step; then go to Step 4.
 
 ### Step 4: Status
 
-Never auto-promote to `todo`. Ask whether to mark `todo` only when the ticket is `draft` at the end, including a just-reopened terminal or a just-demoted `review`. Only an explicit yes does.
+Never auto-promote to `todo`.
+
+If the ticket is design: do not ask to mark `todo`. Sound means the owner accepts, then decompose. If they accept now:
+
+```bash
+start get tasks:ticket/decompose
+```
+
+That task marks the design done after it writes the follow-ups. If they stop after the proposal, leave in `draft`.
+
+Revise or Split: leave in `draft`.
+
+If the wrap-up is Ready to implement, Ready to diagnose, Ready to decide, or Ready to investigate: ask whether to mark `todo` only when the ticket is `draft` at the end, including a just-reopened terminal or a just-demoted `review`. Only an explicit yes does.
+
+Otherwise do not ask `todo`. Capture, stub, issues remaining, and split stay where they are.

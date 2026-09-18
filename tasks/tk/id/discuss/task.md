@@ -22,16 +22,11 @@ Run `tk get <id>`. The working path is the last path it printed.
 
 Read the ticket. Look at the relevant code if there is any. Check whether the proposed work is already done or redundant: the code already does it, another ticket covers it, or the need has gone.
 
-The writing guide is the source for what a finished ticket looks like: a document a different agent can execute in a fresh session with no conversation context.
+```bash
+start get contexts:ticket/writing
+```
 
-A ticket is a stub if any of these hold:
-
-- No writing-guide section headings under the H1
-- Primary content is a log, paste, or error dump
-- Missing Goal, missing Requirements, or missing Acceptance Criteria
-- Relies on conversation context ("as discussed", "you can see below")
-
-A thin ticket that still has those sections is not a stub.
+Brief against the matched profile. The writing guide's stub test is the source for whether the body matches.
 
 If it is a stub, say so plainly at the top of the brief.
 
@@ -57,13 +52,13 @@ Whether the work is already in the repo, covered elsewhere, or still needed. If 
 
 Whether to do it, skip it, reshape it, or something else, and why.
 
-If the ticket is a stub, offer to run expand after the brief. If they accept:
+Offer expand after the brief only for stubs, or when the user wants a capture promoted. Do not offer expand merely because Requirements is absent. If they accept:
 
 ```bash
 start get tasks:tk/id/expand
 ```
 
-If it is not a stub, do not offer expand. Do not offer a ticket-document review.
+If it is not a stub and they did not ask to promote a capture, do not offer expand. Do not offer a ticket-document review.
 
 ## After the brief
 

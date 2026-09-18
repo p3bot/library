@@ -4,17 +4,17 @@ This directory holds the ticket review task. This README documents the reasoning
 
 ## Purpose
 
-The task reviews a ticket document before implementation begins. The goal is a self-contained ticket document that an implementing agent, working in a fresh session with no other context, can execute successfully.
+The task reviews a ticket document against its matched profile. The goal is a self-contained ticket a fresh-session agent can act on. Design-profile tickets dispatch to `tasks:design/review`. Capture may wrap as not ready to implement rather than a findings walk.
 
 ## Workflow Context
 
-The task is designed to be run repeatedly against the same ticket document — typically five to ten times. Each run is a fresh pair of eyes looking for what earlier passes missed. Over successive runs, the review is expected to exhaust the set of real outliers that would cause implementation to fail.
+The task is designed to be run repeatedly against the same ticket document — typically five to ten times. Each run is a fresh pair of eyes looking for what earlier passes missed. Over successive runs, the review is expected to exhaust the set of real outliers that would force a fresh session to rework or guess.
 
 Re-runs are a coverage strategy, not a drift problem. New issues on run seven are fine if they are real.
 
 ## The Core Tension
 
-A review that finds too few issues lets real problems slip through to implementation. A review that finds too many low-value issues creates noise, triggers unnecessary rework, and erodes trust in the review itself. Getting the balance right is the hardest part of this design.
+A review that finds too few issues lets real problems reach a fresh session that cannot do that profile's work. A review that finds too many low-value issues creates noise, triggers unnecessary rework, and erodes trust in the review itself. Getting the balance right is the hardest part of this design.
 
 Over a multi-run cycle the asymmetry matters: a missed real issue surfaces on the next run, but noise compounds across runs. The task therefore errs on the side of suppressing low-value findings.
 
@@ -22,11 +22,11 @@ Over a multi-run cycle the asymmetry matters: a missed real issue surfaces on th
 
 ### Trust the implementer
 
-Routine implementation judgement — naming, defensive code, local refactors, style — stays with the implementer. The review targets design flaws, missing requirements, incorrect assumptions, and owner decisions.
+Routine implementation judgement — naming, defensive code, local refactors, style — stays with the implementer when the work is implement, or a bug whose work is a fix. The review targets issues that would force a fresh session to rework or guess. Missing Requirements is not a gap on capture, bug, investigate, decide, or design. Empty Decision, Recommendation, Expected, Actual, or Repro is the work on those profiles, not a defect.
 
 ### Goal bar
 
-An issue is worth flagging only if leaving it unresolved would force significant rework, cause incorrect behaviour, or leave a critical requirement unmet. Everything below that bar is noise.
+An issue is worth flagging only if leaving it unresolved would force a fresh session to rework or guess. Everything below that bar is noise.
 
 ### Articulation test
 
@@ -34,7 +34,7 @@ If the reviewer cannot articulate what goes wrong when an item is left unresolve
 
 ### Regret filter
 
-Before finalising a finding, ask: would I regret not flagging this after implementation lands? If not, drop it.
+Before finalising a finding, ask: would I regret not flagging this after that profile's work lands? If not, drop it.
 
 ### Permission to find nothing
 
@@ -60,10 +60,14 @@ Size is a property of the whole document, not any one section, so it cannot be s
 
 ## Outcomes
 
-The review concludes with exactly one of three outcomes:
+The review concludes with exactly one wrap-up:
 
-- Ready to implement — no blocking issues remain
-- Issues to resolve — blocking issues listed for the owner to resolve
+- Ready to implement — implement, or bug when the work is a fix, and no blocking issues remain
+- Ready to diagnose — bug whose work is not yet a fix, and a fresh session can diagnose. Expected, Actual, or Repro may be empty
+- Ready to decide — decide, and a fresh session can make the choice. Decision may be empty
+- Ready to investigate — investigate, and a fresh session can research. Recommendation may be empty
+- Not ready to implement — capture, or a stub that was not expanded
+- Issues to resolve — blocking issues remain
 - Split the ticket — too broad for a single implementation pass
 
 ## Why This Design

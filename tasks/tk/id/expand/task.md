@@ -33,26 +33,27 @@ The working path is the last path printed by `tk get` or `tk mark`. After a reop
 start get contexts:ticket/writing
 ```
 
-The guide is the single source of truth for structure, sections, formatting, and principles.
+The guide is the single source of truth for structure, sections, formatting, principles, profiles, and the stub test.
 
-A ticket matches when a fresh-session implementer could execute it from the document alone, and the body uses the guide's section headings for the sections it includes.
+Run that guide's stub test against the working path. Classify:
 
-Treat it as a stub if any of these hold:
+- stub — the stub test fails. This is a Match failure
+- capture — the match is capture. Not a stub. Not a Match failure
+- other — any other matching profile. Say so and stop. Do not rewrite. Quality of the plan is `tasks:tk/id/review`, not this task
 
-- No writing-guide section headings under the H1
-- Primary content is a log, paste, or error dump
-- Missing Goal, missing Requirements, or missing Acceptance Criteria
-- Relies on conversation context ("as discussed", "you can see below")
+This task: on stub or capture, go to Write. Callers that Write only on Match failure write stubs only.
 
-A thin ticket that still has those sections matches. Quality of the plan is `tasks:tk/id/review`, not this task.
-
-If it matches: say so and stop. Do not rewrite.
+Missing Requirements is not a stub when the headings match capture, bug, investigate, decide, or design.
 
 ### Step 3: Write
 
-Investigate first. Read the stub. Read the relevant files, configuration, and behaviour. Keep useful content from the stub; fold it into the right sections later. Do not re-ask facts the stub already states.
+Investigate first. Read the ticket. Read the relevant files, configuration, and behaviour. Keep useful content from the body; fold it into the right sections later. Do not re-ask facts the ticket already states.
 
-If the stub plus the codebase is enough to write Goal, Scope, Requirements, and Acceptance Criteria without inventing an owner decision, write. Do not interview. Do not hold a design session.
+If the match is capture, promote to implement (or design, decide, or investigate when that is the work). Do not leave it as capture.
+
+If the match is stub, rewrite into the profile the work actually is (often capture or implement), not always implement.
+
+If the ticket plus the codebase is enough to fill that profile's required identifying headings without inventing an owner decision, write. Do not interview. Do not hold a design session.
 
 An owner decision is a choice a competent agent cannot settle from the repo: what the user meant, where the boundary is, which approach, what done looks like when several readings fit.
 
@@ -61,12 +62,12 @@ If owner decisions remain, hold a design session before writing:
 - Say what you think the ticket is, and what you cannot settle
 - For each unknown: the options, your recommendation, why
 - Right-size the conversation. One unknown is one question. Several related unknowns are one short exchange
-- Do not send a section questionnaire (Goal, Scope, Requirements, ...)
+- Do not send a section questionnaire
 - Do not write a separate design document. Resolutions belong in the ticket
 - Do not guess. Wait
 - If the work is more than one implementation pass, say so before writing
 
-Then rewrite under the H1 following the loaded guide. Right-size: omit any optional section that does not apply. Record References for sources consulted. Draft the Implementation Plan from the settled requirements and current state. Preserve the YAML frontmatter. Do not change status here.
+Then rewrite under the H1 following the loaded guide. Right-size: omit any optional section that does not apply. Keep identifying headings even when empty. Record References for sources consulted. Preserve the YAML frontmatter. Do not change status here.
 
 ### Step 4: Status
 

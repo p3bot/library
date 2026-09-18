@@ -1,8 +1,8 @@
-# Design Document Review
+# Design Review
 
-Interactive review of a design document — the design for a new system or substantial feature — before it is accepted and decomposed into ticket documents. Finds unsound architecture, better alternatives that were dismissed or never considered, unstated tradeoffs and assumptions, and unmanaged risks — the flaws that would make this an unsound or under-argued design — then walks through each one and integrates the resolution into the design content.
+Interactive review of a design-profile ticket — the design for a new system or substantial feature — before it is accepted and decomposed. Leftover unmanaged design documents remain valid input until they are moved into tk. Finds unsound architecture, better alternatives that were dismissed or never considered, unstated tradeoffs and assumptions, and unmanaged risks — the flaws that would make this an unsound or under-argued design — then walks through each one and integrates the resolution into the design content.
 
-Goal: catch the design-level flaws that would cost far more to unwind once implementation has begun. Routine implementation judgement — naming, defensive code, local refactors — belongs to the ticket documents this design produces, not here.
+Goal: catch the design-level flaws that would cost far more to unwind once implementation has begun. Routine implementation judgement — naming, defensive code, local refactors — belongs to the tickets this design produces, not here.
 
 Finding no new issues is a valid outcome. If the design is sound and prior reviews have surfaced the real concerns, say so rather than invent findings to justify the run.
 
@@ -10,8 +10,8 @@ Finding no new issues is a valid outcome. If the design is sound and prior revie
 
 ### Phase 1: Review
 
-1. Identify the design document from the user's instructions. If they named a path, use it. If they asked you to find it, look where they pointed. Otherwise ask.
-2. Read the design document thoroughly.
+1. Identify the design from the user's instructions. If they named a ticket id, `tk get <id>`. If they named a path, use it (a tk ticket path or a leftover unmanaged design document). If they asked you to find it, look where they pointed. Otherwise ask. When this task is fetched from `tasks:ticket/review`, skip this step and use the already resolved path.
+2. Read the design thoroughly.
 3. Run the Coherence Check (below). If it fires, still produce the report header and What this design does, then skip to Phase 4 and declare Split the design.
 4. Analyse the design:
    - Validate the stated current state against the actual codebase
@@ -39,17 +39,17 @@ Let `m` be the count of actionable findings. The top-level choice from Phase 1 s
 
 Continue (`C`) walks the findings one at a time. For each finding:
 
-1. Re-read the relevant context — the design document and any referenced code — and critically re-evaluate the finding. The original may have been wrong, or rendered obsolete by an earlier fix. If the finding no longer holds, say so and revise or withdraw it before presenting.
+1. Re-read the relevant context — the design and any referenced code — and critically re-evaluate the finding. The original may have been wrong, or rendered obsolete by an earlier fix. If the finding no longer holds, say so and revise or withdraw it before presenting.
 2. Before presenting, lock the Recommendation: does it fix the design-level flaw (approach, assumption, tradeoff, risk), or only a surface wording? Name the cheapest alternative and reject it only if it is worse on soundness or long-term cost, not effort. If the finding still needs the design or code in the reader's head, rewrite until it does not — or withdraw it.
 3. Present the finding using the Per-item Template (below) with `n` as the position in the walk and `m` as the total.
 4. Display the Per-item Prompt (see Commands) and pause for an explicit decision. Never assume blanket approval from an earlier response. Accepting one finding does not authorise the next. If a response is ambiguous, ask which finding it applies to.
 
 Per-item command semantics. Letters are case-insensitive. Outcomes are tracked in-session — they are not written to disk at the moment of decision. They surface in the Phase 4 summary table and in the Remediation Summary if the review is saved.
 
-- An option letter (`A`, `B`, `C` …) — apply that specific option to the design document, fully integrating it so the underlying issue is covered by the new content. Switch the Proposed Design, add the rejected option to Alternatives Considered, record the missing tradeoff or assumption — whatever the option calls for. Do not leave an Issues Discovered section; resolved items become polished design content. Track as `Fixed`. Briefly confirm what was done.
+- An option letter (`A`, `B`, `C` …) — apply that specific option to the design, fully integrating it so the underlying issue is covered by the new content. Switch the Proposed Design, add the rejected option to Alternatives Considered, record the missing tradeoff or assumption — whatever the option calls for. Do not leave an Issues Discovered section; resolved items become polished design content. Track as `Fixed`. Briefly confirm what was done.
 - `R` — apply exactly what the Recommendation states, which may be a single option, a combination, or a blend. Otherwise identical to applying an option. Track as `Fixed`.
 - `N` — acknowledge and move to the next finding. Track as `Skipped`.
-- `G` — spin the finding out as a standalone follow-up design (Desi(g)n; see Design File Format below). Track as `Design: <filename>`. Move to the next finding without offering an inline resolution
+- `G` — create a follow-up design-profile ticket (Desi(g)n; see Design (G) below). Track as `Design: <id>`. Move to the next finding without offering an inline resolution. Omit this command unless the Ticket (T) check succeeded
 - `T` — create a tk ticket for this finding (see Ticket (T) below). Track as `Ticket: <id>`. Move to the next finding without offering an inline resolution. Omit this command unless the Ticket (T) check succeeded
 - `S` — see Save (below).
 
@@ -66,11 +66,11 @@ Remediation guidance:
 - Bias recommendations toward the principled long-term design choice. Prefer changing the Proposed Design (and recording the loser in Alternatives Considered) over a local caveat that leaves the approach intact. Do not default to the smallest-diff edit
 - Apply minimal, targeted edits to integrate the resolution. Refactor surrounding text only when required to make the resolution land cleanly.
 - Integrating an alternative does not mean discarding the record. When the chosen approach changes, move the former approach into Alternatives Considered with the reason it lost — the comparison is part of the design.
-- If a resolution would be too large or would open its own decision, recommend `G` to spin it out as a design, or `T` when `tk` is available to spin it out as a tk ticket
+- If a resolution would be too large or would open its own decision, recommend `G` to spin it out as a design-profile ticket, or `T` to spin it out as a ticket of the profile that fits the finding, when `tk` is available
 
 ### Phase 3: Satisfaction Pass
 
-After all findings have been processed, re-read the design document with fresh eyes. Surface any new issues the edits themselves introduced — an approach switched in one section but assumed in another, a tradeoff now stated that a goal contradicts, a rejected alternative still referenced downstream.
+After all findings have been processed, re-read the design with fresh eyes. Surface any new issues the edits themselves introduced — an approach switched in one section but assumed in another, a tradeoff now stated that a goal contradicts, a rejected alternative still referenced downstream.
 
 - Handle new findings using the mode chosen at the top level — walk them under `C`, auto-apply them under `A` (deny an edit to discuss)
 - This pass is lightweight — catch regressions introduced by the fixes, not run a full second review
@@ -78,11 +78,13 @@ After all findings have been processed, re-read the design document with fresh e
 ### Phase 4: Wrap-up
 
 1. Declare the outcome:
-   - Sound — no blocking issues remain; the design is ready to decompose into ticket documents
+   - Sound — no blocking issues remain; the design is ready to decompose
    - Revise — blocking issues remain; list them by number and title
    - Split the design — the document covers more than one independent design; summarise the seam
 
    An issue blocks acceptance if it would make the design wrong, leave a load-bearing part of it unargued, or expose a risk with no mitigation or accepted rationale.
+
+   Do not mark `todo`. Sound means the owner accepts, then decompose. Leave the ticket in `draft` until decompose writes the follow-ups. That task marks it done.
 2. Print a summary table of all findings and their outcomes (see Remediation Summary in the Report Format). Do not prompt to save.
 
 ## Reviewer Guidance
@@ -110,7 +112,7 @@ After all findings have been processed, re-read the design document with fresh e
 
 ## Per-item Template
 
-Findings are read by someone who has not opened the design document, cannot look anything up, and has to decide something after one read.
+Findings are read by someone who has not opened the design, cannot look anything up, and has to decide something after one read.
 
 The bar: that reader can restate the problem in their own words after reading it once. A finding that fails this has failed, however accurate it is.
 
@@ -222,9 +224,9 @@ For decisions, the Options block lists the alternatives the owner is choosing be
 Structure the inline review report as follows. After the header, bullet what the design does before listing findings. Each bullet is one outcome or change the design would put in place — not a restatement of the Proposed Design and not a dump of the alternatives.
 
 ```
-## Design Document Review
+## Design Review
 
-Design: <path to design document>
+Design: <path>
 Intent: <one sentence on what the design sets out to do>
 Findings: <count by category, e.g. 1 approach, 2 tradeoff, 1 assumption>
 
@@ -250,9 +252,9 @@ A complete list of every finding — list all of them, do not truncate. The deta
 
 When the report is saved after remediation begins, append the section below. Outcome values:
 
-- `Fixed` — the resolution was applied to the design document
+- `Fixed` — the resolution was applied to the design
 - `Skipped` — the finding was acknowledged with `N` and left unresolved
-- `Design: <filename>` — spun out as a standalone follow-up design
+- `Design: <id>` — spun out as a design-profile ticket
 - `Ticket: <id>` — spun out as a tk ticket
 - `Pending` — `S` was invoked before the finding had been processed
 
@@ -263,15 +265,24 @@ When the report is saved after remediation begins, append the section below. Out
 |---|----------|---------|---------|
 | 1 | approach | Brief description | Fixed |
 | 2 | tradeoff | Brief description | Skipped |
-| 3 | decision | Brief description | Design: 02-cache-invalidation.md |
+| 3 | decision | Brief description | Design: lib-a3 |
 | 4 | risk | Brief description | Pending |
 ```
 
-## Design File Format
+## Design (G)
 
-When `G` is selected during remediation, write a standalone file for the follow-up design. Use the path they gave. If none, ask, offering a name beside the design under review (finding's short title lowercased and hyphenated, e.g. "Cache invalidation strategy" becomes `cache-invalidation-strategy.md`).
+`G` requires `tk`. Offer `G` only if the Ticket (T) check succeeded. Omit it from the per-item prompt otherwise. Do not write an unmanaged design file.
 
-The file must be self-contained so a fresh session can pick up the design with no extra context. Draw its structure from the design document itself: state the Problem, the Current State, and the Alternatives in play, and leave the Proposed Design open where deferring the approach is the point of spinning it out.
+When `G` is selected:
+
+1. Run `tk create` with `--tag design` and a title from the finding's short title. When the subject is a tk ticket, create in that ticket's scope (`--scope` is the scope name, not the ticket id). Otherwise omit `--scope` unless they named one
+2. Then `start get contexts:ticket/writing`. Never fetch the writing guide at review start
+3. The writing guide's File Placement section does not apply. The path is the one `tk create` printed
+4. Fill the design profile under that H1. Do not paste a second heading
+5. Track as `Design: <id>` so G stays distinct from T (`Ticket: <id>`)
+6. If `tk status mode` is `tk-driven`, `tk sync` after the body fill
+
+The ticket must be self-contained so a fresh session can pick up the design with no extra context. State the Problem, the Current State, and the Alternatives in play, and leave the Proposed Design open where deferring the approach is the point of spinning it out.
 
 ## Ticket (T)
 
@@ -281,17 +292,17 @@ Per-item `T` creates one tk ticket for that finding and continues the walk. Top-
 
 When `T` is selected:
 
-1. Run `tk create` with a title from the finding's short title (per-item) or a title covering the remaining set (top-level)
-2. Then `start get contexts:ticket/writing`. Never fetch the writing guide at review start
+1. Run `tk create` with a title from the finding's short title (per-item) or a title covering the remaining set (top-level). When the subject is a tk ticket, create in that ticket's scope (`--scope` is the scope name, not the ticket id). Otherwise omit `--scope` unless they named one
+2. Then `start get contexts:ticket/writing` if it is not already loaded. Never fetch the writing guide at start
 3. The writing guide's File Placement section does not apply. The path is the one `tk create` printed
 4. Fill under that H1. Do not paste a second heading
-5. The writing guide supplies principles, section purpose, and formatting only
+5. Fill the profile that fits the finding or gap. Do not mix two full spines
 6. Track as `Ticket: <id>`
 7. If `tk status mode` is `tk-driven`, `tk sync` after the body fill
 
-Per-item fill: the ticket is that finding. Carry the instance, Simple Explanation, Details, Options, and Recommendation already presented.
+Per-item fill: the ticket is that finding. Fold the instance, explanation, options, and recommended resolution into the chosen profile's sections. Do not paste finding-template headings (Decision, Options, Recommendation, Simple Explanation, Details) as ticket headings unless that profile owns them.
 
-Top-level fill: re-check each remaining finding with the same Recommendation lock as the walk. Skip any that no longer hold. Write each that still holds with its instance, Simple Explanation, Details, Options, and Recommendation so a fresh session can walk the set. Then stop.
+Top-level fill: re-check each remaining finding with the same Recommendation lock as the walk. Skip any that no longer hold. Fold each that still holds into the chosen profile the same way so a fresh session can walk the set. Then stop.
 
 ## Save
 
@@ -316,7 +327,7 @@ Display at the end of Phase 1. Include the Ticket line only if the Ticket (T) ch
 
 ### Per-item Prompt
 
-Display after presenting each finding. Include Ticket only if the Ticket (T) check succeeded.
+Display after presenting each finding. Include Ticket and Desi(g)n only if the Ticket (T) check succeeded.
 
 ```
 (R)ecommended  (N)ext  Desi(g)n  (T)icket  (S)ave

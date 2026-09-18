@@ -1,8 +1,8 @@
 # Ticket Document Review
 
-Interactive review of a ticket document before implementation begins. Finds design flaws, missing requirements, incorrect assumptions, and owner decisions that would force rework if discovered mid-implementation, then walks through each one and integrates the resolution into the ticket content.
+Interactive review of a ticket document against its matched profile. Finds issues that would force rework if discovered mid-work, then walks through each one and integrates the resolution into the ticket content.
 
-Goal: catch issues that would force rework if discovered mid-implementation. Routine implementation judgement — naming, defensive code, local refactors — stays with the implementer.
+Goal: catch issues that would force rework if a fresh session started the work. For implement, that is mid-implementation. For decide, whether the question and options are enough to choose. For investigate, whether the question and method are enough to research. Empty Decision or Recommendation is the work, not a defect. For a bug still in diagnosis, empty Expected, Actual, or Repro is the work, not a defect. For design, dispatch to `tasks:design/review`. Routine implementation judgement — naming, defensive code, local refactors — stays with the implementer.
 
 Finding no new issues is a valid outcome. If the ticket document is complete and prior reviews have surfaced the real concerns, say so rather than invent findings to justify the run.
 
@@ -12,16 +12,37 @@ Finding no new issues is a valid outcome. If the ticket document is complete and
 
 1. Identify the ticket document from the user's instructions. If they named a path, use it. If they asked you to find it, look where they pointed. Otherwise ask.
 
-   A library ticket document is a standalone markdown plan for one implementation pass.
-2. Read the ticket document thoroughly.
-3. Run the Size and Coherence Check (below). If it fires, still produce the report header and What this ticket does, then skip to Phase 4 and declare Split the ticket.
-4. Analyse the repository:
-   - Validate the stated current state against the actual codebase
-   - Check whether the proposed approach covers all stated requirements
+   A library ticket document is a standalone markdown document a fresh-session agent can act on.
+2. Load the writing guide and match the profile:
+
+   ```bash
+   start get contexts:ticket/writing
+   ```
+
+   Run that guide's stub test. Expand only stubs. If it is a stub and this review is not already inside `tasks:tk/id/review` (that envelope already ran expand):
+
+   ```bash
+   start get tasks:tk/id/expand
+   ```
+
+   Run Match and Write against the path. Skip Resolve, Sync, and Status. After Write, stop and tell the user to run this task again. Do not rewrite from the writing guide alone.
+3. If the matched profile is design:
+
+   ```bash
+   start get tasks:design/review
+   ```
+
+   Run that walk on the already resolved path. Skip Identification in the fetched task. Do not copy design-review concerns into this task. Stop this task's remaining phases after that walk. Do not mark `todo`. Sound means the owner accepts, then decompose. Resume the caller if any (`tasks:tk/id/review` Step 4 still runs).
+4. If the matched profile is capture, skip to Phase 4 and declare not ready to implement rather than inventing a findings walk, unless the owner asked to review the capture as a plan.
+5. Read the ticket document thoroughly.
+6. Run the Size and Coherence Check (below) on implement tickets, and on bug tickets when the work is a fix. If it fires, still produce the report header and What this ticket does, then skip to Phase 4 and declare Split the ticket.
+7. Analyse the repository:
+   - Validate the stated current state against the actual codebase when Current State exists
+   - Check whether a fresh-session agent can do that profile's work from the document. Do not treat an unfilled Decision or Recommendation as a gap. Do not treat empty Expected, Actual, or Repro as a gap when the bug is still diagnosis. Do not treat missing Requirements as a gap on capture, bug, investigate, decide, or design
    - Research external facts only when the ticket's approach turns on them — a specific dependency version, an API behaviour, or a platform capability. Generic dependency scans produce noise over repeated runs
-5. Identify concerns that meet the Goal bar — issues that would force rework, cause incorrect behaviour, or leave a critical requirement unmet. Apply the Articulation Test and Regret Filter (see Reviewer Guidance) before listing each one.
-6. Produce a structured report using the Report Format (below) and present it inline. Do not write a report file unless Save applies.
-7. If there are no actionable findings, skip to Phase 4 and declare Ready to implement. Otherwise display the Top-level Prompt (see Commands).
+8. Identify concerns that meet the Goal bar — issues that would force a fresh session to rework or guess. Apply the Articulation Test and Regret Filter (see Reviewer Guidance) before listing each one.
+9. Produce a structured report using the Report Format (below) and present it inline. Do not write a report file unless Save applies.
+10. If there are no actionable findings, skip to Phase 4 and declare the wrap-up for this profile. Otherwise display the Top-level Prompt (see Commands).
 
 ### Size and Coherence Check
 
@@ -85,19 +106,23 @@ After all findings have been processed, re-read the ticket document with fresh e
 ### Phase 4: Wrap-up
 
 1. Declare the outcome:
-   - Ready to implement — no blocking issues remain
+   - Ready to implement — implement, or bug when the work is a fix, and no blocking issues remain
+   - Ready to diagnose — bug whose work is not yet a fix, and a fresh session can diagnose. Expected, Actual, or Repro may be empty
+   - Ready to decide — decide, and a fresh session can make the choice. Decision may be empty
+   - Ready to investigate — investigate, and a fresh session can research. Recommendation may be empty
+   - Not ready to implement — capture, or a stub that was not expanded
    - Issues to resolve — blocking issues remain; list them by number and title
    - Split the ticket — the document is too broad for a single implementation pass; summarise the seam
 
-   An issue blocks implementation if proceeding without resolving it would force significant rework, cause incorrect behaviour, or leave a critical requirement unmet.
+   An issue blocks work if proceeding without resolving it would force a fresh session to rework or guess. Never auto-promote to `todo`.
 2. Print a summary table of all findings and their outcomes (see Remediation Summary in the Report Format). Do not prompt to save.
 
 ## Reviewer Guidance
 
 - Trust the implementer — routine judgement on naming, defensive code, local refactors, and style stays with them
-- Goal bar — flag a finding only if leaving it unresolved would force significant rework, cause incorrect behaviour, or leave a critical requirement unmet
+- Goal bar — flag a finding only if leaving it unresolved would force a fresh session to rework or guess
 - Articulation Test — if you cannot articulate what goes wrong when an item is left unresolved, it does not belong in the list
-- Regret Filter — before finalising a finding, ask: would I regret not flagging this after implementation lands? If not, drop it
+- Regret Filter — before finalising a finding, ask: would I regret not flagging this after that profile's work lands? If not, drop it
 - Permission to find nothing — a late-run review that produces no findings is evidence the document is complete. Inventing findings to justify the run destroys the signal
 - Recommendations target the principled long-term solution. Do not default to the minimal-diff resolution
 
@@ -107,7 +132,7 @@ After all findings have been processed, re-read the ticket document with fresh e
 |----------|----------|
 | decision | The owner needs to choose between valid alternatives |
 | design | A flaw, weakness, or missing element in the design or architecture |
-| gap | A requirement, step, or detail that is missing from the ticket document |
+| gap | Something that profile needs is missing from the document. Not missing Requirements on capture, bug, investigate, decide, or design |
 | risk | A potential problem that may not occur but should be acknowledged |
 | dependency | An external dependency with version, compatibility, or availability concerns |
 
@@ -283,17 +308,17 @@ Per-item `T` creates one tk ticket for that finding and continues the walk. Top-
 
 When `T` is selected:
 
-1. Run `tk create` with a title from the finding's short title (per-item) or a title covering the remaining set (top-level)
-2. Then `start get contexts:ticket/writing`. Never fetch the writing guide at review start
+1. Run `tk create` with a title from the finding's short title (per-item) or a title covering the remaining set (top-level). When the subject is a tk ticket, create in that ticket's scope (`--scope` is the scope name, not the ticket id). Otherwise omit `--scope` unless they named one
+2. Then `start get contexts:ticket/writing` if it is not already loaded. Never fetch the writing guide at start
 3. The writing guide's File Placement section does not apply. The path is the one `tk create` printed
 4. Fill under that H1. Do not paste a second heading
-5. The writing guide supplies principles, section purpose, and formatting only
+5. Fill the profile that fits the finding or gap. Do not mix two full spines
 6. Track as `Ticket: <id>`
 7. If `tk status mode` is `tk-driven`, `tk sync` after the body fill
 
-Per-item fill: the ticket is that finding. Carry the instance, Simple Explanation, Details, Options, and Recommendation already presented.
+Per-item fill: the ticket is that finding. Fold the instance, explanation, options, and recommended resolution into the chosen profile's sections. Do not paste finding-template headings (Decision, Options, Recommendation, Simple Explanation, Details) as ticket headings unless that profile owns them.
 
-Top-level fill: re-check each remaining finding with the same Recommendation lock as the walk. Skip any that no longer hold. Write each that still holds with its instance, Simple Explanation, Details, Options, and Recommendation so a fresh session can walk the set. Then stop.
+Top-level fill: re-check each remaining finding with the same Recommendation lock as the walk. Skip any that no longer hold. Fold each that still holds into the chosen profile the same way so a fresh session can walk the set. Then stop.
 
 ## Save
 

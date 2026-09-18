@@ -3,7 +3,7 @@ package create
 import "github.com/p3bot/library/schemas@v1"
 
 task: schemas.#Task & {
-	description: "Create a new ticket document"
+	description: "Create a new ticket document by profile"
 	tags: ["ticket", "create", "planning", "active", "current"]
 	uses: ["contexts:ticket/writing"]
 	file: "@module/task.md"

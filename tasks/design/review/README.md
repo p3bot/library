@@ -4,11 +4,11 @@ This directory holds the design review task. This README documents the reasoning
 
 ## Purpose
 
-The task reviews a design document — the design for a new system or substantial feature — before it is accepted and decomposed into ticket documents. The goal is a design whose architecture is sound, whose alternatives were genuinely weighed, and whose tradeoffs, assumptions, and risks are on the page rather than in someone's head.
+The task reviews a design-profile ticket — the design for a new system or substantial feature — before it is accepted and decomposed. Leftover unmanaged design documents remain valid input until they are moved into tk. The goal is a design whose architecture is sound, whose alternatives were genuinely weighed, and whose tradeoffs, assumptions, and risks are on the page rather than in someone's head.
 
 ## Position in the Workflow
 
-A design document specifies a new system or feature before it is built; a ticket document schedules the work that builds part of it. Design review sits at the seam between them. It is the last cheap moment to change the design — once it is decomposed into tickets and implementation begins, reversing it means unwinding work, not editing prose.
+A design-profile ticket specifies a new system or feature before it is built; implement tickets schedule the work that builds part of it. Design review sits at the seam between them. It is the last cheap moment to change the design — once it is decomposed and implementation begins, reversing it means unwinding work, not editing prose.
 
 That position sets the bar. The task does not look for implementation defects; those belong to the ticket documents and to `ticket/review`. It looks for design defects: an unsound architecture, a better alternative left unexplored, a cost never admitted, an assumption that does not hold.
 

@@ -3,7 +3,8 @@ package writing
 import "github.com/p3bot/library/schemas@v1"
 
 context: schemas.#Context & {
-	description: "Guide for writing design documents for a new system or substantial feature before decomposition into ticket documents"
-	tags: ["design", "writing", "feature", "architecture", "documentation", "guide", "agents"]
+	description: "Session guide for designing a system or feature, then handing off to a design-profile ticket"
+	tags: ["design", "writing", "feature", "architecture", "documentation", "guide", "agents", "session"]
+	uses: ["contexts:ticket/writing"]
 	file: "@module/context.md"
 }

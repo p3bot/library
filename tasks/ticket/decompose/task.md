@@ -1,10 +1,10 @@
 # Decompose a Design into Tickets
 
-Analyse a polished design and the surrounding codebase, find the natural seams, and propose a right-sized set of ticket documents for implementation.
+Analyse a polished design and the surrounding codebase, find the natural seams, and propose a right-sized set of tickets.
 
-This task sits after design review and before ticket writing. The design is ready to implement. The question is how to carve that design into ticket documents an implementer agent can execute one at a time.
+This task sits after design review and before ticket writing. The design is ready to decompose. The question is how to carve that design into tickets a fresh-session agent can act on one at a time.
 
-IMPORTANT: Run `start get contexts:ticket/writing` before proposing or writing any ticket document. That guide defines what a ticket is, what sections it carries, and how it must stand alone for a fresh-session agent.
+IMPORTANT: Run `start get contexts:ticket/writing` before proposing or writing any ticket document. That guide defines profiles, sections, and how a ticket must stand alone. Output is implement tickets, and investigate or decide when those are the honest units. Do not require every output ticket to have all nine implement sections.
 
 ## Goal
 
@@ -22,14 +22,15 @@ A single ticket is a valid outcome. Small features often should not be split.
 
 ## What a Ticket Is
 
-A ticket document is the sole context for a different agent in a fresh session. The implementer has no conversation history. Everything needed to understand and execute the work must live in the document itself.
+A ticket document is the sole context for a different agent in a fresh session. Everything needed to do that profile's work must live in the document itself.
 
 From that definition:
 
-- A ticket is a unit of implementation with a clear outcome, not a chapter heading from the design
+- A ticket is a unit of work with a clear outcome, not a chapter heading from the design
+- Most output tickets are implement. Investigate or decide when the design still has unknowns that are tickets of their own
 - A ticket must be completable and verifiable on its own once its declared dependencies are done
-- Implementation Plan steps inside a ticket are not tickets. Sequential steps of one coherent change belong together
-- The document defines what and why. The implementer owns how
+- Implementation Plan steps inside an implement ticket are not tickets. Sequential steps of one coherent change belong together
+- For implement, the document defines what and why. The implementer owns how
 
 ## Sizing Principles
 
@@ -93,7 +94,7 @@ If the design is a focused feature, a localised change, or a tightly coupled set
 
 ### Phase 1: Orient
 
-1. Identify the design document(s) from the user's instructions. If they named a path, use it. If they asked you to find it, look where they pointed. Otherwise ask. One design may span multiple files — read all they named.
+1. Identify the design from the user's instructions. If they named a ticket id, `tk get <id>`. If they named a path, use it (a tk ticket path or a leftover unmanaged design document). If they asked you to find it, look where they pointed. Otherwise ask. One design may span multiple files — read all they named. Input is a design-profile ticket, or a leftover unmanaged design document until it is moved into tk.
 
 2. Confirm the design is ready for decomposition. If it still has unresolved architectural decisions, open alternatives, or contradictions, stop and say so. Point the owner at design review rather than inventing ticket boundaries around unfinished design.
 
@@ -152,14 +153,16 @@ Approval may adjust boundaries, merge or split candidates, change order, or rena
 
 Once the owner accepts the breakdown:
 
-1. Follow `start get contexts:ticket/writing` for structure, principles, and placement.
-2. Write one ticket document per accepted ticket.
-3. Each document must stand alone. Reference the design document and relevant design records in References. Do not assume the implementer has read sibling tickets — state only what that ticket needs, including which dependency tickets must already be done.
-4. Encode dependencies in the Implementation Plan order across the set (and in any frontmatter or index the repo uses).
-5. Right-size sections per ticket. A small ticket omits empty sections.
-6. Report what was written: paths, titles, dependency order, and any open questions still owned by the human.
+1. Follow `start get contexts:ticket/writing` for profiles, structure, and principles.
+2. Write one ticket document per accepted ticket, using the profile that fits that unit.
+3. If the design is a tk ticket, `tk create` each accepted follow-up in that ticket's scope (`--scope` is the scope name, not the ticket id) and fill under the H1. Unmanaged File Placement does not apply. If leftover unmanaged, use the same tk-versus-unmanaged rule as `tasks:ticket/create`.
+4. Each document must stand alone. Reference the design and relevant design records in References. Do not assume the next agent has read sibling tickets — state only what that ticket needs, including which dependency tickets must already be done.
+5. Encode dependencies across the set (Implementation Plan order on implement tickets, and in any frontmatter or index the repo uses).
+6. Right-size sections per ticket. A small ticket omits empty sections. Do not force nine implement sections onto investigate or decide units.
+7. If the design is a tk ticket, `tk mark done` on it
+8. Report what was written: paths or ids, titles, profiles, dependency order, and any open questions still owned by the human
 
-If the owner wants only the plan and will write tickets later, stop after Phase 4.
+If the owner wants only the plan and will write tickets later, stop after Phase 4. Do not mark the design done.
 
 ## Proposal Format
 
@@ -259,4 +262,5 @@ Done means:
 - Ticket breakdown proposed with explicit merge/split rationale
 - Dependencies and order stated
 - Owner approved the breakdown
-- If requested: ticket documents written per the ticket writing guide, each standalone and right-sized
+- If requested: ticket documents written per the ticket writing guide, each standalone, right-sized, and on the profile that fits
+- If the design is a tk ticket and follow-ups were written: that design marked `done`

@@ -355,21 +355,21 @@ contexts: {
 	}
 	"ticket/writing": {
 		module:      "github.com/p3bot/library/contexts/ticket/writing@v1"
-		version:     "v1.1.0"
-		description: "Guide for writing ticket documents that serve as the sole context for an implementer agent"
-		tags: ["ticket", "writing", "documentation", "guide", "agents"]
+		version:     "v1.2.0"
+		description: "Guide for writing ticket documents by profile as the sole context for a fresh-session agent"
+		tags: ["ticket", "writing", "documentation", "guide", "agents", "profile"]
 	}
 	"ticket/implementation": {
 		module:      "github.com/p3bot/library/contexts/ticket/implementation@v1"
-		version:     "v1.0.0"
-		description: "Guide for implementing ticket documents received as the sole context for the work"
+		version:     "v1.1.0"
+		description: "Guide for working a ticket document by profile as the sole context for the work"
 		tags: ["ticket", "implementation", "implement", "implementing", "execution", "delivery", "documentation", "guide", "agents"]
 	}
 	"design/writing": {
 		module:      "github.com/p3bot/library/contexts/design/writing@v1"
-		version:     "v1.1.0"
-		description: "Guide for writing design documents for a new system or substantial feature before decomposition into ticket documents"
-		tags: ["design", "writing", "feature", "architecture", "documentation", "guide", "agents"]
+		version:     "v1.2.0"
+		description: "Session guide for designing a system or feature, then handing off to a design-profile ticket"
+		tags: ["design", "writing", "feature", "architecture", "documentation", "guide", "agents", "session"]
 	}
 	"skill/writing": {
 		module:      "github.com/p3bot/library/contexts/skill/writing@v1"
@@ -499,13 +499,13 @@ tasks: {
 	}
 	"review/pre-commit": {
 		module:      "github.com/p3bot/library/tasks/review/pre-commit@v2"
-		version:     "v2.2.0"
+		version:     "v2.3.0"
 		description: "Interactive pre-commit review that finds issues in git changes and walks through fixing them"
 		tags: ["review", "pre-commit", "fix", "code-changes", "code-quality"]
 	}
 	"review/multi-agent/orchestrator": {
 		module:      "github.com/p3bot/library/tasks/review/multi-agent/orchestrator@v2"
-		version:     "v2.2.0"
+		version:     "v2.3.0"
 		description: "Orchestrate parallel review agents, consolidate findings, and walk through fixing them"
 		tags: ["review", "orchestration", "multi-agent", "parallel", "fix"]
 	}
@@ -565,32 +565,32 @@ tasks: {
 	}
 	"ticket/create": {
 		module:      "github.com/p3bot/library/tasks/ticket/create@v1"
-		version:     "v1.1.0"
-		description: "Create a new ticket document"
+		version:     "v1.2.0"
+		description: "Create a new ticket document by profile"
 		tags: ["ticket", "create", "planning", "active", "current"]
 	}
 	"ticket/review": {
 		module:      "github.com/p3bot/library/tasks/ticket/review@v1"
-		version:     "v1.1.0"
-		description: "Review and prepare the current ticket for implementation"
+		version:     "v1.2.0"
+		description: "Review a ticket document against its matched profile"
 		tags: ["ticket", "review", "preparation", "analysis", "active", "current"]
 	}
 	"ticket/begin": {
 		module:      "github.com/p3bot/library/tasks/ticket/begin@v1"
-		version:     "v1.1.0"
-		description: "Begin working on the current ticket with full context"
+		version:     "v1.2.0"
+		description: "Begin working the matched profile of the current ticket"
 		tags: ["ticket", "begin", "implementation", "active", "current"]
 	}
 	"ticket/decompose": {
 		module:      "github.com/p3bot/library/tasks/ticket/decompose@v1"
-		version:     "v1.1.0"
-		description: "Decompose an accepted design into a right-sized set of ticket documents"
+		version:     "v1.2.0"
+		description: "Decompose an accepted design into a right-sized set of tickets by profile"
 		tags: ["ticket", "decompose", "design", "planning", "breakdown", "seams", "active", "current"]
 	}
 	"design/review": {
 		module:      "github.com/p3bot/library/tasks/design/review@v1"
-		version:     "v1.5.0"
-		description: "Review and harden a design document before decomposition into ticket documents"
+		version:     "v1.6.0"
+		description: "Review a design-profile ticket before decompose"
 		tags: ["design", "review", "feature", "analysis", "architecture", "critique"]
 	}
 	"confluence/doc/read": {
@@ -643,7 +643,7 @@ tasks: {
 	}
 	"chore/comment/prune": {
 		module:      "github.com/p3bot/library/tasks/chore/comment/prune@v2"
-		version:     "v2.1.0"
+		version:     "v2.2.0"
 		description: "Prune comment bloat from source files, compressing real WHY and harvesting markers"
 		tags: ["chore", "comment", "prune", "code-quality", "cleanup"]
 	}
@@ -655,31 +655,31 @@ tasks: {
 	}
 	"tk/id/build": {
 		module:      "github.com/p3bot/library/tasks/tk/id/build@v1"
-		version:     "v1.1.0"
+		version:     "v1.2.0"
 		description: "Using tk, build this ticket"
 		tags: ["tk", "id", "build", "implementation", "ticket"]
 	}
 	"tk/id/continue": {
 		module:      "github.com/p3bot/library/tasks/tk/id/continue@v1"
-		version:     "v1.3.0"
+		version:     "v1.4.0"
 		description: "Using tk, continue this ticket"
 		tags: ["tk", "id", "continue", "implementation", "ticket"]
 	}
 	"tk/id/discuss": {
 		module:      "github.com/p3bot/library/tasks/tk/id/discuss@v1"
-		version:     "v1.1.0"
+		version:     "v1.2.0"
 		description: "Using tk, discuss this ticket"
 		tags: ["tk", "id", "discuss", "ticket"]
 	}
 	"tk/id/expand": {
 		module:      "github.com/p3bot/library/tasks/tk/id/expand@v1"
-		version:     "v1.2.0"
-		description: "Using tk, expand this ticket to the writing guide"
+		version:     "v1.3.0"
+		description: "Using tk, expand this ticket to a matching writing-guide profile"
 		tags: ["tk", "id", "expand", "ticket", "writing", "stub"]
 	}
 	"tk/id/review": {
 		module:      "github.com/p3bot/library/tasks/tk/id/review@v1"
-		version:     "v1.4.0"
+		version:     "v1.5.0"
 		description: "Using tk, review this ticket document"
 		tags: ["tk", "id", "review", "ticket", "document"]
 	}
@@ -691,13 +691,13 @@ tasks: {
 	}
 	"tk/board/groom": {
 		module:      "github.com/p3bot/library/tasks/tk/board/groom@v1"
-		version:     "v1.3.0"
+		version:     "v1.4.0"
 		description: "Using tk, groom the board"
 		tags: ["tk", "board", "groom", "status", "hygiene"]
 	}
 	"tk/scope/orchestrate": {
 		module:      "github.com/p3bot/library/tasks/tk/scope/orchestrate@v1"
-		version:     "v1.1.0"
+		version:     "v1.2.0"
 		description: "Using tk, orchestrate work across scopes"
 		tags: ["tk", "scope", "orchestrate", "ticket"]
 	}
@@ -709,7 +709,7 @@ skills: [string]: schemas.#IndexEntry
 skills: {
 	"finding/one-by-one": {
 		module:      "github.com/p3bot/library/skills/finding/one-by-one@v1"
-		version:     "v1.2.0"
+		version:     "v1.3.0"
 		description: "Walk a list of findings one at a time and resolve each with a principled fix"
 		tags: ["finding", "one-by-one", "workflow", "remediation", "review"]
 	}

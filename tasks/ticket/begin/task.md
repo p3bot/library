@@ -1,6 +1,6 @@
 # Begin Ticket
 
-Load the current or active ticket document and implement it.
+Load the current or active ticket document and work its matched profile.
 
 ## Process
 
@@ -8,9 +8,9 @@ Load the current or active ticket document and implement it.
 
 Identify the ticket document from the user's instructions. If they named a path, use it. If they asked you to find it, look where they pointed. Otherwise ask.
 
-A library ticket document is a standalone markdown plan for one implementation pass.
+A library ticket document is a standalone markdown document a fresh-session agent can act on. Match its profile from headings.
 
-### Step 2: Implement
+### Step 2: Work
 
 Run the following command to load the implementation guide and follow it:
 
@@ -18,4 +18,4 @@ Run the following command to load the implementation guide and follow it:
 start get contexts:ticket/implementation
 ```
 
-The guide defines the full implementation workflow — Orient, Implement, Verify, Report — and how to surface gaps discovered mid-implementation. Orient against the located ticket document, then work its Implementation Plan through that workflow, asking the user for input only when genuinely blocked.
+The guide defines the shared workflow — Orient, Work, Verify, Report, Progress, gaps — and works the matched profile the same way `tasks:tk/id/build` would, unmanaged or tk. Do not invent an Implementation Plan for a profile that has none. For design, that guide loads the design session; do not treat the ticket as complete — the owner accepts, then decompose. Ask the user for input only when genuinely blocked.

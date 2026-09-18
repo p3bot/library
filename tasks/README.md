@@ -30,7 +30,7 @@ tasks/<domain>/<name>/
 
 ### design/
 
-- [design/review](design/review/) - Review a design document
+- [design/review](design/review/) - Review a design-profile ticket before decompose
 
 ### git/
 
@@ -62,10 +62,10 @@ tasks/<domain>/<name>/
 
 ### ticket/
 
-- [ticket/begin](ticket/begin/) - Begin working on the current ticket document
-- [ticket/create](ticket/create/) - Create a ticket document
-- [ticket/decompose](ticket/decompose/) - Decompose an accepted design into ticket documents
-- [ticket/review](ticket/review/) - Review a ticket document
+- [ticket/begin](ticket/begin/) - Begin working the matched profile of the current ticket
+- [ticket/create](ticket/create/) - Create a ticket document by profile
+- [ticket/decompose](ticket/decompose/) - Decompose an accepted design into tickets by profile
+- [ticket/review](ticket/review/) - Review a ticket document against its matched profile
 
 ### tk/
 
@@ -73,7 +73,7 @@ tasks/<domain>/<name>/
 - [tk/id/build](tk/id/build/) - Using tk, build this ticket
 - [tk/id/continue](tk/id/continue/) - Using tk, continue this ticket
 - [tk/id/discuss](tk/id/discuss/) - Using tk, discuss this ticket
-- [tk/id/expand](tk/id/expand/) - Using tk, expand this ticket to the writing guide
+- [tk/id/expand](tk/id/expand/) - Using tk, expand this ticket to a matching writing-guide profile
 - [tk/id/review](tk/id/review/) - Using tk, review this ticket document
 - [tk/board/reorder](tk/board/reorder/) - Using tk, fix the sequence of the board
 - [tk/board/groom](tk/board/groom/) - Using tk, groom the board

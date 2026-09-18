@@ -341,17 +341,17 @@ Per-item `T` creates one tk ticket for that finding and continues the walk. Top-
 
 When `T` is selected:
 
-1. Run `tk create` with a title from the finding's short title (per-item) or a title covering the remaining set (top-level)
-2. Then `start get contexts:ticket/writing`. Never fetch the writing guide at review start
+1. Run `tk create` with a title from the finding's short title (per-item) or a title covering the remaining set (top-level). When the subject is a tk ticket, create in that ticket's scope (`--scope` is the scope name, not the ticket id). Otherwise omit `--scope` unless they named one
+2. Then `start get contexts:ticket/writing` if it is not already loaded. Never fetch the writing guide at start
 3. The writing guide's File Placement section does not apply. The path is the one `tk create` printed
 4. Fill under that H1. Do not paste a second heading
-5. The writing guide supplies principles, section purpose, and formatting only
+5. Fill the profile that fits the finding or gap. Do not mix two full spines
 6. Track as `Ticket: <id>`
 7. If `tk status mode` is `tk-driven`, `tk sync` after the body fill
 
-Per-item fill: the ticket is that finding. Carry the instance, Simple Explanation, Details, Options, and Recommendation already presented.
+Per-item fill: the ticket is that finding. Fold the instance, explanation, options, and recommended resolution into the chosen profile's sections. Do not paste finding-template headings (Decision, Options, Recommendation, Simple Explanation, Details) as ticket headings unless that profile owns them.
 
-Top-level fill: re-check each remaining finding with the same Recommendation lock as the walk. Skip any that no longer hold. Write each that still holds with its instance, Simple Explanation, Details, Options, and Recommendation so a fresh session can walk the set. Then stop.
+Top-level fill: re-check each remaining finding with the same Recommendation lock as the walk. Skip any that no longer hold. Fold each that still holds into the chosen profile the same way so a fresh session can walk the set. Then stop.
 
 ## Save File Format
 

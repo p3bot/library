@@ -21,11 +21,16 @@ A ticket is terminal when its status is `done` or `cancelled`.
 
 ## Process
 
-Look for:
+Look for leftover doctor residue except tokens whose names start with `depends_` and `order_long`. Look for status hygiene on the inventory: stale `in-progress`, `blocked` with no path, empty `todo`, parked `review`, `backlog` that should come up.
 
-- Leftover doctor residue except tokens whose names start with `depends_` and `order_long`
-- Status hygiene: stale `in-progress`, `blocked` with no path, empty `todo`, parked `review`, `backlog` that should come up
-- Stub in `todo`: read each `todo` body. No writing-guide section headings under the H1, or the body is primarily a log or paste. Propose `tk mark draft <id>`. Do not expand
+```bash
+start get contexts:ticket/writing
+```
+
+Run that guide's matcher and stub test on each `todo` body:
+
+- Capture in `todo`: the match is capture. Premature for `tk next`. Propose `tk mark draft <id>` or `tk mark backlog <id>`. Do not call a matching capture a stub. Do not expand
+- Stub in `todo`: the stub test fails. Propose `tk mark draft <id>`. Do not expand
 
 Do not unclaim `in-progress` just because this machine did not claim it. Ask if the owner is unclear.
 

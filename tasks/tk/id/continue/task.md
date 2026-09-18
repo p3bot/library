@@ -18,14 +18,22 @@ The ticket id is the instruction. If none was supplied, ask for it. Do not guess
 
 Run `tk get <id>`, then `tk mark in-progress <id>` whatever status it had. This unarchives `done` and `cancelled`. The last path `tk mark` printed is the working path; it replaces the earlier `tk get` path.
 
-### Step 2: Implement
+### Step 2: Work
 
 ```bash
 start get contexts:ticket/implementation
 ```
 
-Follow that guide against the working path. Orient, implement, verify, report.
+Follow that guide against the working path. Orient, work the matched profile, verify, report. Same profile rules as `tasks:tk/id/build`. Do not invent an Implementation Plan for a profile that has none.
 
 ### Step 3: Close
 
-On success, `tk mark done <id>`.
+Same Close table as `tasks:tk/id/build`. Mark from the outcome of this run. Do not leave a finished or stopped profile in `in-progress`.
+
+- implement, decide, investigate, or a bug whose work was a fix — success: `tk mark done <id>`
+- bug blocked outside this session: record Blocked on / Already done and `tk mark blocked <id>`
+- capture stop or stub: `tk mark draft <id>`
+- design filled and waiting for accept: `tk mark draft <id>`. Do not mark `todo`. Owner accepts, then decompose
+- still mid-work (Progress remains): leave `in-progress`
+
+If capture rewrote in place to another profile, close as that profile.
