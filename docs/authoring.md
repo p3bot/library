@@ -78,7 +78,7 @@ Command template placeholders:
 
 `{{.role}}` and `{{.role_file}}` are empty when start has no role (`--role none`). Optional role flags use `{{if .role}}` / `{{if .role_file}}` with the leading space inside the if: `{{.bin}}{{if .role_file}} --system-prompt-file {{.role_file}}{{end}}`. Do not wrap `{{.prompt}}`. Gemini's env assignment sits before `{{.bin}}`; keep the trailing space that separates it from the binary inside the if: `{{if .role_file}}GEMINI_SYSTEM_MD={{.role_file}} {{end}}{{.bin}}`.
 
-Role injection varies by tool. Common patterns: a command-line flag (`{{if .role_file}} --append-system-prompt-file {{.role_file}}{{end}}`), an environment variable (`{{if .role_file}}GEMINI_SYSTEM_MD={{.role_file}} {{end}}`), or an inline argument (`{{if .role}} --system {{.role}}{{end}}`). Check the target tool's documentation for the correct approach.
+Role injection varies by tool. Published recipes: claude-code `{{.bin}}{{if .role_file}} --system-prompt-file {{.role_file}}{{end}}`, grok `{{if .role}} --system-prompt-override {{.role}}{{end}}`, aichat `{{if .role}} --prompt {{.role}}{{end}}` with `{{.prompt}}` outside the if, gemini `{{if .role_file}}GEMINI_SYSTEM_MD={{.role_file}} {{end}}{{.bin}}`. For a new family, check the target tool's documentation and wrap only the role flag it already uses.
 
 Joined recipe (default). Catalog id, no `bin`, optional CLI-alias `models`:
 
