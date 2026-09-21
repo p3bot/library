@@ -15,6 +15,7 @@ package schemas
 	// Command template (required, must not be empty)
 	// Placeholders: {{.bin}}, {{.model}}, {{.prompt}}, {{.role}}, {{.role_file}}
 	// {{.model}} may be empty; optional --model flags use {{if .model}} (space inside the if)
+	// {{.role}} / {{.role_file}} may be empty (--role none); optional role flags use {{if .role}} / {{if .role_file}}
 	command: string & !=""
 
 	// Binary name for auto-detection and {{.bin}} placeholder

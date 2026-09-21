@@ -192,8 +192,8 @@ A library agent is a launch recipe (invocation). agentdex catalogs the outside o
 - `{{.bin}}` - Binary name substituted at launch. Unjoined recipes take it from `bin`. Joined recipes still use the placeholder; start fills it from agentdex. The schema does not define precedence when both fields are set
 - `{{.model}}` - Resolved model identifier; may be empty. Optional `--model` flags use `{{if .model}}` with the leading space inside the if (`{{.bin}}{{if .model}} --model {{.model}}{{end}}`). Do not wrap positional required `{{.model}}` operands
 - `{{.prompt}}` - Composed prompt (from UTD resolution)
-- `{{.role}}` - Role content (inline)
-- `{{.role_file}}` - Role file path
+- `{{.role}}` - Role content (inline); may be empty (`--role none`). Optional role flags use `{{if .role}}` with the leading space inside the if
+- `{{.role_file}}` - Role file path; may be empty. Optional role-file flags use `{{if .role_file}}`. Gemini's env prefix sits before `{{.bin}}` (`{{if .role_file}}GEMINI_SYSTEM_MD={{.role_file}} {{end}}{{.bin}}`)
 
 **Constraints:**
 
