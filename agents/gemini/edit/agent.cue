@@ -4,7 +4,7 @@ import "github.com/p3bot/library/schemas@v1"
 
 agent: schemas.#Agent & {
 	bin:         "gemini"
-	command:     "GEMINI_SYSTEM_MD={{.role_file}} {{.bin}}{{if .model}} --model {{.model}}{{end}} --approval-mode auto_edit --prompt-interactive {{.prompt}}"
+	command:     "{{if .role_file}}GEMINI_SYSTEM_MD={{.role_file}} {{end}}{{.bin}}{{if .model}} --model {{.model}}{{end}} --approval-mode auto_edit --prompt-interactive {{.prompt}}"
 	description: "Gemini CLI with auto-accepted file edits - for trusted editing sessions"
 	default_model: "pro"
 	models: {

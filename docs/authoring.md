@@ -71,12 +71,14 @@ Command template placeholders:
 | `{{.bin}}` | Binary name at launch. Unjoined recipes take it from `bin`. Joined recipes still use the placeholder; start fills it from agentdex. The schema does not define precedence when both fields are set |
 | `{{.model}}` | Resolved model identifier; may be empty |
 | `{{.prompt}}` | Replaced with the task prompt content |
-| `{{.role}}` | Replaced with the role prompt content (inline) |
-| `{{.role_file}}` | Replaced with a path to a temp file containing the role |
+| `{{.role}}` | Role prompt content (inline); may be empty |
+| `{{.role_file}}` | Path to a temp file containing the role; may be empty |
 
 `{{.model}}` is empty when start has no model to fill (no `--model` and no `default_model`). Optional `--model` flags use `{{if .model}}` with the leading space inside the if so tokens do not glue: `{{.bin}}{{if .model}} --model {{.model}}{{end}}`. Do not wrap positional required `{{.model}}` operands (for example `ollama run {{.model}}`).
 
-Role injection varies by tool. Common patterns: a command-line flag (`--append-system-prompt-file {{.role_file}}`), an environment variable (`GEMINI_SYSTEM_MD={{.role_file}}`), or an inline argument (`--system {{.role}}`). Check the target tool's documentation for the correct approach.
+`{{.role}}` and `{{.role_file}}` are empty when start has no role (`--role none`). Optional role flags use `{{if .role}}` / `{{if .role_file}}` with the leading space inside the if: `{{.bin}}{{if .role_file}} --system-prompt-file {{.role_file}}{{end}}`. Do not wrap `{{.prompt}}`. Gemini's env assignment sits before `{{.bin}}`; keep the trailing space that separates it from the binary inside the if: `{{if .role_file}}GEMINI_SYSTEM_MD={{.role_file}} {{end}}{{.bin}}`.
+
+Role injection varies by tool. Common patterns: a command-line flag (`{{if .role_file}} --append-system-prompt-file {{.role_file}}{{end}}`), an environment variable (`{{if .role_file}}GEMINI_SYSTEM_MD={{.role_file}} {{end}}`), or an inline argument (`{{if .role}} --system {{.role}}{{end}}`). Check the target tool's documentation for the correct approach.
 
 Joined recipe (default). Catalog id, no `bin`, optional CLI-alias `models`:
 

@@ -4,7 +4,7 @@ import "github.com/p3bot/library/schemas@v1"
 
 agent: schemas.#Agent & {
 	agentdex:      "claude-code"
-	command:       "{{.bin}}{{if .model}} --model {{.model}}{{end}} --permission-mode bypassPermissions --system-prompt-file {{.role_file}} {{.prompt}}"
+	command:       "{{.bin}}{{if .model}} --model {{.model}}{{end}} --permission-mode bypassPermissions{{if .role_file}} --system-prompt-file {{.role_file}}{{end}} {{.prompt}}"
 	description:   "Claude Code with all permissions bypassed - for background and automated tasks"
 	default_model: "sonnet"
 	models: {

@@ -4,7 +4,7 @@ import "github.com/p3bot/library/schemas@v1"
 
 agent: schemas.#Agent & {
 	agentdex:      "claude-code"
-	command:       "{{.bin}}{{if .model}} --model {{.model}}{{end}} --permission-mode default --system-prompt-file {{.role_file}} --print {{.prompt}}"
+	command:       "{{.bin}}{{if .model}} --model {{.model}}{{end}} --permission-mode default{{if .role_file}} --system-prompt-file {{.role_file}}{{end}} --print {{.prompt}}"
 	description:   "Claude Code in non-interactive mode - completes task and exits"
 	default_model: "sonnet"
 	models: {

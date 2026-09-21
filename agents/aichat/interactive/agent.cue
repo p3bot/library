@@ -4,7 +4,7 @@ import "github.com/p3bot/library/schemas@v1"
 
 agent: schemas.#Agent & {
 	bin:         "aichat"
-	command:     "{{.bin}}{{if .model}} --model {{.model}}{{end}} --prompt {{.role}} {{.prompt}}"
+	command:     "{{.bin}}{{if .model}} --model {{.model}}{{end}}{{if .role}} --prompt {{.role}}{{end}} {{.prompt}}"
 	description: "AIChat - All-in-one LLM CLI tool by sigoden"
 	default_model: "vertexai:gemini-2.5-flash"
 	models: {

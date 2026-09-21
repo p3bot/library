@@ -6,7 +6,7 @@ package schemas
 // Example 1: Joined recipe — agentdex catalog id, no bin, CLI-alias models
 agents: "claude-code/interactive": {
 	agentdex:      "claude-code"
-	command:       "{{.bin}}{{if .model}} --model {{.model}}{{end}} --append-system-prompt {{.role}} {{.prompt}}"
+	command:       "{{.bin}}{{if .model}} --model {{.model}}{{end}}{{if .role}} --append-system-prompt {{.role}}{{end}} {{.prompt}}"
 	description:   "Claude Code by Anthropic"
 	default_model: "sonnet"
 	models: {
@@ -20,7 +20,7 @@ agents: "claude-code/interactive": {
 // Example 2: Gemini with file-based role
 agents: "gemini": {
 	bin:           "gemini"
-	command:       "GEMINI_SYSTEM_MD={{.role_file}} {{.bin}}{{if .model}} --model {{.model}}{{end}} {{.prompt}}"
+	command:       "{{if .role_file}}GEMINI_SYSTEM_MD={{.role_file}} {{end}}{{.bin}}{{if .model}} --model {{.model}}{{end}} {{.prompt}}"
 	description:   "Google Gemini AI"
 	default_model: "pro"
 	models: {
@@ -37,7 +37,7 @@ agents: "simple": {
 
 // Example 4: Custom script wrapper
 agents: "custom-wrapper": {
-	command:     "./scripts/ai-wrapper.sh --role {{.role}} --prompt {{.prompt}}"
+	command:     "./scripts/ai-wrapper.sh{{if .role}} --role {{.role}}{{end}} --prompt {{.prompt}}"
 	description: "Project-specific AI wrapper script"
 }
 
@@ -59,7 +59,7 @@ agents: "echo": {
 // Example 7: OpenAI compatible
 agents: "openai": {
 	bin:           "openai"
-	command:       "{{.bin}} chat{{if .model}} --model {{.model}}{{end}} --system {{.role}} {{.prompt}}"
+	command:       "{{.bin}} chat{{if .model}} --model {{.model}}{{end}}{{if .role}} --system {{.role}}{{end}} {{.prompt}}"
 	description:   "OpenAI API CLI"
 	default_model: "gpt4"
 	models: {

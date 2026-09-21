@@ -4,7 +4,7 @@ import "github.com/p3bot/library/schemas@v1"
 
 agent: schemas.#Agent & {
 	bin:         "gemini"
-	command:     "GEMINI_SYSTEM_MD={{.role_file}} {{.bin}}{{if .model}} --model {{.model}}{{end}} --approval-mode default --prompt-interactive {{.prompt}}"
+	command:     "{{if .role_file}}GEMINI_SYSTEM_MD={{.role_file}} {{end}}{{.bin}}{{if .model}} --model {{.model}}{{end}} --approval-mode default --prompt-interactive {{.prompt}}"
 	description: "Gemini CLI by Google - agentic coding assistant"
 	default_model: "pro"
 	models: {

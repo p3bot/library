@@ -8,77 +8,77 @@ agents: [string]: schemas.#IndexEntry
 agents: {
 	"claude-code/interactive": {
 		module:      "github.com/p3bot/library/agents/claude-code/interactive@v1"
-		version:     "v1.1.0"
+		version:     "v1.2.0"
 		description: "Claude Code by Anthropic - agentic coding assistant"
 		bin:         "claude"
 		tags: ["claude-code", "anthropic", "claude", "coding", "agent"]
 	}
 	"claude-code/bypass-permissions": {
 		module:      "github.com/p3bot/library/agents/claude-code/bypass-permissions@v1"
-		version:     "v1.1.0"
+		version:     "v1.2.0"
 		description: "Claude Code with all permissions bypassed - for background and automated tasks"
 		bin:         "claude"
 		tags: ["claude-code", "anthropic", "claude", "coding", "agent", "automation", "background", "bypass-permissions"]
 	}
 	"claude-code/edit": {
 		module:      "github.com/p3bot/library/agents/claude-code/edit@v1"
-		version:     "v1.1.0"
+		version:     "v1.2.0"
 		description: "Claude Code with auto-accepted file edits - for trusted editing sessions"
 		bin:         "claude"
 		tags: ["claude-code", "anthropic", "claude", "coding", "agent", "trusted", "auto-edit"]
 	}
 	"claude-code/non-interactive": {
 		module:      "github.com/p3bot/library/agents/claude-code/non-interactive@v1"
-		version:     "v1.1.0"
+		version:     "v1.2.0"
 		description: "Claude Code in non-interactive mode - completes task and exits"
 		bin:         "claude"
 		tags: ["claude-code", "anthropic", "claude", "coding", "agent", "non-interactive", "scripted"]
 	}
 	"claude-code/unattended": {
 		module:      "github.com/p3bot/library/agents/claude-code/unattended@v1"
-		version:     "v1.1.0"
+		version:     "v1.2.0"
 		description: "Claude Code in unattended mode - non-interactive with all permissions bypassed"
 		bin:         "claude"
 		tags: ["claude-code", "anthropic", "claude", "coding", "agent", "unattended", "non-interactive", "bypass-permissions", "automation"]
 	}
 	"gemini/interactive": {
 		module:      "github.com/p3bot/library/agents/gemini/interactive@v1"
-		version:     "v1.2.0"
+		version:     "v1.3.0"
 		description: "Gemini CLI by Google - agentic coding assistant"
 		bin:         "gemini"
 		tags: ["google", "gemini", "coding", "agent"]
 	}
 	"gemini/bypass-permissions": {
 		module:      "github.com/p3bot/library/agents/gemini/bypass-permissions@v1"
-		version:     "v1.2.0"
+		version:     "v1.3.0"
 		description: "Gemini CLI with all approvals bypassed - for background and automated tasks"
 		bin:         "gemini"
 		tags: ["google", "gemini", "coding", "agent", "automation", "background", "bypass-permissions"]
 	}
 	"gemini/edit": {
 		module:      "github.com/p3bot/library/agents/gemini/edit@v1"
-		version:     "v1.2.0"
+		version:     "v1.3.0"
 		description: "Gemini CLI with auto-accepted file edits - for trusted editing sessions"
 		bin:         "gemini"
 		tags: ["google", "gemini", "coding", "agent", "trusted", "auto-edit"]
 	}
 	"gemini/non-interactive": {
 		module:      "github.com/p3bot/library/agents/gemini/non-interactive@v1"
-		version:     "v1.2.0"
+		version:     "v1.3.0"
 		description: "Gemini CLI in non-interactive mode - completes task and exits"
 		bin:         "gemini"
 		tags: ["google", "gemini", "coding", "agent", "non-interactive", "scripted"]
 	}
 	"gemini/unattended": {
 		module:      "github.com/p3bot/library/agents/gemini/unattended@v1"
-		version:     "v1.2.0"
+		version:     "v1.3.0"
 		description: "Gemini CLI in unattended mode - non-interactive with all approvals bypassed"
 		bin:         "gemini"
 		tags: ["google", "gemini", "coding", "agent", "unattended", "non-interactive", "bypass-permissions", "automation"]
 	}
 	"aichat/interactive": {
 		module:      "github.com/p3bot/library/agents/aichat/interactive@v1"
-		version:     "v1.2.0"
+		version:     "v1.3.0"
 		description: "AIChat - All-in-one LLM CLI tool by sigoden"
 		bin:         "aichat"
 		tags: ["aichat", "multi-provider", "rag", "agents"]
@@ -120,14 +120,14 @@ agents: {
 	}
 	"grok/interactive": {
 		module:      "github.com/p3bot/library/agents/grok/interactive@v1"
-		version:     "v1.3.0"
+		version:     "v1.4.0"
 		description: "Grok Build TUI by xAI - agentic coding assistant"
 		bin:         "grok"
 		tags: ["xai", "grok", "coding", "agent"]
 	}
 	"grok/auto": {
 		module:      "github.com/p3bot/library/agents/grok/auto@v1"
-		version:     "v1.2.0"
+		version:     "v1.3.0"
 		description: "Grok Build TUI with auto permission mode - fewer prompts with background safety checks"
 		bin:         "grok"
 		tags: ["xai", "grok", "coding", "agent", "auto"]
