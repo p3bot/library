@@ -4,7 +4,7 @@ import "github.com/p3bot/library/schemas@v1"
 
 agent: schemas.#Agent & {
 	agentdex:      "claude-code"
-	command:       "{{.bin}} --model {{.model}} --permission-mode acceptEdits --system-prompt-file {{.role_file}} {{.prompt}}"
+	command:       "{{.bin}}{{if .model}} --model {{.model}}{{end}} --permission-mode acceptEdits --system-prompt-file {{.role_file}} {{.prompt}}"
 	description:   "Claude Code with auto-accepted file edits - for trusted editing sessions"
 	default_model: "sonnet"
 	models: {

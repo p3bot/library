@@ -4,7 +4,7 @@ import "github.com/p3bot/library/schemas@v1"
 
 agent: schemas.#Agent & {
 	bin:         "gemini"
-	command:     "GEMINI_SYSTEM_MD={{.role_file}} {{.bin}} --model {{.model}} --approval-mode yolo --prompt {{.prompt}}"
+	command:     "GEMINI_SYSTEM_MD={{.role_file}} {{.bin}}{{if .model}} --model {{.model}}{{end}} --approval-mode yolo --prompt {{.prompt}}"
 	description: "Gemini CLI in unattended mode - non-interactive with all approvals bypassed"
 	default_model: "pro"
 	models: {

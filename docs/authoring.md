@@ -69,10 +69,12 @@ Command template placeholders:
 | Placeholder | Purpose |
 | --- | --- |
 | `{{.bin}}` | Binary name at launch. Unjoined recipes take it from `bin`. Joined recipes still use the placeholder; start fills it from agentdex. The schema does not define precedence when both fields are set |
-| `{{.model}}` | Replaced with the resolved model identifier |
+| `{{.model}}` | Resolved model identifier; may be empty |
 | `{{.prompt}}` | Replaced with the task prompt content |
 | `{{.role}}` | Replaced with the role prompt content (inline) |
 | `{{.role_file}}` | Replaced with a path to a temp file containing the role |
+
+`{{.model}}` is empty when start has no model to fill (no `--model` and no `default_model`). Optional `--model` flags use `{{if .model}}` with the leading space inside the if so tokens do not glue: `{{.bin}}{{if .model}} --model {{.model}}{{end}}`. Do not wrap positional required `{{.model}}` operands (for example `ollama run {{.model}}`).
 
 Role injection varies by tool. Common patterns: a command-line flag (`--append-system-prompt-file {{.role_file}}`), an environment variable (`GEMINI_SYSTEM_MD={{.role_file}}`), or an inline argument (`--system {{.role}}`). Check the target tool's documentation for the correct approach.
 
