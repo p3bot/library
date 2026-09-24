@@ -6,8 +6,8 @@ Naming conventions for all module types in the p3bot library.
 
 Every module has two related identifiers:
 
-- The name is what appears within a category, structured as one or more slash-separated segments (e.g. `claude-code/interactive`)
-- The fully-qualified address combines the category and the name with a colon: `category:name` (e.g. `agents:claude-code/interactive`). This is the canonical user-facing form for inputs and display
+- The name is what appears within a category, structured as one or more slash-separated segments (e.g. `claude-code`, `gemini/interactive`)
+- The fully-qualified address combines the category and the name with a colon: `category:name` (e.g. `agents:claude-code`, `agents:gemini/interactive`). This is the canonical user-facing form for inputs and display
 
 This document describes the structure of the name for each category. Examples below are bare names; the fully-qualified address is the same string prefixed with `<category>:`.
 
@@ -68,24 +68,32 @@ import (
 
 ## Agents
 
-Pattern: `tool/variant`
+Two patterns. Leaf-only still holds: one index must not advertise a bare key and a variant key under that same tool.
 
-Every agent has an explicit variant name. No bare tool names as defaults.
+Claude Code, Copilot, Antigravity, and Grok are one segment, the agentdex id:
 
 | Segment | Required | Purpose |
 |---------|----------|---------|
-| tool | yes | The agentdex catalog id for joined recipes; the CLI name for unjoined tools |
-| variant | yes | The configuration variant |
-
-Examples:
+| tool | yes | The agentdex catalog id: `claude-code`, `copilot`, `agy`, `grok` |
 
 ```
-claude-code/interactive
-claude-code/edit
-claude-code/non-interactive
-claude-code/unattended
+claude-code
+copilot
+agy
+grok
+```
+
+Gemini and AIChat stay `tool/variant`:
+
+| Segment | Required | Purpose |
+|---------|----------|---------|
+| tool | yes | The CLI name |
+| variant | yes | The configuration variant |
+
+```
 gemini/interactive
 gemini/bypass-permissions
+aichat/interactive
 ```
 
 ## Roles
@@ -231,7 +239,7 @@ Other action verbs (`read`, `review`, `research`, `debug`, and so on) are free-f
 
 | Category | Pattern | Required Segments |
 |----------|---------|-------------------|
-| Agents | `tool/variant` | tool, variant |
+| Agents | `tool`, or `tool/variant` for Gemini and AIChat | tool; variant when the product stays a variant module |
 | Roles | `domain/[specialisation/]mode` | domain, mode |
 | Contexts | `domain/[specialisation/]noun` | domain, noun |
 | Tasks | `[domain/][specialisation/][noun/]action` | action |

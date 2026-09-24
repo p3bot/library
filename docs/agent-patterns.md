@@ -1,140 +1,108 @@
 # Agent Patterns
 
-Agent patterns define how an AI CLI tool operates in terms of interactivity and permission handling. Each pattern establishes consistent operational expectations, making agents predictable and fit for purpose.
+Two layouts publish an AI CLI tool.
 
-All agents share the same underlying CLI tool (Claude, Gemini, etc.). The pattern determines the execution mode and permission model.
+Claude Code, Copilot, Antigravity, and Grok are one module each. The index key is the agentdex id. Permission, effort, output, resume, and print are flags on that module. start fills `{{.permission}}`, `{{.effort}}`, `{{.output}}`, `{{.resume}}`, and `{{.print}}` from the module's `flags` table. The command template does not contain `{{.prompt}}`. The print fragment carries the prompt word.
 
-## Dimensions
+Gemini and AIChat stay `tool/variant` modules. Each variant is its own command, with `{{.prompt}}` in `command` and no `flags` table.
 
-Agents vary across two dimensions:
+## Flag modules
 
-| Dimension | Options |
-|-----------|---------|
-| Interactivity | Interactive (ongoing session) or Non-interactive (one-shot) |
-| Permissions | Default (prompt for approval), Auto (safety-checked auto-approve), Auto-edit (approve file edits), Bypass (approve all) |
+| Address | agentdex | bin |
+| --- | --- | --- |
+| `agents:claude-code` | `claude-code` | `claude` |
+| `agents:copilot` | `copilot` | `copilot` |
+| `agents:agy` | `agy` | `agy` |
+| `agents:grok` | `grok` | `grok` |
 
-## Patterns
-
-### Base
-
-Interactive session with default permission prompts.
-
-- Ongoing conversation with the user
-- Prompts for approval before file edits and shell commands
-- User remains in control of all actions
-- Standard mode for interactive development
-
-Best for: General development, exploratory work, learning a codebase.
-
-### Auto
-
-Interactive session with safety-checked auto-approval.
-
-- Ongoing conversation with the user
-- A safety check auto-approves routine local work
-- Other calls are blocked or escalated rather than always prompting
-- Fewer prompts than default, without full autonomy
-
-Best for: Interactive Grok sessions that want fewer prompts with background safety checks.
-
-Note: Currently published for Grok only. Grok's `auto` mode is not the same as Claude's `acceptEdits` or `bypassPermissions`.
-
-### Edit
-
-Interactive session with auto-accepted file edits.
-
-- Ongoing conversation with the user
-- Automatically approves file read/write operations
-- Still prompts for shell commands and other actions
-- Trusted mode for focused editing sessions
-
-Best for: Refactoring, code reviews with fixes, trusted editing tasks.
-
-### Bypass Permissions
-
-Interactive session with all permissions bypassed.
-
-- Ongoing conversation with the user
-- Automatically approves all actions (edits, commands, etc.)
-- No permission prompts interrupt the workflow
-- Full autonomy mode for trusted environments
-
-Best for: Rapid prototyping, trusted environments, experienced users.
-
-### Non-interactive
-
-One-shot execution with default permission prompts.
-
-- Executes the prompt and exits after completion
-- Prompts for approval before actions
-- No ongoing conversation
-- Single task execution mode
-
-Best for: Scripted tasks requiring oversight, CI checks with manual gates.
-
-### Unattended
-
-One-shot execution with all permissions bypassed.
-
-- Executes the prompt and exits after completion
-- Automatically approves all actions
-- No user interaction required
-- Fully autonomous execution mode
-
-Best for: CI/CD pipelines, background tasks, batch operations, scheduled jobs.
-
-## Agent Naming Convention
-
-Agent names follow a consistent pattern within the agents category:
+Command shape. Each flag fragment is empty or begins with a space, because start assembles it that way. `{{.role}}` here is the product's guarded role fragment, not a flags slot. Antigravity and Copilot omit it.
 
 ```
-<tool>/<variant>
+{{.bin}}{{if .model}} --model {{.model}}{{end}}{{.permission}}{{.role}}{{.effort}}{{.output}}{{.resume}}{{.print}}
 ```
 
-The `tool` segment is the agentdex catalog id for joined recipes (`claude-code`, `grok`, `copilot`, `agy`) and the CLI name for unjoined tools (`gemini`, `aichat`). The fully-qualified user-facing address is `agents:<tool>/<variant>` (e.g. `agents:claude-code/interactive`). The table below lists agents by their bare name; prefix with `agents:` for the full address.
+Claude guards `--system-prompt-file {{.role_file}}`. Grok guards `--system-prompt-override {{.role}}`. Antigravity has no system-prompt CLI flag. Roles for Antigravity rely on workspace `AGENTS.md` / `GEMINI.md` discovery.
+
+An empty word list accepts the value and inserts nothing. A missing key rejects the flag. Do not add a module that selects these flags for an old variant address.
+
+### permission
+
+| Value | Claude | Copilot | Antigravity | Grok |
+| --- | --- | --- | --- | --- |
+| `default` | empty | empty | empty | `--permission-mode default` |
+| `edit` | `--permission-mode acceptEdits` | `--allow-tool=write` | `--mode accept-edits` | `--permission-mode acceptEdits` |
+| `auto` | `--permission-mode auto` | — | — | `--permission-mode auto` |
+| `bypass` | `--permission-mode bypassPermissions` | `--allow-all` | `--dangerously-skip-permissions` | `--permission-mode bypassPermissions` |
+| `plan` | `--permission-mode plan` | — | `--mode plan` | `--permission-mode plan` |
+
+Claude's `default` row does not send `--permission-mode default`.
+
+`default` prompts before file edits and shell commands. `edit` accepts file edits and still prompts for other actions. `auto` safety-checks routine local work and blocks or escalates the rest. `bypass` approves every action. `plan` is the tool's plan mode.
+
+### print
+
+The prompt word appears only here. Off is an ongoing session. On runs the prompt and exits.
+
+| | Claude | Copilot | Antigravity | Grok |
+| --- | --- | --- | --- | --- |
+| off | `{{.prompt}}` | `--interactive {{.prompt}}` | `--prompt-interactive {{.prompt}}` | `{{.prompt}}` |
+| on | `--print {{.prompt}}` | `--prompt {{.prompt}}` | `--print {{.prompt}}` | `--single {{.prompt}}` |
+
+Copilot's on fragment is `--prompt` and `{{.prompt}}` only. It does not include `--allow-all-tools`. Print together with bypass is the permission slot plus this on fragment.
+
+### resume
+
+A dash means the product has no `resume` key, so start rejects `--resume`.
+
+| | Claude | Copilot | Antigravity | Grok |
+| --- | --- | --- | --- | --- |
+| latest | `--continue` | — | `--continue` | `--continue` |
+| id | `--resume {{.resume}}` | — | `--conversation {{.resume}}` | `--resume {{.resume}}` |
+
+### effort
+
+The flag word is `--effort`. The value word is the same word the user passed. A dash means that value is not a key. Copilot has no `effort` key. Grok's per-model menu ids, such as `deep`, are not keys.
+
+| Value | Claude | Antigravity | Grok | Copilot |
+| --- | --- | --- | --- | --- |
+| `none` | — | — | yes | — |
+| `minimal` | — | — | yes | — |
+| `low` | yes | yes | yes | — |
+| `medium` | yes | yes | yes | — |
+| `high` | yes | yes | yes | — |
+| `xhigh` | yes | — | yes | — |
+| `max` | yes | — | yes | — |
+
+### output
+
+The flag word is `--output-format`. Copilot has no `output` key. Claude and Antigravity map `text`, `json`, and `stream-json` to that same word. Grok maps `text` to `plain`, `json` to `json`, `stream-json` to `streaming-json`, and `streaming-messages-json` to that word.
+
+## Variant modules
+
+Gemini and AIChat keep one module per mode. Prefix the bare name with `agents:` for the full address.
 
 | Agent | Interactivity | Permissions |
-|-------|---------------|-------------|
-| `claude-code/interactive` | Interactive | Default |
-| `claude-code/edit` | Interactive | Auto-edit |
-| `claude-code/bypass-permissions` | Interactive | Bypass all |
-| `claude-code/non-interactive` | Non-interactive | Default |
-| `claude-code/unattended` | Non-interactive | Bypass all |
+| --- | --- | --- |
 | `gemini/interactive` | Interactive | Default |
 | `gemini/edit` | Interactive | Auto-edit |
 | `gemini/bypass-permissions` | Interactive | Bypass all |
 | `gemini/non-interactive` | Non-interactive | Default |
 | `gemini/unattended` | Non-interactive | Bypass all |
-| `copilot/interactive` | Interactive | Default |
-| `copilot/edit` | Interactive | Auto-edit |
-| `copilot/bypass-permissions` | Interactive | Bypass all |
-| `copilot/non-interactive` | Non-interactive | Default |
-| `copilot/unattended` | Non-interactive | Bypass all |
-| `grok/interactive` | Interactive | Default |
-| `grok/auto` | Interactive | Auto |
-| `agy/interactive` | Interactive | Default |
-| `agy/edit` | Interactive | Auto-edit |
-| `agy/bypass-permissions` | Interactive | Bypass all |
-| `agy/non-interactive` | Non-interactive | Default |
-| `agy/unattended` | Non-interactive | Bypass all |
+| `aichat/interactive` | Interactive | Default |
 
-## Choosing a Pattern
+Gemini commands:
 
-| Situation | Pattern |
-|-----------|---------|
-| Interactive development | Base |
-| Fewer prompts, interactive Grok | Auto |
-| Trusted editing session | Edit |
-| Full autonomy, interactive | Bypass Permissions |
-| Scripted with oversight | Non-interactive |
-| Fully automated | Unattended |
+| Variant | Flags |
+| --- | --- |
+| `gemini/interactive` | `--approval-mode default --prompt-interactive` |
+| `gemini/edit` | `--approval-mode auto_edit --prompt-interactive` |
+| `gemini/bypass-permissions` | `--approval-mode yolo --prompt-interactive` |
+| `gemini/non-interactive` | `--approval-mode default --prompt` |
+| `gemini/unattended` | `--approval-mode yolo --prompt` |
 
-Consider:
+AIChat publishes interactive only. Its command has no permission flag.
 
-- **Trust level**: Untrusted environment? Default permissions. Trusted? Edit or Bypass.
-- **User presence**: User watching? Interactive. Unattended execution? Non-interactive or Unattended.
-- **Task scope**: Exploratory? Interactive. Well-defined? Non-interactive or Unattended.
-- **Risk tolerance**: High stakes? Default permissions. Routine automation? Bypass.
+For a flag module, pass `--permission` and `--print` on `agents:claude-code`, `agents:copilot`, `agents:agy`, or `agents:grok`. For Gemini, select the variant whose row matches the session. `auto` exists only where that permission key exists.
 
 ## Non-TTY Default-Resolution Contract
 
@@ -143,18 +111,3 @@ If a bin appears in multiple agent index entries, at least one of those entries 
 The contract is enforced by `library/scripts/validate-index`. Run it after any change to `index/index.cue` that adds, removes, or renames an agent entry.
 
 In TTY mode the user always picks a variant from a list, so this contract has no effect on the interactive flow.
-
-## CLI Flag Reference
-
-The patterns map to CLI flags:
-
-| Pattern | Claude Flags | Gemini Flags | Copilot Flags | Grok Flags | Agy Flags |
-|---------|--------------|--------------|---------------|------------|-----------|
-| Base | `--permission-mode default` | `--approval-mode default --prompt-interactive` | `--interactive` | `--permission-mode default` | `--prompt-interactive` |
-| Auto | — | — | — | `--permission-mode auto` | — |
-| Edit | `--permission-mode acceptEdits` | `--approval-mode auto_edit --prompt-interactive` | `--allow-tool=write --interactive` | — | `--mode accept-edits --prompt-interactive` |
-| Bypass Permissions | `--permission-mode bypassPermissions` | `--approval-mode yolo --prompt-interactive` | `--allow-all --interactive` | — | `--dangerously-skip-permissions --prompt-interactive` |
-| Non-interactive | `--permission-mode default --print` | `--approval-mode default --prompt` | `--allow-all-tools --prompt` | — | `--print` |
-| Unattended | `--permission-mode bypassPermissions --print` | `--approval-mode yolo --prompt` | `--allow-all --prompt` | — | `--dangerously-skip-permissions --print` |
-
-Note: Copilot's "Non-interactive" variant uses `--allow-all-tools` rather than a default-permission flag, so its effective permission posture differs from the Claude and Gemini Non-interactive variants. The pattern label captures the interactivity dimension; consult each agent's `command` field for the exact flags it runs. Grok currently publishes `interactive` and `auto` only. Agy has no system-prompt CLI flag; roles rely on workspace `AGENTS.md` / `GEMINI.md` discovery.

@@ -52,6 +52,22 @@ Do not implement until the design is agreed. The version bump for an update is d
 
 Files produced: `agent.cue` and `cue.mod/module.cue`. Agents have no markdown file — the whole definition lives in `agent.cue`.
 
+Directory layout. Claude Code, Copilot, Antigravity, and Grok are one module, keyed by the agentdex id. Gemini and AIChat stay one module per variant.
+
+```
+agents/<tool>/
+├── agent.cue
+└── cue.mod/module.cue
+```
+
+```
+agents/<tool>/<variant>/
+├── agent.cue
+└── cue.mod/module.cue
+```
+
+`<tool>` in the first tree is `claude-code`, `copilot`, `agy`, or `grok`. `<tool>` in the second tree is `gemini` or `aichat`.
+
 Schema fields:
 
 | Field | Required | Type | Purpose |
@@ -63,6 +79,7 @@ Schema fields:
 | agentdex | no | string | agentdex catalog id of the product this recipe launches. Omit for custom or uncatalogued agents |
 | default_model | no | string | Default model alias (must be a key in models) |
 | models | no | map | CLI aliases (joined) or short alias to full model identifier (unjoined) |
+| flags | no | struct | Optional flag table. See Flag table |
 
 Command template placeholders:
 
@@ -70,17 +87,63 @@ Command template placeholders:
 | --- | --- |
 | `{{.bin}}` | Binary name at launch. Unjoined recipes take it from `bin`. Joined recipes still use the placeholder; start fills it from agentdex. The schema does not define precedence when both fields are set |
 | `{{.model}}` | Resolved model identifier; may be empty |
-| `{{.prompt}}` | Replaced with the task prompt content |
+| `{{.prompt}}` | Task prompt. In `command` only when the module has no `flags.print`. When `flags.print` is set, that fragment carries the prompt word and `command` omits `{{.prompt}}` |
 | `{{.role}}` | Role prompt content (inline); may be empty |
 | `{{.role_file}}` | Path to a temp file containing the role; may be empty |
+| `{{.permission}}` | Permission fragment from `flags.permission`. Empty or begins with a space |
+| `{{.effort}}` | Effort fragment from `flags.effort`. Empty or begins with a space |
+| `{{.output}}` | Output fragment from `flags.output`. Empty or begins with a space |
+| `{{.resume}}` | Resume fragment from `flags.resume`, and the session id word inside that fragment |
+| `{{.print}}` | Print fragment from `flags.print`. Empty or begins with a space |
 
 `{{.model}}` is empty when start has no model to fill (no `--model` and no `default_model`). Optional `--model` flags use `{{if .model}}` with the leading space inside the if so tokens do not glue: `{{.bin}}{{if .model}} --model {{.model}}{{end}}`. Do not wrap positional required `{{.model}}` operands (for example `ollama run {{.model}}`).
 
 `{{.role}}` and `{{.role_file}}` are empty when start has no role (`--role none`). Optional role flags use `{{if .role}}` / `{{if .role_file}}` with the leading space inside the if: `{{.bin}}{{if .role_file}} --system-prompt-file {{.role_file}}{{end}}`. Do not wrap `{{.prompt}}`. Gemini's env assignment sits before `{{.bin}}`; keep the trailing space that separates it from the binary inside the if: `{{if .role_file}}GEMINI_SYSTEM_MD={{.role_file}} {{end}}{{.bin}}`.
 
-Role injection varies by tool. Published recipes: claude-code `{{.bin}}{{if .role_file}} --system-prompt-file {{.role_file}}{{end}}`, grok `{{if .role}} --system-prompt-override {{.role}}{{end}}`, aichat `{{if .role}} --prompt {{.role}}{{end}}` with `{{.prompt}}` outside the if, gemini `{{if .role_file}}GEMINI_SYSTEM_MD={{.role_file}} {{end}}{{.bin}}`. For a new family, check the target tool's documentation and wrap only the role flag it already uses.
+Role injection varies by tool. Published recipes: claude-code `{{if .role_file}} --system-prompt-file {{.role_file}}{{end}}`, grok `{{if .role}} --system-prompt-override {{.role}}{{end}}`, aichat `{{if .role}} --prompt {{.role}}{{end}}` with `{{.prompt}}` in `command` outside the if, gemini `{{if .role_file}}GEMINI_SYSTEM_MD={{.role_file}} {{end}}{{.bin}}`. For a new family, check the target tool's documentation and wrap only the role flag it already uses.
 
-Joined recipe (default). Catalog id, no `bin`, optional CLI-alias `models`:
+### Flag table
+
+`flags` is optional and has no defaults. `permission`, `effort`, and `output` are maps from a value to a list of words. `print` has `off` and `on`. `resume` has `latest` and `id`. An empty list accepts the value and inserts nothing. A missing key rejects that flag. A word is a literal, or a whole word `{{.prompt}}` or `{{.resume}}`.
+
+start assembles each fragment with a leading space. The command places the slots and does not contain an `{{if eq}}` copy of the table. Order for a flag module:
+
+```
+{{.bin}}{{if .model}} --model {{.model}}{{end}}{{.permission}}{{.role}}{{.effort}}{{.output}}{{.resume}}{{.print}}
+```
+
+`{{.role}}` in that line is the guarded role fragment, not a flags slot. Omit it when the product has no role flag. A module with no `flags.print` keeps `{{.prompt}}` in `command`.
+
+Joined flag module. Catalog id, no `bin`, prompt only in `flags.print`:
+
+```cue
+package <leaf>
+
+import "github.com/p3bot/library/schemas@v1"
+
+agent: schemas.#Agent & {
+	agentdex:      "<catalog-id>"
+	command:       "{{.bin}}{{if .model}} --model {{.model}}{{end}}{{.permission}}{{.effort}}{{.output}}{{.resume}}{{.print}}"
+	description:   "<description>"
+	default_model: "<default-alias>"
+	models: {
+		"<alias>": "<cli-alias>"
+	}
+	flags: {
+		permission: {
+			default: []
+			edit: ["--permission-mode", "acceptEdits"]
+		}
+		print: {
+			off: ["{{.prompt}}"]
+			on: ["--print", "{{.prompt}}"]
+		}
+	}
+	tags: ["<tag1>", "<tag2>"]
+}
+```
+
+Joined variant module (Gemini, AIChat). Catalog id may be omitted. `{{.prompt}}` stays in `command`:
 
 ```cue
 package <variant>
@@ -116,7 +179,7 @@ agent: schemas.#Agent & {
 
 Add `bin` when the wrapper is on PATH and the command uses `{{.bin}}`. `agentdex` and `bin` are independent: joined recipes may omit `bin`; unjoined agents may still set it.
 
-cue.mod/module.cue depends only on the schemas module. Pin a schemas version that includes `#Agent.agentdex` (`v1.4.0` or later):
+cue.mod/module.cue depends only on the schemas module. Pin a schemas version that includes `#Agent.flags` (`v1.7.0` or later). A module with no `flags` field still validates against that schema:
 
 ```cue
 module: "github.com/p3bot/library/agents/<path>@v1"
@@ -128,7 +191,7 @@ source: {
 }
 deps: {
 	"github.com/p3bot/library/schemas@v1": {
-		v: "v1.4.0"
+		v: "v1.7.0"
 	}
 }
 ```
