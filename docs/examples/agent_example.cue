@@ -70,7 +70,31 @@ agents: "openai": {
 	tags: ["openai", "gpt", "ai"]
 }
 
-// Example 8: Local LLM via Ollama
+// Example 8: Flag table. The print fragment carries the prompt, so command omits {{.prompt}}.
+agents: "claude-code": {
+	agentdex:      "claude-code"
+	command:       "{{.bin}}{{if .model}} --model {{.model}}{{end}}{{.permission}}{{if .role_file}} --system-prompt-file {{.role_file}}{{end}}{{.effort}}{{.output}}{{.resume}}{{.print}}"
+	description:   "Claude Code by Anthropic"
+	default_model: "sonnet"
+	models: {
+		haiku:  "haiku"
+		sonnet: "sonnet"
+		opus:   "opus"
+	}
+	flags: {
+		permission: {
+			default: []
+			edit: ["--permission-mode", "acceptEdits"]
+		}
+		print: {
+			off: ["{{.prompt}}"]
+			on: ["--print", "{{.prompt}}"]
+		}
+	}
+	tags: ["anthropic", "claude", "ai"]
+}
+
+// Example 9: Local LLM via Ollama
 agents: "ollama": {
 	bin:           "ollama"
 	command:       "{{.bin}} run {{.model}} {{.prompt}}"

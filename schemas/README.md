@@ -173,9 +173,9 @@ A library agent is a launch recipe (invocation). agentdex catalogs the outside o
 
 **Agent Identification:**
 
-- Agents are identified by their **map key** (e.g., `agents["claude-code/interactive"]`)
+- Agents are identified by their **map key** (e.g., `agents["claude-code"]`)
 - There is no `name` field - the key IS the name
-- Tasks reference agents by this key (e.g., `agent: "claude-code/interactive"`)
+- Tasks reference agents by this key (e.g., `agent: "claude-code"`)
 
 **Fields:**
 
@@ -186,14 +186,16 @@ A library agent is a launch recipe (invocation). agentdex catalogs the outside o
 - `tags` ([]string, optional) - Tags for categorization/search
 - `default_model` (string, optional) - Default model when `--model` not specified
 - `models` (map, optional) - Friendly names to full model identifiers
+- `flags` (struct, optional) - Flag table start turns into command fragments. No defaults. Maps `permission`, `effort`, and `output` send a value to a list of words. `print` has required `off` and `on` lists. `resume` has required `latest` and `id` lists. An empty list accepts the value and inserts nothing. A missing key rejects that flag. A word is a literal, or a whole word `{{.prompt}}` or `{{.resume}}`
 
 **Agent Placeholders:**
 
 - `{{.bin}}` - Binary name substituted at launch. Unjoined recipes take it from `bin`. Joined recipes still use the placeholder; start fills it from agentdex. The schema does not define precedence when both fields are set
 - `{{.model}}` - Resolved model identifier; may be empty. Optional `--model` flags use `{{if .model}}` with the leading space inside the if (`{{.bin}}{{if .model}} --model {{.model}}{{end}}`). Do not wrap positional required `{{.model}}` operands
-- `{{.prompt}}` - Composed prompt (from UTD resolution)
+- `{{.prompt}}` - Composed prompt (from UTD resolution). `flags.print` carries this word when that fragment exists, and `command` then omits `{{.prompt}}`. With no print fragment, `command` carries `{{.prompt}}`
 - `{{.role}}` - Role content (inline); may be empty (`--role none`). Optional role flags use `{{if .role}}` with the leading space inside the if
 - `{{.role_file}}` - Role file path; may be empty. Optional role-file flags use `{{if .role_file}}`. Gemini's env prefix sits before `{{.bin}}` (`{{if .role_file}}GEMINI_SYSTEM_MD={{.role_file}} {{end}}{{.bin}}`)
+- `{{.permission}}`, `{{.effort}}`, `{{.output}}`, `{{.resume}}`, `{{.print}}` - Flag fragments. Each is empty or begins with a space. The command template places the slots and does not copy the table with `{{if eq}}`
 
 **Constraints:**
 
