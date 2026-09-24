@@ -143,7 +143,9 @@ agent: schemas.#Agent & {
 }
 ```
 
-Joined variant module (Gemini, AIChat). Catalog id may be omitted. `{{.prompt}}` stays in `command`:
+Variant modules. Gemini and AIChat keep `{{.prompt}}` in `command`, set `bin`, and omit `agentdex`.
+
+Gemini interactive. The role env assignment sits before the binary. The other variants swap the approval and prompt flags:
 
 ```cue
 package <variant>
@@ -151,18 +153,37 @@ package <variant>
 import "github.com/p3bot/library/schemas@v1"
 
 agent: schemas.#Agent & {
-	agentdex:      "<catalog-id>"
-	command:       "<command-template>"
+	bin:           "gemini"
+	command:       "{{if .role_file}}GEMINI_SYSTEM_MD={{.role_file}} {{end}}{{.bin}}{{if .model}} --model {{.model}}{{end}} --approval-mode default --prompt-interactive {{.prompt}}"
 	description:   "<description>"
 	default_model: "<default-alias>"
 	models: {
-		"<alias>": "<cli-alias>"
+		"<alias>": "<model-id>"
 	}
 	tags: ["<tag1>", "<tag2>"]
 }
 ```
 
-`agentdex` must match `^[a-z0-9]+(-[a-z0-9]+)*$` (for example `claude-code`). The schema does not check that the id exists in the catalog. Omit `default_model` and `models` when start should use live agentdex models only.
+AIChat. The role flag is `--prompt`, and the task prompt stays outside that if:
+
+```cue
+package <variant>
+
+import "github.com/p3bot/library/schemas@v1"
+
+agent: schemas.#Agent & {
+	bin:           "aichat"
+	command:       "{{.bin}}{{if .model}} --model {{.model}}{{end}}{{if .role}} --prompt {{.role}}{{end}} {{.prompt}}"
+	description:   "<description>"
+	default_model: "<default-alias>"
+	models: {
+		"<alias>": "<model-id>"
+	}
+	tags: ["<tag1>", "<tag2>"]
+}
+```
+
+`agentdex` must match `^[a-z0-9]+(-[a-z0-9]+)*$` (for example `claude-code`). The schema does not check that the id exists in the catalog. Omit `default_model` and `models` when start should use live agentdex models only, as Grok does. Copilot and Antigravity set `default_model` and omit `models`; start passes that word through.
 
 Unjoined custom (command-only, or `bin` without a catalog id):
 
@@ -200,7 +221,7 @@ Notes:
 
 - The `agent:` key is always the literal `agent`; the index key supplies the friendly name
 - `uses` stays empty for agents — they fetch no other module at runtime
-- A `default_model` must name a key present in `models`
+- When `models` is set, `default_model` names a key in that map. When `models` is omitted, `default_model` is passed through as the model word
 - Module identity is the index key, not `agentdex`
 
 ## Role Specifics

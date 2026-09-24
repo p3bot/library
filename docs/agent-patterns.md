@@ -2,7 +2,7 @@
 
 Two layouts publish an AI CLI tool.
 
-Claude Code, Copilot, Antigravity, and Grok are one module each. The index key is the agentdex id. Permission, effort, output, resume, and print are flags on that module. start fills `{{.permission}}`, `{{.effort}}`, `{{.output}}`, `{{.resume}}`, and `{{.print}}` from the module's `flags` table. The command template does not contain `{{.prompt}}`. The print fragment carries the prompt word.
+Claude Code, Copilot, Antigravity, and Grok are one module each. The index key is the agentdex id. The command places `{{.permission}}`, `{{.effort}}`, `{{.output}}`, `{{.resume}}`, and `{{.print}}`, and start fills each slot from that module's `flags` table. Claude, Antigravity, and Grok define all five. Copilot defines permission and print only, so start rejects effort, output, and resume. The command template does not contain `{{.prompt}}`. The print fragment carries the prompt word.
 
 Gemini and AIChat stay `tool/variant` modules. Each variant is its own command, with `{{.prompt}}` in `command` and no `flags` table.
 
@@ -35,9 +35,11 @@ An empty word list accepts the value and inserts nothing. A missing key rejects 
 | `bypass` | `--permission-mode bypassPermissions` | `--allow-all` | `--dangerously-skip-permissions` | `--permission-mode bypassPermissions` |
 | `plan` | `--permission-mode plan` | — | `--mode plan` | `--permission-mode plan` |
 
-Claude's `default` row does not send `--permission-mode default`.
+Claude's `default` row does not send `--permission-mode default`. Claude, Copilot, and Antigravity accept `default` and insert nothing. Grok's `default` sends `--permission-mode default`.
 
-`default` prompts before file edits and shell commands. `edit` accepts file edits and still prompts for other actions. `auto` safety-checks routine local work and blocks or escalates the rest. `bypass` approves every action. `plan` is the tool's plan mode.
+`edit` accepts file edits and still prompts for other actions. `bypass` approves every action. `plan` is that CLI's plan mode. Claude, Antigravity, and Grok have the `plan` key. Copilot does not.
+
+Grok's `auto` safety-checks routine local work and blocks or escalates the rest. Claude's `auto` sends `--permission-mode auto`. Copilot and Antigravity have no `auto` key.
 
 ### print
 
