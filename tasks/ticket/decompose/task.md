@@ -94,17 +94,19 @@ If the design is a focused feature, a localised change, or a tightly coupled set
 
 ### Phase 1: Orient
 
-1. Identify the design from the user's instructions. If they named an id, run `tk design get <id>`. A path on stdout is the design document. `design_id:` and no path: stop. Do not run `tk get`. Unknown design id: run `tk get <id>`. A path is a legacy design-profile ticket. If they named a path, use it. If they asked you to find it, look where they pointed. Otherwise ask. One design may span multiple files — read all they named. Input is a design document, a legacy design-profile ticket, or a leftover unmanaged design document.
+1. Identify the design from the user's instructions. If they named an id, run `tk design get <id>`. `design_id:` and no path: stop. Do not `tk mark`. Do not run `tk get`. A path with `parse_error:` for that id: stop. The fence is quarantined. Do not mark, do not edit the fence, and do not run the design session or the review. `parse_error: N unparseable` does not quarantine the file just fetched. A path with no per-id `parse_error:` is the design document. Unknown design id: run `tk get <id>`. A path is a legacy design-profile ticket. If they named a path, use it. If they asked you to find it, look where they pointed. Otherwise ask. One design may span multiple files. Input is a design document, a legacy design-profile ticket, or a leftover unmanaged design document.
 
-2. Confirm the design is ready for decomposition. A design document must be `accepted`. If it is `draft`, stop unless the owner explicitly accepts the design in this session. Then `tk design mark accepted` and continue. If it is `decomposed` or `superseded`, stop and say so. A legacy ticket has no design status. If the design still has unresolved architectural decisions, open alternatives, or contradictions, stop and say so. Point the owner at design review rather than inventing ticket boundaries around unfinished design.
+2. If a path is under `design/`, run `tk design get` on the full id in its filename before treating it as the design. The id is the first two hyphen-separated tokens (`design/library-h2h7-leave-draft.md` → `library-h2h7`). Scope and short id contain no hyphen; the slug may. `design_id:` and no path: stop. Do not `tk mark`. A path with `parse_error:` for that id: stop. The fence is quarantined. Do not mark, do not edit the fence, and do not decompose. `parse_error: N unparseable` does not quarantine the file just fetched. A path with no per-id `parse_error:` is the design. A path that is not under `design/` stays the legacy ticket or unmanaged file from step 1.
 
-3. Load the ticket writing guide:
+3. Read every named file. Confirm the design is ready for decomposition. A design document must be `accepted`. If it is `draft`, stop unless the owner explicitly accepts the design in this session. Then `tk design mark accepted` and continue. If it is `decomposed` or `superseded`, stop and say so. A legacy ticket has no design status. If the design still has unresolved architectural decisions, open alternatives, or contradictions, stop and say so. Point the owner at design review rather than inventing ticket boundaries around unfinished design.
+
+4. Load the ticket writing guide:
 
    ```bash
    start get contexts:ticket/writing
    ```
 
-4. Read repo-level agent instructions (`AGENTS.md` and equivalents) and note any existing ticket conventions (location, numbering, naming).
+5. Read repo-level agent instructions (`AGENTS.md` and equivalents) and note any existing ticket conventions (location, numbering, naming).
 
 ### Phase 2: Analyse
 

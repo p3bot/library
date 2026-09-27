@@ -110,7 +110,7 @@ Work the matched profile. Keep the target in a working state between steps when 
   start get contexts:design/writing
   ```
 
-  Run that session against this document. Fill the existing file; do not create a second document. Do not mark a design document `decomposed`. Do not `tk mark done` a legacy design-profile ticket. If the shape is already closed enough to decompose or to stop, do not rerun the session. Report that the owner must accept, then decompose. Owner accept on a design document is `tk design mark accepted`
+  Run that session against this document. Fill the existing file; do not create a second document. Leave a design document `draft`. Do not run `tk design mark accepted` in this session. Do not mark it `decomposed`. Leave a legacy design-profile ticket's status unchanged. Do not `tk mark done` it from this session. If the shape is already closed enough to decompose or to stop, do not rerun the session. Report that the owner must accept with `tk design mark accepted`, then decompose. Decompose runs that command when the owner accepts there
 - decide: record Decision, Rationale, Rejected alternatives, and Follow-up. Do not guess among owner decisions. Create follow-up tickets only after the owner approves
 - investigate: answer the question. Fill Recommendation so a later session can act without re-deriving it. No product change. Create follow-up tickets only after the owner approves
 - bug: diagnose and fix, or record Blocked on / Already done when the next step is outside this session
@@ -125,7 +125,7 @@ Do not introduce new patterns unless the ticket document explicitly calls for on
 
 ### 3. Verify
 
-Check that profile's done-condition. For implement, run the Acceptance Criteria. For design, closed enough to decompose or to stop means ready for the owner to accept. On a design document that is `tk design mark accepted`. On a legacy design-profile ticket, leave the ticket status unchanged. When the work changed the target system, also run the repo's verification commands — tests, build, lint, format, and type checks. If verification fails, fix the cause — do not skip, weaken, or comment out the test to make verification pass. If an acceptance criterion itself is wrong or unverifiable, raise it as a gap.
+Check that profile's done-condition. For implement, run the Acceptance Criteria. For design, closed enough to decompose or to stop means ready for the owner to accept. Leave a design document `draft`. Do not run `tk design mark accepted` in this session. The owner accepts with that command, and decompose runs it when the owner accepts there. Leave a legacy design-profile ticket's status unchanged. Do not `tk mark done` it from this session. When the work changed the target system, also run the repo's verification commands — tests, build, lint, format, and type checks. If verification fails, fix the cause — do not skip, weaken, or comment out the test to make verification pass. If an acceptance criterion itself is wrong or unverifiable, raise it as a gap.
 
 ### 4. Report
 
@@ -136,7 +136,7 @@ Summarise the work so the owner can verify without re-reading the ticket documen
 - Acceptance criteria — each criterion and the verification result (implement)
 - Decision — the recorded choice (decide)
 - Recommendation — the recorded answer (investigate)
-- Design — whether the shape is closed enough to decompose. On a design document, owner accept is `tk design mark accepted`. On a legacy design-profile ticket, do not mark the ticket done
+- Design — whether the shape is closed enough to decompose. On a design document, say it is still `draft` and that the owner accepts with `tk design mark accepted`. On a legacy design-profile ticket, the status is unchanged
 - Deviations — from the Implementation Plan or Implementation Guidance, with reasons. Requirements or Constraints that could not be met should already appear as surfaced gaps; do not record them only at report time
 - Open gaps — items surfaced during the work that remain unresolved
 - Follow-ups — out-of-scope improvements worth flagging, or tickets the owner would need to approve

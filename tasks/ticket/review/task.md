@@ -25,14 +25,14 @@ Finding no new issues is a valid outcome. If the ticket document is complete and
    start get tasks:tk/id/expand
    ```
 
-   Run Match and Write against the path. Skip Resolve, Sync, and Status. After Write, stop and tell the user to run this task again. Do not rewrite from the writing guide alone.
+   Run Match and Write against the path. Skip Resolve, Sync, and Status. The design branch of Write still marks this ticket `done` after the design document exists. After Write, stop. If it created a design document, tell the user the ticket is `done` and to review that design. Otherwise tell the user to run this task again. Do not rewrite from the writing guide alone.
 3. If the matched profile is design:
 
    ```bash
    start get tasks:design/review
    ```
 
-   Run that walk on the already resolved path. Skip Identification in the fetched task. Do not copy design-review concerns into this task. Stop this task's remaining phases after that walk. Do not mark `todo`. Sound means the owner accepts, then decompose. On a design document, accept is `tk design mark accepted`. On a legacy design-profile ticket, leave the ticket status unchanged. Resume the caller if any (`tasks:tk/id/review` Step 4 still runs).
+   Run that walk on the already resolved path. Skip Identification in the fetched task. Do not copy design-review concerns into this task. Stop this task's remaining phases after that walk. Resume the caller if any (`tasks:tk/id/review` Step 4 still runs).
 4. If the matched profile is capture, skip to Phase 4 and declare not ready to implement rather than inventing a findings walk, unless the owner asked to review the capture as a plan.
 5. Read the ticket document thoroughly.
 6. Run the Size and Coherence Check (below) on implement tickets, and on bug tickets when the work is a fix. If it fires, still produce the report header and What this ticket does, then skip to Phase 4 and declare Split the ticket.

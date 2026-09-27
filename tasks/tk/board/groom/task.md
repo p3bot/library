@@ -11,7 +11,7 @@ A ticket is terminal when its status is `done` or `cancelled`.
 ## Prepare
 
 - Sync: when `tk pulse mode` is `tk-driven`, run `tk sync` first. Skip on repo-driven and plain-files. If sync needs-attention, stop.
-- Doctor: Run bare `tk doctor`. Mechanical `tk repair` when the findings are id collisions, equal order keys, or archive layout. State what it will do before running it. `design_id:` and `produces_dangling:` are diagnose-only. Report them. Do not send them to `tk repair`. Repair does not rename a design file.
+- Doctor: Run bare `tk doctor`. Mechanical `tk repair` when the findings are id collisions, equal order keys, or archive layout. State what it will do before running it. `design_id:` and `produces_dangling:` are diagnose-only. Report them. Do not send them to `tk repair`. A design `parse_error:` is not a `tk repair` input. Repair does not rename a design file. Do not `tk design mark` or `tk design meta` a design until its fence parses.
 
 ### Inventory
 
@@ -34,6 +34,7 @@ Run that guide's matcher and stub test on each `todo` body:
 - Stub in `todo`: the stub test fails. Propose `tk mark draft <id>`. Do not expand
 - Unknown design status (`schema_error:` on a path under `design/`): propose `tk design mark` to one of `draft`, `accepted`, `decomposed`, `superseded`. Do not `tk meta set` a design
 - `design_id:` or `produces_dangling:`: report the doctor line. Do not repair it and do not rewrite the fence by hand
+- Design `parse_error:` on a path under `design/`: report the doctor line. Do not send it to `tk repair`. Do not `tk design mark` or `tk design meta` until the fence parses. Propose an in-place repair that keeps the path, the id, and `created`, and restores status and `produces` only when the broken text already shows them. Apply it only after approval. If the fence carries conflict markers, stop and report the line for the owner
 
 Do not unclaim `in-progress` just because this machine did not claim it. Ask if the owner is unclear.
 

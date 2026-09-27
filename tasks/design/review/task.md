@@ -10,17 +10,18 @@ Finding no new issues is a valid outcome. If the design is sound and prior revie
 
 ### Phase 1: Review
 
-1. Identify the design from the user's instructions. If they named an id, run `tk design get <id>`. A path on stdout is the design document. `design_id:` and no path: stop. Do not run `tk get`. Unknown design id: run `tk get <id>` for a legacy design-profile ticket. If they named a path, use it. If they asked you to find it, look where they pointed. Otherwise ask. When this task is fetched from `tasks:ticket/review` or `tasks:tk/id/review` with a path already resolved, skip this step and use that path.
-2. Read the design thoroughly.
-3. Run the Coherence Check (below). If it fires, still produce the report header and What this design does, then skip to Phase 4 and declare Split the design.
-4. Analyse the design:
+1. Identify the design from the user's instructions. If they named an id, run `tk design get <id>`. `design_id:` and no path: stop. Do not `tk mark`. Do not run `tk get`. A path with `parse_error:` for that id: stop. The fence is quarantined. Do not mark, do not edit the fence, and do not run the design session or the review. `parse_error: N unparseable` does not quarantine the file just fetched. A path with no per-id `parse_error:` is the design document. Unknown design id: run `tk get <id>` for a legacy design-profile ticket. If they named a path, use it. If they asked you to find it, look where they pointed. Otherwise ask. When this task is fetched from `tasks:ticket/review` or `tasks:tk/id/review` with a path already resolved, skip this step and use that path.
+2. If a path is under `design/`, run `tk design get` on the full id in its filename before reading. The id is the first two hyphen-separated tokens (`design/library-h2h7-leave-draft.md` → `library-h2h7`). Scope and short id contain no hyphen; the slug may. Do this even when step 1 was skipped. `design_id:` and no path: stop. Do not `tk mark`. A path with `parse_error:` for that id: stop. The fence is quarantined. Do not mark, do not edit the fence, and do not run the review. `parse_error: N unparseable` does not quarantine the file just fetched. A path with no per-id `parse_error:` is the design to review. A path that is not under `design/` stays the legacy or unmanaged case from step 1.
+3. Read the design thoroughly.
+4. Run the Coherence Check (below). If it fires, still produce the report header and What this design does, then skip to Phase 4 and declare Split the design.
+5. Analyse the design:
    - Validate the stated current state against the actual codebase
    - Test whether the chosen approach actually meets the stated goals and non-goals
    - Look for approaches the document did not consider, and pressure-test the reasons the considered alternatives were rejected
    - Research external facts only when the design turns on them — a dependency's behaviour, an API contract, a platform capability, a benchmark. Generic scans produce noise over repeated runs
-5. Identify concerns that meet the Goal bar — issues that would make the design wrong, leave it under-argued, or expose an unmanaged risk. Apply the Articulation Test and Regret Filter (see Reviewer Guidance) before listing each one.
-6. Produce a structured report using the Report Format (below) and present it inline. Do not write a report file unless Save applies.
-7. If there are no actionable findings, skip to Phase 4 and declare Sound. Otherwise display the Top-level Prompt (see Commands).
+6. Identify concerns that meet the Goal bar — issues that would make the design wrong, leave it under-argued, or expose an unmanaged risk. Apply the Articulation Test and Regret Filter (see Reviewer Guidance) before listing each one.
+7. Produce a structured report using the Report Format (below) and present it inline. Do not write a report file unless Save applies.
+8. If there are no actionable findings, skip to Phase 4 and declare Sound. Otherwise display the Top-level Prompt (see Commands).
 
 ### Coherence Check
 
@@ -84,7 +85,9 @@ After all findings have been processed, re-read the design with fresh eyes. Surf
 
    An issue blocks acceptance if it would make the design wrong, leave a load-bearing part of it unargued, or expose a risk with no mitigation or accepted rationale.
 
-   Do not mark `todo`. Sound means the owner accepts, then decompose. On a design document, owner accept is `tk design mark accepted`. Leave a legacy design-profile ticket in `draft`. Decompose records `produces` and marks a design document `decomposed`. Decompose marks a legacy ticket `done`.
+   Do not mark `todo`. On Sound or Revise, leave a design document `draft`. Do not run `tk design mark accepted` in this session. The owner accepts with that command. Decompose runs it when the owner accepts there, records `produces`, and marks the design `decomposed`. Leave a legacy design-profile ticket's status unchanged. Do not `tk mark done` it from this session. Decompose marks that ticket `done`.
+
+   On Split, summarise the seam and stop. Do not create designs or change status in this turn. After the owner agrees, `tk design create` one document per independent design. `--scope` is that design's scope name, not the id. Then `start get contexts:ticket/writing`. Fill the design profile for that design under the H1 `tk design create` printed. Do not paste a second heading. Leave each `draft`. If `tk pulse mode` is `tk-driven`, `tk sync` after those body fills. Then `tk design mark superseded` on the old design document. Do not mark it before those files exist. `G` does not supersede the parent. Do not pass an unmanaged file to `tk design mark`. Leave it, and say it is leftover. A legacy design-profile ticket stays unchanged. Do not `tk mark done` it from this session.
 2. Print a summary table of all findings and their outcomes (see Remediation Summary in the Report Format). Do not prompt to save.
 
 ## Reviewer Guidance
@@ -278,7 +281,7 @@ When `G` is selected:
 1. Run `tk design create` with a title from the finding's short title. When the subject is a design document or a tk ticket, create in that subject's scope (`--scope` is the scope name, not the id). Otherwise omit `--scope` unless they named one
 2. Then `start get contexts:ticket/writing`. Never fetch the writing guide at review start
 3. The writing guide's File Placement section does not apply. The path is the one `tk design create` printed
-4. Fill the design profile under that H1. Do not paste a second heading. Leave status `draft`
+4. Fill the design profile under that H1. Do not paste a second heading. Leave status `draft`. Do not mark the parent `superseded`
 5. Track as `Design: <id>` so G stays distinct from T (`Ticket: <id>`)
 6. If `tk pulse mode` is `tk-driven`, `tk sync` after the body fill
 

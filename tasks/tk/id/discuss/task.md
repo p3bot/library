@@ -16,7 +16,7 @@ Do not run `tk doctor` unless `tk get` or `tk mark` fails.
 
 The ticket id is the instruction. If none was supplied, ask for it. Do not guess or claim the next ticket.
 
-Run `tk get <id>`. Unknown ticket id: run `tk design get <id>`. A path is the working path and the subject is a design document. A ticket path is the working path. `design_id:` and no path: stop.
+Run `tk get <id>`. Unknown ticket id: run `tk design get <id>`. `design_id:` and no path: stop. Do not `tk mark`. A path with `parse_error:` for that id: stop. The fence is quarantined. Do not mark, do not edit the fence, and do not run the design session or the review. `parse_error: N unparseable` does not quarantine the file just fetched. A path with no per-id `parse_error:` is the working path and the subject is a design document. A ticket path is the working path.
 
 ## Brief
 

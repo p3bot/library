@@ -25,7 +25,7 @@ The value of a design is the reasoning it makes explicit and the solution it com
 
 ## Handoff
 
-If this session was started against an existing design document, or against an existing design-profile ticket, fill that file. Do not `tk design create` or `tk create` another. Do not mark a design document `decomposed`. Do not `tk mark done` a legacy ticket.
+If this session was started against an existing design document, or against an existing design-profile ticket, fill that file. Do not `tk design create` or `tk create` another. Leave a design document `draft`. Do not run `tk design mark accepted` in this session. Do not mark it `decomposed`. Leave a legacy design-profile ticket's status unchanged. Do not `tk mark done` it from this session.
 
 Otherwise, once the session has settled the shape, write a design document following the design profile in the ticket writing guide:
 
@@ -35,4 +35,4 @@ start get contexts:ticket/writing
 
 If `command -v tk` succeeds and they did not ask for an unmanaged path, `tk design create` with a title from the shape and fill under the H1 it printed. Leave status `draft`. Otherwise use that guide's unmanaged File Placement.
 
-Then decompose after the owner accepts the design. On a design document, accept is `tk design mark accepted`. Decompose records `produces` and marks that design `decomposed` after it writes the follow-ups. A legacy design-profile ticket is still `tk mark done` after the follow-ups. Do not implement from the design.
+Leave the design `draft`. The owner accepts with `tk design mark accepted`. Decompose runs that command when the owner accepts there, records `produces`, and marks that design `decomposed` after it writes the follow-ups. A legacy design-profile ticket is still `tk mark done` after the follow-ups. Do not implement from the design.

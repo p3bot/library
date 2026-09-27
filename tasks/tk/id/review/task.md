@@ -10,6 +10,8 @@ These sections of the fetched expand protocol do not apply:
 - Sync
 - Status
 
+The design branch of Write still marks this ticket `done` after the design document exists.
+
 These sections of the fetched review protocol do not apply:
 
 - Identification of the ticket document
@@ -28,7 +30,7 @@ Do not run `tk doctor` unless `tk get` or `tk mark` fails.
 
 The ticket id is the instruction. If none was supplied, ask for it. Do not guess or claim the next ticket.
 
-Run `tk get <id>`. Unknown ticket id: run `tk design get <id>`. A path means this id is a design document. Skip the later steps of this envelope. Do not `tk mark` the design. Run design review on that path:
+Run `tk get <id>`. Unknown ticket id: run `tk design get <id>`. `design_id:` and no path: stop. Do not `tk mark`. A path with `parse_error:` for that id: stop. The fence is quarantined. Do not mark, do not edit the fence, and do not run the design session or the review. `parse_error: N unparseable` does not quarantine the file just fetched. A path with no per-id `parse_error:` is a design document. Skip the later steps of this envelope. Do not `tk mark` the design. Run design review on that path:
 
 ```bash
 start get tasks:design/review
@@ -52,7 +54,7 @@ start get tasks:tk/id/expand
 
 Run the fetched Match test against the working path. Write only on stub (Match failure). Do not Write on capture. Capture is not a Match failure; continue to review. Write includes investigate, a design document when the work is a design, and the rewrite.
 
-If Write ran: stop. The ticket was a stub; it now matches the writing guide. Tell the user to run this task again for the review.
+If Write ran: stop. If it created a design document, the ticket is `done`. Tell the user to review that design. Otherwise the ticket now matches the writing guide. Tell the user to run this task again for the review.
 
 If the ticket already matched, including capture: continue.
 

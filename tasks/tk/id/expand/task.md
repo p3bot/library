@@ -18,7 +18,7 @@ Do not run `tk doctor` unless `tk get` or `tk mark` fails.
 
 The ticket id is the instruction. If none was supplied, ask for it. Do not guess or claim the next ticket.
 
-Run `tk get <id>`. Unknown ticket id: run `tk design get <id>`. A path means this id is a design document. Stop. Edit that file under the H1. Do not rewrite it as a ticket.
+Run `tk get <id>`. Unknown ticket id: run `tk design get <id>`. `design_id:` and no path: stop. Do not `tk mark`. A path with `parse_error:` for that id: stop. The fence is quarantined. Do not mark, do not edit the fence, and do not run the design session or the review. `parse_error: N unparseable` does not quarantine the file just fetched. A path with no per-id `parse_error:` is a design document. Skip the later steps of this envelope. Do not `tk mark` it. The path `tk design get` printed is the file for this branch. Edit under its H1. Do not rewrite it as a ticket.
 
 On a ticket path, apply the terminal test to that path and status before any mark.
 
@@ -70,10 +70,10 @@ If owner decisions remain, settle them with the owner before writing:
 - Do not guess. Wait
 - If the work is more than one implementation pass, say so before writing
 
-If the profile to write is design, `tk design create` in this ticket's scope (`--scope` is the scope name, not the ticket id). Fill the design section under that H1. Do not paste a second heading. Do not leave the design spine on this ticket. Name the new design id under Notes. Leave the design `draft`. If `tk pulse mode` is `tk-driven`, `tk sync` after that body fill. Leave this ticket's status to Step 4.
+If the profile to write is design, `tk design create` in this ticket's scope (`--scope` is the scope name, not the ticket id). Fill the design section under that H1. Do not paste a second heading. Do not leave the design spine on this ticket. Name the new design id under Notes. Leave the design `draft`. If `tk pulse mode` is `tk-driven`, `tk sync` after the design body and this ticket's body edits. Then `tk mark done` on this ticket. The archive keeps the Notes line.
 
 Otherwise rewrite under the H1 following the loaded guide. Right-size: omit any optional section that does not apply. Keep identifying headings even when empty. Record References for sources consulted. Preserve the YAML frontmatter. Do not change status here.
 
 ### Step 4: Status
 
-Never auto-promote to `todo`. Do not change status except the terminal reopen in Step 1.
+Never auto-promote to `todo`. Do not change status except the terminal reopen in Step 1 and the design branch, which marks this ticket `done` after the design document exists.

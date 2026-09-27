@@ -179,7 +179,7 @@ Writing and review leave it `draft`. The owner accepts with `tk design mark acce
 
 Stopping after a breakdown proposal does not mark `decomposed`. Leave `accepted` if the owner already accepted the design, and `draft` if they have not. A replacement design, including a split, marks the old file `superseded`.
 
-`tk design create` and edits under the H1 do not self-commit. On a tk-driven scope, `tk sync`. `tk design mark` and `tk design meta add|remove` self-commit and do not push. `tk get` does not open a design. `tk design get` does not open a ticket. Two design files that share a short id make `get`, `mark`, and `meta` refuse and print no path.
+`tk design create` and edits under the H1 do not self-commit. On a tk-driven scope, `tk sync`. `tk design mark` and `tk design meta add|remove` self-commit and do not push. `tk get` does not open a design. `tk design get` does not open a ticket. Two design files that share a short id make `get`, `mark`, and `meta` refuse and print no path. `design_id:` and no path: stop. Do not `tk mark`. A path with `parse_error:` for that id: stop. The fence is quarantined. Do not mark, do not edit the fence, and do not run the design session or the review. `tasks:tk/board/groom` is the exception: it may propose the in-place repair it describes, keeping the path, the id, and `created`, and restoring status and `produces` only when the broken text already shows them. A fence with conflict markers stays a stop for the owner. `parse_error: N unparseable` does not quarantine the file just fetched. A path with no per-id `parse_error:` is the design document.
 
 Build, continue, and begin do not mark this profile done.
 
