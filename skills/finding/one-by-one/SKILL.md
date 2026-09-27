@@ -162,13 +162,13 @@ Per-item `T` creates one tk ticket for that finding and continues the walk. Top-
 
 When `T` is selected:
 
-1. Run `tk create` with a title from the finding's short title (per-item) or a title covering the remaining set (top-level). When the subject is a tk ticket, create in that ticket's scope (`--scope` is the scope name, not the ticket id). Otherwise omit `--scope` unless they named one
+1. Run `tk create` with a title from the finding's short title (per-item) or a title covering the remaining set (top-level). When the subject is a design document or a tk ticket, create in that subject's scope (`--scope` is the scope name, not the id). Otherwise omit `--scope` unless they named one
 2. Then `start get contexts:ticket/writing` if it is not already loaded. Never fetch the writing guide at start
 3. The writing guide's File Placement section does not apply. The path is the one `tk create` printed
 4. Fill under that H1. Do not paste a second heading
 5. Fill the profile that fits the finding or gap. Do not mix two full spines
 6. Track as `Ticket: <id>`
-7. If `tk status mode` is `tk-driven`, `tk sync` after the body fill
+7. If `tk pulse mode` is `tk-driven`, `tk sync` after the body fill
 
 Per-item fill: the ticket is that finding. Fold the instance, explanation, options, and recommended resolution into the chosen profile's sections. Do not paste finding-template headings (Decision, Options, Recommendation, Simple Explanation, Details) as ticket headings unless that profile owns them.
 

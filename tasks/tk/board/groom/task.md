@@ -10,14 +10,15 @@ A ticket is terminal when its status is `done` or `cancelled`.
 
 ## Prepare
 
-- Sync: when `tk status mode` is `tk-driven`, run `tk sync` first. Skip on repo-driven and plain-files. If sync needs-attention, stop.
-- Doctor: Run bare `tk doctor`. Mechanical `--repair` if those tokens are present. `--repair` rewrites ids, equal order keys, and archive layout. State what it will do before running it.
+- Sync: when `tk pulse mode` is `tk-driven`, run `tk sync` first. Skip on repo-driven and plain-files. If sync needs-attention, stop.
+- Doctor: Run bare `tk doctor`. Mechanical `tk repair` when the findings are id collisions, equal order keys, or archive layout. State what it will do before running it. `design_id:` and `produces_dangling:` are diagnose-only. Report them. Do not send them to `tk repair`. Repair does not rename a design file.
 
 ### Inventory
 
 - Board: Run `tk list --all --no-lens` to get the full non-terminal set
-- Ignore every terminal row
-- Do not use `tk status` counts as the board. They are lens-filtered.
+- Designs: Run `tk design list` for `draft` and `accepted`. Use `--all` only when hunting `decomposed`, `superseded`, or an unknown status
+- Ignore every terminal ticket row
+- Do not use `tk pulse` counts as the board. They are lens-filtered.
 
 ## Process
 
@@ -31,6 +32,8 @@ Run that guide's matcher and stub test on each `todo` body:
 
 - Capture in `todo`: the match is capture. Premature for `tk next`. Propose `tk mark draft <id>` or `tk mark backlog <id>`. Do not call a matching capture a stub. Do not expand
 - Stub in `todo`: the stub test fails. Propose `tk mark draft <id>`. Do not expand
+- Unknown design status (`schema_error:` on a path under `design/`): propose `tk design mark` to one of `draft`, `accepted`, `decomposed`, `superseded`. Do not `tk meta set` a design
+- `design_id:` or `produces_dangling:`: report the doctor line. Do not repair it and do not rewrite the fence by hand
 
 Do not unclaim `in-progress` just because this machine did not claim it. Ask if the owner is unclear.
 

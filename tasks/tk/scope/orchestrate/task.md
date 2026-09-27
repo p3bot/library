@@ -22,8 +22,9 @@ Use `--scope` or full ids on every tk command. Do not rely on ambient scope.
 
 For each named scope, in the order given:
 
-- Sync: when `tk status mode --scope S` is `tk-driven`, run `tk sync --scope S` first. Skip on repo-driven and plain-files. If sync needs-attention, stop that scope and report it
+- Sync: when `tk pulse mode --scope S` is `tk-driven`, run `tk sync --scope S` first. Skip on repo-driven and plain-files. If sync needs-attention, stop that scope and report it
 - Board: `tk list --open --no-lens --scope S` to show all non-terminal tickets
+- Designs: `tk design list --scope S` for `draft` and `accepted`
 
 Combined count 500 or fewer: for each ticket, `tk get <id>`, `tk deps <id>`, and the body from the path `tk get` printed. Over 500: titles, status, summary, and `tk deps` only. Say that bodies were skipped.
 
@@ -43,13 +44,17 @@ Each line: full id, title, why this position (prerequisite id, or ready, or para
 
 Tickets that cannot run yet. Each line: id, what it is waiting on (open prerequisite, other-scope work not done, or assumed work with no ticket).
 
+### Designs
+
+Draft and accepted designs in the named scopes. Each line: full id, status, title, and whether it is still being written or is waiting to be decomposed.
+
 ### Gaps
 
 Work a ticket assumes that no non-terminal ticket in the named scopes covers. Each line: which ticket assumed it, what is missing, which named scope would own it.
 
 Omit a section when it is empty.
 
-Do not add, remove, or rewrite `depends` or `related` unless the user asks. Do not create tickets until they approve a gap fill.
+Do not add, remove, or rewrite `depends` or `related` unless the user asks. Do not create tickets or design documents until they approve a gap fill.
 
 ## After the brief
 
@@ -61,5 +66,5 @@ If new tickets need to be created:
 start get contexts:ticket/writing
 ```
 
-Then `tk create <title> --scope S` and fill the profile that fits under the H1 it printed. Unmanaged File Placement does not apply. Edit the returned ticket document path.
+Then `tk design create <title> --scope S` when the profile is design, or `tk create <title> --scope S` for any other profile. Fill under the H1 it printed. Unmanaged File Placement does not apply. Edit the returned path. Leave a new design at `draft`.
 

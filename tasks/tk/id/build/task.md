@@ -4,7 +4,7 @@ Using tk, build this ticket.
 
 ## Sync
 
-When `tk status mode` is `tk-driven`, run `tk sync` first. Skip on repo-driven and plain-files. If sync needs-attention, stop.
+When `tk pulse mode` is `tk-driven`, run `tk sync` first. Skip on repo-driven and plain-files. If sync needs-attention, stop.
 
 After ticket-body edits, `tk sync` again on tk-driven. `mark` already self-commits.
 
@@ -16,7 +16,13 @@ Do not run `tk doctor` unless `tk get` or `tk mark` fails.
 
 The ticket id is the instruction. If none was supplied, ask for it. Do not guess or claim the next ticket.
 
-Run `tk get <id>`, then `tk meta get <id> status`.
+Run `tk get <id>`. Unknown ticket id: run `tk design get <id>`. A path means this id is a design document. Stop. Do not `tk mark` it. Run the design session against that path:
+
+```bash
+start get contexts:design/writing
+```
+
+On a ticket path, run `tk meta get <id> status`.
 
 A ticket is terminal when that status is `done` or `cancelled`.
 
@@ -34,7 +40,7 @@ start get contexts:ticket/implementation
 Follow that guide against the working path. Orient, work the matched profile, verify, report. Do not invent an Implementation Plan for a profile that has none.
 
 - implement: work the plan, update Progress
-- design: the implementation guide loads the design session. Fill this ticket. After the session, the owner accepts, then decompose
+- design: the implementation guide loads the design session. Fill this legacy design-profile ticket. After the session, the owner accepts, then decompose. Do not `tk mark done`
 - decide, investigate: do that profile's work, write it into the body. Create follow-up tickets only after the owner approves
 - capture: expand-in-place when possible; otherwise stop
 - bug: diagnose and fix, or record Blocked on / Already done when the next step is outside this session
@@ -48,7 +54,7 @@ Mark from the outcome of this run. Do not leave a finished or stopped profile in
 - implement, decide, investigate, or a bug whose work was a fix — success: `tk mark done <id>`
 - bug blocked outside this session: `tk mark blocked <id>`
 - capture stop or stub: `tk mark draft <id>`
-- design filled and waiting for accept: `tk mark draft <id>`. Do not mark `todo`. Owner accepts, then decompose
+- legacy design-profile ticket filled and waiting for accept: `tk mark draft <id>`. Do not mark `todo`. Owner accepts, then decompose. A design document is not this task
 - still mid-work (Progress remains): leave `in-progress`
 
 If capture rewrote in place to another profile, close as that profile.

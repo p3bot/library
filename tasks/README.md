@@ -30,7 +30,7 @@ tasks/<domain>/<name>/
 
 ### design/
 
-- [design/review](design/review/) - Review a design-profile ticket before decompose
+- [design/review](design/review/) - Review a design document before decompose
 
 ### git/
 

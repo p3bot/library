@@ -4,7 +4,7 @@ Using tk, continue this ticket.
 
 ## Sync
 
-When `tk status mode` is `tk-driven`, run `tk sync` first. Skip on repo-driven and plain-files. If sync needs-attention, stop.
+When `tk pulse mode` is `tk-driven`, run `tk sync` first. Skip on repo-driven and plain-files. If sync needs-attention, stop.
 
 After ticket-body edits, `tk sync` again on tk-driven. `mark` already self-commits.
 
@@ -16,7 +16,13 @@ Do not run `tk doctor` unless `tk get` or `tk mark` fails.
 
 The ticket id is the instruction. If none was supplied, ask for it. Do not guess or claim the next ticket.
 
-Run `tk get <id>`, then `tk mark in-progress <id>` whatever status it had. This unarchives `done` and `cancelled`. The last path `tk mark` printed is the working path; it replaces the earlier `tk get` path.
+Run `tk get <id>`. Unknown ticket id: run `tk design get <id>`. A path means this id is a design document. Stop. Do not `tk mark` it. Edit under its H1. When the shape is still open, run the design session against that path:
+
+```bash
+start get contexts:design/writing
+```
+
+On a ticket path, `tk mark in-progress <id>` whatever status it had. This unarchives `done` and `cancelled`. The last path `tk mark` printed is the working path; it replaces the earlier `tk get` path.
 
 ### Step 2: Work
 
@@ -33,7 +39,7 @@ Same Close table as `tasks:tk/id/build`. Mark from the outcome of this run. Do n
 - implement, decide, investigate, or a bug whose work was a fix — success: `tk mark done <id>`
 - bug blocked outside this session: record Blocked on / Already done and `tk mark blocked <id>`
 - capture stop or stub: `tk mark draft <id>`
-- design filled and waiting for accept: `tk mark draft <id>`. Do not mark `todo`. Owner accepts, then decompose
+- legacy design-profile ticket filled and waiting for accept: `tk mark draft <id>`. Do not mark `todo`. Owner accepts, then decompose. A design document is not this task
 - still mid-work (Progress remains): leave `in-progress`
 
 If capture rewrote in place to another profile, close as that profile.

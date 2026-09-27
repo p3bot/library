@@ -94,9 +94,9 @@ If the design is a focused feature, a localised change, or a tightly coupled set
 
 ### Phase 1: Orient
 
-1. Identify the design from the user's instructions. If they named a ticket id, `tk get <id>`. If they named a path, use it (a tk ticket path or a leftover unmanaged design document). If they asked you to find it, look where they pointed. Otherwise ask. One design may span multiple files — read all they named. Input is a design-profile ticket, or a leftover unmanaged design document until it is moved into tk.
+1. Identify the design from the user's instructions. If they named an id, run `tk design get <id>`. A path on stdout is the design document. `design_id:` and no path: stop. Do not run `tk get`. Unknown design id: run `tk get <id>`. A path is a legacy design-profile ticket. If they named a path, use it. If they asked you to find it, look where they pointed. Otherwise ask. One design may span multiple files — read all they named. Input is a design document, a legacy design-profile ticket, or a leftover unmanaged design document.
 
-2. Confirm the design is ready for decomposition. If it still has unresolved architectural decisions, open alternatives, or contradictions, stop and say so. Point the owner at design review rather than inventing ticket boundaries around unfinished design.
+2. Confirm the design is ready for decomposition. A design document must be `accepted`. If it is `draft`, stop unless the owner explicitly accepts the design in this session. Then `tk design mark accepted` and continue. If it is `decomposed` or `superseded`, stop and say so. A legacy ticket has no design status. If the design still has unresolved architectural decisions, open alternatives, or contradictions, stop and say so. Point the owner at design review rather than inventing ticket boundaries around unfinished design.
 
 3. Load the ticket writing guide:
 
@@ -155,14 +155,14 @@ Once the owner accepts the breakdown:
 
 1. Follow `start get contexts:ticket/writing` for profiles, structure, and principles.
 2. Write one ticket document per accepted ticket, using the profile that fits that unit.
-3. If the design is a tk ticket, `tk create` each accepted follow-up in that ticket's scope (`--scope` is the scope name, not the ticket id) and fill under the H1. Unmanaged File Placement does not apply. If leftover unmanaged, use the same tk-versus-unmanaged rule as `tasks:ticket/create`.
+3. When `command -v tk` succeeds and they did not ask for an unmanaged path, `tk create` each accepted follow-up. `--scope` is the design's scope name, not the design id or a ticket id. Fill under the H1. Unmanaged File Placement does not apply. Otherwise use the writing guide's unmanaged File Placement.
 4. Each document must stand alone. Reference the design and relevant design records in References. Do not assume the next agent has read sibling tickets — state only what that ticket needs, including which dependency tickets must already be done.
 5. Encode dependencies across the set (Implementation Plan order on implement tickets, and in any frontmatter or index the repo uses).
 6. Right-size sections per ticket. A small ticket omits empty sections. Do not force nine implement sections onto investigate or decide units.
-7. If the design is a tk ticket, `tk mark done` on it
+7. If the design is a design document, `tk design meta add <design-id> produces <full-ticket-id>` for each follow-up after that ticket exists, then `tk design mark decomposed <design-id>`. If the design is a legacy design-profile ticket, `tk mark done` on it. An unmanaged file has no status to mark
 8. Report what was written: paths or ids, titles, profiles, dependency order, and any open questions still owned by the human
 
-If the owner wants only the plan and will write tickets later, stop after Phase 4. Do not mark the design done.
+If the owner wants only the plan and will write tickets later, stop after Phase 4. Do not mark the design `decomposed` or `done`. Leave a design document `accepted` if the owner already accepted it, and `draft` if they have not.
 
 ## Proposal Format
 
@@ -263,4 +263,5 @@ Done means:
 - Dependencies and order stated
 - Owner approved the breakdown
 - If requested: ticket documents written per the ticket writing guide, each standalone, right-sized, and on the profile that fits
-- If the design is a tk ticket and follow-ups were written: that design marked `done`
+- If follow-ups were written for a design document: each id is on `produces` and the design is `decomposed`
+- If follow-ups were written for a legacy design-profile ticket: that ticket marked `done`

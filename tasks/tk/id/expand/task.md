@@ -6,7 +6,7 @@ Using tk, expand this ticket to the ticket writing guide.
 
 ## Sync
 
-When `tk status mode` is `tk-driven`, run `tk sync` first. Skip on repo-driven and plain-files. If sync needs-attention, stop.
+When `tk pulse mode` is `tk-driven`, run `tk sync` first. Skip on repo-driven and plain-files. If sync needs-attention, stop.
 
 After ticket-body edits, `tk sync` again on tk-driven. `mark` already self-commits.
 
@@ -18,7 +18,9 @@ Do not run `tk doctor` unless `tk get` or `tk mark` fails.
 
 The ticket id is the instruction. If none was supplied, ask for it. Do not guess or claim the next ticket.
 
-Run `tk get <id>`. Apply the terminal test to that path and status before any mark.
+Run `tk get <id>`. Unknown ticket id: run `tk design get <id>`. A path means this id is a design document. Stop. Edit that file under the H1. Do not rewrite it as a ticket.
+
+On a ticket path, apply the terminal test to that path and status before any mark.
 
 A ticket is terminal when the path is under `archive/`, or when its status is `done` or `cancelled`.
 
@@ -53,21 +55,24 @@ If the match is capture, promote to implement (or design, decide, or investigate
 
 If the match is stub, rewrite into the profile the work actually is (often capture or implement), not always implement.
 
-If the ticket plus the codebase is enough to fill that profile's required identifying headings without inventing an owner decision, write. Do not interview. Do not hold a design session.
+If the ticket plus the codebase is enough to fill that profile's required identifying headings without inventing an owner decision, write. Do not interview. Do not open a design document yet.
 
 An owner decision is a choice a competent agent cannot settle from the repo: what the user meant, where the boundary is, which approach, what done looks like when several readings fit.
 
-If owner decisions remain, hold a design session before writing:
+If owner decisions remain, settle them with the owner before writing:
 
 - Say what you think the ticket is, and what you cannot settle
 - For each unknown: the options, your recommendation, why
 - Right-size the conversation. One unknown is one question. Several related unknowns are one short exchange
 - Do not send a section questionnaire
-- Do not write a separate design document. Resolutions belong in the ticket
+- When the work is a design, the settled shape is a design document, not a rewrite of this ticket
+- When the work is another profile, resolutions belong in this ticket
 - Do not guess. Wait
 - If the work is more than one implementation pass, say so before writing
 
-Then rewrite under the H1 following the loaded guide. Right-size: omit any optional section that does not apply. Keep identifying headings even when empty. Record References for sources consulted. Preserve the YAML frontmatter. Do not change status here.
+If the profile to write is design, `tk design create` in this ticket's scope (`--scope` is the scope name, not the ticket id). Fill the design section under that H1. Do not paste a second heading. Do not leave the design spine on this ticket. Name the new design id under Notes. Leave the design `draft`. If `tk pulse mode` is `tk-driven`, `tk sync` after that body fill. Leave this ticket's status to Step 4.
+
+Otherwise rewrite under the H1 following the loaded guide. Right-size: omit any optional section that does not apply. Keep identifying headings even when empty. Record References for sources consulted. Preserve the YAML frontmatter. Do not change status here.
 
 ### Step 4: Status
 

@@ -110,7 +110,7 @@ Work the matched profile. Keep the target in a working state between steps when 
   start get contexts:design/writing
   ```
 
-  Run that session against this ticket. Fill the existing document; do not create a second ticket. Do not mark the ticket done. If the shape is already closed enough to decompose or to stop, do not rerun the session; report that the owner must accept, then decompose
+  Run that session against this document. Fill the existing file; do not create a second document. Do not mark a design document `decomposed`. Do not `tk mark done` a legacy design-profile ticket. If the shape is already closed enough to decompose or to stop, do not rerun the session. Report that the owner must accept, then decompose. Owner accept on a design document is `tk design mark accepted`
 - decide: record Decision, Rationale, Rejected alternatives, and Follow-up. Do not guess among owner decisions. Create follow-up tickets only after the owner approves
 - investigate: answer the question. Fill Recommendation so a later session can act without re-deriving it. No product change. Create follow-up tickets only after the owner approves
 - bug: diagnose and fix, or record Blocked on / Already done when the next step is outside this session
@@ -125,7 +125,7 @@ Do not introduce new patterns unless the ticket document explicitly calls for on
 
 ### 3. Verify
 
-Check that profile's done-condition. For implement, run the Acceptance Criteria. For design, closed enough to decompose or to stop means ready for the owner to accept, not to mark the ticket done. When the work changed the target system, also run the repo's verification commands — tests, build, lint, format, and type checks. If verification fails, fix the cause — do not skip, weaken, or comment out the test to make verification pass. If an acceptance criterion itself is wrong or unverifiable, raise it as a gap.
+Check that profile's done-condition. For implement, run the Acceptance Criteria. For design, closed enough to decompose or to stop means ready for the owner to accept. On a design document that is `tk design mark accepted`. On a legacy design-profile ticket, leave the ticket status unchanged. When the work changed the target system, also run the repo's verification commands — tests, build, lint, format, and type checks. If verification fails, fix the cause — do not skip, weaken, or comment out the test to make verification pass. If an acceptance criterion itself is wrong or unverifiable, raise it as a gap.
 
 ### 4. Report
 
@@ -136,7 +136,7 @@ Summarise the work so the owner can verify without re-reading the ticket documen
 - Acceptance criteria — each criterion and the verification result (implement)
 - Decision — the recorded choice (decide)
 - Recommendation — the recorded answer (investigate)
-- Design — whether the shape is closed enough to decompose (design). Do not mark the ticket done; the owner accepts, then decompose
+- Design — whether the shape is closed enough to decompose. On a design document, owner accept is `tk design mark accepted`. On a legacy design-profile ticket, do not mark the ticket done
 - Deviations — from the Implementation Plan or Implementation Guidance, with reasons. Requirements or Constraints that could not be met should already appear as surfaced gaps; do not record them only at report time
 - Open gaps — items surfaced during the work that remain unresolved
 - Follow-ups — out-of-scope improvements worth flagging, or tickets the owner would need to approve
@@ -152,4 +152,4 @@ When the work reveals something the matched profile needs is missing or ambiguou
 3. For blocking gaps, raise the issue and request a decision before continuing.
 4. For non-blocking gaps, note them in your final report so they can be addressed as follow-up.
 
-Do not invent an Implementation Plan for a decide, design, or investigate ticket in order to keep moving.
+Do not invent an Implementation Plan for a decide, design, or investigate document in order to keep moving.

@@ -22,7 +22,7 @@ The guide is the single source of truth for how a ticket document is written. Fo
 
 ### Step 3: Choose a Profile and Gather
 
-Ask which profile fits, or infer from what they said. Gather only that profile's inputs. Do not gather implement sections for a capture, decide, design, bug, or investigate ticket.
+Ask which profile fits, or infer from what they said. Gather only that profile's inputs. Do not gather implement sections for a capture, decide, design, bug, or investigate profile.
 
 Gather the inputs only the user can provide, and investigate the rest from the repository. Right-size: omit any optional section that does not apply. Keep identifying headings even when empty.
 
@@ -30,7 +30,9 @@ Gather the inputs only the user can provide, and investigate the rest from the r
 
 Write the document following the structure, formatting, and principles defined by the writing guide loaded in Step 2.
 
-If `command -v tk` succeeds and they did not ask for an unmanaged path, `tk create` with a title from what they named, or from Problem, Summary, or Goal. Do not gather a Goal just to name the file. Add `--tag design` when the profile is design. Fill under the H1 `tk create` printed. Unmanaged File Placement does not apply.
+If the profile is design and `command -v tk` succeeds and they did not ask for an unmanaged path, `tk design create` with a title from what they named, or from Summary, Problem, or Goal. Do not gather a Goal just to name the file. Fill under the H1 `tk design create` printed. Unmanaged File Placement does not apply. Leave status `draft`.
+
+If the profile is not design and `command -v tk` succeeds and they did not ask for an unmanaged path, `tk create` with a title from what they named, or from Problem, Summary, or Goal. Do not gather a Goal just to name the file. Fill under the H1 `tk create` printed. Unmanaged File Placement does not apply.
 
 Otherwise follow the writing guide's unmanaged File Placement. Write the markdown file yourself at the chosen path.
 

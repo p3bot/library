@@ -4,7 +4,7 @@ This directory holds the ticket review task. This README documents the reasoning
 
 ## Purpose
 
-The task reviews a ticket document against its matched profile. The goal is a self-contained ticket a fresh-session agent can act on. Design-profile tickets dispatch to `tasks:design/review`. Capture may wrap as not ready to implement rather than a findings walk.
+The task reviews a ticket document against its matched profile. The goal is a self-contained ticket a fresh-session agent can act on. A design-profile match, including a legacy design-profile ticket, dispatches to `tasks:design/review`. Capture may wrap as not ready to implement rather than a findings walk.
 
 ## Workflow Context
 

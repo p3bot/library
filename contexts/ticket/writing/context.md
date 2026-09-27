@@ -14,18 +14,19 @@ Profile is inferred from headings under the H1. Do not declare profile in frontm
 - Direct language — "do X" or "do not do X", not "consider doing X"
 - Profile is inferred from the headings present under the H1, matched against this guide
 - Headings that identify a profile stay even when their body is empty. Omit-if-empty applies to the rest of that profile's list
-- Tags are optional board lenses. Tag `design` when the ticket is a design. Do not require a tag for the other profiles
+- Tags are optional board lenses on tickets. A design document has no tags. Do not require a tag for a profile
 - Resolve settled issues into the body. Open questions are allowed when they are the work (investigate, decide) or when they still need an owner (design)
 
-Pick one profile. Do not mix two full spines in one ticket. A capture may later be rewritten into another profile. A design decomposes into later tickets rather than growing an Implementation Plan in the same body.
+Pick one profile. Do not mix two full spines in one document. A capture may later be rewritten into another profile. A design decomposes into later tickets rather than growing an Implementation Plan in the same body.
 
 Decision and Recommendation identify profiles. Fold finding content into the chosen profile. Do not paste finding-template headings (Decision, Options, Recommendation, Simple Explanation, Details) as ticket headings unless that profile owns them.
 
 ## File placement
 
-Two cases:
+Three cases:
 
-- tk: the path `tk create` printed. Unmanaged File Placement does not apply. Fill under the existing H1. Do not paste a second heading. Do not hand-edit the fence
+- Design document: the path `tk design create` printed. Unmanaged File Placement does not apply. Fill under the existing H1. Do not paste a second heading. Do not hand-edit the fence. Set status with `tk design mark`. Set `produces` with `tk design meta add` and `tk design meta remove`
+- Ticket: the path `tk create` printed. Unmanaged File Placement does not apply. Fill under the existing H1. Do not paste a second heading. Do not hand-edit the fence
 - Unmanaged: use the path they gave. If none, ask, offering to continue any existing `NN-<slug>.md` sequence at the repository root, else a short kebab-case name from what they named, or from Problem, Summary, or Goal. Do not gather a Goal just to name the file. Place it at the repository root unless they specified a different location
 
 ## How to choose a profile
@@ -34,7 +35,7 @@ Two cases:
 - bug: something is wrong. Repro and expected versus actual matter more than a feature plan
 - investigate: the deliverable is knowledge or a recommendation. No product change in this ticket
 - decide: the deliverable is a recorded choice. A later ticket may build
-- design: the deliverable is the shape of a solution. Tag `design`. Do not implement from this ticket
+- design: the deliverable is the shape of a solution. New work is a design document from `tk design create`. Do not implement from it. A ticket that already carries this profile stays a ticket until it is migrated
 - implement: the deliverable is a change in the target system
 
 If several readings fit, prefer the one whose done-condition matches what the owner wants from this ticket.
@@ -110,11 +111,11 @@ Same spine as investigate (those sections omit if empty), then these headings al
 - Rejected alternatives
 - Follow-up
 
-A ticket with a Decision heading is decide from create time. Done when the choice is in the body. Follow-up names the implement or design tickets that should exist after, created only when the owner asks.
+A ticket with a Decision heading is decide from create time. Done when the choice is in the body. Follow-up names the implement tickets or design documents that should exist after, created only when the owner asks.
 
 ## design
 
-Tag `design`. This profile owns the document shape.
+This profile owns the document shape. New design work is a design document, not a board ticket. A ticket that already has these headings is legacy and stays a ticket until it is migrated.
 
 Sections, in this order. Goals and Non-Goals, Proposed Design, and Alternatives Considered stay even when empty. Other sections omit if empty.
 
@@ -170,9 +171,21 @@ Prior art, similar systems, benchmarks, and documentation consulted. Give the lo
 
 The later tickets this design should produce after the owner accepts. Decompose creates them. Do not grow an Implementation Plan in this body.
 
-Done when the shape is closed enough to decompose or to stop. Do not implement product code in this ticket. Decompose into later tickets after the owner accepts the design. Build, continue, and begin do not mark this profile done. Decompose marks it done after it writes the follow-ups.
+Done when the shape is closed enough to decompose or to stop. Do not implement product code from this document.
 
-Review of a design-profile ticket is `tasks:design/review`.
+A new design is a design document. `tk design create` scaffolds `design/<id>-<slug>.md` with status `draft`. The file stays in `design/`. Statuses are `draft`, `accepted`, `decomposed`, and `superseded`, set with `tk design mark`. Any of the four may be marked from any of the four. A ticket status is a usage error.
+
+Writing and review leave it `draft`. The owner accepts with `tk design mark accepted`. Decompose writes the follow-up tickets, then `tk design meta add <design-id> produces <full-ticket-id>` for each ticket that now exists, then `tk design mark decomposed`. `produces` is one way. There is no back-link on the ticket. Do not put a design id on `depends` or `related`.
+
+Stopping after a breakdown proposal does not mark `decomposed`. Leave `accepted` if the owner already accepted the design, and `draft` if they have not. A replacement design, including a split, marks the old file `superseded`.
+
+`tk design create` and edits under the H1 do not self-commit. On a tk-driven scope, `tk sync`. `tk design mark` and `tk design meta add|remove` self-commit and do not push. `tk get` does not open a design. `tk design get` does not open a ticket. Two design files that share a short id make `get`, `mark`, and `meta` refuse and print no path.
+
+Build, continue, and begin do not mark this profile done.
+
+A legacy design-profile ticket is a board ticket that already has these headings. It stays a ticket until it is migrated. Decompose of that ticket still ends with `tk mark done`. Do not create another one. New design work is `tk design create`.
+
+Review is `tasks:design/review`.
 
 ## implement
 
@@ -230,7 +243,7 @@ Optional Progress when the work will span sessions or already has.
 
 ## Progress
 
-Not a profile. Add under implement, or under a long design or investigate, when a later agent will continue the same ticket.
+Not a profile. Add under implement, or under a long design or investigate, when a later agent will continue the same ticket or design document.
 
 Place after the last profile section. Omit empty overlay headings.
 
@@ -253,6 +266,6 @@ Treat it as a stub only if:
 - Primary content is a log, paste, or error dump
 - Relies on conversation context ("as discussed", "you can see below")
 
-A capture with Problem and Done when matches. A thin implement that has Goal, Requirements, and Acceptance Criteria matches. A decide ticket with an empty Decision heading matches. Quality of the plan is review, not expand.
+A capture with Problem and Done when matches. A thin implement that has Goal, Requirements, and Acceptance Criteria matches. A decide ticket with an empty Decision heading matches. A design document with Goals and Non-Goals, Proposed Design, and Alternatives Considered matches. Quality of the plan is review, not expand.
 
 Missing Requirements is not a stub if the headings match capture, bug, investigate, decide, or design.

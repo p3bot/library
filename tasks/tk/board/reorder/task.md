@@ -10,14 +10,14 @@ A ticket is terminal when its status is `done` or `cancelled`.
 
 ## Prepare
 
-- Sync: when `tk status mode` is `tk-driven`, run `tk sync` first. Skip on repo-driven and plain-files. If sync needs-attention, stop.
+- Sync: when `tk pulse mode` is `tk-driven`, run `tk sync` first. Skip on repo-driven and plain-files. If sync needs-attention, stop.
 - Doctor: Run bare `tk doctor`. Mechanical `--repair` if those tokens are present. `--repair` rewrites ids, equal order keys, and archive layout. State what it will do before running it.
 
 ### Inventory
 
 - Board: Run `tk list --all --no-lens` to get the full non-terminal set - TSV columns: id, status, title.
 - Ignore every terminal row
-- Do not use `tk status` counts as the board. They are lens-filtered.
+- Do not use `tk pulse` counts as the board. They are lens-filtered.
 
 ## Sequence
 

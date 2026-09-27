@@ -18,4 +18,4 @@ Run the following command to load the implementation guide and follow it:
 start get contexts:ticket/implementation
 ```
 
-The guide defines the shared workflow — Orient, Work, Verify, Report, Progress, gaps — and works the matched profile the same way `tasks:tk/id/build` would, unmanaged or tk. Do not invent an Implementation Plan for a profile that has none. For design, that guide loads the design session; do not treat the ticket as complete — the owner accepts, then decompose. Ask the user for input only when genuinely blocked.
+The guide defines the shared workflow — Orient, Work, Verify, Report, Progress, gaps — and works the matched profile the same way `tasks:tk/id/build` would, unmanaged or tk. Do not invent an Implementation Plan for a profile that has none. For design, that guide loads the design session. Do not treat the document as complete. The owner accepts, then decompose. On a design document, accept is `tk design mark accepted`. On a legacy design-profile ticket, leave the ticket status unchanged. Ask the user for input only when genuinely blocked.

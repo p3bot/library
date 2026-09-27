@@ -32,7 +32,7 @@ Finding no new issues is a valid outcome. If the ticket document is complete and
    start get tasks:design/review
    ```
 
-   Run that walk on the already resolved path. Skip Identification in the fetched task. Do not copy design-review concerns into this task. Stop this task's remaining phases after that walk. Do not mark `todo`. Sound means the owner accepts, then decompose. Resume the caller if any (`tasks:tk/id/review` Step 4 still runs).
+   Run that walk on the already resolved path. Skip Identification in the fetched task. Do not copy design-review concerns into this task. Stop this task's remaining phases after that walk. Do not mark `todo`. Sound means the owner accepts, then decompose. On a design document, accept is `tk design mark accepted`. On a legacy design-profile ticket, leave the ticket status unchanged. Resume the caller if any (`tasks:tk/id/review` Step 4 still runs).
 4. If the matched profile is capture, skip to Phase 4 and declare not ready to implement rather than inventing a findings walk, unless the owner asked to review the capture as a plan.
 5. Read the ticket document thoroughly.
 6. Run the Size and Coherence Check (below) on implement tickets, and on bug tickets when the work is a fix. If it fires, still produce the report header and What this ticket does, then skip to Phase 4 and declare Split the ticket.
@@ -308,13 +308,13 @@ Per-item `T` creates one tk ticket for that finding and continues the walk. Top-
 
 When `T` is selected:
 
-1. Run `tk create` with a title from the finding's short title (per-item) or a title covering the remaining set (top-level). When the subject is a tk ticket, create in that ticket's scope (`--scope` is the scope name, not the ticket id). Otherwise omit `--scope` unless they named one
+1. Run `tk create` with a title from the finding's short title (per-item) or a title covering the remaining set (top-level). When the subject is a design document or a tk ticket, create in that subject's scope (`--scope` is the scope name, not the id). Otherwise omit `--scope` unless they named one
 2. Then `start get contexts:ticket/writing` if it is not already loaded. Never fetch the writing guide at start
 3. The writing guide's File Placement section does not apply. The path is the one `tk create` printed
 4. Fill under that H1. Do not paste a second heading
 5. Fill the profile that fits the finding or gap. Do not mix two full spines
 6. Track as `Ticket: <id>`
-7. If `tk status mode` is `tk-driven`, `tk sync` after the body fill
+7. If `tk pulse mode` is `tk-driven`, `tk sync` after the body fill
 
 Per-item fill: the ticket is that finding. Fold the instance, explanation, options, and recommended resolution into the chosen profile's sections. Do not paste finding-template headings (Decision, Options, Recommendation, Simple Explanation, Details) as ticket headings unless that profile owns them.
 
