@@ -270,7 +270,7 @@ contexts: {
 	}
 	"ticket/implementation": {
 		module:      "github.com/p3bot/library/contexts/ticket/implementation@v1"
-		version:     "v1.3.0"
+		version:     "v1.4.0"
 		description: "Guide for working a ticket document by profile as the sole context for the work"
 		tags: ["ticket", "implementation", "implement", "implementing", "execution", "delivery", "documentation", "guide", "agents"]
 	}
@@ -468,7 +468,7 @@ tasks: {
 	}
 	"cwd/dotagents/role/create": {
 		module:      "github.com/p3bot/library/tasks/cwd/dotagents/role/create@v1"
-		version:     "v1.1.0"
+		version:     "v1.2.0"
 		description: "Create a new system prompt (role) for AI agent use"
 		tags: ["dotagents", "cwd", "role", "system-prompt", "ai"]
 	}

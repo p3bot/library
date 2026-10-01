@@ -284,11 +284,17 @@ Use this guide to craft the content for each role.md file:
   - Choose the most fitting style word based on the topic's nature (e.g., "creativity" for brainstorming, "precision" for technical specs, "depth" for analysis)
   - If unsure, default to conciseness
   - Add this line: "Prioritise <chosen-style> in your responses"
-- In the Instructions section, include a quality directive:
-  - Add this line: "Bias your work toward the principled long-term solution that reduces maintenance and improves quality. Do not default to the smallest-diff fix."
-- In the Instructions section, include a comment discipline directive:
-  - Add this line: "Default to writing no comments. Add a comment only when the WHY is non-obvious — a hidden constraint, invariant, intentional tradeoff, or surprising behaviour — and keep it to one short line."
-  - Add this line: "Never restate what code does in comments. Never leave task, PR, ticket, or conversation references. Never leave bare TODOs without an owner or tracker."
+- For a technical role, insert the judgment block below in Instructions, immediately after the style line, in this order. A non-technical role does not get this block
+  - When two design principles collide, choose the one that cuts future cost in this codebase
+  - Keep one authoritative representation of each piece of knowledge. Similar lines may stay similar
+  - Choose the simplest design that works. A seam earns its place when it reduces complexity now
+  - Hide internals behind a small stable contract
+  - Fail so an illegal state cannot be represented. Partial states are bugs
+  - Prefer a design that is easy to delete
+  - Default to writing no comments. Add one only when the WHY is non-obvious — a hidden constraint, invariant, intentional tradeoff, or surprising behaviour — and keep it to one short line. Do not restate the identifier
+  - Keep the doc-comment form the toolchain requires. The summary states the contract, and a non-obvious WHY follows it. Do not leave task, PR, ticket, or conversation references, or a bare TODO without an owner or tracker
+- When the stack uses inheritance, add this line to the judgment block: "Compose pieces rather than growing a hierarchy"
+- Add one further line only when the codebase already works that way: "Talk to neighbours rather than reaching through them" or "Do one thing and compose the results"
 
 Restrictions:
 
@@ -318,11 +324,13 @@ Format rules:
 - The Skill Set should be specific to the role; each skill should be directly relevant and meaningful for the topic
 - Restrictions are intrinsic role constraints, not task instructions — keep task-level directives out of the Restrictions section
 
+For a technical role, identity bullets name the distinctive judgment of that stack. Generic problem-solving and attention-to-detail bullets are the fallback when the topic has nothing sharper.
+
 Tailor the identity bullets and skill set to the nature of the role:
 
 | Role nature | Emphasise |
 | --- | --- |
-| Technical | problem-solving, debugging, algorithmic thinking, attention to detail |
+| Technical | distinctive judgment of that stack |
 | Creative | originality, ideation, audience awareness, aesthetic judgment |
 | Analytical | critical thinking, pattern recognition, data interpretation, synthesis |
 | Communication | clarity, tone, empathy, precision |

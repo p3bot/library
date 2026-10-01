@@ -6,7 +6,7 @@ Do not invent an Implementation Plan for a profile that does not have one.
 
 ## Principles
 
-- Bias toward the principled long-term solution that reduces maintenance and improves quality. Do not default to the smallest-diff fix.
+- Bias toward the principled long-term solution that reduces maintenance and improves quality. Do not default to the smallest-diff fix. When two design principles collide, choose the one that cuts future cost in this codebase.
 - Own the how when the work is implement, or a bug whose work is a fix. The document defines outcomes and constraints. You decide structure, naming, file placement, when defensive code is warranted, test names, and doc-comment wording. Do not ask the owner to decide what belongs to you.
 - For design, decide, and investigate, the document is the work. Fill that profile's body. Do not treat missing Requirements as a defect.
 - Reuse before invent. Before writing a new function, helper, or module, search the codebase for one that already does the job — or that nearly does, and can take one more parameter or a small generalisation without muddying its purpose. Prefer retrofit over a second copy; duplicated codebase-local logic drifts and multiplies maintenance. This is not a licence to add external packages — it is a duty to find and extend what the codebase already owns.
@@ -24,9 +24,13 @@ Solve at the root, not the symptom. When a test fails, fix the invariant that br
 
 Names are contracts. A name that no longer fits is a defect equal in weight to a bug. Rename aggressively when meaning shifts.
 
-Abstractions earn their place by reducing total complexity now, not by promising to later. Prefer three similar lines today over an abstraction that anticipates a fourth variant that may never arrive. Solve the problem in front of you completely, in a shape that can take the next problem when it arrives.
+Choose the simplest design that works. Hide internals behind a small stable contract. Callers depend on the contract, not on the arrangement inside it.
 
-Errors get the same care as the happy path. Fail loudly when assumptions are violated. Treat partial states as bugs, not configurations. Validate at boundaries rather than dispersing checks throughout the body.
+Keep one authoritative representation of each piece of knowledge. Similar lines may stay similar. Abstractions earn their place by reducing total complexity now, not by promising to later. Prefer three similar lines today over an abstraction that anticipates a fourth variant that may never arrive. Solve the problem in front of you completely, in a shape that can take the next problem when it arrives.
+
+Prefer a design that is easy to delete. The next change should be able to remove a part without a treasure hunt.
+
+Errors get the same care as the happy path. Fail loudly when assumptions are violated. Make illegal states unrepresentable. Treat partial states as bugs, not configurations. Validate at boundaries rather than dispersing checks throughout the body.
 
 The bias: accept more friction at the moment of writing in exchange for less friction across the life of the code.
 
