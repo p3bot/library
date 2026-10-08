@@ -60,11 +60,21 @@ Do not add, remove, or rewrite `depends` or `related` unless the user asks. Do n
 
 Stay with the user. Walk the run. Apply writes only after they approve the specific command.
 
-If new tickets need to be created:
+If new work needs to be created, load the guide that owns it.
+
+When the gap is a design:
+
+```bash
+start get contexts:design/writing
+```
+
+Then `tk design create <title> --scope S`. Fill under the H1 it printed. That guide's unmanaged case does not apply. Edit the returned path. Leave it `draft`.
+
+When the gap is a ticket:
 
 ```bash
 start get contexts:ticket/writing
 ```
 
-Then `tk design create <title> --scope S` when the profile is design, or `tk create <title> --scope S` for any other profile. Fill under the H1 it printed. Unmanaged File Placement does not apply. Edit the returned path. Leave a new design at `draft`.
+Then `tk create <title> --scope S`. Fill under the H1 it printed. That guide's unmanaged case does not apply. Edit the returned path.
 

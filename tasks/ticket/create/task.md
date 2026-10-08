@@ -12,7 +12,15 @@ A library ticket document is a standalone markdown document (profile and section
 
 ### Step 2: Load the Writing Guide
 
-Run the following command to load the ticket writing guide, which defines the canonical structure, sections, formatting, principles, and profiles for ticket documents:
+If the work is a design, stop this task and run the design session. Pass through any path they named.
+
+```bash
+start get contexts:design/writing
+```
+
+Follow that guide. Do not gather a design here.
+
+Otherwise load the ticket writing guide, which defines the canonical structure, sections, formatting, principles, and profiles for ticket documents:
 
 ```bash
 start get contexts:ticket/writing
@@ -22,7 +30,7 @@ The guide is the single source of truth for how a ticket document is written. Fo
 
 ### Step 3: Choose a Profile and Gather
 
-Ask which profile fits, or infer from what they said. Gather only that profile's inputs. Do not gather implement sections for a capture, decide, design, bug, or investigate profile.
+Ask which profile fits, or infer from what they said. Gather only that profile's inputs. Do not gather implement sections for a capture, decide, bug, or investigate profile.
 
 Gather the inputs only the user can provide, and investigate the rest from the repository. Right-size: omit any optional section that does not apply. Keep identifying headings even when empty.
 
@@ -30,9 +38,7 @@ Gather the inputs only the user can provide, and investigate the rest from the r
 
 Write the document following the structure, formatting, and principles defined by the writing guide loaded in Step 2.
 
-If the profile is design and `command -v tk` succeeds and they did not ask for an unmanaged path, `tk design create` with a title from what they named, or from Summary, Problem, or Goal. Do not gather a Goal just to name the file. Fill under the H1 `tk design create` printed. Unmanaged File Placement does not apply. Leave status `draft`.
-
-If the profile is not design and `command -v tk` succeeds and they did not ask for an unmanaged path, `tk create` with a title from what they named, or from Problem, Summary, or Goal. Do not gather a Goal just to name the file. Fill under the H1 `tk create` printed. Unmanaged File Placement does not apply.
+If `command -v tk` succeeds and they did not ask for an unmanaged path, `tk create` with a title from what they named, or from Problem, Summary, or Goal. Do not gather a Goal just to name the file. Fill under the H1 `tk create` printed. Unmanaged File Placement does not apply.
 
 Otherwise follow the writing guide's unmanaged File Placement. Write the markdown file yourself at the chosen path.
 

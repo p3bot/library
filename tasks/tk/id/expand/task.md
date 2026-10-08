@@ -2,7 +2,7 @@
 
 Using tk, expand this ticket to the ticket writing guide.
 
-`contexts:ticket/writing` is fetched later. This envelope is the only binding source for path, edits, and status.
+`contexts:ticket/writing` is fetched later. On the design branch, `contexts:design/writing` is fetched for the document shape. This envelope is the only binding source for path, edits, and status.
 
 ## Sync
 
@@ -70,7 +70,13 @@ If owner decisions remain, settle them with the owner before writing:
 - Do not guess. Wait
 - If the work is more than one implementation pass, say so before writing
 
-If the profile to write is design, `tk design create` in this ticket's scope (`--scope` is the scope name, not the ticket id). Fill the design section under that H1. Do not paste a second heading. Do not leave the design spine on this ticket. Name the new design id under Notes. Leave the design `draft`. If `tk pulse mode` is `tk-driven`, `tk sync` after the design body and this ticket's body edits. Then `tk mark done` on this ticket. The archive keeps the Notes line.
+If the profile to write is design, load the design writing guide. It supplies the document shape. This envelope still binds the path, the edits, and the status.
+
+```bash
+start get contexts:design/writing
+```
+
+`tk design create` in this ticket's scope (`--scope` is the scope name, not the ticket id). Fill the document under that H1. Do not paste a second heading. Do not leave the design spine on this ticket. Name the new design id under Notes. Leave the design `draft`. If `tk pulse mode` is `tk-driven`, `tk sync` after the design body and this ticket's body edits. Then `tk mark done` on this ticket. The archive keeps the Notes line.
 
 Otherwise rewrite under the H1 following the loaded guide. Right-size: omit any optional section that does not apply. Keep identifying headings even when empty. Record References for sources consulted. Preserve the YAML frontmatter. Do not change status here.
 

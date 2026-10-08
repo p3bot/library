@@ -264,7 +264,7 @@ contexts: {
 	}
 	"ticket/writing": {
 		module:      "github.com/p3bot/library/contexts/ticket/writing@v1"
-		version:     "v1.4.0"
+		version:     "v1.5.0"
 		description: "Guide for writing ticket documents by profile as the sole context for a fresh-session agent"
 		tags: ["ticket", "writing", "documentation", "guide", "agents", "profile"]
 	}
@@ -276,8 +276,8 @@ contexts: {
 	}
 	"design/writing": {
 		module:      "github.com/p3bot/library/contexts/design/writing@v1"
-		version:     "v1.4.0"
-		description: "Session guide for designing a system or feature, then handing off a design document"
+		version:     "v1.5.0"
+		description: "Session guide and document contract for designing a system or feature"
 		tags: ["design", "writing", "feature", "architecture", "documentation", "guide", "agents", "session"]
 	}
 	"skill/writing": {
@@ -474,8 +474,8 @@ tasks: {
 	}
 	"ticket/create": {
 		module:      "github.com/p3bot/library/tasks/ticket/create@v1"
-		version:     "v1.3.0"
-		description: "Create a ticket or design document by profile"
+		version:     "v1.4.0"
+		description: "Create a ticket document by profile"
 		tags: ["ticket", "create", "planning", "active", "current"]
 	}
 	"ticket/review": {
@@ -498,7 +498,7 @@ tasks: {
 	}
 	"design/review": {
 		module:      "github.com/p3bot/library/tasks/design/review@v1"
-		version:     "v1.8.0"
+		version:     "v1.9.0"
 		description: "Review a design document before decompose"
 		tags: ["design", "review", "feature", "analysis", "architecture", "critique"]
 	}
@@ -582,7 +582,7 @@ tasks: {
 	}
 	"tk/id/expand": {
 		module:      "github.com/p3bot/library/tasks/tk/id/expand@v1"
-		version:     "v1.5.0"
+		version:     "v1.6.0"
 		description: "Using tk, expand this ticket to a matching writing-guide profile"
 		tags: ["tk", "id", "expand", "ticket", "writing", "stub"]
 	}
@@ -606,7 +606,7 @@ tasks: {
 	}
 	"tk/scope/orchestrate": {
 		module:      "github.com/p3bot/library/tasks/tk/scope/orchestrate@v1"
-		version:     "v1.3.0"
+		version:     "v1.4.0"
 		description: "Using tk, orchestrate work across scopes"
 		tags: ["tk", "scope", "orchestrate", "ticket"]
 	}

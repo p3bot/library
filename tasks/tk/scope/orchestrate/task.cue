@@ -6,6 +6,7 @@ task: schemas.#Task & {
 	description: "Using tk, orchestrate work across scopes"
 	tags: ["tk", "scope", "orchestrate", "ticket"]
 	uses: [
+		"contexts:design/writing",
 		"contexts:ticket/writing",
 		"tasks:tk/id/continue",
 	]

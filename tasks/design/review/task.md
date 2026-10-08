@@ -87,7 +87,7 @@ After all findings have been processed, re-read the design with fresh eyes. Surf
 
    Do not mark `todo`. On Sound or Revise, leave a design document `draft`. Do not run `tk design mark accepted` in this session. The owner accepts with that command. Decompose runs it when the owner accepts there, records `produces`, and marks the design `decomposed`. Leave a legacy design-profile ticket's status unchanged. Do not `tk mark done` it from this session. Decompose marks that ticket `done`.
 
-   On Split, summarise the seam and stop. Do not create designs or change status in this turn. After the owner agrees, `tk design create` one document per independent design. `--scope` is that design's scope name, not the id. Then `start get contexts:ticket/writing`. Fill the design profile for that design under the H1 `tk design create` printed. Do not paste a second heading. Leave each `draft`. If `tk pulse mode` is `tk-driven`, `tk sync` after those body fills. Then `tk design mark superseded` on the old design document. Do not mark it before those files exist. `G` does not supersede the parent. Do not pass an unmanaged file to `tk design mark`. Leave it, and say it is leftover. A legacy design-profile ticket stays unchanged. Do not `tk mark done` it from this session.
+   On Split, summarise the seam and stop. Do not create designs or change status in this turn. After the owner agrees, `tk design create` one document per independent design. `--scope` is that design's scope name, not the id. Then `start get contexts:design/writing`. Fill that guide's document under the H1 `tk design create` printed. Do not paste a second heading. Leave each `draft`. If `tk pulse mode` is `tk-driven`, `tk sync` after those body fills. Then `tk design mark superseded` on the old design document. Do not mark it before those files exist. `G` does not supersede the parent. Do not pass an unmanaged file to `tk design mark`. Leave it, and say it is leftover. A legacy design-profile ticket stays unchanged. Do not `tk mark done` it from this session.
 2. Print a summary table of all findings and their outcomes (see Remediation Summary in the Report Format). Do not prompt to save.
 
 ## Reviewer Guidance
@@ -279,9 +279,9 @@ When the report is saved after remediation begins, append the section below. Out
 When `G` is selected:
 
 1. Run `tk design create` with a title from the finding's short title. When the subject is a design document or a tk ticket, create in that subject's scope (`--scope` is the scope name, not the id). Otherwise omit `--scope` unless they named one
-2. Then `start get contexts:ticket/writing`. Never fetch the writing guide at review start
-3. The writing guide's File Placement section does not apply. The path is the one `tk design create` printed
-4. Fill the design profile under that H1. Do not paste a second heading. Leave status `draft`. Do not mark the parent `superseded`
+2. Then `start get contexts:design/writing`. Never fetch the design guide at review start
+3. The design guide's Placement section does not apply. The path is the one `tk design create` printed
+4. Fill the document under that H1. Do not paste a second heading. Leave status `draft`. Do not mark the parent `superseded`
 5. Track as `Design: <id>` so G stays distinct from T (`Ticket: <id>`)
 6. If `tk pulse mode` is `tk-driven`, `tk sync` after the body fill
 
