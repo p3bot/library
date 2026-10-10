@@ -94,7 +94,15 @@ agents: "claude-code": {
 	tags: ["anthropic", "claude", "ai"]
 }
 
-// Example 9: Local LLM via Ollama
+// Example 9: Session id is one JSON object key on stdout
+agents: "located": {
+	bin:             "located"
+	command:         "{{.bin}} --print"
+	description:     "Agent that names where its session id sits"
+	session_locator: ["session_id"]
+}
+
+// Example 10: Local LLM via Ollama
 agents: "ollama": {
 	bin:           "ollama"
 	command:       "{{.bin}} run {{.model}} {{.prompt}}"

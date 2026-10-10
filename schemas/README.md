@@ -187,6 +187,7 @@ A library agent is a launch recipe (invocation). agentdex catalogs the outside o
 - `default_model` (string, optional) - Default model when `--model` not specified
 - `models` (map, optional) - Friendly names to full model identifiers
 - `flags` (struct, optional) - Flag table start turns into command fragments. No defaults. Maps `permission`, `effort`, and `output` send a value to a list of words. `print` has required `off` and `on` lists. `resume` has required `latest` and `id` lists. An empty list accepts the value and inserts nothing. A missing key rejects that flag. A word is a literal, or a whole word `{{.prompt}}` or `{{.resume}}`
+- `session_locator` ([]string, optional) - JSON object keys from the root of the agent's stdout to the session id. Each key is a non-empty string and contains no newline. The list itself is non-empty. Omit when the module names no locator. A step is a key, not an array index
 
 **Agent Placeholders:**
 
@@ -205,6 +206,7 @@ A library agent is a launch recipe (invocation). agentdex catalogs the outside o
 - Tags must match pattern `[a-z0-9]+(-[a-z0-9]+)*`
 - `agentdex` and `bin` are independent: command-only agents (echo, wrappers) remain valid; joined recipes may omit `bin`; unjoined agents may still set `bin`. This is policy, not a CUE oneOf
 - `models` and `default_model` are unconstrained relative to `agentdex`
+- `session_locator`, when set, is a non-empty list of non-empty strings, and no key contains a newline
 
 ### #Task
 
