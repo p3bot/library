@@ -52,6 +52,24 @@ Notes:
 - Violations print as JSON listing each offending bin and the keys involved
 - See docs/agent-patterns.md for the contract rationale
 
+## validate-schemas
+
+Vet the schemas package with the legal `session_locator` example, then require
+each fixture in `docs/examples/locator_reject/` to fail with an error that
+names `session_locator`.
+
+Usage: validate-schemas
+
+Examples:
+
+  validate-schemas
+
+Notes:
+
+- Run from anywhere; the script finds the repository root
+- Exits non-zero when the legal locator is rejected, a fixture is accepted, or a fixture fails for a reason other than `session_locator`
+- The fixtures stay outside `schemas/` so `cue vet ./...` does not load them
+
 ## publish-module
 
 Create a git tag and publish a single CUE module to the CUE registry.

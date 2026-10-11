@@ -80,6 +80,7 @@ Schema fields:
 | default_model | no | string | Default model alias (must be a key in models) |
 | models | no | map | CLI aliases (joined) or short alias to full model identifier (unjoined) |
 | flags | no | struct | Optional flag table. See Flag table |
+| session_locator | no | list of strings | JSON object keys from the root of the agent's stdout to the session id. Each key is a non-empty string and contains no newline. The list itself is non-empty. Omit when the module names no locator. A step is a key, not an array index |
 
 Command template placeholders:
 

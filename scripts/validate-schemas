@@ -1,0 +1,105 @@
+#!/usr/bin/env bash
+
+# Environment setup
+# -----------------------------------------------------------------------------
+set -o pipefail
+[[ ${DEBUG-} ]] && set -o xtrace
+SCRIPT_DIR="$(cd "${BASH_SOURCE[0]%/*}" || exit 1; pwd)"
+[[ ":${PATH}:" != *:"${SCRIPT_DIR}":* ]] && export PATH="${SCRIPT_DIR}:${PATH}"
+source "${SCRIPT_DIR}/lib.sh"
+REPO_ROOT="$(cd "${SCRIPT_DIR}/.." || exit 1; pwd)"
+
+function print_usage() {
+  cat <<EOF
+Usage: $(basename "$0")
+
+Vet the schemas package together with the legal session_locator example, then
+require each locator_reject fixture to fail with an error that names
+session_locator. The fixtures live outside schemas/ so cue vet ./... does not
+load a value that is meant to fail. A syntax error does not count: the failure
+must name the field.
+
+Dependencies:
+  cue   The CUE CLI tool
+
+Optional arguments:
+  -h, --help  Show this help message and exit
+EOF
+}
+if [[ "${1-}" == "-h" || "${1-}" == "--help" ]]; then
+  print_usage
+  exit 0
+fi
+if [[ $# -gt 0 ]]; then
+  print_usage
+  exit 1
+fi
+
+function ctrlc_trap() {
+  log_newline
+  log_warning "Script interrupted. Exiting."
+  exit 130
+}
+trap ctrlc_trap SIGINT
+
+# Title and Dependency Checks
+# -----------------------------------------------------------------------------
+log_newline
+log_title "Validate Schemas"
+
+if ! command -v cue >/dev/null; then
+  log_error "Missing dependency - 'cue'"
+  exit 1
+fi
+
+declare schemas_dir="${REPO_ROOT}/schemas"
+declare legal="${REPO_ROOT}/docs/examples/agent_session_locator.cue"
+declare reject_dir="${REPO_ROOT}/docs/examples/locator_reject"
+
+log_heading "Operational Values"
+log_message "schemas: '${schemas_dir}'"
+log_message "  legal: '${legal}'"
+log_message " reject: '${reject_dir}'"
+
+# Main Logic
+# -----------------------------------------------------------------------------
+log_heading "Legal locator"
+
+if [[ ! -d "${schemas_dir}" || ! -f "${legal}" || ! -d "${reject_dir}" ]]; then
+  log_failure "schemas, the legal locator, or locator_reject is missing"
+  exit 1
+fi
+
+if (cd "${schemas_dir}" && cue vet ./*.cue "${legal}"); then
+  log_success "legal locator unifies"
+else
+  log_failure "legal locator rejected"
+  exit 1
+fi
+
+log_heading "Rejected locators"
+
+shopt -s nullglob
+declare -a fixtures=("${reject_dir}"/*.cue)
+if [[ ${#fixtures[@]} -eq 0 ]]; then
+  log_failure "no fixtures in '${reject_dir}'"
+  exit 1
+fi
+
+declare fixture err
+for fixture in "${fixtures[@]}"; do
+  # A fixture that vets, or that fails for some other reason, is not a lock.
+  if err="$(cd "${schemas_dir}" && cue vet ./*.cue "${fixture}" 2>&1)"; then
+    log_failure "$(basename "${fixture}") was accepted"
+    exit 1
+  fi
+  if [[ "${err}" != *session_locator* ]]; then
+    log_failure "$(basename "${fixture}") failed without a session_locator error"
+    log_newline
+    echo "${err}" >&2
+    exit 1
+  fi
+  log_success "$(basename "${fixture}") rejected"
+done
+
+log_done

@@ -52,5 +52,5 @@ package schemas
 
 	// JSON object keys from the root of the agent's stdout to the session id.
 	// A step is a key. An index is not a step.
-	session_locator?: [string & !="" & !~"\n", ...(string & !="" & !~"\n")]
+	session_locator?: [...string & !="" & !~"\n"] & [_, ...]
 }

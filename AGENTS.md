@@ -185,12 +185,15 @@ Schema validation from the schemas directory:
 
 ```bash
 cd schemas
-cue vet utd.cue task.cue ../docs/examples/task_example.cue
-cue vet utd.cue role.cue ../docs/examples/role_example.cue
-cue vet utd.cue context.cue ../docs/examples/context_example.cue
-cue vet agent.cue ../docs/examples/agent_example.cue
-cue vet index.cue ../docs/examples/index_example.cue
+cue vet ./...
+cue vet *.cue ../docs/examples/task_example.cue
+cue vet *.cue ../docs/examples/role_example.cue
+cue vet *.cue ../docs/examples/context_example.cue
+cue vet *.cue ../docs/examples/agent_example.cue
+cue vet *.cue ../docs/examples/index_example.cue
 ```
+
+`scripts/validate-schemas` vets the legal `session_locator` and requires each fixture in `docs/examples/locator_reject/` to fail.
 
 Module validation from a module directory (resolves `schemas@v1` from the registry):
 

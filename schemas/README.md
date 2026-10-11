@@ -290,6 +290,8 @@ cd schemas
 cue vet ./...
 ```
 
+From the repository root, `scripts/validate-schemas` vets the legal `session_locator` and requires an empty list, an empty key, a newline, and an array index to fail. Those fixtures live in `docs/examples/locator_reject/` so `cue vet ./...` does not load them.
+
 ### Validate Examples
 
 The example files in `docs/examples/` are illustrative only. They live outside the schemas module so they do not pollute the published package, which means they are not part of `cue vet ./...`. To vet an example against the schemas, pass the full schema package alongside the example file:
