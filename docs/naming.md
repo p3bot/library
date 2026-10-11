@@ -68,7 +68,7 @@ import (
 
 ## Agents
 
-Two patterns. Leaf-only still holds: one index must not advertise a bare key and a variant key under that same tool.
+Three patterns. Leaf-only still holds: one index must not advertise a bare key and a variant key under that same tool.
 
 Claude Code, Copilot, Antigravity, and Grok are one segment, the agentdex id:
 
@@ -96,11 +96,23 @@ gemini/bypass-permissions
 aichat/interactive
 ```
 
+Hotseat member launches are `hotseat/<tool>`. They are leaves beside the one-segment product modules. `hotseat/grok` is a different leaf from `grok`. `hotseat/claude` launches Claude Code. Antigravity stays `agy`.
+
+| Segment | Required | Purpose |
+|---------|----------|---------|
+| hotseat | yes | The member-launch family |
+| tool | yes | `grok` or `claude` |
+
+```
+hotseat/grok
+hotseat/claude
+```
+
 ## Roles
 
 Pattern: `domain/[specialisation/]mode`
 
-Mode is the final segment. Normally it is one of `agent`, `assistant`, or `teacher`.
+Mode is the final segment. Normally it is one of `agent`, `assistant`, or `teacher`. `hotseat/member` is the one member role, so its final segment is `member`. Do not add `hotseat/agent`, `hotseat/assistant`, or `hotseat/teacher`.
 
 | Segment | Required | Purpose |
 |---------|----------|---------|
@@ -115,6 +127,7 @@ golang/agent
 gitlab/pipeline/assistant
 markdown/low-token/teacher
 role/design/agent
+hotseat/member
 ```
 
 Exception: file-based roles under `cwd/` and `home/` may use alternative final segments such as `default` or a filename reference (e.g., `cwd/role-md`, `cwd/dotagents/default`) where no mode applies.
@@ -136,6 +149,7 @@ cwd/agents-md
 home/dotagents/environment
 golang/design/cli
 ticket/writing
+hotseat/bus
 ```
 
 ## Tasks
@@ -239,8 +253,8 @@ Other action verbs (`read`, `review`, `research`, `debug`, and so on) are free-f
 
 | Category | Pattern | Required Segments |
 |----------|---------|-------------------|
-| Agents | `tool`, or `tool/variant` for Gemini and AIChat | tool; variant when the product stays a variant module |
-| Roles | `domain/[specialisation/]mode` | domain, mode |
+| Agents | `tool`, `tool/variant` for Gemini and AIChat, or `hotseat/grok` and `hotseat/claude` | tool; variant when the product stays a variant module |
+| Roles | `domain/[specialisation/]mode`, with `hotseat/member` as the member role | domain, mode |
 | Contexts | `domain/[specialisation/]noun` | domain, noun |
 | Tasks | `[domain/][specialisation/][noun/]action` | action |
 | Skills | `domain/[specialisation/]capability` | domain, capability |

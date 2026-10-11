@@ -76,6 +76,20 @@ agents: {
 		bin:         "agy"
 		tags: ["google", "agy", "antigravity", "coding", "agent"]
 	}
+	"hotseat/grok": {
+		module:      "github.com/p3bot/library/agents/hotseat/grok@v1"
+		version:     "v1.0.0"
+		description: "Hotseat member launch of Grok Build"
+		bin:         "grok"
+		tags: ["hotseat", "grok", "xai", "coding", "agent", "member"]
+	}
+	"hotseat/claude": {
+		module:      "github.com/p3bot/library/agents/hotseat/claude@v1"
+		version:     "v1.0.0"
+		description: "Hotseat member launch of Claude Code"
+		bin:         "claude"
+		tags: ["hotseat", "claude", "claude-code", "anthropic", "coding", "agent", "member"]
+	}
 }
 
 // Role index - maps friendly names to module paths
@@ -208,6 +222,12 @@ roles: {
 		description: "AI role designer and prompt engineering expert - instructional teacher mode"
 		tags: ["role", "prompt-engineering", "design", "teacher", "instructional", "learning"]
 	}
+	"hotseat/member": {
+		module:      "github.com/p3bot/library/roles/hotseat/member@v1"
+		version:     "v1.0.0"
+		description: "Hotseat conversation member: speech, kinds, and the acting seat"
+		tags: ["hotseat", "member", "conversation"]
+	}
 }
 
 // Context index - maps friendly names to module paths
@@ -285,6 +305,12 @@ contexts: {
 		version:     "v1.1.0"
 		description: "Guide for writing agent-facing SKILL.md files that are token-efficient without losing functionality"
 		tags: ["skill", "writing", "documentation", "guide", "agents"]
+	}
+	"hotseat/bus": {
+		module:      "github.com/p3bot/library/contexts/hotseat/bus@v1"
+		version:     "v1.0.0"
+		description: "Hotseat bus commands, kind tokens, and who a message names"
+		tags: ["hotseat", "bus", "conversation"]
 	}
 }
 
