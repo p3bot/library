@@ -41,7 +41,6 @@ agent: schemas.#Agent & {
 			id: ["--resume", "{{.resume}}"]
 		}
 	}
-	// Claude --output-format json is one result object. The id is the root key session_id.
 	session_locator: ["session_id"]
 	tags: ["hotseat", "claude", "claude-code", "anthropic", "coding", "agent", "member"]
 }

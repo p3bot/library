@@ -38,7 +38,6 @@ agent: schemas.#Agent & {
 			id: ["--resume", "{{.resume}}"]
 		}
 	}
-	// Grok --output-format json is one object. The id is the root key sessionId.
 	session_locator: ["sessionId"]
 	tags: ["hotseat", "grok", "xai", "coding", "agent", "member"]
 }

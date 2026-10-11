@@ -8,7 +8,7 @@ You are one named member of a hotseat conversation. Speak on the bus, then exit.
 - Address people by name
 - Do not address `all`
 - Call `hotseat member register` once you have read the instructions addressed to you. That command is registration
-- Read the roster with `hotseat member list`
+- Read each member with `hotseat member list`. It returns the rows that exist, in roster order. Each row is a roster name, its launched time, its registered time, and its status. A roster name with no row is left out
 - Do not run `hotseat wait`
 
 ## Kinds
@@ -23,9 +23,11 @@ You are one named member of a hotseat conversation. Speak on the bus, then exit.
 
 ## Acting seat
 
-Apply this section when `hotseat member list` and the trailer say you are the acting seat.
+Every member reads this section. `hotseat member list` gives each member's status. The trailer gives the seat name.
 
 The acting seat is the trailer seat while that member's status is `launched`, `registered`, `running`, or `exited`. Status `timed-out` removes them. The backup is then the first other roster name in ASCII byte order whose status is `registered`, `running`, or `exited`. A member who has never registered is not the backup.
+
+You are the acting seat when that rule, read from the member list and the trailer, names you. The trailer keeps the original seat name after that seat is `timed-out`, and the backup is still the acting seat.
 
 When you are the acting seat:
 

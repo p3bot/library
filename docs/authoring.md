@@ -27,7 +27,7 @@ Use this flow for a new module that does not exist yet.
 
 1. Gather the design inputs for the category (see the relevant specifics section) and the source: an existing document or definition to adapt, or a description to author from scratch
 2. Decide the path, package name, and tags by following the naming standard
-3. Confirm the target does not exist: check whether the module directory (or, for roles, any of its mode directories) is already present. If it is, the operation is really an update — switch to the Update Flow, confirming the switch with the user
+3. Confirm the target does not exist: check whether the module directory is already present. For a three-mode role, also check its agent, assistant, and teacher directories. `roles/hotseat/member` is the only directory for that role. If the target is present, the operation is really an update — switch to the Update Flow, confirming the switch with the user
 4. Design interactively. Agree the path, the content, and the category-specific choices with the user before creating any files
 5. Scaffold the directory structure and write the files from the source or from scratch, following the category specifics
 6. Validate, then publish at v1.0.0 (see Validate and Publish)
@@ -39,7 +39,7 @@ Do not create files until the design is agreed.
 Use this flow for an existing module that is being modified.
 
 1. Identify the target. If a path was supplied in the instructions, use it; otherwise ask which module to update and confirm the full path under its category directory
-2. Confirm the target exists: read its current files. For roles, confirm whether the change affects one mode or all three and read each affected mode. If the target is missing, the operation is really a create — switch to the Create Flow, confirming the switch with the user
+2. Confirm the target exists: read its current files. For a three-mode role, confirm whether the change affects one mode or all three and read each affected mode. `roles/hotseat/member` is the only directory for that role: read that directory only. If the target is missing, the operation is really a create — switch to the Create Flow, confirming the switch with the user
 3. Summarise the current module back to the user so they can confirm your understanding before proceeding
 4. Understand the problem. Ask what the module is doing wrong or not doing, and probe until it is clearly understood
 5. Design the changes interactively. Describe what you plan to change and why, and confirm the approach with the user before writing anything
@@ -52,7 +52,7 @@ Do not implement until the design is agreed. The version bump for an update is d
 
 Files produced: `agent.cue` and `cue.mod/module.cue`. Agents have no markdown file — the whole definition lives in `agent.cue`.
 
-Directory layout. Claude Code, Copilot, Antigravity, and Grok are one module, keyed by the agentdex id. Gemini and AIChat stay one module per variant.
+Directory layout. The product modules for Claude Code, Copilot, Antigravity, and Grok are one module each, keyed by the agentdex id. Gemini and AIChat stay one module per variant. Hotseat member launches are `hotseat/<tool>`, leaves beside those product modules. `hotseat/grok` is a different leaf from `grok`. `hotseat/claude` launches Claude Code. Antigravity stays `agy`.
 
 ```
 agents/<tool>/
@@ -66,7 +66,13 @@ agents/<tool>/<variant>/
 └── cue.mod/module.cue
 ```
 
-`<tool>` in the first tree is `claude-code`, `copilot`, `agy`, or `grok`. `<tool>` in the second tree is `gemini` or `aichat`.
+```
+agents/hotseat/<tool>/
+├── agent.cue
+└── cue.mod/module.cue
+```
+
+`<tool>` in the first tree is `claude-code`, `copilot`, `agy`, or `grok`. `<tool>` in the second tree is `gemini` or `aichat`. `<tool>` in the hotseat tree is `grok` or `claude`.
 
 Schema fields:
 
@@ -227,9 +233,11 @@ Notes:
 
 ## Role Specifics
 
-A role is three modules — agent, assistant, teacher — in sibling directories. Each mode produces `role.cue`, `role.md`, and `cue.mod/module.cue`.
+A role is normally three modules — agent, assistant, and teacher — in sibling directories. Each of those modes produces `role.cue`, `role.md`, and `cue.mod/module.cue`. `hotseat/member` is the one member role, so its final segment is `member`. Do not add `hotseat/agent`, `hotseat/assistant`, or `hotseat/teacher`.
 
-Three-mode handling differs by operation:
+Three-mode handling differs by operation. `hotseat/member` is outside that handling: create and update touch that one module.
+
+For a three-mode role:
 
 - Create produces all three modes together. Mode selection is not optional
 - Update operates on only the affected modes. The shared Skill Set and base Restrictions apply to all three, so a change to either is reflected across all three; mode-specific changes (Instructions tone, identity bullets) affect only the targeted mode(s)
@@ -360,7 +368,7 @@ Output template:
 
 ### Mode-Specific Adjustments
 
-Apply these adjustments when generating each mode's role.md:
+Apply these adjustments when generating role.md for the agent, assistant, and teacher modes:
 
 Agent mode:
 
@@ -390,7 +398,7 @@ Teacher mode:
 
 ### Content Consistency
 
-The three modes for a role share:
+For a three-mode role, the modes share:
 
 - The same Skill Set (domain knowledge is identical across modes)
 - The same Restrictions base (domain constraints apply equally)
