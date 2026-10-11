@@ -78,14 +78,14 @@ agents: {
 	}
 	"hotseat/grok": {
 		module:      "github.com/p3bot/library/agents/hotseat/grok@v1"
-		version:     "v1.0.0"
+		version:     "v1.0.1"
 		description: "Hotseat member launch of Grok Build"
 		bin:         "grok"
 		tags: ["hotseat", "grok", "xai", "coding", "agent", "member"]
 	}
 	"hotseat/claude": {
 		module:      "github.com/p3bot/library/agents/hotseat/claude@v1"
-		version:     "v1.0.0"
+		version:     "v1.0.1"
 		description: "Hotseat member launch of Claude Code"
 		bin:         "claude"
 		tags: ["hotseat", "claude", "claude-code", "anthropic", "coding", "agent", "member"]
