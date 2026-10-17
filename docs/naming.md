@@ -112,7 +112,7 @@ hotseat/claude
 
 Pattern: `domain/[specialisation/]mode`
 
-Mode is the final segment. Normally it is one of `agent`, `assistant`, or `teacher`. `hotseat/member` is the one member role, so its final segment is `member`. Do not add `hotseat/agent`, `hotseat/assistant`, or `hotseat/teacher`.
+Mode is the final segment. Normally it is one of `agent`, `assistant`, or `teacher`. `hotseat/member` is the member role and `hotseat/chief` is the chief role, so their final segments are `member` and `chief`. Do not add `hotseat/agent`, `hotseat/assistant`, or `hotseat/teacher`.
 
 | Segment | Required | Purpose |
 |---------|----------|---------|
@@ -128,6 +128,7 @@ gitlab/pipeline/assistant
 markdown/low-token/teacher
 role/design/agent
 hotseat/member
+hotseat/chief
 ```
 
 Exception: file-based roles under `cwd/` and `home/` may use alternative final segments such as `default` or a filename reference (e.g., `cwd/role-md`, `cwd/dotagents/default`) where no mode applies.
@@ -177,6 +178,11 @@ confluence/doc/read
 gitlab/pipeline/review
 cwd/dotagents/role/create
 tk/next/build
+hotseat/ticket/triage
+hotseat/ticket/review
+hotseat/ticket/implement
+hotseat/pre-commit/review
+hotseat/workflow/implement
 ```
 
 ## Skills
@@ -254,7 +260,7 @@ Other action verbs (`read`, `review`, `research`, `debug`, and so on) are free-f
 | Category | Pattern | Required Segments |
 |----------|---------|-------------------|
 | Agents | `tool`, `tool/variant` for Gemini and AIChat, or `hotseat/grok` and `hotseat/claude` | tool; variant when the product stays a variant module |
-| Roles | `domain/[specialisation/]mode`, with `hotseat/member` as the member role | domain, mode |
+| Roles | `domain/[specialisation/]mode`, with `hotseat/member` and `hotseat/chief` as the hotseat roles | domain, mode |
 | Contexts | `domain/[specialisation/]noun` | domain, noun |
 | Tasks | `[domain/][specialisation/][noun/]action` | action |
 | Skills | `domain/[specialisation/]capability` | domain, capability |

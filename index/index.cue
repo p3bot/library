@@ -228,6 +228,12 @@ roles: {
 		description: "Hotseat conversation member: speech, kinds, and the acting seat"
 		tags: ["hotseat", "member", "conversation"]
 	}
+	"hotseat/chief": {
+		module:      "github.com/p3bot/library/roles/hotseat/chief@v1"
+		version:     "v1.0.0"
+		description: "Ongoing hotseat chief: one bus, many conversations, roster and repair"
+		tags: ["hotseat", "chief", "conversation"]
+	}
 }
 
 // Context index - maps friendly names to module paths
@@ -509,6 +515,36 @@ tasks: {
 		version:     "v1.4.0"
 		description: "Review a ticket document against its matched profile"
 		tags: ["ticket", "review", "preparation", "analysis", "active", "current"]
+	}
+	"hotseat/ticket/triage": {
+		module:      "github.com/p3bot/library/tasks/hotseat/ticket/triage@v1"
+		version:     "v1.0.0"
+		description: "Parallel triage of one ticket: pass, stub, reject, or split"
+		tags: ["hotseat", "ticket", "triage"]
+	}
+	"hotseat/ticket/review": {
+		module:      "github.com/p3bot/library/tasks/hotseat/ticket/review@v1"
+		version:     "v1.0.0"
+		description: "Parallel review of one ticket document, then a serial fix and one satisfaction pass"
+		tags: ["hotseat", "ticket", "review"]
+	}
+	"hotseat/ticket/implement": {
+		module:      "github.com/p3bot/library/tasks/hotseat/ticket/implement@v1"
+		version:     "v1.0.0"
+		description: "Single-seat implementation of one ticket, closed at review status"
+		tags: ["hotseat", "ticket", "implement"]
+	}
+	"hotseat/pre-commit/review": {
+		module:      "github.com/p3bot/library/tasks/hotseat/pre-commit/review@v1"
+		version:     "v1.0.0"
+		description: "Parallel pre-commit diff review, a serial fix, and one satisfaction pass"
+		tags: ["hotseat", "pre-commit", "review"]
+	}
+	"hotseat/workflow/implement": {
+		module:      "github.com/p3bot/library/tasks/hotseat/workflow/implement@v1"
+		version:     "v1.0.0"
+		description: "Run triage, ticket review, implementation, and pre-commit review as four hotseat conversations"
+		tags: ["hotseat", "workflow", "implement"]
 	}
 	"ticket/begin": {
 		module:      "github.com/p3bot/library/tasks/ticket/begin@v1"
