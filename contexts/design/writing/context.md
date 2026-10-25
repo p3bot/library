@@ -95,15 +95,13 @@ Two cases:
 
 A new design is a design document. `tk design create` scaffolds `design/<id>-<slug>.md` with status `draft`. The file stays in `design/`. Statuses are `draft`, `accepted`, `decomposed`, and `superseded`, set with `tk design mark`. Any of the four may be marked from any of the four. A ticket status is a usage error.
 
-Writing and review leave it `draft`. The owner accepts with `tk design mark accepted`. Decompose writes the follow-up tickets, then `tk design meta add <design-id> produces <full-ticket-id>` for each ticket that now exists, then `tk design mark decomposed`. `produces` is one way. There is no back-link on the ticket. Do not put a design id on `depends` or `related`.
+Writing, cover, and review leave it `draft`. The owner accepts with `tk design mark accepted`. Decompose (`tasks:design/decompose`) writes the follow-up tickets, then `tk design meta add <design-id> produces <full-ticket-id>` for each ticket that now exists, then `tk design mark decomposed`. `produces` is one way. There is no back-link on the ticket. Do not put a design id on `depends` or `related`.
 
 Stopping after a breakdown proposal does not mark `decomposed`. Leave `accepted` if the owner already accepted the design, and `draft` if they have not. A replacement design, including a split, marks the old file `superseded`.
 
 `tk design create` and edits under the H1 do not self-commit. On a tk-driven scope, `tk sync`. `tk design mark` and `tk design meta add|remove` self-commit and do not push. `tk get` does not open a design. `tk design get` does not open a ticket. Two design files that share a short id make `get`, `mark`, and `meta` refuse and print no path. `design_id:` and no path: stop. Do not `tk mark`. A path with `parse_error:` for that id: stop. The fence is quarantined. Do not mark, do not edit the fence, and do not run the design session or the review. `tasks:tk/board/groom` is the exception: it may propose the in-place repair it describes, keeping the path, the id, and `created`, and restoring status and `produces` only when the broken text already shows them. A fence with conflict markers stays a stop for the owner. `parse_error: N unparseable` does not quarantine the file just fetched. A path with no per-id `parse_error:` is the design document.
 
 A legacy design-profile ticket is a board ticket that already has these headings. It stays a ticket until it is migrated. Decompose of that ticket still ends with `tk mark done`. Do not create another one. New design work is `tk design create`.
-
-Review is `tasks:design/review`.
 
 ## Progress
 
@@ -128,4 +126,12 @@ Otherwise, once the session has settled the shape, write the document in Documen
 
 If `command -v tk` succeeds and they did not ask for an unmanaged path, `tk design create` with a title from the shape and fill under the H1 it printed. Leave status `draft`. Otherwise use Placement's unmanaged case.
 
-Leave the design `draft`. The owner accepts with `tk design mark accepted`. Decompose runs that command when the owner accepts there, records `produces`, and marks that design `decomposed` after it writes the follow-ups. A legacy design-profile ticket is still `tk mark done` after the follow-ups. Do not implement from the design.
+Leave the design `draft`. The owner accepts with `tk design mark accepted`. Decompose (`tasks:design/decompose`) runs that command when the owner accepts there, records `produces`, and marks that design `decomposed` after it writes the follow-ups. A legacy design-profile ticket is still `tk mark done` after the follow-ups. Do not implement from the design.
+
+After the document is written and left `draft`, in this session:
+
+```
+start get contexts:design/cover
+```
+
+Follow that context to the end. Then this writing session is done.

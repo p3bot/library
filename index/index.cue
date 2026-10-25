@@ -302,9 +302,21 @@ contexts: {
 	}
 	"design/writing": {
 		module:      "github.com/p3bot/library/contexts/design/writing@v1"
-		version:     "v1.5.0"
+		version:     "v1.6.0"
 		description: "Session guide and document contract for designing a system or feature"
 		tags: ["design", "writing", "feature", "architecture", "documentation", "guide", "agents", "session"]
+	}
+	"design/cover": {
+		module:      "github.com/p3bot/library/contexts/design/cover@v1"
+		version:     "v1.0.0"
+		description: "Same-session pass that writes this conversation's decisions into the design document"
+		tags: ["design", "cover", "session", "decisions", "conversation"]
+	}
+	"design/trace": {
+		module:      "github.com/p3bot/library/contexts/design/trace@v1"
+		version:     "v1.0.0"
+		description: "Check that a design's content is present in the tickets it produced"
+		tags: ["design", "trace", "tickets", "coverage", "produces"]
 	}
 	"skill/writing": {
 		module:      "github.com/p3bot/library/contexts/skill/writing@v1"
@@ -552,15 +564,15 @@ tasks: {
 		description: "Begin working the matched profile of the current ticket"
 		tags: ["ticket", "begin", "implementation", "active", "current"]
 	}
-	"ticket/decompose": {
-		module:      "github.com/p3bot/library/tasks/ticket/decompose@v1"
-		version:     "v1.4.0"
+	"design/decompose": {
+		module:      "github.com/p3bot/library/tasks/design/decompose@v1"
+		version:     "v1.0.0"
 		description: "Decompose an accepted design into a right-sized set of tickets by profile"
 		tags: ["ticket", "decompose", "design", "planning", "breakdown", "seams", "active", "current"]
 	}
 	"design/review": {
 		module:      "github.com/p3bot/library/tasks/design/review@v1"
-		version:     "v1.9.0"
+		version:     "v1.10.0"
 		description: "Review a design document before decompose"
 		tags: ["design", "review", "feature", "analysis", "architecture", "critique"]
 	}
@@ -650,7 +662,7 @@ tasks: {
 	}
 	"tk/id/review": {
 		module:      "github.com/p3bot/library/tasks/tk/id/review@v1"
-		version:     "v1.7.0"
+		version:     "v1.8.0"
 		description: "Using tk, review this ticket document"
 		tags: ["tk", "id", "review", "ticket", "document"]
 	}

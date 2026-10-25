@@ -73,7 +73,7 @@ Never auto-promote to `todo`.
 If the matched profile is design: do not ask to mark `todo`. Sound means the owner accepts, then decompose. If they accept now:
 
 ```bash
-start get tasks:ticket/decompose
+start get tasks:design/decompose
 ```
 
 That task marks this legacy ticket `done` after it writes the follow-ups. If they stop after the proposal, leave the ticket in `draft`. A design document does not reach this step.

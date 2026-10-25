@@ -10,6 +10,8 @@ The task reviews a design document — the design for a new system or substantia
 
 A design document specifies a new system or feature before it is built; implement tickets schedule the work that builds part of it. Design review sits at the seam between them. It is the last cheap moment to change the design — once it is decomposed and implementation begins, reversing it means unwinding work, not editing prose.
 
+The writing session records conversation decisions through `contexts:design/cover` before this review runs. Review reads the finished document.
+
 That position sets the bar. The task does not look for implementation defects; those belong to the ticket documents and to `ticket/review`. It looks for design defects: an unsound architecture, a better alternative left unexplored, a cost never admitted, an assumption that does not hold.
 
 ## The Core Tension

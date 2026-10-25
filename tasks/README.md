@@ -30,6 +30,7 @@ tasks/<domain>/<name>/
 
 ### design/
 
+- [design/decompose](design/decompose/) - Decompose an accepted design into tickets by profile
 - [design/review](design/review/) - Review a design document before decompose
 
 ### git/
@@ -64,7 +65,6 @@ tasks/<domain>/<name>/
 
 - [ticket/begin](ticket/begin/) - Begin working the matched profile of the current ticket
 - [ticket/create](ticket/create/) - Create a ticket document by profile
-- [ticket/decompose](ticket/decompose/) - Decompose an accepted design into tickets by profile
 - [ticket/review](ticket/review/) - Review a ticket document against its matched profile
 
 ### tk/

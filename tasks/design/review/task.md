@@ -6,6 +6,8 @@ Goal: catch the design-level flaws that would cost far more to unwind once imple
 
 Finding no new issues is a valid outcome. If the design is sound and prior reviews have surfaced the real concerns, say so rather than invent findings to justify the run.
 
+The design document is the source. Check it against the codebase and against its own goals. A writing conversation that is still open is not a second source. Decisions from that conversation belong to `contexts:design/cover`, which runs in the writing session.
+
 ## Workflow
 
 ### Phase 1: Review
@@ -85,13 +87,14 @@ After all findings have been processed, re-read the design with fresh eyes. Surf
 
    An issue blocks acceptance if it would make the design wrong, leave a load-bearing part of it unargued, or expose a risk with no mitigation or accepted rationale.
 
-   Do not mark `todo`. On Sound or Revise, leave a design document `draft`. Do not run `tk design mark accepted` in this session. The owner accepts with that command. Decompose runs it when the owner accepts there, records `produces`, and marks the design `decomposed`. Leave a legacy design-profile ticket's status unchanged. Do not `tk mark done` it from this session. Decompose marks that ticket `done`.
+   Do not mark `todo`. On Sound or Revise, leave a design document `draft`. Do not run `tk design mark accepted` in this session. The owner accepts with that command. `tasks:design/decompose` runs it when the owner accepts there, records `produces`, and marks the design `decomposed`. Leave a legacy design-profile ticket's status unchanged. Do not `tk mark done` it from this session. Decompose marks that ticket `done`.
 
    On Split, summarise the seam and stop. Do not create designs or change status in this turn. After the owner agrees, `tk design create` one document per independent design. `--scope` is that design's scope name, not the id. Then `start get contexts:design/writing`. Fill that guide's document under the H1 `tk design create` printed. Do not paste a second heading. Leave each `draft`. If `tk pulse mode` is `tk-driven`, `tk sync` after those body fills. Then `tk design mark superseded` on the old design document. Do not mark it before those files exist. `G` does not supersede the parent. Do not pass an unmanaged file to `tk design mark`. Leave it, and say it is leftover. A legacy design-profile ticket stays unchanged. Do not `tk mark done` it from this session.
 2. Print a summary table of all findings and their outcomes (see Remediation Summary in the Report Format). Do not prompt to save.
 
 ## Reviewer Guidance
 
+- The document is the source — check the design against the codebase and against its own goals. A writing conversation that is still open is not a second source
 - Review the design, not the implementation — routine judgement on naming, defensive code, local refactors, and style belongs to the ticket documents this design produces
 - Goal bar — flag a finding only if leaving it unresolved would make the design wrong, leave it under-argued, or expose an unmanaged risk
 - Articulation Test — if you cannot articulate what goes wrong when an item is left unresolved, it does not belong in the list
