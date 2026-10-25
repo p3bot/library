@@ -42,7 +42,8 @@ Open with a short message such as:
 Read `~/.claude/statusline.sh` in full and identify the active settings. Look for:
 
 - The 200k orange/red thresholds (default `ORANGE_THRESHOLD=72`, `RED_THRESHOLD=88`)
-- The 1M orange/red thresholds (default `90` / `95`)
+- The 1M orange/red thresholds (default `90` / `100`)
+- The 1M token budget the bar and `k left` are measured against (default `BUDGET=400000`)
 - The 256-colour ANSI codes for `RED`, `ORANGE`, `WHITE` (defaults `196`, `208`, `231`)
 - The headroom multiplier used for `k left` in 200k mode (default `* 88 / 100`)
 - The `printf` format string at the bottom, which controls the layout
@@ -57,7 +58,7 @@ Present a short menu of common changes. Do not list every possible tweak — sho
 
 1. Colours — change the ANSI 256-colour codes for red, orange, or the directory white
 2. Thresholds — change when the bar turns orange or red (200k mode, 1M mode, or both)
-3. `k left` headroom — change the `* 88 / 100` multiplier that defines "useful capacity" in 200k mode
+3. Capacity — change the `* 88 / 100` headroom multiplier in 200k mode, or the `BUDGET` in 1M mode
 4. Layout — reorder, add, or remove segments in the `printf`
 5. Add a segment — common asks include git branch, time, hostname, or a custom static label
 6. Remove a segment — drop the directory, model tag, percentage, or `k left`

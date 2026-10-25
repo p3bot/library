@@ -51,14 +51,17 @@ IFS=$'\t' read -r DIR MODEL PCT WIN USED <<<"$(jq -r '
   ] | @tsv' <<<"$input")"
 
 if (( WIN >= 1000000 )); then
-  BAR_PCT=$(( USED * 100 / 200000 ))
-  DISPLAY_PCT=$BAR_PCT
+  BUDGET=400000
+  BAR_PCT=$(( USED * 100 / BUDGET ))
+  (( BAR_PCT > 100 )) && BAR_PCT=100
+  LEFT=$(( BUDGET - USED ))
+  (( LEFT < 0 )) && LEFT=0
   ORANGE_THRESHOLD=90
-  RED_THRESHOLD=95
+  RED_THRESHOLD=100
   MODEL="${MODEL} (1M)"
 else
   BAR_PCT=$PCT
-  DISPLAY_PCT=$PCT
+  LEFT=$(( 200000 * 88 / 100 - USED ))
   ORANGE_THRESHOLD=72
   RED_THRESHOLD=88
   MODEL="${MODEL} (200k)"
@@ -83,24 +86,13 @@ elif (( BAR_PCT >= ORANGE_THRESHOLD )); then BAR_COLOR="$ORANGE"
 else                                         BAR_COLOR=""
 fi
 
-if (( WIN >= 1000000 )); then
-  LEFT=$(( 200000 - USED ))
-  if   (( LEFT < 10000 )); then LEFT_COLOR="$RED"
-  elif (( LEFT < 20000 )); then LEFT_COLOR="$ORANGE"
-  else                          LEFT_COLOR=""
-  fi
-else
-  LEFT=$(( 200000 * 88 / 100 - USED ))
-  LEFT_COLOR="$BAR_COLOR"
-fi
-
 LEFT_K=$(( LEFT / 1000 ))
 
 printf '%s%s%s | %s | %s%s %s%%%s | %s%sk left%s' \
   "${WHITE}" "${DIR}" "${RESET}" \
   "${MODEL}" \
-  "${BAR_COLOR}" "${BAR}" "${DISPLAY_PCT}" "${RESET}" \
-  "${LEFT_COLOR}" "${LEFT_K}" "${RESET}"
+  "${BAR_COLOR}" "${BAR}" "${BAR_PCT}" "${RESET}" \
+  "${BAR_COLOR}" "${LEFT_K}" "${RESET}"
 ```
 
 Use a heredoc so the contents are written exactly as shown, including the Unicode block characters:
@@ -159,16 +151,16 @@ Tell the user what the new statusline shows and how to read it. Use this structu
 The statusline renders four segments separated by ` | `:
 
 1. Current directory (basename only), in bright white
-2. Model display name, suffixed with `(200k)` or `(1M)` to indicate which context window the bar is sized against
+2. Model display name, suffixed with `(200k)` or `(1M)` to indicate which mode applies
 3. A 10-cell block bar plus the used-context percentage
 4. Remaining capacity in thousands of tokens, formatted as `Nk left`
 
-Colour thresholds:
+Colour thresholds (`k left` shares the bar colour in both modes):
 
-- 200k mode: bar turns orange at 72%, red at 88%. `k left` shares the bar colour.
-- 1M mode: bar turns orange at 90%, red at 95%. `k left` colours independently — orange under 20k remaining, red under 10k remaining.
+- 200k mode: bar turns orange at 72%, red at 88% of the context window
+- 1M mode: bar turns orange at 90% (360k), red at 100% (400k) of a 400,000-token budget
 
-In 1M mode the `k left` value is computed against the full 200,000-token usable window; in 200k mode it is computed against 88% of 200,000 to leave headroom before auto-compaction.
+In 1M mode the bar and `k left` are measured against the 400,000-token budget, not the full 1M window, and stop at 100% and 0k. In 200k mode `k left` is computed against 88% of 200,000 to leave headroom before auto-compaction.
 
 Finish by reminding the user to start a fresh Claude Code session (or run `/statusLine` if their version supports hot-reload) so the new statusline takes effect.
 

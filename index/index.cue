@@ -338,13 +338,13 @@ tasks: [string]: schemas.#IndexEntry
 tasks: {
 	"claude/statusline/create": {
 		module:      "github.com/p3bot/library/tasks/claude/statusline/create@v1"
-		version:     "v1.1.0"
+		version:     "v1.2.0"
 		description: "Install the Claude Code statusline script and wire it into settings.json"
 		tags: ["claude", "statusline", "configuration", "settings", "shell"]
 	}
 	"claude/statusline/update": {
 		module:      "github.com/p3bot/library/tasks/claude/statusline/update@v1"
-		version:     "v1.1.0"
+		version:     "v1.2.0"
 		description: "Interactively customise the Claude Code statusline script"
 		tags: ["claude", "statusline", "customise", "interactive", "settings"]
 	}
