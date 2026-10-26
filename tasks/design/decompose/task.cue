@@ -5,7 +5,7 @@ import "github.com/p3bot/library/schemas@v1"
 task: schemas.#Task & {
 	description: "Decompose an accepted design into a right-sized set of tickets by profile"
 	tags: ["ticket", "decompose", "design", "planning", "breakdown", "seams", "active", "current"]
-	uses: ["contexts:ticket/writing", "contexts:design/trace"]
+	uses: ["contexts:ticket/writing", "tasks:design/trace"]
 	file: "@module/task.md"
 	prompt: """
 		Read {{.file}} to understand your task.

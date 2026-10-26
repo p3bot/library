@@ -32,6 +32,7 @@ tasks/<domain>/<name>/
 
 - [design/decompose](design/decompose/) - Decompose an accepted design into tickets by profile
 - [design/review](design/review/) - Review a design document before decompose
+- [design/trace](design/trace/) - Check that a design is carried into the tickets it produced
 
 ### git/
 

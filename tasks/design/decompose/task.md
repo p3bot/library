@@ -163,7 +163,7 @@ Once the owner accepts the breakdown:
 6. Right-size sections per ticket. A small ticket omits empty sections. Do not force nine implement sections onto investigate or decide units.
 7. If the design is a design document, `tk design meta add <design-id> produces <full-ticket-id>` for each follow-up after that ticket exists, then `tk design mark decomposed <design-id>`. If the design is a legacy design-profile ticket, `tk mark done` on it. An unmanaged file has no status to mark
 8. Report what was written: paths or ids, titles, profiles, dependency order, and any open questions still owned by the human
-9. Tell the owner to run `start get contexts:design/trace` and follow that context, in this session or a fresh one. Do not enter it from this task
+9. Tell the owner to run the trace task, `start task tasks:design/trace <design-id>` in a fresh session or `start get tasks:design/trace` in this one. Do not enter it from this task
 
 If the owner wants only the plan and will write tickets later, stop after Phase 4. Do not mark the design `decomposed` or `done`. Leave a design document `accepted` if the owner already accepted it, and `draft` if they have not. Do not tell them to run trace. Trace needs the tickets.
 
@@ -254,7 +254,7 @@ Surface the disagreement in Open Questions or in Coverage. Do not paper over it 
 | Design still being written | `contexts:design/writing`, then `contexts:design/cover` |
 | Soundness of an accepted-or-draft design | `tasks:design/review` |
 | Design accepted, need ticket boundaries | this task |
-| Tickets written, need the design carried into them | `contexts:design/trace` |
+| Tickets written, need the design carried into them | `tasks:design/trace` |
 | One ticket needs a quality check | `tasks:ticket/review` |
 | Ticket ready to build | `tasks:ticket/begin` |
 

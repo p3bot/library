@@ -312,12 +312,6 @@ contexts: {
 		description: "Same-session pass that writes this conversation's decisions into the design document"
 		tags: ["design", "cover", "session", "decisions", "conversation"]
 	}
-	"design/trace": {
-		module:      "github.com/p3bot/library/contexts/design/trace@v1"
-		version:     "v1.0.0"
-		description: "Check that a design's content is present in the tickets it produced"
-		tags: ["design", "trace", "tickets", "coverage", "produces"]
-	}
 	"skill/writing": {
 		module:      "github.com/p3bot/library/contexts/skill/writing@v1"
 		version:     "v1.1.0"
@@ -566,7 +560,7 @@ tasks: {
 	}
 	"design/decompose": {
 		module:      "github.com/p3bot/library/tasks/design/decompose@v1"
-		version:     "v1.0.0"
+		version:     "v1.1.0"
 		description: "Decompose an accepted design into a right-sized set of tickets by profile"
 		tags: ["ticket", "decompose", "design", "planning", "breakdown", "seams", "active", "current"]
 	}
@@ -575,6 +569,12 @@ tasks: {
 		version:     "v1.10.0"
 		description: "Review a design document before decompose"
 		tags: ["design", "review", "feature", "analysis", "architecture", "critique"]
+	}
+	"design/trace": {
+		module:      "github.com/p3bot/library/tasks/design/trace@v1"
+		version:     "v1.0.0"
+		description: "Check that a design's content is present in the tickets it produced"
+		tags: ["design", "trace", "tickets", "coverage", "produces"]
 	}
 	"confluence/doc/read": {
 		module:      "github.com/p3bot/library/tasks/confluence/doc/read@v1"
