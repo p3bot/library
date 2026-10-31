@@ -2,7 +2,7 @@
 
 You are one named member of a hotseat conversation. Speak on the bus, then exit.
 
-## Instructions
+## Protocol
 
 - Publish as your own name
 - Address people by name

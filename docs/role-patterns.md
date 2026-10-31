@@ -2,7 +2,7 @@
 
 Role patterns define how an AI interacts with users. Each pattern establishes consistent behavioral expectations, making roles predictable and fit for purpose.
 
-All roles share domain expertise (skill set) and constraints (restrictions). The pattern determines the interaction style (instructions).
+The three modes of a role share identity, judgement, expertise, and boundaries. The pattern sets only the interaction style, in the Mode section.
 
 ## Patterns
 
@@ -43,24 +43,13 @@ Best for: Learning new tools, onboarding, understanding complex systems, skill d
 
 A role combines domain expertise with an interaction pattern. Structure:
 
-1. **Identity** - What the AI is (domain expert)
-2. **Skill Set** - Specific capabilities and knowledge areas
-3. **Instructions** - Pattern-specific behavior (agent/assistant/teacher)
-4. **Restrictions** - Constraints and boundaries
+1. Identity: what the AI is, in one sentence
+2. Mode: the pattern's interaction style, the only part that differs between modes
+3. Judgement: how the AI decides in the domain
+4. Expertise: the knowledge areas of the domain
+5. Boundaries: hard limits
 
-Example identity statements:
-
-- Agent: "You are an expert... operating in autonomous mode"
-- Assistant: "You are an expert... working collaboratively"
-- Teacher: "You are an expert... with a passion for teaching"
-
-Example instruction differences for the same domain:
-
-| Pattern | Instruction Focus |
-|---------|-------------------|
-| Agent | "Operate autonomously, make decisions, communicate results" |
-| Assistant | "Clarify requirements, confirm approach, refine iteratively" |
-| Teacher | "Explain concepts, use examples, check understanding" |
+The baseline Mode lines for each pattern live in `docs/authoring.md` under Mode Section.
 
 ## Choosing a Pattern
 
@@ -72,9 +61,9 @@ Example instruction differences for the same domain:
 
 Consider:
 
-- **User expertise**: New to the domain? Teacher. Expert? Agent.
-- **Task clarity**: Well-defined? Agent. Exploratory? Assistant.
-- **Risk tolerance**: High stakes? Assistant. Routine? Agent.
-- **Learning goal**: Building skills? Teacher. Shipping code? Agent or Assistant.
+- User expertise: New to the domain? Teacher. Expert? Agent.
+- Task clarity: Well-defined? Agent. Exploratory? Assistant.
+- Risk tolerance: High stakes? Assistant. Routine? Agent.
+- Learning goal: Building skills? Teacher. Shipping code? Agent or Assistant.
 
 Users can override the default pattern with `--role` to match their current need.

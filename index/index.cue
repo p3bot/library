@@ -98,19 +98,19 @@ roles: [string]: schemas.#IndexEntry
 roles: {
 	"golang/agent": {
 		module:      "github.com/p3bot/library/roles/golang/agent@v1"
-		version:     "v1.1.0"
+		version:     "v1.2.0"
 		description: "Go programming language expert - autonomous agent mode"
 		tags: ["golang", "programming", "agent", "autonomous", "automation"]
 	}
 	"golang/assistant": {
 		module:      "github.com/p3bot/library/roles/golang/assistant@v1"
-		version:     "v1.1.0"
+		version:     "v1.2.0"
 		description: "Go programming language expert - collaborative assistant mode"
 		tags: ["golang", "programming", "assistant", "collaborative"]
 	}
 	"golang/teacher": {
 		module:      "github.com/p3bot/library/roles/golang/teacher@v1"
-		version:     "v1.1.0"
+		version:     "v1.2.0"
 		description: "Go programming language expert - instructional teacher mode"
 		tags: ["golang", "programming", "teacher", "instructional", "learning"]
 	}
@@ -134,103 +134,103 @@ roles: {
 	}
 	"markdown/low-token/agent": {
 		module:      "github.com/p3bot/library/roles/markdown/low-token/agent@v1"
-		version:     "v1.1.0"
+		version:     "v1.2.0"
 		description: "Low-token markdown expert - autonomous agent mode"
 		tags: ["markdown", "low-token", "commonmark", "agent", "autonomous"]
 	}
 	"markdown/low-token/assistant": {
 		module:      "github.com/p3bot/library/roles/markdown/low-token/assistant@v1"
-		version:     "v1.1.0"
+		version:     "v1.2.0"
 		description: "Low-token markdown expert - collaborative assistant mode"
 		tags: ["markdown", "low-token", "commonmark", "assistant", "collaborative"]
 	}
 	"markdown/low-token/teacher": {
 		module:      "github.com/p3bot/library/roles/markdown/low-token/teacher@v1"
-		version:     "v1.1.0"
+		version:     "v1.2.0"
 		description: "Low-token markdown expert - instructional teacher mode"
 		tags: ["markdown", "low-token", "commonmark", "teacher", "instructional"]
 	}
 	"gitlab/pipeline/agent": {
 		module:      "github.com/p3bot/library/roles/gitlab/pipeline/agent@v1"
-		version:     "v1.1.0"
+		version:     "v1.2.0"
 		description: "GitLab CI/CD pipeline expert - autonomous agent mode"
 		tags: ["gitlab", "ci-cd", "pipeline", "agent", "autonomous"]
 	}
 	"gitlab/pipeline/assistant": {
 		module:      "github.com/p3bot/library/roles/gitlab/pipeline/assistant@v1"
-		version:     "v1.1.0"
+		version:     "v1.2.0"
 		description: "GitLab CI/CD pipeline expert - collaborative assistant mode"
 		tags: ["gitlab", "ci-cd", "pipeline", "assistant", "collaborative"]
 	}
 	"gitlab/pipeline/teacher": {
 		module:      "github.com/p3bot/library/roles/gitlab/pipeline/teacher@v1"
-		version:     "v1.1.0"
+		version:     "v1.2.0"
 		description: "GitLab CI/CD pipeline expert - instructional teacher mode"
 		tags: ["gitlab", "ci-cd", "pipeline", "teacher", "instructional"]
 	}
 	"git/agent": {
 		module:      "github.com/p3bot/library/roles/git/agent@v1"
-		version:     "v1.1.0"
+		version:     "v1.2.0"
 		description: "Git version control expert - autonomous agent mode"
 		tags: ["git", "version-control", "vcs", "agent", "autonomous"]
 	}
 	"git/assistant": {
 		module:      "github.com/p3bot/library/roles/git/assistant@v1"
-		version:     "v1.1.0"
+		version:     "v1.2.0"
 		description: "Git version control expert - collaborative assistant mode"
 		tags: ["git", "version-control", "vcs", "assistant", "collaborative"]
 	}
 	"git/teacher": {
 		module:      "github.com/p3bot/library/roles/git/teacher@v1"
-		version:     "v1.1.0"
+		version:     "v1.2.0"
 		description: "Git version control expert - instructional teacher mode"
 		tags: ["git", "version-control", "vcs", "teacher", "instructional", "learning"]
 	}
 	"linux/endeavouros/agent": {
 		module:      "github.com/p3bot/library/roles/linux/endeavouros/agent@v1"
-		version:     "v1.1.0"
+		version:     "v1.2.0"
 		description: "EndeavourOS Linux system administration expert - autonomous agent mode"
 		tags: ["linux", "endeavouros", "arch", "system-administration", "agent", "autonomous"]
 	}
 	"linux/endeavouros/assistant": {
 		module:      "github.com/p3bot/library/roles/linux/endeavouros/assistant@v1"
-		version:     "v1.1.0"
+		version:     "v1.2.0"
 		description: "EndeavourOS Linux system administration expert - collaborative assistant mode"
 		tags: ["linux", "endeavouros", "arch", "system-administration", "assistant", "collaborative"]
 	}
 	"linux/endeavouros/teacher": {
 		module:      "github.com/p3bot/library/roles/linux/endeavouros/teacher@v1"
-		version:     "v1.1.0"
+		version:     "v1.2.0"
 		description: "EndeavourOS Linux system administration expert - instructional teacher mode"
 		tags: ["linux", "endeavouros", "arch", "system-administration", "teacher", "instructional", "learning"]
 	}
 	"role/design/agent": {
 		module:      "github.com/p3bot/library/roles/role/design/agent@v1"
-		version:     "v1.1.0"
+		version:     "v1.2.0"
 		description: "AI role designer and prompt engineering expert - autonomous agent mode"
 		tags: ["role", "prompt-engineering", "design", "agent", "autonomous"]
 	}
 	"role/design/assistant": {
 		module:      "github.com/p3bot/library/roles/role/design/assistant@v1"
-		version:     "v1.1.0"
+		version:     "v1.2.0"
 		description: "AI role designer and prompt engineering expert - collaborative assistant mode"
 		tags: ["role", "prompt-engineering", "design", "assistant", "collaborative"]
 	}
 	"role/design/teacher": {
 		module:      "github.com/p3bot/library/roles/role/design/teacher@v1"
-		version:     "v1.1.0"
+		version:     "v1.2.0"
 		description: "AI role designer and prompt engineering expert - instructional teacher mode"
 		tags: ["role", "prompt-engineering", "design", "teacher", "instructional", "learning"]
 	}
 	"hotseat/member": {
 		module:      "github.com/p3bot/library/roles/hotseat/member@v1"
-		version:     "v1.1.0"
+		version:     "v1.2.0"
 		description: "Hotseat conversation member: speech, kinds, and the acting seat"
 		tags: ["hotseat", "member", "conversation"]
 	}
 	"hotseat/chief": {
 		module:      "github.com/p3bot/library/roles/hotseat/chief@v1"
-		version:     "v1.0.0"
+		version:     "v1.1.0"
 		description: "Ongoing hotseat chief: one bus, many conversations, roster and repair"
 		tags: ["hotseat", "chief", "conversation"]
 	}
@@ -506,7 +506,7 @@ tasks: {
 	}
 	"cwd/dotagents/role/create": {
 		module:      "github.com/p3bot/library/tasks/cwd/dotagents/role/create@v1"
-		version:     "v1.2.0"
+		version:     "v1.3.0"
 		description: "Create a new system prompt (role) for AI agent use"
 		tags: ["dotagents", "cwd", "role", "system-prompt", "ai"]
 	}
