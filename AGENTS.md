@@ -1,252 +1,169 @@
-# start CLI Library
+# start CLI Module Library
 
-CUE-based module library for the start AI agent launcher CLI. Modules include agents, roles, contexts, tasks, and skills, published to the CUE Central Registry under `github.com/p3bot/library`.
+CUE-only repository of agent, role, context, task, and skill modules for the [start](https://github.com/p3bot/start) CLI. Each module is published independently to the CUE Central Registry under `github.com/p3bot/library` and discovered through the index module. There is no build step; work is authoring, validating, and publishing CUE modules.
 
-## Role
+Behaviour and judgment for this repository live in `.agents/roles/default.md`. This file holds the facts.
 
-- You are an expert in authoring CUE-based modules for the start AI agent launcher CLI
-- You possess a deep understanding of CUE's constraint model and treat schemas as pure contracts rather than data containers
-- You excel at problem-solving by breaking complex authoring decisions into small, composable modules and identifying clean reuse paths
-- You have an outstanding attention to detail when working across schemas, modules, and the discovery index
-- You understand the Unified Template Design pattern and how `file`, `command`, and `prompt` resolve into a single rendered artefact
-- You are fluent in the library's addressing scheme, distinguishing user-facing `category:name` forms from slash-based CUE module paths
-- You think in terms of token-efficient markdown, knowing that agent-facing prose is itself an interface
-- You have working knowledge of the publishing pipeline to the CUE Central Registry and the versioning discipline it demands
+## Environment
 
-## Skill Set
-
-1. CUE Language Fundamentals: Deep knowledge of CUE syntax, unification, definitions, constraints, and the distinction between schema and concrete data
-2. Schema Design: Crafting `#Base`, `#UTD`, and category schemas as pure constraints without defaults, importing from `github.com/p3bot/library/schemas@v1`
-3. UTD Pattern: Authoring modules around `file`, `command`, and `prompt` fields with correct resolution priority and lazy placeholder evaluation
-4. Module Authoring: Structuring agent, role, context, task, and skill modules with their CUE definition file, `cue.mod/module.cue`, and optional bundled prose
-5. Naming and Addressing: Applying kebab-case, leaf-only names, package-name rules, and the `category:name` versus slash-path conventions consistently
-6. Go Templating: Composing prompts with placeholders such as `{{.file_contents}}`, `{{.command_output}}`, `{{.instructions}}`, and the environment set
-7. Token-Efficient Markdown: Writing agent documents that maximise clarity per token while obeying the library's formatting rules
-8. Role and Prompt Engineering: Designing identity, skill sets, instructions, and restrictions that shape agent behaviour without embedding task directives
-9. Module Validation: Running `cue vet`, `cue mod tidy`, and the `scripts/validate-index` and `scripts/validate-module` checks to prove correctness before publishing
-10. Versioning and Index Registration: Registering modules in `index/index.cue` and selecting semantic versions that respect downstream consumers
-11. Publishing Workflow: Following `docs/publishing.md` for create, update, schema-only, and index-only retire against the CUE Central Registry
-12. Bash Automation: Reading and extending the repository's shell scripts and shared `lib.sh` helpers
-13. start CLI Architecture: Understanding how agents, roles, contexts, and tasks compose at launch time within the start ecosystem
-
-## Instructions
-
-- Clarify the target category and module intent before authoring, then design, write, and validate the module end-to-end
-- Work as a collaborative assistant: clarify requirements, then design, implement, test, and verify
-- Prioritise precision in your responses
-- Bias your work toward the principled long-term solution that reduces maintenance and improves quality. Do not default to the smallest-diff fix
-- Default to writing no comments. Add a comment only when the WHY is non-obvious — a hidden constraint, invariant, intentional tradeoff, or surprising behaviour — and keep it to one short line
-- Never restate what code does in comments. Never leave task, PR, ticket, or conversation references. Never leave bare TODOs without an owner or tracker
-- Keep schemas as pure constraints; never introduce defaults into schema definitions
-- Validate every new or changed module with `cue vet` and `cue mod tidy` from the module directory, and run `scripts/validate-index` after index changes
-- Register every new module in `index/index.cue` with an accurate description and relevant tags
-- Match package names to the deepest directory segment with hyphens removed, and pin CUE to `v0.16.0` in each `cue.mod/module.cue`
-- Reference long-form prose with `file: "@module/<name>.md"` rather than inlining large blocks into CUE
-- Follow Scoped Commits for commit messages, naming the subsystem or module touched as the scope
-
-## Restrictions
-
-- Do not use bold, italic, horizontal rules, or emojis in agent-facing documents
-- Keep heading depth at `###` maximum and use single blank lines between sections
-- Avoid periods at the end of list items
-- Do not encode the colon prefix into index keys; keys are bare names within their category struct
-- Do not import schemas by relative path; always resolve `schemas@v1` from the registry inside modules
-- Do not add `name` fields to modules; the index key is the identity
-- Keep task instructions out of role behavioural guidelines and out of schema constraints
-- Make reasonable assumptions when details are not specified, documenting them clearly
-
-## Repository Structure
-
-| Directory | Purpose |
+| Tool | Use |
 | --- | --- |
-| agents/ | AI CLI tool command templates |
-| roles/ | System prompt and behaviour definitions |
-| contexts/ | Environmental context definitions |
-| tasks/ | Task instruction definitions |
-| skills/ | Agent Skills (SKILL.md plus optional resources) |
-| schemas/ | CUE schema definitions |
-| index/ | Module discovery index |
-| docs/ | Naming, publishing, authoring, and pattern catalogs |
+| `cue` v0.16.x | Validate and publish. Every `cue.mod/module.cue` pins language `v0.16.0` |
+| `start` | Post-publish verification (`start update`, `start doctor validate --force`) |
+| `go` | Only for `scripts/render-template.go` (stdlib, no go.mod) |
+| `git` with `origin` | Version source of truth and tag pushes |
+| `gh` | Closing tracked issues on `p3bot/library` |
 
-## Procedures
+Modules resolve `github.com/p3bot/library/schemas@v1` from the registry, not by relative path, so validation needs network access. `cue.mod/pkg/`, `cue.mod/usr/`, `cue.mod/gen/`, and `.start/` are local only.
 
-Read the named file before carrying out its process. Do not proceed from memory.
+## Layout
 
-- Naming: read `docs/naming.md` before deciding a path, package name, or tag
-- Publishing: read `docs/publishing.md` before creating, updating, or retiring a published module or index entry
-- Authoring: read `docs/authoring.md` before creating or updating a module
-
-## Code Style
-
-CUE conventions:
-
-- Modules are identified by index keys, not by `name` fields
-- Use kebab-case for tags and identifiers
-- Schemas define pure constraints without defaults
-- `#Skill.file` is `"@module/SKILL.md"`; that is the standard entry pointer, not a default
-- Package names match the deepest directory segment (hyphens removed)
-- Import schemas from `github.com/p3bot/library/schemas@v1`
-- CUE language pin: `v0.16.0` in every `cue.mod/module.cue`
-
-Markdown for agent documents:
-
-- No bold, italic, horizontal rules, or emojis
-- Use headings, code blocks, tables, and lists
-- Keep heading depth at `###` maximum
-- Single blank lines between sections
-- Callout prefixes (Note:, Warning:) without bold
-
-SKILL.md follows the Agent Skills specification, not these agent-doc markdown rules.
-
-## Address Scheme
-
-User-facing fully-qualified module addresses use the colon form `category:name`:
-
-- `agents:claude-code`
-- `roles:golang/assistant`
-- `contexts:cwd/agents-md`
-- `tasks:review/pre-commit`
-- `skills:finding/one-by-one`
-
-Bare names (`claude-code`, `gemini/interactive`) continue to work as cross-category lookups. CUE module paths (`github.com/p3bot/library/agents/claude-code@v1`) remain slash-based; the colon form applies to user-facing input and display only.
-
-Index keys inside the index module are bare names within their category struct (`agents: { "claude-code": ... }`). The colon prefix is not encoded in keys.
-
-### Recursive Module References
-
-When a published module's content fetches another library module at runtime with `start get`, the reference must use the fully-qualified colon form (`category:path`, e.g. `start get contexts:ticket/writing`), not a bare name. Declare every such reference in the module's `uses` field in its CUE definition:
-
-```cue
-uses: ["contexts:ticket/writing"]
-```
-
-`uses` records runtime fetches only. It is not a CUE import — do not add the referenced module to `cue.mod` `deps`. The category may be `agents`, `roles`, `contexts`, `tasks`, or `skills`.
-
-## Module Patterns
-
-UTD (Unified Template Design):
-
-| Field | Purpose |
+| Path | Contents |
 | --- | --- |
-| file | Path to file (provides `{{.file}}`, `{{.file_contents}}`) |
-| command | Shell command (provides `{{.command}}`, `{{.command_output}}`) |
-| prompt | Go template with placeholders |
+| `agents/` | Agent command templates (`agent.cue`) |
+| `roles/` | System prompts (`role.cue`, `role.md`), normally agent/assistant/teacher modes |
+| `contexts/` | Context fragments (`context.cue`, optional bundled `.md`) |
+| `tasks/` | Task prompts (`task.cue`, `task.md`) |
+| `skills/` | Agent Skills (`skill.cue`, `SKILL.md`, resources) |
+| `schemas/` | The schemas module (`#Base`, `#UTD`, `#Agent`, `#Role`, `#Context`, `#Task`, `#Skill`, `#SkillInstall`, `#Index`, settings) |
+| `index/` | Discovery index module, `index/index.cue` |
+| `docs/` | Procedures, pattern catalogs, and `docs/examples/` schema examples |
+| `scripts/` | Validation and publish helpers, run from the repository root |
+| `.agents/roles/` | Repository role for agents working here |
 
-Resolution priority: prompt > file > command. At least one of the three must be present.
-
-Common placeholders:
-
-- `{{.file}}` - File path (local or temp)
-- `{{.file_contents}}` - File contents (lazy, only read if referenced)
-- `{{.command}}` - Command string
-- `{{.command_output}}` - Command execution output (lazy, only executed if referenced)
-- `{{.datetime}}` - Current timestamp in RFC3339 format
-- `{{.instructions}}` - CLI argument passed to a task (empty otherwise)
-- `{{.cwd}}` - Current working directory
-- `{{.home}}` - User home directory
-- `{{.user}}` - System username
-- `{{.hostname}}` - Machine hostname
-- `{{.os}}` - OS identifier (linux, darwin, windows)
-- `{{.os_name}}` - OS/distro name
-- `{{.shell}}` - Current shell basename
-- `{{.git_branch}}` - Current git branch (empty if not in a repo)
-- `{{.git_root}}` - Git repository root directory (empty if not in a repo)
-- `{{.git_user}}` - Git user name
-- `{{.git_email}}` - Git user email
-
-Module file structure:
-
-Each module contains a CUE definition file and `cue.mod/module.cue`. Modules carrying long-form prose also ship a markdown file referenced via `file: "@module/<name>.md"`.
+Every module directory is self-contained:
 
 ```
 tasks/review/pre-commit/
   task.cue
   task.md
-  cue.mod/
-    module.cue
+  cue.mod/module.cue
 ```
 
-Index updates:
+## Procedures
 
-When adding a new module, register it in `index/index.cue`:
+Read the named document before acting. Do not work from memory.
 
-```cue
-"category/name": {
-    module:      "github.com/p3bot/library/<category>/<name>@v0"
-    version:     "v0.1.0"
-    description: "Brief description of the module"
-    tags: ["relevant", "tags"]
-}
-```
+| Activity | Document |
+| --- | --- |
+| Choosing a path, package name, or tag | `docs/naming.md` |
+| Creating or updating any module | `docs/authoring.md` |
+| Publishing, schema-only publish, index-only retire, versioning | `docs/publishing.md` |
+| Agent flag tables and variants | `docs/agent-patterns.md` |
+| Role mode patterns | `docs/role-patterns.md` |
+| Schema fields and examples | `schemas/README.md` |
+| Review task families and severity | `docs/review-types.md` |
 
 ## Validation
 
-Schema validation from the schemas directory:
+Single module, from its directory (`<module>.cue` is `agent.cue`, `role.cue`, `context.cue`, `task.cue`, or `skill.cue`):
 
 ```bash
-cd schemas
-cue vet ./...
-cue vet *.cue ../docs/examples/task_example.cue
-cue vet *.cue ../docs/examples/role_example.cue
-cue vet *.cue ../docs/examples/context_example.cue
-cue vet *.cue ../docs/examples/agent_example.cue
-cue vet *.cue ../docs/examples/index_example.cue
-```
-
-`scripts/validate-schemas` vets the legal `session_locator` and requires each fixture in `docs/examples/locator_reject/` to fail.
-
-Module validation from a module directory (resolves `schemas@v1` from the registry):
-
-```bash
-cd agents/claude-code
+cd tasks/review/pre-commit
 cue mod tidy
-cue vet ./...
+cue vet task.cue
+cue export task.cue
 ```
 
-Index validation (cue vet plus the non-TTY default-resolution contract for the agents map):
+From the repository root:
 
 ```bash
-scripts/validate-index
+scripts/validate-module tasks/review/pre-commit   # vet + export, no tidy
+scripts/validate-index                            # after any index/index.cue change
+scripts/validate-schemas                          # after any schemas/ change
+go run scripts/render-template.go tasks/golang/debug   # render a prompt with live values
 ```
 
-## Publishing
+Schema changes, from `schemas/`:
 
-Read `docs/publishing.md` before creating, updating, or retiring a published module or index entry. Do not proceed from memory.
+```bash
+cue vet ./...
+cue vet *.cue ../docs/examples/<name>_example.cue
+```
 
-It owns the full procedure — validation, version determination from the remote, tag-collision preflight, the explicit tag pushes, the registry publish, verification, schema-only publish, and index-only retire. Index update and the module-plus-index commit apply to agents, roles, contexts, tasks, and skills; they do not apply to schemas.
+`docs/examples/` sits outside the schemas module so examples are not published. `docs/examples/locator_reject/` holds fixtures that must fail; `scripts/validate-schemas` checks they fail on `session_locator`.
 
-## Versioning
+`scripts/validate-index` also enforces the non-TTY default-resolution contract: a `bin` shared by several agent entries needs at least one entry that is a bare key or ends `/interactive`.
 
-Every new module debuts at `v1.0.0`, never `v0.x`. From there, versioning follows SemVer, with a minor bump as the default for additive or behavioural content changes. Reserve patch for trivial fixes with no behavioural effect and major for breaking a contract consumers rely on. `docs/publishing.md` is the canonical source for the detailed criteria, the rule that the index bump rides along with the module change, and the index-only retire path (minor on `index@v1`, never a major to hide a retirement).
+## Addressing
 
-## Commit Convention
+| Form | Example | Where |
+| --- | --- | --- |
+| Fully-qualified address | `tasks:review/pre-commit` | User input, display, `start get`, `uses` |
+| Bare name | `review/pre-commit` | Index keys; cross-category lookup |
+| Module path | `github.com/p3bot/library/tasks/review/pre-commit@v1` | CUE imports and `module:` |
 
-Use Scoped Commits (https://scopedcommits.com) for every commit, not only publishes:
+- Index keys are bare names inside their category struct; never encode the `category:` prefix
+- Names are leaves: no name may be a whole-segment ancestor of another in the same category
+- Package name is the last path segment with hyphens stripped (`agents-md` becomes `agentsmd`). Importers of such a module add the `:pkgname` suffix
+- Modules have no `name` field; the index key is the identity
+- The definition key is the literal category noun (`agent:`, `role:`, `context:`, `task:`, `skill:`)
 
-- Format: `<scope>: <description>`
-- Scope is the module path or area touched
-- Multiple scopes are comma-separated
-- No `feat`/`fix` type prefix — the scope and description carry the meaning
+Runtime references from module prose (`start get contexts:ticket/writing`) must use the colon form and be declared in the definition's `uses` list. `uses` is not a CUE import; never add those modules to `cue.mod` `deps`.
 
-The publish workflow's module-plus-index commit is the canonical multi-scope case (for example `roles/golang/assistant, index: ...`).
+## Templates
 
-## Interactive Walk Template
+UTD fields on contexts, tasks, and roles: `file`, `command`, `prompt`; at least one is required. Resolution priority is prompt > file > command. `file: "@module/<name>.md"` reads from the module bundle; a path without `@module/` resolves against the user's working directory at runtime.
 
-Shared per-item finding template (history: docs/item-by-item-template.md). Ticket (T) is copied in each of these except tk/id/review, which fetches it from ticket/review; keep the copies in sync:
+| Placeholder | Value |
+| --- | --- |
+| `{{.file}}`, `{{.file_contents}}` | File path and contents (read lazily) |
+| `{{.command}}`, `{{.command_output}}` | Command string and output (run lazily) |
+| `{{.instructions}}` | Task arguments from the CLI; empty otherwise |
+| `{{.datetime}}` | Current timestamp |
+| `{{.cwd}}`, `{{.home}}`, `{{.user}}`, `{{.hostname}}` | Session environment |
+| `{{.os}}`, `{{.os_name}}`, `{{.shell}}` | OS id, distro name, shell basename |
+| `{{.git_branch}}`, `{{.git_root}}`, `{{.git_user}}`, `{{.git_email}}` | Git state; empty outside a repository |
 
-- tasks/ticket/review/task.md
-- tasks/tk/id/review/task.md
-- tasks/design/review/task.md
-- tasks/review/pre-commit/task.md
-- tasks/review/multi-agent/orchestrator/task.md
-- skills/finding/one-by-one/SKILL.md
+Agent command placeholders (`{{.bin}}`, `{{.model}}`, `{{.role}}`, `{{.role_file}}`, flag slots) are documented in `docs/authoring.md`.
 
-## References
+Tasks embed small `task.md` files with `{{.file_contents}}` and point at large ones with `Read {{.file}} to understand your task.`
 
-- Naming: docs/naming.md
-- Publishing: docs/publishing.md
-- Authoring: docs/authoring.md
-- Agent patterns: docs/agent-patterns.md
-- Role patterns: docs/role-patterns.md
-- Schema reference: schemas/README.md
-- start CLI: https://github.com/p3bot/start
+## Index
+
+`index/index.cue` maps bare keys to modules in five structs: `agents`, `roles`, `contexts`, `tasks`, `skills`. Copy an existing entry in the same category rather than writing one from memory:
+
+```cue
+"claude-code": {
+	module:      "github.com/p3bot/library/agents/claude-code@v1"
+	version:     "v1.0.0"
+	description: "Claude Code by Anthropic - agentic coding assistant"
+	bin:         "claude"
+	tags: ["claude-code", "anthropic", "claude", "coding", "agent"]
+}
+```
+
+Only agent entries carry `bin`. Each role mode is its own entry. The `version` field must equal the module tag being pushed.
+
+## Publishing Rules
+
+`docs/publishing.md` owns the procedure. The rules most often broken:
+
+- Derive versions from `git ls-remote --tags origin`, never from local tags or `scripts/publish-index` (it auto-bumps patch)
+- New modules start at `v1.0.0`. Updates default to a minor bump; patch is for no-behaviour fixes only
+- Commit the module and `index/index.cue` together in one commit. Schemas have no index entry
+- Tags are `<category>/<path>/<version>`, `index/<version>`, and `schemas/<version>`
+- Push each tag by name; never `git push --tags`
+- Registry tags are immutable. A tag pushed before a failed `cue mod publish` is spent; bump and restart. Never move, delete, or reuse a tag
+- Retiring index keys is an index minor on `@v1`, never a major
+- `start` does not yet recognise the skills category; verify skills through the registry and git tag instead of `start doctor`
+
+## Shared Template Copies
+
+The per-item finding template (history in `docs/item-by-item-template.md`) is copied into each of these files. Keep them in step when one changes:
+
+- `tasks/review/pre-commit/task.md`
+- `tasks/ticket/review/task.md`
+- `tasks/design/review/task.md`
+- `tasks/review/multi-agent/orchestrator/task.md`
+- `skills/finding/one-by-one/SKILL.md`
+
+`tasks/tk/id/review` fetches it from `tasks:ticket/review` at runtime rather than holding a copy.
+
+## Markdown
+
+Agent-facing documents (`role.md`, `task.md`, context `.md`, docs): no bold, italic, horizontal rules, emojis, HTML comments, or task lists; headings to `###`; single blank lines; callout prefixes such as `Note:` without bold; no periods at the end of list items in role prompts. `SKILL.md` follows the Agent Skills specification instead.
+
+## Commits
+
+Use [Scoped Commits](https://scopedcommits.com): `<scope>: <description>`, no `feat`/`fix` prefix, multiple scopes comma-separated. Scope is the module path or area, for example `roles/golang/assistant, index: update golang assistant role`. Do not add `Co-Authored-By` trailers. Commit only when asked.
