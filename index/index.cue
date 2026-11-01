@@ -278,15 +278,21 @@ contexts: {
 	}
 	"cli/design": {
 		module:      "github.com/p3bot/library/contexts/cli/design@v1"
-		version:     "v1.1.0"
-		description: "Agent-first CLI design guide for designing and auditing command-line tools"
+		version:     "v1.2.0"
+		description: "p3bot guide to agent-first CLIs: designing and auditing command-line tools"
 		tags: ["cli", "design", "agents", "guide"]
 	}
 	"golang/design/cli": {
 		module:      "github.com/p3bot/library/contexts/golang/design/cli@v1"
-		version:     "v1.1.0"
-		description: "Go CLI design guide: architecture, patterns, and conventions for command-line tools"
+		version:     "v1.2.0"
+		description: "p3bot Go CLI guide: architecture, patterns, and conventions for command-line tools"
 		tags: ["golang", "design", "cli", "go", "guide"]
+	}
+	"golang/design/cli-skill": {
+		module:      "github.com/p3bot/library/contexts/golang/design/cli-skill@v1"
+		version:     "v1.0.0"
+		description: "p3bot Go CLI guide: implementing an embedded agent skill with install, list, and uninstall"
+		tags: ["golang", "design", "cli-skill", "cli", "go", "skill", "guide"]
 	}
 	"ticket/writing": {
 		module:      "github.com/p3bot/library/contexts/ticket/writing@v1"

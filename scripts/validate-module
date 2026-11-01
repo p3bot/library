@@ -13,11 +13,14 @@ function print_usage() {
   cat <<EOF
 Usage: $(basename "$0") <module-dir>
 
-Validate a CUE module by running cue vet and cue export.
+Validate a CUE module by running cue vet and cue export, then checking the
+template start would render for a role, task, or context module: it must parse
+and use only known placeholders.
 The module-dir is relative to the repository root.
 
 Dependencies:
   cue    The CUE CLI tool
+  go     Runs scripts/render-template.go for the template check
 
 Required arguments:
   module-dir    Path to the module directory (e.g., roles/git/agent)
@@ -45,6 +48,11 @@ log_title "Validate Module"
 
 if ! command -v cue >/dev/null; then
   log_error "Missing dependency - 'cue'"
+  exit 1
+fi
+
+if ! command -v go >/dev/null; then
+  log_error "Missing dependency - 'go'"
   exit 1
 fi
 
@@ -107,5 +115,18 @@ else
   log_failure "cue export failed"
   exit 1
 fi
+
+case "${cue_file}" in
+  role.cue | task.cue | context.cue)
+    log_heading "template check"
+
+    if go run "${SCRIPT_DIR}/render-template.go" --check "${module_path}"; then
+      log_success "template check passed"
+    else
+      log_failure "template check failed"
+      exit 1
+    fi
+    ;;
+esac
 
 log_done

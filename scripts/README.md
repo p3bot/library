@@ -6,7 +6,9 @@ Scripts automatically locate the repository root via their own path.
 
 ## validate-module
 
-Validate a CUE module by running cue vet and cue export.
+Validate a CUE module by running cue vet and cue export, then checking the template
+start would render for a role, task, or context module: it must parse and use only
+known placeholders.
 The module type file (role.cue, task.cue, context.cue, agent.cue, skill.cue, index.cue)
 is detected automatically.
 
@@ -26,6 +28,7 @@ Notes:
 
 - Does not run cue mod tidy - run that manually when first creating a module
 - Exits non-zero on any validation failure
+- Requires Go for the template check (render-template.go --check)
 
 ## validate-index
 
@@ -146,26 +149,34 @@ Notes:
 
 ## render-template
 
-Render a context, task, role, or agent prompt template with real system values.
-Accepts a module directory path, runs cue export to extract the prompt, and
-executes the Go template with live environment data populated.
+Render a context, task, or role template with real system values.
+Accepts a module directory path, runs cue export to read the module, and executes
+the template start would use (prompt, else file, else command output) with live
+environment data populated.
 
-Usage: go run scripts/render-template.go <module-dir>
+Usage: go run scripts/render-template.go [--check] <module-dir>
 
 Arguments:
 
-  module-dir    Path to the module directory relative to the repository root
+  module-dir    Path to the module directory
+
+Optional arguments:
+
+  --check       Parse the template and reject unknown placeholders, without rendering.
+                Runs no module commands
 
 Examples:
 
   go run scripts/render-template.go contexts/home/dotagents/environment
   go run scripts/render-template.go tasks/golang/debug
-  go run scripts/render-template.go roles/git/agent
+  go run scripts/render-template.go --check roles/git/agent
 
 Notes:
 
 - Requires Go to be installed (stdlib only, no go.mod needed)
 - Populates all standard template variables from the live system
-- file_contents is read eagerly if a file field is set
-- command_output is executed eagerly if a command field is set
+- file_contents is read eagerly if a file field is set; @module/ resolves against module-dir
+- command_output is executed eagerly, once, if a command field is set
 - instructions is always empty (not applicable outside the CLI)
+- --check skips a file outside the module bundle and command output, which only exist at runtime
+- Agent modules have no template, so nothing is rendered for them

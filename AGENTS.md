@@ -10,7 +10,7 @@ Behaviour and judgment for this repository live in `.agents/roles/default.md`. T
 | --- | --- |
 | `cue` v0.16.x | Validate and publish. Every `cue.mod/module.cue` pins language `v0.16.0` |
 | `start` | Post-publish verification (`start update`, `start doctor validate --force`) |
-| `go` | Only for `scripts/render-template.go` (stdlib, no go.mod) |
+| `go` | Only for `scripts/render-template.go`, which `scripts/validate-module` also runs (stdlib, no go.mod) |
 | `git` with `origin` | Version source of truth and tag pushes |
 | `gh` | Closing tracked issues on `p3bot/library` |
 
@@ -68,7 +68,7 @@ cue export task.cue
 From the repository root:
 
 ```bash
-scripts/validate-module tasks/review/pre-commit   # vet + export, no tidy
+scripts/validate-module tasks/review/pre-commit   # vet + export + template check, no tidy
 scripts/validate-index                            # after any index/index.cue change
 scripts/validate-schemas                          # after any schemas/ change
 go run scripts/render-template.go tasks/golang/debug   # render a prompt with live values

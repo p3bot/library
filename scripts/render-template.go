@@ -2,14 +2,18 @@ package main
 
 import (
 	"encoding/json"
+	"flag"
 	"fmt"
+	"maps"
 	"os"
 	"os/exec"
 	"os/user"
 	"path/filepath"
 	"runtime"
+	"slices"
 	"strings"
 	"text/template"
+	"text/template/parse"
 	"time"
 )
 
@@ -52,13 +56,94 @@ func osName() string {
 	return runtime.GOOS
 }
 
+func resolveFile(file, moduleDir, home string) string {
+	if rest, ok := strings.CutPrefix(file, "@module/"); ok {
+		return filepath.Join(moduleDir, rest)
+	}
+	return expandHome(file, home)
+}
+
+// templateSource returns the text start parses as a template: prompt, else file, else command output.
+func templateSource(m module, filePath, commandOutput string, check bool) (string, error) {
+	switch {
+	case m.Prompt != "":
+		return m.Prompt, nil
+	case m.File != "":
+		// A path outside the bundle resolves against the user's directory at runtime.
+		if check && !strings.HasPrefix(m.File, "@module/") {
+			return "", nil
+		}
+		b, err := os.ReadFile(filePath)
+		return string(b), err
+	case m.Command != "":
+		return commandOutput, nil
+	}
+	return "", nil
+}
+
+// unknownFields lists the template's fields missing from known. start's missingkey=zero
+// renders them as empty text, so parsing alone accepts them.
+func unknownFields(tmpl *template.Template, known map[string]string) []string {
+	unknown := map[string]bool{}
+	var walk func(n parse.Node)
+	branch := func(b parse.BranchNode) {
+		walk(b.Pipe)
+		walk(b.List)
+		walk(b.ElseList)
+	}
+	walk = func(n parse.Node) {
+		switch n := n.(type) {
+		case *parse.ListNode:
+			if n != nil {
+				for _, c := range n.Nodes {
+					walk(c)
+				}
+			}
+		case *parse.ActionNode:
+			walk(n.Pipe)
+		case *parse.IfNode:
+			branch(n.BranchNode)
+		case *parse.RangeNode:
+			branch(n.BranchNode)
+		case *parse.WithNode:
+			branch(n.BranchNode)
+		case *parse.TemplateNode:
+			walk(n.Pipe)
+		case *parse.PipeNode:
+			if n != nil {
+				for _, c := range n.Cmds {
+					walk(c)
+				}
+			}
+		case *parse.CommandNode:
+			for _, a := range n.Args {
+				walk(a)
+			}
+		case *parse.ChainNode:
+			walk(n.Node)
+		case *parse.FieldNode:
+			if _, ok := known[n.Ident[0]]; !ok {
+				unknown[n.Ident[0]] = true
+			}
+		}
+	}
+	for _, t := range tmpl.Templates() {
+		if t.Tree != nil {
+			walk(t.Tree.Root)
+		}
+	}
+	return slices.Sorted(maps.Keys(unknown))
+}
+
 func main() {
-	if len(os.Args) < 2 {
-		fmt.Fprintf(os.Stderr, "Usage: %s <module-dir>\n", filepath.Base(os.Args[0]))
+	check := flag.Bool("check", false, "parse the template without rendering it")
+	flag.Parse()
+	if flag.NArg() != 1 {
+		fmt.Fprintf(os.Stderr, "Usage: %s [--check] <module-dir>\n", filepath.Base(os.Args[0]))
 		os.Exit(1)
 	}
 
-	moduleDir := os.Args[1]
+	moduleDir := flag.Arg(0)
 
 	// Find the CUE file
 	var cueFile, moduleType string
@@ -94,8 +179,9 @@ func main() {
 		fmt.Fprintf(os.Stderr, "failed to parse module fields: %v\n", err)
 		os.Exit(1)
 	}
-	if m.Prompt == "" {
-		fmt.Println("(no prompt field)")
+	// An agent's command is a launch template for start, not a command to run here.
+	if moduleType == "agent" {
+		fmt.Println("(agent modules have no template)")
 		return
 	}
 
@@ -106,20 +192,33 @@ func main() {
 		home = u.HomeDir
 		username = u.Username
 	}
+	filePath := resolveFile(m.File, moduleDir, home)
+
+	commandOutput := ""
+	if m.Command != "" && !*check {
+		commandOutput = runCmd("sh", "-c", m.Command)
+	}
+
+	source, err := templateSource(m, filePath, commandOutput, *check)
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "failed to read template: %v\n", err)
+		os.Exit(1)
+	}
+	// Matches start's options, so a template this accepts also parses there.
+	tmpl, err := template.New("prompt").Option("missingkey=zero").Parse(source)
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "failed to parse template: %v\n", err)
+		os.Exit(1)
+	}
+
 	hostname, _ := os.Hostname()
 	cwd, _ := os.Getwd()
-	filePath := expandHome(m.File, home)
 
 	fileContents := ""
 	if filePath != "" {
 		if b, err := os.ReadFile(filePath); err == nil {
 			fileContents = string(b)
 		}
-	}
-
-	commandOutput := ""
-	if m.Command != "" {
-		commandOutput = runCmd("sh", "-c", m.Command)
 	}
 
 	data := map[string]string{
@@ -142,11 +241,14 @@ func main() {
 		"instructions":   "",
 	}
 
-	tmpl, err := template.New("prompt").Parse(m.Prompt)
-	if err != nil {
-		fmt.Fprintf(os.Stderr, "failed to parse template: %v\n", err)
-		os.Exit(1)
+	if *check {
+		if unknown := unknownFields(tmpl, data); len(unknown) > 0 {
+			fmt.Fprintf(os.Stderr, "unknown placeholders render as empty text: %s\n", strings.Join(unknown, ", "))
+			os.Exit(1)
+		}
+		return
 	}
+
 	if err := tmpl.Execute(os.Stdout, data); err != nil {
 		fmt.Fprintf(os.Stderr, "failed to render template: %v\n", err)
 		os.Exit(1)

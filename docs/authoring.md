@@ -430,7 +430,7 @@ UTD content fields (at least one required):
 
 UTD configuration fields: `shell` (override the default shell) and `timeout` (command timeout in seconds, 1-3600).
 
-Resolution priority is prompt > file > command. With only `file` set, the file contents are returned directly; with only `command` set, the command output is returned directly; with `prompt` set, it is rendered as a Go template with access to `{{.file}}`, `{{.file_contents}}`, `{{.command}}`, `{{.command_output}}`, and `{{.datetime}}`.
+Resolution priority is prompt > file > command. The highest-priority field set is the template: start parses and renders it as a Go template, with access to `{{.file}}`, `{{.file_contents}}`, `{{.command}}`, `{{.command_output}}`, and `{{.datetime}}`. With `prompt` set, `{{.file_contents}}` and `{{.command_output}}` insert their values as data. With only `file` or only `command` set, the file contents or command output are themselves the template, so a literal `{{` is never safe: `{{version}}` fails the module at load, and `{{.Version}}` silently renders as empty text. Restructure the text to avoid it, or write it as `{{"{{"}}`. `scripts/validate-module` rejects both forms in `prompt` and bundled `file` templates; it cannot check command output.
 
 Context definition templates:
 
