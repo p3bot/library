@@ -15,11 +15,12 @@ package schemas
 	// Embed UTD pattern (file, command, prompt, shell, timeout)
 	#UTD
 
-	// Whether this role can be skipped if its file is missing.
+	// Whether this role takes part in discovery when no role is named.
 	// Optional roles are discovery-based (e.g., dotagents roles that look for
-	// .agents/roles/default.md). When file is missing:
-	// - optional: true → skip, try next role in definition order
-	// - optional: false → error, stop execution
-	// Explicit --role flag always errors on failure.
+	// .agents/roles/default.md):
+	// - optional: true → candidate; if its file is missing, try the next in definition order
+	// - optional: false → only used when named by --role or a task
+	// Finding no candidate is an error; --role none runs without a role.
+	// A named role always errors on failure.
 	optional: bool | *false
 }
