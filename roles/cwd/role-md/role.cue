@@ -6,5 +6,5 @@ role: schemas.#Role & {
 	description: "Project-specific role from role.md"
 	tags: ["cwd", "project", "role"]
 	file:     "role.md"
-	optional: true
+	priority: 20
 }

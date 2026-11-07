@@ -10,6 +10,8 @@ Each subdirectory contains a CUE package defining a role with prompts, instructi
 
 Not every domain provides all three styles.
 
+The cwd/ and home/ roles carry a `priority`, so start selects the first one whose file exists when no role is named. Lower numbers are tried first: `cwd/dotagents/default` (10), `cwd/role-md` (20), `home/dotagents/default` (50). Every other role is used only when named with `--role` or by a task.
+
 ## Structure
 
 ```

@@ -116,19 +116,19 @@ roles: {
 	}
 	"home/dotagents/default": {
 		module:      "github.com/p3bot/library/roles/home/dotagents/default@v1"
-		version:     "v1.1.0"
+		version:     "v1.2.0"
 		description: "User's global default role from ~/.agents/roles/default.md"
 		tags: ["dotagents", "home", "global", "default"]
 	}
 	"cwd/dotagents/default": {
 		module:      "github.com/p3bot/library/roles/cwd/dotagents/default@v1"
-		version:     "v1.1.0"
+		version:     "v1.2.0"
 		description: "Project-specific default role from .agents/roles/default.md"
 		tags: ["dotagents", "cwd", "project", "default"]
 	}
 	"cwd/role-md": {
 		module:      "github.com/p3bot/library/roles/cwd/role-md@v1"
-		version:     "v1.1.0"
+		version:     "v1.2.0"
 		description: "Project-specific role from role.md"
 		tags: ["cwd", "project", "role"]
 	}
