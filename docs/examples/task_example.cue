@@ -60,6 +60,13 @@ tasks: {
 		// timeout: 120 from global default
 	}
 
+	"pair-review": {
+		description: "Review a change with two or more agents"
+		prompt:      "Review {{.instructions}} and discuss each finding"
+		min_members: 2 // A roster smaller than 2 cannot run this task
+		tags: ["review"]
+	}
+
 	// This will FAIL validation - no file, command, or prompt
 	// "invalid-task": {
 	//     description: "This is invalid"

@@ -160,7 +160,7 @@ cue vet ./...
 cue vet *.cue ../docs/examples/<affected>_example.cue
 ```
 
-From the repository root, `scripts/validate-schemas` vets the legal `session_locator` and requires the `docs/examples/locator_reject/` fixtures to fail. Vet every example the schema change touches. Also confirm any unification change (for example a new `uses` category) with a throwaway value against the changed definition. Do not proceed if validation fails.
+From the repository root, `scripts/validate-schemas` vets each `docs/examples/legal/<field>.cue` and requires every fixture in `docs/examples/reject/<field>/` to fail on that field. A new constrained field adds both. Vet every example the schema change touches. Also confirm any unification change (for example a new `uses` category) with a throwaway value against the changed definition. Do not proceed if validation fails.
 
 ### 2. Determine the next schemas version from the remote only
 

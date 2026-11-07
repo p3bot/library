@@ -233,12 +233,14 @@ Defines the schema for task workflows. Embeds `#UTD` for content generation.
 - `tags` ([]string, optional) - Tags for categorization/search
 - `role` (string, optional) - Reference to role name (validated at runtime)
 - `agent` (string, optional) - Reference to agent name (validated at runtime)
+- `min_members` (int >= 1, optional) - Smallest roster the task needs. Absent means 1. start stores, installs, and prints it with `start get <task> --field min_members`, and does not read it when it launches the task. It is for a roster runner to read
 
 **Constraints:**
 
 - At least one of `file`, `command`, or `prompt` must be present (inherited from #UTD)
 - `shell` must not be empty string if provided (inherited from #UTD)
 - `timeout` must be between 1 and 3600 seconds if provided (inherited from #UTD)
+- `min_members`, when set, is an integer of at least 1
 
 ### #Skill
 
@@ -298,7 +300,14 @@ cd schemas
 cue vet ./...
 ```
 
-From the repository root, `scripts/validate-schemas` vets the legal `session_locator` and requires an empty list, an empty key, a newline, and an array index to fail. Those fixtures live in `docs/examples/locator_reject/` so `cue vet ./...` does not load them.
+From the repository root, `scripts/validate-schemas` vets the package, then checks each field that has fixtures. A checked field has one legal example, `docs/examples/legal/<field>.cue`, and one reject directory, `docs/examples/reject/<field>/`. The legal example must unify. Each reject must fail with an error whose value path names that field, so a syntax error or a failure on another field does not count. A field with only one of the two fails the run. The fixtures live outside `schemas/` so `cue vet ./...` does not load them.
+
+| Field | Rejects |
+| --- | --- |
+| `session_locator` | An empty list, an empty key, a newline, and an array index |
+| `min_members` | 0, a negative number, a fraction, and a string |
+
+To check a new field, add its legal example and reject directory. The script does not change.
 
 ### Validate Examples
 

@@ -81,7 +81,7 @@ cue vet ./...
 cue vet *.cue ../docs/examples/<name>_example.cue
 ```
 
-`docs/examples/` sits outside the schemas module so examples are not published. `docs/examples/locator_reject/` holds fixtures that must fail; `scripts/validate-schemas` checks they fail on `session_locator`.
+`docs/examples/` sits outside the schemas module so examples are not published. Per checked field, `docs/examples/legal/<field>.cue` must unify and each fixture in `docs/examples/reject/<field>/` must fail on that field; `scripts/validate-schemas` checks both. A new constrained field adds fixtures, not script code.
 
 `scripts/validate-index` also enforces the non-TTY default-resolution contract: a `bin` shared by several agent entries needs at least one entry that is a bare key or ends `/interactive`.
 

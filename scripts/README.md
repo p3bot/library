@@ -57,9 +57,10 @@ Notes:
 
 ## validate-schemas
 
-Vet the schemas package with the legal `session_locator` example, then require
-each fixture in `docs/examples/locator_reject/` to fail with an error that
-names `session_locator`.
+Vet the schemas package, then check each field that has fixtures. A checked
+field has a legal example `docs/examples/legal/<field>.cue` and a reject
+directory `docs/examples/reject/<field>/`. The legal example must unify, and
+each reject fixture must fail with an error whose value path names the field.
 
 Usage: validate-schemas
 
@@ -70,7 +71,9 @@ Examples:
 Notes:
 
 - Run from anywhere; the script finds the repository root
-- Exits non-zero when the legal locator is rejected, a fixture is accepted, or a fixture fails for a reason other than `session_locator`
+- Exits non-zero when a legal example is rejected, a fixture is accepted, a fixture fails for a reason other than its field, or a field has a legal example without a reject directory or the reverse
+- A syntax error does not count: the fixture path also names the field, so the script matches the CUE value path, not a substring
+- Adding a checked field adds fixtures and does not edit the script
 - The fixtures stay outside `schemas/` so `cue vet ./...` does not load them
 
 ## publish-module

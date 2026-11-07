@@ -13,11 +13,14 @@ function print_usage() {
   cat <<EOF
 Usage: $(basename "$0")
 
-Vet the schemas package together with the legal session_locator example, then
-require each locator_reject fixture to fail with an error that names
-session_locator. The fixtures live outside schemas/ so cue vet ./... does not
-load a value that is meant to fail. A syntax error does not count: the failure
-must name the field.
+Vet the schemas package, then check each schema field that has fixtures.
+A checked field has a legal example docs/examples/legal/<field>.cue and a
+reject directory docs/examples/reject/<field>/. The legal example must unify
+with the schemas. Each reject fixture must fail with an error whose value path
+names that field. A syntax error, or a failure on another field, does not
+count. A legal example without a reject directory, or the reverse, fails the
+run. The fixtures live outside schemas/ so cue vet ./... does not load a value
+that is meant to fail. Adding a checked field adds fixtures, not script code.
 
 Dependencies:
   cue   The CUE CLI tool
@@ -53,53 +56,101 @@ if ! command -v cue >/dev/null; then
 fi
 
 declare schemas_dir="${REPO_ROOT}/schemas"
-declare legal="${REPO_ROOT}/docs/examples/agent_session_locator.cue"
-declare reject_dir="${REPO_ROOT}/docs/examples/locator_reject"
+declare legal_dir="${REPO_ROOT}/docs/examples/legal"
+declare reject_dir="${REPO_ROOT}/docs/examples/reject"
 
 log_heading "Operational Values"
 log_message "schemas: '${schemas_dir}'"
-log_message "  legal: '${legal}'"
+log_message "  legal: '${legal_dir}'"
 log_message " reject: '${reject_dir}'"
 
 # Main Logic
 # -----------------------------------------------------------------------------
-log_heading "Legal locator"
-
-if [[ ! -d "${schemas_dir}" || ! -f "${legal}" || ! -d "${reject_dir}" ]]; then
-  log_failure "schemas, the legal locator, or locator_reject is missing"
+if [[ ! -d "${schemas_dir}" || ! -d "${legal_dir}" || ! -d "${reject_dir}" ]]; then
+  log_failure "schemas, docs/examples/legal, or docs/examples/reject is missing"
   exit 1
 fi
 
-if (cd "${schemas_dir}" && cue vet ./*.cue "${legal}"); then
-  log_success "legal locator unifies"
+log_heading "Schemas package"
+
+if (cd "${schemas_dir}" && cue vet ./...); then
+  log_success "schemas vet"
 else
-  log_failure "legal locator rejected"
+  log_failure "schemas rejected"
   exit 1
 fi
-
-log_heading "Rejected locators"
 
 shopt -s nullglob
-declare -a fixtures=("${reject_dir}"/*.cue)
-if [[ ${#fixtures[@]} -eq 0 ]]; then
-  log_failure "no fixtures in '${reject_dir}'"
+
+# Every field must appear on both sides, so a fixture set cannot go half-checked.
+declare -A fields=()
+declare path
+for path in "${legal_dir}"/*.cue; do
+  fields["$(basename "${path}" .cue)"]=1
+done
+for path in "${reject_dir}"/*/; do
+  path="${path%/}"
+  fields["${path##*/}"]=1
+done
+
+if [[ ${#fields[@]} -eq 0 ]]; then
+  log_failure "no checked fields under docs/examples"
   exit 1
 fi
 
-declare fixture err
-for fixture in "${fixtures[@]}"; do
-  # A fixture that vets, or that fails for some other reason, is not a lock.
-  if err="$(cd "${schemas_dir}" && cue vet ./*.cue "${fixture}" 2>&1)"; then
-    log_failure "$(basename "${fixture}") was accepted"
+# Matches a CUE error header whose value path has the field as one segment,
+# such as "_bad.session_locator.0:". The fixture path also contains the field
+# name, so a plain substring would accept a syntax error.
+function names_field() {
+  local field="$1" err="$2" line
+  local pattern="^([^[:space:]:]+\.)?${field}(\.[^[:space:]:]+)?:"
+  while IFS= read -r line; do
+    [[ "${line}" =~ ${pattern} ]] && return 0
+  done <<<"${err}"
+  return 1
+}
+
+declare field legal fixture err
+declare -a fixtures
+while IFS= read -r field; do
+  log_heading "Field ${field}"
+
+  if [[ ! "${field}" =~ ^[A-Za-z_][A-Za-z0-9_]*$ ]]; then
+    log_failure "'${field}' is not a CUE field name"
     exit 1
   fi
-  if [[ "${err}" != *session_locator* ]]; then
-    log_failure "$(basename "${fixture}") failed without a session_locator error"
-    log_newline
-    echo "${err}" >&2
+
+  legal="${legal_dir}/${field}.cue"
+  if [[ ! -f "${legal}" ]]; then
+    log_failure "no legal example '${legal}'"
     exit 1
   fi
-  log_success "$(basename "${fixture}") rejected"
-done
+  fixtures=("${reject_dir}/${field}"/*.cue)
+  if [[ ${#fixtures[@]} -eq 0 ]]; then
+    log_failure "no reject fixtures in '${reject_dir}/${field}'"
+    exit 1
+  fi
+
+  if (cd "${schemas_dir}" && cue vet ./*.cue "${legal}"); then
+    log_success "legal ${field} unifies"
+  else
+    log_failure "legal ${field} rejected"
+    exit 1
+  fi
+
+  for fixture in "${fixtures[@]}"; do
+    if err="$(cd "${schemas_dir}" && cue vet ./*.cue "${fixture}" 2>&1)"; then
+      log_failure "${field}/$(basename "${fixture}") was accepted"
+      exit 1
+    fi
+    if ! names_field "${field}" "${err}"; then
+      log_failure "${field}/$(basename "${fixture}") failed without a ${field} error"
+      log_newline
+      echo "${err}" >&2
+      exit 1
+    fi
+    log_success "${field}/$(basename "${fixture}") rejected"
+  done
+done < <(printf '%s\n' "${!fields[@]}" | sort)
 
 log_done

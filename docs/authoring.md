@@ -504,7 +504,7 @@ task: schemas.#Task & {
 }
 ```
 
-Without a role, drop the role import and the `role` field. Declare a `uses` list when the task fetches other library modules at runtime with `start get`, using fully-qualified colon-form addresses.
+Without a role, drop the role import and the `role` field. Set `min_members` (an integer, at least 1) when the task needs a roster of more than one agent, for example 2 for a review that a second agent challenges. start does not read it at launch. Declare a `uses` list when the task fetches other library modules at runtime with `start get`, using fully-qualified colon-form addresses.
 
 Choose the prompt pattern by the size of task.md:
 

@@ -16,4 +16,8 @@ package schemas
 	// role can be a string (runtime resolution) or #Role (CUE dependency)
 	role?:  string | #Role
 	agent?: string // Must exist in agents (validated at runtime)
+
+	// Smallest roster the task needs. Absent means 1. start stores and
+	// prints it and does not read it at launch.
+	min_members?: int & >=1
 }
