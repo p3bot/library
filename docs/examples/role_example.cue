@@ -120,3 +120,12 @@ roles: "data-scientist": {
 		"""
 	tags: ["data-science", "python", "ml"]
 }
+
+// Example 8: Automatically selected role
+// Used when no role is named and ./ROLE.md exists; lower priority is tried first
+roles: "project-role": {
+	description: "Project role from ROLE.md"
+	file:        "./ROLE.md"
+	priority:    15
+	tags: ["project", "default"]
+}

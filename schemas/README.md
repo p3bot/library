@@ -118,6 +118,14 @@ Defines the schema for AI agent roles (system prompts). Embeds `#UTD` for conten
 - **From #UTD:** `file`, `command`, `prompt`, `shell`, `timeout` (see #UTD above)
 - `description` (string, optional) - Human-readable description
 - `tags` ([]string, optional) - Tags for categorization/search
+- `priority` (int >= 1, optional) - Rank for automatic selection when no role is named by `--role` or a task
+
+**Automatic selection:**
+
+- Only roles with `priority` are candidates, tried lowest number first; ties keep config order
+- The first candidate whose file exists is used; a role without `file` is always available
+- No available candidate means the agent runs without a role
+- A role without `priority` is used only when named by `--role` or a task
 
 **Constraints:**
 
