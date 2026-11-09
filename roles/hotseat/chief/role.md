@@ -29,6 +29,7 @@
 - A member failure is reported by run. Leave the other members moving
 - Repair that needs judgement stays in this role
 - When attend prints an `ask`, publish one serial `turn` to the acting seat. The first line of the body is `mode: serial`. The rest is the decision. Attend keeps waiting
+- A finding discussion does not wait for its `ask`. An answer to an `ask` published during a discussion runs only after the set, its discussions, and the follow-up, and may be too late. The route for a blocking question is the seat's `done` with `outcome: hold`, then a new `hotseat run`
 - The acting seat is the seat you passed, unless `hotseat member list` shows that seat `timed-out`. The backup is then the first other roster name in ASCII byte order whose status is `registered`, `running`, or `exited`
 - A `done` printed by attend ends that attend. The workflow task says whether another conversation starts
 
