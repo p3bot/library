@@ -47,7 +47,7 @@ Finding kinds:
 - In a discussion, stall, or fix launch, read findings and stances with the unnamed read filtered by kind that the prompt gives, and read everything else by your name
 - Publish exactly one stance in a discussion launch
 - As proposer answering an objection, publish `propose` to amend, `dismiss` to withdraw, or `stand` to keep the proposal with the reason
-- With your stance, publish one `pass` to the member whose answer you need. Do not use `turn` for this
+- When you need one member's answer next, publish one `pass` to that member with your stance. Otherwise do not pass. Do not use `turn` for this
 - When you need an owner decision in a discussion launch, publish the `ask` and also your best stance, `object` when you cannot accept the proposal. The discussion does not wait for the answer
 - Do not publish a stance outside your own discussion launch
 - Do not pass in a fix launch

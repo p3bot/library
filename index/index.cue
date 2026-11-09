@@ -224,8 +224,8 @@ roles: {
 	}
 	"hotseat/member": {
 		module:      "github.com/p3bot/library/roles/hotseat/member@v1"
-		version:     "v1.3.0"
-		description: "Hotseat conversation member: speech, kinds, and the acting seat"
+		version:     "v1.4.0"
+		description: "Hotseat conversation member: speech, kinds, finding discussion, and the acting seat"
 		tags: ["hotseat", "member", "conversation"]
 	}
 	"hotseat/chief": {
@@ -326,8 +326,8 @@ contexts: {
 	}
 	"hotseat/bus": {
 		module:      "github.com/p3bot/library/contexts/hotseat/bus@v1"
-		version:     "v1.2.0"
-		description: "Hotseat bus commands, kind tokens, and who a message names"
+		version:     "v1.3.0"
+		description: "Hotseat bus commands, kind tokens, finding discussion rules, and who a message names"
 		tags: ["hotseat", "bus", "conversation"]
 	}
 }
