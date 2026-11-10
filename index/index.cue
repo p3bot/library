@@ -536,8 +536,8 @@ tasks: {
 	}
 	"hotseat/ticket/review": {
 		module:      "github.com/p3bot/library/tasks/hotseat/ticket/review@v1"
-		version:     "v1.0.0"
-		description: "Parallel review of one ticket document, then a serial fix and one satisfaction pass"
+		version:     "v1.1.0"
+		description: "Parallel review of one ticket document, each finding discussed and fixed by agreement, then one satisfaction pass over the fixes"
 		tags: ["hotseat", "ticket", "review"]
 	}
 	"hotseat/ticket/implement": {
@@ -554,7 +554,7 @@ tasks: {
 	}
 	"hotseat/workflow/implement": {
 		module:      "github.com/p3bot/library/tasks/hotseat/workflow/implement@v1"
-		version:     "v1.0.0"
+		version:     "v1.1.0"
 		description: "Run triage, ticket review, implementation, and pre-commit review as four hotseat conversations"
 		tags: ["hotseat", "workflow", "implement"]
 	}

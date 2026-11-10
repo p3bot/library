@@ -7,6 +7,6 @@ source: {
 }
 deps: {
 	"github.com/p3bot/library/schemas@v1": {
-		v: "v1.8.0"
+		v: "v1.10.0"
 	}
 }
