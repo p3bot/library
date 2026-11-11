@@ -548,8 +548,8 @@ tasks: {
 	}
 	"hotseat/pre-commit/review": {
 		module:      "github.com/p3bot/library/tasks/hotseat/pre-commit/review@v1"
-		version:     "v1.0.0"
-		description: "Parallel pre-commit diff review, a serial fix, and one satisfaction pass"
+		version:     "v1.1.0"
+		description: "Parallel pre-commit diff review, each finding discussed and fixed by agreement, then one satisfaction pass over the fixes"
 		tags: ["hotseat", "pre-commit", "review"]
 	}
 	"hotseat/workflow/implement": {
