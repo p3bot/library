@@ -256,7 +256,7 @@ Surface the disagreement in Open Questions or in Coverage. Do not paper over it 
 | Design accepted, need ticket boundaries | this task |
 | Tickets written, need the design carried into them | `tasks:design/trace` |
 | One ticket needs a quality check | `tasks:ticket/review` |
-| Ticket ready to build | `tasks:ticket/begin` |
+| Ticket ready to build | `tasks:ticket/build` |
 
 ## Outcome
 

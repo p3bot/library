@@ -7,7 +7,7 @@ Using tk, build the next available ticket.
 ### Step 1: Fetch
 
 ```bash
-start get tasks:tk/id/build
+start get tasks:ticket/build
 ```
 
 ### Step 2: Select

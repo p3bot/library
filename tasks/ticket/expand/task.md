@@ -1,12 +1,12 @@
 # Expand a Ticket
 
-Using tk, expand this ticket to the ticket writing guide.
+Expand this ticket to the ticket writing guide.
 
-`contexts:ticket/writing` is fetched later. On the design branch, `contexts:design/writing` is fetched for the document shape. This envelope is the only binding source for path, edits, and status.
+`contexts:ticket/writing` is fetched later. On the design branch, `contexts:design/writing` is fetched for the document shape. This task is the only binding source for path, edits, and status.
 
 ## Sync
 
-When `tk pulse mode` is `tk-driven`, run `tk sync` first. Skip on repo-driven and plain-files. If sync needs-attention, stop.
+Sync applies to a tk ticket or design. When `tk pulse mode` is `tk-driven`, run `tk sync` before `tk get` or `tk design get`. Skip on repo-driven and plain-files. If sync needs-attention, stop.
 
 After ticket-body edits, `tk sync` again on tk-driven. `mark` already self-commits.
 
@@ -16,11 +16,13 @@ Do not run `tk doctor` unless `tk get` or `tk mark` fails.
 
 ### Step 1: Resolve
 
-The ticket id is the instruction. If none was supplied, ask for it. Do not guess or claim the next ticket.
+The ticket is the instruction: a tk id or a path. If they asked you to find it, look where they pointed. If none was supplied, ask for it. Do not guess or claim the next ticket.
 
-Run `tk get <id>`. Unknown ticket id: run `tk design get <id>`. `design_id:` and no path: stop. Do not `tk mark`. A path with `parse_error:` for that id: stop. The fence is quarantined. Do not mark, do not edit the fence, and do not run the design session or the review. `parse_error: N unparseable` does not quarantine the file just fetched. A path with no per-id `parse_error:` is a design document. Skip the later steps of this envelope. Do not `tk mark` it. The path `tk design get` printed is the file for this branch. Edit under its H1. Do not rewrite it as a ticket.
+When `command -v tk` fails, a path is an unmanaged ticket. Otherwise, a path under `design/`: run `tk design get` on the full id in its filename, the first two hyphen-separated tokens, and continue from that command below; an id tk does not know leaves it unmanaged. Another path is a tk ticket when its frontmatter has an `id` that `tk get` resolves. Otherwise it is an unmanaged ticket. Its path is the working path, and it has no status to mark.
 
-On a ticket path, apply the terminal test to that path and status before any mark.
+For a tk id, run `tk get <id>`. Unknown ticket id: run `tk design get <id>`. `design_id:` and no path: stop. Do not `tk mark`. A path with `parse_error:` for that id: stop. The fence is quarantined. Do not mark, do not edit the fence, and do not run the design session or the review. `parse_error: N unparseable` does not quarantine the file just fetched. A path with no per-id `parse_error:` is a design document. Skip the later steps of this task. Do not `tk mark` it. The path `tk design get` printed is the file for this branch. Edit under its H1. Do not rewrite it as a ticket.
+
+On a tk ticket path, apply the terminal test to that path and status before any mark.
 
 A ticket is terminal when the path is under `archive/`, or when its status is `done` or `cancelled`.
 
@@ -41,7 +43,7 @@ Run that guide's stub test against the working path. Classify:
 
 - stub — the stub test fails. This is a Match failure
 - capture — the match is capture. Not a stub. Not a Match failure
-- other — any other matching profile. Say so and stop. Do not rewrite. Quality of the plan is `tasks:tk/id/review`, not this task
+- other — any other matching profile. Say so and stop. Do not rewrite. Quality of the plan is `tasks:ticket/review`, not this task
 
 This task: on stub or capture, go to Write. Callers that Write only on Match failure write stubs only.
 
@@ -70,7 +72,7 @@ If owner decisions remain, settle them with the owner before writing:
 - Do not guess. Wait
 - If the work is more than one implementation pass, say so before writing
 
-If the profile to write is design, load the design writing guide. It supplies the document shape. This envelope still binds the path, the edits, and the status.
+If the profile to write is design, load the design writing guide. It supplies the document shape. This task still binds the path, the edits, and the status.
 
 ```bash
 start get contexts:design/writing
@@ -78,8 +80,10 @@ start get contexts:design/writing
 
 `tk design create` in this ticket's scope (`--scope` is the scope name, not the ticket id). Fill the document under that H1. Do not paste a second heading. Do not leave the design spine on this ticket. Name the new design id under Notes. Leave the design `draft`. If `tk pulse mode` is `tk-driven`, `tk sync` after the design body and this ticket's body edits. Then `tk mark done` on this ticket. The archive keeps the Notes line.
 
+On an unmanaged ticket, place the design document with that guide's unmanaged Placement instead of `tk design create`, and name its path under Notes. Do not mark. Tell the user the design document replaces this ticket.
+
 Otherwise rewrite under the H1 following the loaded guide. Right-size: omit any optional section that does not apply. Keep identifying headings even when empty. Record References for sources consulted. Preserve the YAML frontmatter. Do not change status here.
 
 ### Step 4: Status
 
-Never auto-promote to `todo`. Do not change status except the terminal reopen in Step 1 and the design branch, which marks this ticket `done` after the design document exists.
+Never auto-promote to `todo`. Do not change status except the terminal reopen in Step 1 and the design branch, which marks this ticket `done` after the design document exists. An unmanaged ticket has no status to change.

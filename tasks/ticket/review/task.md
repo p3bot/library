@@ -6,33 +6,59 @@ Goal: catch issues that would force rework if a fresh session started the work. 
 
 Finding no new issues is a valid outcome. If the ticket document is complete and prior reviews have surfaced the real concerns, say so rather than invent findings to justify the run.
 
+## Sync
+
+Sync applies to a tk ticket or design. When `tk pulse mode` is `tk-driven`, run `tk sync` before `tk get` or `tk design get`. Skip on repo-driven and plain-files. If sync needs-attention, stop.
+
+After ticket-body edits, `tk sync` again on tk-driven. `mark` already self-commits.
+
+Do not run `tk doctor` unless `tk get` or `tk mark` fails.
+
 ## Workflow
 
 ### Phase 1: Review
 
-1. Identify the ticket document from the user's instructions. If they named a path, use it. If they asked you to find it, look where they pointed. Otherwise ask.
+1. Resolve the ticket document. It is the instruction: a tk id or a path. If they asked you to find it, look where they pointed. If none was supplied, ask for it. Do not guess or claim the next ticket.
 
    A library ticket document is a standalone markdown document a fresh-session agent can act on.
+
+   When `command -v tk` fails, a path is an unmanaged ticket. Otherwise, a path under `design/`: run `tk design get` on the full id in its filename, the first two hyphen-separated tokens, and continue from that command below; an id tk does not know leaves it unmanaged. Another path is a tk ticket when its frontmatter has an `id` that `tk get` resolves. Otherwise it is an unmanaged ticket. Its path is the working path, and it has no status to mark.
+
+   For a tk id, run `tk get <id>`. Unknown ticket id: run `tk design get <id>`. `design_id:` and no path: stop. Do not `tk mark`. A path with `parse_error:` for that id: stop. The fence is quarantined. Do not mark, do not edit the fence, and do not run the design session or the review. `parse_error: N unparseable` does not quarantine the file just fetched. A path with no per-id `parse_error:` is a design document. Skip the rest of this task. Do not `tk mark` the design. Run design review on that path:
+
+   ```bash
+   start get tasks:design/review
+   ```
+
+   On a tk ticket path, apply the terminal test to that path and status before any mark.
+
+   A ticket is terminal when the path is under `archive/`, or when its status is `done` or `cancelled`.
+
+   - Terminal: ask whether to continue the review and reopen as `draft`. Explicit no: stop, leave the ticket terminal. Explicit yes: `tk mark draft <id>` and proceed
+   - Status `review`: `tk mark draft <id>` first. Do not use the `review` status
+   - Leave `in-progress`, `blocked`, `todo`, `backlog`, and `draft` alone
+
+   The working path is the last path printed by `tk get` or `tk mark`. After a reopen-as-`draft` mark, that printed path replaces the earlier get path. On a tk ticket, edit only under the H1.
 2. Load the writing guide and match the profile:
 
    ```bash
    start get contexts:ticket/writing
    ```
 
-   Run that guide's stub test. Expand only stubs. If it is a stub and this review is not already inside `tasks:tk/id/review` (that envelope already ran expand):
+   Run that guide's stub test against the working path. Expand only stubs. Capture is not a stub; continue. If it is a stub:
 
    ```bash
-   start get tasks:tk/id/expand
+   start get tasks:ticket/expand
    ```
 
-   Run Match and Write against the path. Skip Resolve, Sync, and Status. The design branch of Write still marks this ticket `done` after the design document exists. After Write, stop. If it created a design document, tell the user the ticket is `done` and to review that design. Otherwise tell the user to run this task again. Do not rewrite from the writing guide alone.
+   Run its Match and Write against the working path. Skip its Resolve, Sync, and Status. This task stays the only binding source for path, edits, and status. Write includes investigate, a design document when the work is a design, and the rewrite. The design branch of Write still marks this ticket `done` after the design document exists. After Write, stop. If it created a design document, tell the user to review that design, and on a tk ticket that the ticket is `done`. Otherwise tell the user to run this task again. Do not rewrite from the writing guide alone.
 3. If the matched profile is design:
 
    ```bash
    start get tasks:design/review
    ```
 
-   Run that walk on the already resolved path. Skip Identification in the fetched task. Do not copy design-review concerns into this task. Stop this task's remaining phases after that walk. Resume the caller if any (`tasks:tk/id/review` Step 4 still runs).
+   Run that walk on the already resolved path. Skip Identification in the fetched task. Do not copy design-review concerns into this task. After that walk, skip Phases 2 to 4 and go to Phase 5.
 4. If the matched profile is capture, skip to Phase 4 and declare not ready to implement rather than inventing a findings walk, unless the owner asked to review the capture as a plan.
 5. Read the ticket document thoroughly.
 6. Run the Size and Coherence Check (below) on implement tickets, and on bug tickets when the work is a fix. If it fires, still produce the report header and What this ticket does, then skip to Phase 4 and declare Split the ticket.
@@ -116,6 +142,26 @@ After all findings have been processed, re-read the ticket document with fresh e
 
    An issue blocks work if proceeding without resolving it would force a fresh session to rework or guess. Never auto-promote to `todo`.
 2. Print a summary table of all findings and their outcomes (see Remediation Summary in the Report Format). Do not prompt to save.
+
+### Phase 5: Status
+
+An unmanaged ticket has no status. Skip this phase.
+
+Never auto-promote to `todo`.
+
+If the matched profile is design: do not ask to mark `todo`. Sound means the owner accepts, then decompose. If they accept now:
+
+```bash
+start get tasks:design/decompose
+```
+
+That task marks this legacy ticket `done` after it writes the follow-ups. If they stop after the proposal, leave the ticket in `draft`. A design document does not reach this phase.
+
+Revise or Split: leave in `draft`.
+
+If the wrap-up is Ready to implement, Ready to diagnose, Ready to decide, or Ready to investigate: ask whether to mark `todo` only when the ticket is `draft` at the end, including a just-reopened terminal or a just-demoted `review`. Only an explicit yes does.
+
+Otherwise do not ask `todo`. Capture, stub, issues remaining, and split stay where they are.
 
 ## Reviewer Guidance
 

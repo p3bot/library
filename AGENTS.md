@@ -158,8 +158,6 @@ The per-item finding template (history in `docs/item-by-item-template.md`) is co
 - `tasks/review/multi-agent/orchestrator/task.md`
 - `skills/finding/one-by-one/SKILL.md`
 
-`tasks/tk/id/review` fetches it from `tasks:ticket/review` at runtime rather than holding a copy.
-
 The shared judgement block and shared boundary, defined under Role Specifics in `docs/authoring.md`, are copied into each of these. Keep them word for word in step:
 
 - `docs/authoring.md`

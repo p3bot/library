@@ -31,6 +31,7 @@ tasks/<domain>/<name>/
 ### design/
 
 - [design/decompose](design/decompose/) - Decompose an accepted design into tickets by profile
+- [design/discuss](design/discuss/) - Brief a design document against the design writing guide, then discuss it
 - [design/review](design/review/) - Review a design document before decompose
 - [design/trace](design/trace/) - Check that a design is carried into the tickets it produced
 
@@ -64,18 +65,16 @@ tasks/<domain>/<name>/
 
 ### ticket/
 
-- [ticket/begin](ticket/begin/) - Begin working the matched profile of the current ticket
+- [ticket/build](ticket/build/) - Build a ticket by its matched profile, from a tk id or a path
+- [ticket/continue](ticket/continue/) - Continue a ticket by its matched profile, reopening it in tk
 - [ticket/create](ticket/create/) - Create a ticket document by profile
+- [ticket/discuss](ticket/discuss/) - Brief a ticket against its matched profile, then discuss it
+- [ticket/expand](ticket/expand/) - Expand a ticket to a matching writing-guide profile
 - [ticket/review](ticket/review/) - Review a ticket document against its matched profile
 
 ### tk/
 
 - [tk/next/build](tk/next/build/) - Using tk, build the next available ticket
-- [tk/id/build](tk/id/build/) - Using tk, build this ticket
-- [tk/id/continue](tk/id/continue/) - Using tk, continue this ticket
-- [tk/id/discuss](tk/id/discuss/) - Using tk, discuss this ticket
-- [tk/id/expand](tk/id/expand/) - Using tk, expand this ticket to a matching writing-guide profile
-- [tk/id/review](tk/id/review/) - Using tk, review this ticket document
 - [tk/board/reorder](tk/board/reorder/) - Using tk, fix the sequence of the board
 - [tk/board/groom](tk/board/groom/) - Using tk, groom the board
 - [tk/scope/orchestrate](tk/scope/orchestrate/) - Using tk, orchestrate work across scopes

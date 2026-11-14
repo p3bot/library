@@ -8,7 +8,7 @@ task: schemas.#Task & {
 	uses: [
 		"contexts:design/writing",
 		"contexts:ticket/writing",
-		"tasks:tk/id/continue",
+		"tasks:ticket/continue",
 	]
 	file: "@module/task.md"
 	prompt: """

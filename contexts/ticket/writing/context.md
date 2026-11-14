@@ -66,7 +66,7 @@ Sections, in this order. Problem and Done when stay even when empty. Notes omit 
 
 Valid in `draft` and `backlog`. Not a stub. Expand promotes it when someone is ready to plan.
 
-`tk/id/build` on capture: if the ticket plus the codebase is enough to choose a later profile and finish that work without an owner decision, rewrite in place to that profile then continue; if an owner decision remains, stop and say so.
+`tasks:ticket/build` on capture: if the ticket plus the codebase is enough to choose a later profile and finish that work without an owner decision, rewrite in place to that profile then continue; if an owner decision remains, stop and say so.
 
 Done when a later session can tell what "done" meant. Capture is not ready to execute as a plan.
 
@@ -125,7 +125,7 @@ start get contexts:design/writing
 
 That guide owns the document, placement, and status. A legacy design-profile ticket stays a ticket until it is migrated. Decompose of that ticket still ends with `tk mark done`. New design work is `tk design create`.
 
-Build, continue, and begin do not mark this profile done.
+Build and continue do not mark this profile done.
 
 Review of this shape is `tasks:design/review`.
 

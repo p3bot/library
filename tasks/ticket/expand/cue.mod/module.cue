@@ -1,4 +1,4 @@
-module: "github.com/p3bot/library/tasks/ticket/begin@v1"
+module: "github.com/p3bot/library/tasks/ticket/expand@v1"
 language: {
 	version: "v0.16.0"
 }

@@ -6,6 +6,8 @@ This directory holds the ticket review task. This README documents the reasoning
 
 The task reviews a ticket document against its matched profile. The goal is a self-contained ticket a fresh-session agent can act on. A design-profile match, including a legacy design-profile ticket, dispatches to `tasks:design/review`. Capture may wrap as not ready to implement rather than a findings walk.
 
+The task takes a tk id or a path. On a tk ticket it also syncs, applies the terminal test before any mark, demotes `review` to `draft`, and asks about `todo` at the end. An unmanaged ticket has no status, so those steps are skipped and the review is otherwise identical.
+
 ## Workflow Context
 
 The task is designed to be run repeatedly against the same ticket document — typically five to ten times. Each run is a fresh pair of eyes looking for what earlier passes missed. Over successive runs, the review is expected to exhaust the set of real outliers that would force a fresh session to rework or guess.

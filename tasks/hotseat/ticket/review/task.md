@@ -12,7 +12,7 @@ Edit only under the H1. The fence stays sealed. On a tk-driven scope, `tk sync` 
 
 The acting seat posts one parallel review `turn` to every name `hotseat member list` returns, including itself.
 
-The first line is `mode: parallel`. The phase text is: `start get tasks:ticket/review`. Use its reviewer guidance, issue categories, goal bar, per-item template, and report format. Do not use its Commands, and do not apply its remediation phase. Do not edit the ticket.
+The first line is `mode: parallel`. The phase text is: `start get tasks:ticket/review`. Use its reviewer guidance, issue categories, goal bar, per-item template, and report format. Do not use its Sync, Resolve, stub Write, Commands, or Status phase, and do not apply its remediation phase. Do not edit the ticket.
 
 Publish each issue as its own `finding`, addressed to every roster name. The body is the full finding with one proposed solution. An issue written only in the `say` gets no discussion and is not fixed.
 
