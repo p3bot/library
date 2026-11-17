@@ -14,9 +14,9 @@ The acting seat posts one parallel review `turn` to every name `hotseat member l
 
 The first line is `mode: parallel`. The phase text is: `start get tasks:ticket/review`. Use its reviewer guidance, issue categories, goal bar, per-item template, and report format. Do not use its Sync, Resolve, stub Write, Commands, or Status phase, and do not apply its remediation phase. Do not edit the ticket.
 
-Publish each issue as its own `finding`, addressed to every roster name. The body is the full finding with one proposed solution. An issue written only in the `say` gets no discussion and is not fixed.
+Publish each issue as its own `finding`, addressed to every roster name, with `--re` set to the `turn`'s `seq`. The body is the full finding with one proposed solution. An issue written only in the `say` gets no discussion and is not fixed.
 
-Then publish one `say` to the seat with the profile, stub, and split verdicts. When you have no findings, the `say` also says `no findings`.
+Then publish one `say` to the seat with the profile, stub, and split verdicts and the same `--re`. When you have no findings, the `say` also says `no findings`.
 
 `start get contexts:ticket/writing` only when the profile match or the stub test is in question.
 
@@ -33,7 +33,7 @@ The follow-up prompt for the review set carries `fixed: <n>`.
 - `fixed: 0`: go to Phase 4
 - Any other count: the seat posts one parallel satisfaction `turn` to every roster name, including itself
 
-The first line is `mode: parallel`. Each member re-reads the document only for inconsistencies the fixes introduced. This is not a second full review. Publish `clean` as a `say` to the seat, or one regression as a `finding` addressed to every roster name. A regression goes through the same discussion and fix.
+The first line is `mode: parallel`. Each member re-reads the document only for inconsistencies the fixes introduced. This is not a second full review. Publish `clean` as a `say` to the seat, or one regression as a `finding` addressed to every roster name, with `--re` set to the satisfaction `turn`'s `seq`. A regression goes through the same discussion and fix.
 
 On the follow-up after the satisfaction set, go to Phase 4. There is no second satisfaction pass.
 

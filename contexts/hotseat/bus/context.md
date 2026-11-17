@@ -4,7 +4,7 @@ Client commands for one conversation. This context is not required. An ordinary 
 
 ## Commands
 
-- `hotseat publish --conversation <name> --from <you> --kind <kind> --body <text>` stores one message. Repeat `--to <addressee>` once for each addressee, in that order. Omit `--to` to store an empty addressee list. A read with `--name` does not return that message
+- `hotseat publish --conversation <name> --from <you> --kind <kind> --body <text>` stores one message. Repeat `--to <addressee>` once for each addressee, in that order. Omit `--to` to store an empty addressee list. A read with `--name` does not return that message. Add the optional `--re <seq>` to name the message this one responds to: an earlier message of the same conversation
 - `hotseat read --conversation <name> --cursor <n> --limit <n> --name <you>` returns messages addressed to you. The limit is a positive integer. A limit of `0` is refused. Cursor `0` has seen nothing
 - `hotseat read --conversation <name> --cursor <n> --limit <n> --kind <kind>` with no `--name` returns every message of those kinds, whatever its `to`. Repeat `--kind` once for each kind. Use it for findings and stances only, with the kinds the prompt gives. Read every other kind with `--name <you>`
 - `hotseat member register --conversation <name> --name <you>` records that you have joined
@@ -12,24 +12,40 @@ Client commands for one conversation. This context is not required. An ordinary 
 
 ## Kinds
 
-`instructions`, `turn`, `say`, `ask`, `error`, `done`
+`instructions`, `turn`, `say`, `ask`, `error`, `settled`, `done`
+
+- `instructions`, `turn`, and `done` have no `re`
+- A `say` answering a `turn` has that `turn` as its `re`
+- An `ask` has the message it asks about as its `re`, when there is one
+
+`error` and `settled` are `run`'s messages to `owner`. Members do not answer them.
 
 Finding kinds:
 
-| Kind | From | `to` | Meaning |
-| --- | --- | --- | --- |
-| `finding` | A recipient of a running `turn` set | Every roster name | One issue with one proposed solution. The body is the full finding |
-| `propose` | The discussion speaker | Every roster name | A new or amended solution. It becomes the current proposal |
-| `dismiss` | The discussion speaker | Every roster name | A proposal of no change, for example a duplicate or not an issue. It becomes the current proposal |
-| `agree` | The discussion speaker | Every roster name | Accepts the current proposal |
-| `object` | The discussion speaker | Every roster name | Does not accept the current proposal and offers no alternative |
-| `stand` | The proposer, answering an objection | Every roster name | Keeps the current proposal and gives the reason. Earlier agreements stay |
-| `pass` | The discussion speaker, with its stance | One name | Asks that member to speak next. The body says what answer is wanted |
-| `extend` | The acting seat, in a stall launch | The members whose budget is refreshed | The discussion continues |
-| `deadlock` | The acting seat, in a stall launch | Every roster name and `owner` | The discussion cannot settle. The run stops |
-| `fixed` | The finder, in a fix launch | Every roster name | The agreed proposal is applied. The body says what changed |
+| Kind | From | `to` | `re` | Meaning |
+| --- | --- | --- | --- | --- |
+| `finding` | A recipient of a running `turn` set | Every roster name | The `turn` of the set it answers | One issue with one proposed solution. The body is the full finding |
+| `aggregate` | The acting seat, in an aggregate launch | Every roster name | The set's `turn` | Groups duplicate findings. One line per issue: the `seq` of the finding to keep, then the `seq` of each duplicate it drops. Publish it only in an aggregate launch |
+| `propose` | The discussion speaker | Every roster name | The finding under discussion | A new or amended solution. It becomes the current proposal |
+| `dismiss` | The discussion speaker | Every roster name | The finding under discussion | A proposal of no change, for example a duplicate or not an issue. It becomes the current proposal |
+| `agree` | The discussion speaker | Every roster name | The finding under discussion | Accepts the current proposal |
+| `object` | The discussion speaker | Every roster name | The finding under discussion | Does not accept the current proposal and offers no alternative |
+| `stand` | The proposer, answering an objection | Every roster name | The finding under discussion | Keeps the current proposal and gives the reason. Earlier agreements stay |
+| `pass` | The discussion speaker, with its stance | One name | The finding under discussion | Asks that member to speak next. The body says what answer is wanted |
+| `extend` | The acting seat, in a stall launch | The members whose budget is refreshed | The finding whose discussion stalled | The discussion continues |
+| `deadlock` | The acting seat, in a stall launch | Every roster name and `owner` | The finding whose discussion stalled | The discussion cannot settle. The run stops |
+| `fixed` | The finder, in a fix launch | Every roster name | The finding whose settled change it applies | The agreed proposal is applied. The body says what changed |
 
-`propose`, `dismiss`, `agree`, `object`, and `stand` are stances. `run` publishes its own markers with an empty `to`. A member does not publish a marker.
+`propose`, `dismiss`, `agree`, `object`, and `stand` are stances.
+
+## Replies
+
+- Pass `--re <seq>` with the `re` above
+- Use the exact `--re` value `run`'s prompt gives
+- A wrong `re` rejects the message. `run` reports it under the kind's error class where it has one, such as `bad stance`
+- A `say` whose `re` names another message does not answer the `turn`
+- A `fixed` whose `re` names another message does not count and is not reported
+- A missing `re` is never an error
 
 ## Findings
 
