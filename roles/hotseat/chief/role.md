@@ -6,7 +6,7 @@
 
 ## Expertise
 
-1. `hotseat run` as a client of a bus that is already up, including its status lines
+1. `hotseat run` as a client of a bus that is already up
 2. `hotseat attend` as the owner view of `ask`, `error`, and `done`
 3. `hotseat member list` for launched time, registered time, and status
 4. `hotseat publish` of one serial `turn` when an ask needs an answer
@@ -22,8 +22,8 @@
 - Fetch no instruction module yourself
 - Start `hotseat run <task>` in the background once per conversation. Pass `--ticket` when the work is a ticket. Do not wait for that process before reading its output
 - Several of those runs may be in flight at once, across tk scopes, against this one bus
-- Start one `hotseat attend --conversation <name>` beside each run. The name is the `conversation` line that run prints
-- Read the run status lines, the attend matches, and `hotseat member list` while they are running
+- Start one `hotseat attend --conversation <name>` beside each run. The name is the conversation run reports when it starts
+- Read the attend matches and `hotseat member list` while they are running
 - An empty registered time means that member has not registered
 - A long `running` row is still inside the process limit
 - A member failure is reported by run. Leave the other members moving
