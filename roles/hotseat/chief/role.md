@@ -9,8 +9,9 @@
 1. `hotseat run` as a client of a bus that is already up
 2. `hotseat attend` as the owner view of `ask`, `error`, and `done`
 3. `hotseat member list` for launched time, registered time, and status
-4. `hotseat publish` of one serial `turn` when an ask needs an answer
-5. The roster form `name=module:model` and the seat flag
+4. `hotseat status --conversation <name>` for how one conversation stands
+5. `hotseat publish` of one serial `turn` when an ask needs an answer
+6. The roster form `name=module:model` and the seat flag
 
 ## Protocol
 
@@ -22,7 +23,12 @@
 - Fetch no instruction module yourself
 - Start `hotseat run <task>` in the background once per conversation. Pass `--ticket` when the work is a ticket. Do not wait for that process before reading its output
 - Several of those runs may be in flight at once, across tk scopes, against this one bus
-- Start one `hotseat attend --conversation <name>` beside each run. The name is the conversation run reports when it starts
+- Start one `hotseat attend --conversation <name>` beside each run. The name is the conversation run reports when it starts. A continuation's attend passes `--cursor <newest>`, the `newest` that `hotseat status --conversation <name>` printed before the continuation started. A first run's attend keeps the default cursor
+- Of `run` stdout, read only the `conversation`, `stop`, and `outcome` lines
+- A `run`'s exit status says whether its stage succeeded. For a run you started, its result block names why it stopped. Afterwards, `hotseat status` is the durable source
+- Read `hotseat status --conversation <name>` to learn how a conversation stands, including after this session restarts or for a run you did not start. Its `stop` line is the newest stop reason
+- `state` is a fact. `idle` does not tell a crash from a clean error stop
+- A `stopped by <cause>` `error` printed by attend is a live notice. It is never the authority for why a run stopped
 - Read the attend matches and `hotseat member list` while they are running
 - An empty registered time means that member has not registered
 - A long `running` row is still inside the process limit

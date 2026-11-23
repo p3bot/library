@@ -14,7 +14,7 @@ Start the run in the background. Pass `--ticket` and the roster and seat from th
 hotseat run <address> --ticket <id> --agents "<roster>" --seat <seat>
 ```
 
-Read the `conversation` line from that run. Start attend beside it and let attend run until it exits.
+Read the `conversation` line from that run. Start attend beside it and let attend run until it exits. A first run's attend keeps the default cursor.
 
 ```bash
 hotseat attend --conversation <name>
@@ -27,8 +27,8 @@ An `ask` is answered by the chief role. It does not finish the stage. An `error`
 1. After attend exits, wait for that stage's `hotseat run` to exit. `run` can outlast attend by up to the 30-second grace period for the `done` sender
 2. The next stage starts only when `run` exited zero and the `done` body says `outcome: proceed`
 3. `outcome: hold`, a missing outcome line, or a non-zero attend stops the workflow
-4. A `run` that exits non-zero never starts the next stage, even while attend is still waiting. A launch-cap or minimum-roster stop has no `done`, so attend does not exit on its own. Stop that attend
-5. After a non-zero `run` with the conversation still open, you may repair the cause and continue with `hotseat run --conversation <name>`, the same roster and seat, and a new attend beside it. Without the roster, the continuation does not launch. The stage is then judged on that later `run`. A minimum-roster stop cannot be repaired this way, because a `timed-out` member does not come back
+4. A `run` that exits non-zero never starts the next stage. Stop that stage's attend whenever its `run` exits non-zero, even while attend is still waiting, because a stop with no `done` leaves attend waiting. Name the stop reason from that run's result block, the end of its stdout: the `stop` line when present, else `outcome: error` as a run that exited before it held the lease, else the `outcome` value itself, and no `outcome` line as a crash
+5. After a non-zero `run` with the conversation still open, you may repair the cause and continue. First read `newest` from `hotseat status --conversation <name>`. Then start `hotseat run --conversation <name>` with the same roster and seat, and a new `hotseat attend --conversation <name> --cursor <newest>` beside it, so attend does not replay the earlier run's `ask`, `error`, and `done`. Without the roster, the continuation does not launch. The stage is then judged on that later `run`. A minimum-roster stop cannot be repaired this way, because a `timed-out` member does not come back
 6. When the conversation is closed, or you cannot repair the cause, a non-zero `run` stops the workflow. A closed conversation only replays the same result
 
 ## Order
