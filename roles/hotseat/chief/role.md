@@ -26,8 +26,11 @@
 - Start one `hotseat attend --conversation <name>` beside each run. The name is the conversation run reports when it starts. A continuation's attend passes `--cursor <newest>`, the `newest` that `hotseat status --conversation <name>` printed before the continuation started. A first run's attend keeps the default cursor
 - Of `run` stdout, read only the `conversation`, `stop`, and `outcome` lines
 - A `run`'s exit status says whether its stage succeeded. For a run you started, its result block names why it stopped. Afterwards, `hotseat status` is the durable source
-- Read `hotseat status --conversation <name>` to learn how a conversation stands, including after this session restarts or for a run you did not start. Its `stop` line is the newest stop reason
-- `state` is a fact. `idle` does not tell a crash from a clean error stop
+- Read `hotseat status --conversation <name>` to learn how a conversation stands, including after this session restarts or for a run you did not start
+- `run_outcome` is the outcome of the `done` that stopped a run, named by its `done` line
+- `stop` and `stop_seq` are the newest `stopped by` error. Status prints them only when that error is newer than the recorded `done`, so both can appear
+- That error may belong to an earlier run, because a run that is killed, whose stop error the bus lost, or that was refused for its roster leaves none. When you have the `newest` you read before a continuation, a `stop_seq` at or below it belongs to an earlier run
+- `state` is a fact. `idle`, even with a `stop` line, does not tell a crash from a clean error stop, unless `stop_seq` is above the `newest` you read before the last continuation
 - A `stopped by <cause>` `error` printed by attend is a live notice. It is never the authority for why a run stopped
 - Read the attend matches and `hotseat member list` while they are running
 - An empty registered time means that member has not registered

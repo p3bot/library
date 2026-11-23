@@ -230,7 +230,7 @@ roles: {
 	}
 	"hotseat/chief": {
 		module:      "github.com/p3bot/library/roles/hotseat/chief@v1"
-		version:     "v1.3.0"
+		version:     "v1.4.0"
 		description: "Ongoing hotseat chief: one bus, many conversations, roster and repair"
 		tags: ["hotseat", "chief", "conversation"]
 	}
@@ -554,7 +554,7 @@ tasks: {
 	}
 	"hotseat/workflow/implement": {
 		module:      "github.com/p3bot/library/tasks/hotseat/workflow/implement@v1"
-		version:     "v1.2.0"
+		version:     "v1.3.0"
 		description: "Run triage, ticket review, implementation, and pre-commit review as four hotseat conversations"
 		tags: ["hotseat", "workflow", "implement"]
 	}
