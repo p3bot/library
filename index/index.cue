@@ -536,19 +536,19 @@ tasks: {
 	}
 	"hotseat/ticket/review": {
 		module:      "github.com/p3bot/library/tasks/hotseat/ticket/review@v1"
-		version:     "v1.3.0"
+		version:     "v1.4.0"
 		description: "Parallel review of one ticket document, each finding discussed and fixed by agreement, then one satisfaction pass over the fixes"
 		tags: ["hotseat", "ticket", "review"]
 	}
 	"hotseat/ticket/implement": {
 		module:      "github.com/p3bot/library/tasks/hotseat/ticket/implement@v1"
-		version:     "v1.0.0"
+		version:     "v1.1.0"
 		description: "Single-seat implementation of one ticket, closed at review status"
 		tags: ["hotseat", "ticket", "implement"]
 	}
 	"hotseat/pre-commit/review": {
 		module:      "github.com/p3bot/library/tasks/hotseat/pre-commit/review@v1"
-		version:     "v1.2.0"
+		version:     "v1.3.0"
 		description: "Parallel pre-commit diff review, each finding discussed and fixed by agreement, then one satisfaction pass over the fixes"
 		tags: ["hotseat", "pre-commit", "review"]
 	}

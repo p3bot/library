@@ -158,6 +158,13 @@ The per-item finding template (history in `docs/item-by-item-template.md`) is co
 - `tasks/review/multi-agent/orchestrator/task.md`
 - `skills/finding/one-by-one/SKILL.md`
 
+The hotseat review tasks carry an adapted copy for the finding protocol: one Proposal in place of Decision, Options, and Recommendation, and no prompt. Carry a template change into them too:
+
+- `tasks/hotseat/pre-commit/review/task.md`
+- `tasks/hotseat/ticket/review/task.md`
+
+`tasks/hotseat/pre-commit/review/task.md` also carries the ten review criteria of `tasks/review/pre-commit/task.md` word for word. Keep them in step.
+
 The shared judgement block and shared boundary, defined under Role Specifics in `docs/authoring.md`, are copied into each of these. Keep them word for word in step:
 
 - `docs/authoring.md`

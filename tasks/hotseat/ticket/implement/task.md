@@ -12,7 +12,7 @@ The ticket id is the `ticket:` line in the instructions. Do not ask for one.
 
 `start get contexts:ticket/writing` only when the profile match is unsettled.
 
-A design path is not this work. Post `outcome: hold` and do not mark the ticket.
+A design path, or a ticket whose matched profile is design, is not this work. Do not start a design session. Post `outcome: hold` and do not mark the ticket.
 
 A blocking gap is an `ask` to `owner`. Do not post `done` until the answer is in the transcript and the work can continue.
 
