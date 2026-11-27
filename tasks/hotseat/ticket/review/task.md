@@ -4,19 +4,19 @@ Review the ticket document, fix what every member agrees, and mark `todo` only w
 
 The ticket id is the `ticket:` line in the instructions. Do not ask for one.
 
-Every member reads the instructions and registers. A member who is not the acting seat then exits. Phase work starts when a `turn` names you.
+Every member reads the instructions and joins. A member who is not the acting seat then exits. Phase work starts when a `turn` names you.
 
 Edit only under the H1. The fence stays sealed. On a tk-driven scope, `tk sync` after a body edit. `tk mark` self-commits.
 
 ## Phase 1
 
-The acting seat posts one parallel review `turn` to every name `hotseat member list` returns, including itself.
+The acting seat sends one parallel review `turn` to every name `hotseat chat members <chat>` returns, including itself.
 
 The first line is `mode: parallel`. The phase text is: run the Review section of the instructions against the ticket. Do not edit the ticket.
 
-Publish each issue as its own `finding`, addressed to every roster name, with `--re` set to the `turn`'s `seq`. Use the Finding Template. An issue written only in the `say` gets no discussion and is not fixed.
+Send each issue as its own `finding`, addressed to every roster name, with `--re` set to the `turn`'s `seq`. Use the Finding Template. An issue written only in the `say` gets no discussion and is not fixed.
 
-Then publish one `say` to the seat with the report in the Report Format and the same `--re`. When you have no findings, the `say` also says `no findings`.
+Then send one `say` to the seat with the report in the Report Format and the same `--re`. When you have no findings, the `say` also says `no findings`.
 
 ## Phase 2
 
@@ -29,20 +29,20 @@ The seat does not apply edits and does not schedule a discussion.
 The follow-up prompt for the review set carries `fixed: <n>`.
 
 - `fixed: 0`: go to Phase 4
-- Any other count: the seat posts one parallel satisfaction `turn` to every roster name, including itself
+- Any other count: the seat sends one parallel satisfaction `turn` to every roster name, including itself
 
-The first line is `mode: parallel`. Each member re-reads the document only for inconsistencies the fixes introduced. This is not a second full review. Publish `clean` as a `say` to the seat, or one regression as a `finding` addressed to every roster name, with `--re` set to the satisfaction `turn`'s `seq`. A regression goes through the same discussion and fix.
+The first line is `mode: parallel`. Each member re-reads the document only for inconsistencies the fixes introduced. This is not a second full review. Send `clean` as a `say` to the seat, or one regression as a `finding` addressed to every roster name, with `--re` set to the satisfaction `turn`'s `seq`. A regression goes through the same discussion and fix.
 
 On the follow-up after the satisfaction set, go to Phase 4. There is no second satisfaction pass.
 
 ## Phase 4
 
-The seat posts `done` to `owner`. The body starts with the outcome line and then the report, with the Remediation Summary.
+The seat sends `done` to `owner`. The body starts with the outcome line and then the report, with the Remediation Summary.
 
 An issue blocks work if proceeding without resolving it would force a fresh session to rework or guess.
 
 - No blocking issue remains, and the profile is implement, or a bug whose work is a fix: `tk mark todo <id>`, then `outcome: proceed`
-- Anything else, including a split, a stub, a capture, a decide, an investigate, a design, a terminal ticket, or a bug that is not yet a fix: leave the status, and post `outcome: hold`. Name the blocking findings, the seam, or the reason the ticket was not reviewed
+- Anything else, including a split, a stub, a capture, a decide, an investigate, a design, a terminal ticket, or a bug that is not yet a fix: leave the status, and send `outcome: hold`. Name the blocking findings, the seam, or the reason the ticket was not reviewed
 
 A split names the seam and does not create the children.
 
@@ -53,19 +53,19 @@ Goal: catch issues that would force rework if a fresh session started the work. 
 Finding no new issues is a valid outcome. If the ticket document is complete and prior reviews have surfaced the real concerns, say so rather than invent findings to justify the run.
 
 1. `tk get <id>`. The working path is the path it prints
-2. Stop the review and publish no findings when any of these holds. Say which in the `say`:
+2. Stop the review and send no findings when any of these holds. Say which in the `say`:
    - `tk get` does not find the ticket, or reports a `parse_error:` for this id
    - The ticket is terminal: the path is under `archive/`, or the status is `done` or `cancelled`
    - The path is a design document, or the matched profile is design
 3. Match the profile from the headings under the H1. `start get contexts:ticket/writing` only when the profile match or the stub test is in question
 4. A stub or a capture gets no findings walk. Say `stub` or `capture` in the `say`. Do not expand a stub
 5. Read the ticket document thoroughly
-6. Run the Size and Coherence Check on implement tickets, and on bug tickets when the work is a fix. When it fires, say `split` and the seam in the `say`, and publish no other findings
+6. Run the Size and Coherence Check on implement tickets, and on bug tickets when the work is a fix. When it fires, say `split` and the seam in the `say`, and send no other findings
 7. Analyse the repository:
    - Validate the stated current state against the actual codebase when Current State exists
    - Check whether a fresh-session agent can do that profile's work from the document. Do not treat an unfilled Decision or Recommendation as a gap. Do not treat empty Expected, Actual, or Repro as a gap when the bug is still diagnosis. Do not treat missing Requirements as a gap on capture, bug, investigate, decide, or design
    - Research external facts only when the ticket's approach turns on them: a specific dependency version, an API behaviour, or a platform capability. Generic dependency scans produce noise over repeated runs
-8. Identify concerns that meet the Goal bar. Apply the Articulation Test and Regret Filter before publishing each one
+8. Identify concerns that meet the Goal bar. Apply the Articulation Test and Regret Filter before sending each one
 
 ### Size and Coherence Check
 
@@ -97,7 +97,7 @@ If these signals fire, the review short-circuits. Finer issues found against a t
 | risk | A potential problem that may not occur but should be acknowledged |
 | dependency | An external dependency with version, compatibility, or availability concerns |
 
-A `decision` finding proposes the alternative you recommend, and names the others. When the choice is the owner's and not the members', publish an `ask` as the member role says, and take your best stance.
+A `decision` finding proposes the alternative you recommend, and names the others. When the choice is the owner's and not the members', send an `ask` as the member role says, and take your best stance.
 
 ## Finding Template
 

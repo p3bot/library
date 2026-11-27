@@ -4,13 +4,13 @@ Decide whether this ticket should enter review. Do not implement it. Do not expa
 
 The ticket id is the `ticket:` line in the instructions. Do not ask for one.
 
-A member who is not the acting seat registers and exits. Phase work starts when a `turn` names you.
+A member who is not the acting seat joins and exits. Phase work starts when a `turn` names you.
 
 ## Phase 1
 
-The acting seat posts one parallel `turn` to every name `hotseat member list` returns, including itself. Do not wait for the rest of the roster to register.
+The acting seat sends one parallel `turn` to every name `hotseat chat members <chat>` returns, including itself. Do not wait for the rest of the roster to join.
 
-The first line of the body is `mode: parallel`. The phase text is: read the ticket with `tk get`. `start get contexts:ticket/writing` and run that guide's stub test and profile match. Publish a `say` to the seat with one verdict: `pass`, `stub`, `reject`, or `split`. A `split` names the seam. Do not edit the ticket.
+The first line of the body is `mode: parallel`. The phase text is: read the ticket with `tk get`. `start get contexts:ticket/writing` and run that guide's stub test and profile match. Send a `say` to the seat with one verdict: `pass`, `stub`, `reject`, or `split`. A `split` names the seam. Do not edit the ticket.
 
 ## Phase 2
 
@@ -20,7 +20,7 @@ When the says agree, skip this phase.
 
 ## Phase 3
 
-The seat marks, then posts `done` to `owner`. The body starts with the outcome line. The following lines are the profile and, for a split, the seam.
+The seat marks, then sends `done` to `owner`. The body starts with the outcome line. The following lines are the profile and, for a split, the seam.
 
 - `pass`: `tk mark triaged <id>`, then `outcome: proceed`
 - `stub`: leave `draft`, `outcome: hold`, and say that it is a stub. Do not expand

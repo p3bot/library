@@ -3,7 +3,7 @@ package implement
 import "github.com/p3bot/library/schemas@v1"
 
 task: schemas.#Task & {
-	description: "Run triage, ticket review, implementation, and pre-commit review as four hotseat conversations"
+	description: "Run triage, ticket review, implementation, and pre-commit review as four hotseat chats"
 	tags: ["hotseat", "workflow", "implement"]
 	role: "hotseat/chief"
 	file: "@module/task.md"

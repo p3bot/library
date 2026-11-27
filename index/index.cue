@@ -224,15 +224,15 @@ roles: {
 	}
 	"hotseat/member": {
 		module:      "github.com/p3bot/library/roles/hotseat/member@v1"
-		version:     "v1.5.0"
-		description: "Hotseat conversation member: speech, kinds, finding discussion, and the acting seat"
-		tags: ["hotseat", "member", "conversation"]
+		version:     "v1.6.0"
+		description: "Hotseat chat member: join, speech, kinds, finding discussion, and the acting seat"
+		tags: ["hotseat", "member", "chat"]
 	}
 	"hotseat/chief": {
 		module:      "github.com/p3bot/library/roles/hotseat/chief@v1"
-		version:     "v1.4.0"
-		description: "Ongoing hotseat chief: one bus, many conversations, roster and repair"
-		tags: ["hotseat", "chief", "conversation"]
+		version:     "v1.5.0"
+		description: "Ongoing hotseat chief: one bus, many chats, run new and continue, roster and repair"
+		tags: ["hotseat", "chief", "chat"]
 	}
 }
 
@@ -326,9 +326,9 @@ contexts: {
 	}
 	"hotseat/bus": {
 		module:      "github.com/p3bot/library/contexts/hotseat/bus@v1"
-		version:     "v1.4.0"
-		description: "Hotseat bus commands, kind tokens, finding discussion rules, and who a message names"
-		tags: ["hotseat", "bus", "conversation"]
+		version:     "v1.5.0"
+		description: "Hotseat chat commands, exit status, kind tokens, finding discussion rules, and who a message names"
+		tags: ["hotseat", "bus", "chat"]
 	}
 }
 
@@ -530,32 +530,32 @@ tasks: {
 	}
 	"hotseat/ticket/triage": {
 		module:      "github.com/p3bot/library/tasks/hotseat/ticket/triage@v1"
-		version:     "v1.0.0"
+		version:     "v1.1.0"
 		description: "Parallel triage of one ticket: pass, stub, reject, or split"
 		tags: ["hotseat", "ticket", "triage"]
 	}
 	"hotseat/ticket/review": {
 		module:      "github.com/p3bot/library/tasks/hotseat/ticket/review@v1"
-		version:     "v1.4.0"
+		version:     "v1.5.0"
 		description: "Parallel review of one ticket document, each finding discussed and fixed by agreement, then one satisfaction pass over the fixes"
 		tags: ["hotseat", "ticket", "review"]
 	}
 	"hotseat/ticket/implement": {
 		module:      "github.com/p3bot/library/tasks/hotseat/ticket/implement@v1"
-		version:     "v1.1.0"
+		version:     "v1.2.0"
 		description: "Single-seat implementation of one ticket, closed at review status"
 		tags: ["hotseat", "ticket", "implement"]
 	}
 	"hotseat/pre-commit/review": {
 		module:      "github.com/p3bot/library/tasks/hotseat/pre-commit/review@v1"
-		version:     "v1.3.0"
+		version:     "v1.4.0"
 		description: "Parallel pre-commit diff review, each finding discussed and fixed by agreement, then one satisfaction pass over the fixes"
 		tags: ["hotseat", "pre-commit", "review"]
 	}
 	"hotseat/workflow/implement": {
 		module:      "github.com/p3bot/library/tasks/hotseat/workflow/implement@v1"
-		version:     "v1.3.0"
-		description: "Run triage, ticket review, implementation, and pre-commit review as four hotseat conversations"
+		version:     "v1.4.0"
+		description: "Run triage, ticket review, implementation, and pre-commit review as four hotseat chats"
 		tags: ["hotseat", "workflow", "implement"]
 	}
 	"ticket/build": {

@@ -4,7 +4,7 @@ Review the diff, fix what every member agrees, and mark the ticket `done` when t
 
 The ticket id is the `ticket:` line in the instructions. Do not ask for one.
 
-Every member reads the instructions and registers. A member who is not the acting seat then exits. Phase work starts when a `turn` names you.
+Every member reads the instructions and joins. A member who is not the acting seat then exits. Phase work starts when a `turn` names you.
 
 Edit a file only in a fix launch. No member edits a file during the review set or the satisfaction set.
 
@@ -19,13 +19,13 @@ The acting seat runs `git status` and picks one diff command for the whole set:
 
 Untracked files that `git status` lists are part of the diff. The seat names them in the phase text.
 
-The seat posts one parallel review `turn` to every name `hotseat member list` returns, including itself.
+The seat sends one parallel review `turn` to every name `hotseat chat members <chat>` returns, including itself.
 
 The first line is `mode: parallel`. The phase text names the diff command and says: run the Review section of the instructions against that diff. Do not edit the diff.
 
-Publish each issue as its own `finding`, addressed to every roster name, with `--re` set to the `turn`'s `seq`. Tests, comments, and documentation are findings too. Use the Finding Template. An issue written only in the `say` gets no discussion and is not fixed. An `info` item is the exception: it goes in the report only.
+Send each issue as its own `finding`, addressed to every roster name, with `--re` set to the `turn`'s `seq`. Tests, comments, and documentation are findings too. Use the Finding Template. An issue written only in the `say` gets no discussion and is not fixed. An `info` item is the exception: it goes in the report only.
 
-Then publish one `say` to the seat with the report in the Report Format and the same `--re`. When you have no findings, the `say` also says `no findings`.
+Then send one `say` to the seat with the report in the Report Format and the same `--re`. When you have no findings, the `say` also says `no findings`.
 
 ## Phase 2
 
@@ -38,25 +38,25 @@ The seat does not apply fixes and does not schedule a discussion.
 The follow-up prompt for the review set carries `fixed: <n>`.
 
 - `fixed: 0`: go to Phase 4
-- Any other count: the seat posts one parallel satisfaction `turn` to every roster name, including itself
+- Any other count: the seat sends one parallel satisfaction `turn` to every roster name, including itself
 
-The first line is `mode: parallel`. Each member re-reads only the lines the fixes touched, and runs the project's formatters and linters on those files in check mode. This is not a second full review. Publish `clean` as a `say` to the seat, or one regression as a `finding` addressed to every roster name, with `--re` set to the satisfaction `turn`'s `seq`. A violation a formatter or linter reports is a regression `finding`, not a direct fix. A regression goes through the same discussion and fix.
+The first line is `mode: parallel`. Each member re-reads only the lines the fixes touched, and runs the project's formatters and linters on those files in check mode. This is not a second full review. Send `clean` as a `say` to the seat, or one regression as a `finding` addressed to every roster name, with `--re` set to the satisfaction `turn`'s `seq`. A violation a formatter or linter reports is a regression `finding`, not a direct fix. A regression goes through the same discussion and fix.
 
 On the follow-up after the satisfaction set, go to Phase 4. There is no second satisfaction pass.
 
 ## Phase 4
 
-The seat posts `done` to `owner`. The body starts with the outcome line and then the Remediation Summary.
+The seat sends `done` to `owner`. The body starts with the outcome line and then the Remediation Summary.
 
 - The diff is clean: `tk mark done <id>`, then `outcome: proceed`
-- A finding is still unresolved: leave `review`, post `outcome: hold`, and list those findings
+- A finding is still unresolved: leave `review`, send `outcome: hold`, and list those findings
 
 ## Review
 
 1. Run the diff command the `turn` names and read the output to understand the scope and intent of the changes. Read each untracked file the `turn` names as an added file
 2. For each changed file, read the full file and related files to understand surrounding context
 3. Review the changes against the ten criteria below
-4. Publish the findings and the report as Phase 1 says
+4. Send the findings and the report as Phase 1 says
 
 ## Reviewer Guidance
 
