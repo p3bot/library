@@ -708,4 +708,10 @@ skills: {
 		description: "Re-evaluate a live recommendation against the principled long-term solution"
 		tags: ["finding", "double-check", "recommendation", "principled", "dc"]
 	}
+	"design/web-frontend": {
+		module:      "github.com/p3bot/library/skills/design/web-frontend@v1"
+		version:     "v1.0.0"
+		description: "Design and build polished, accessible websites and web apps, verified in a browser with webctl"
+		tags: ["design", "web-frontend", "web", "frontend", "ui", "css", "accessibility", "webctl"]
+	}
 }
